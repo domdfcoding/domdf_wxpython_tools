@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
 	name="domdf_wxpython_tools",
-	version="0.1.0",
+	version="0.1.1",
     author='Dominic Davis-Foster',
 	author_email="dominic@davis-foster.co.uk",
 	packages=find_packages(),
@@ -20,7 +20,7 @@ setup(
         "Operating System :: OS Independent",
 		"Development Status :: 4 - Beta",
     ],
-	install_requires=[
-		"wxPython >= 4.0.0",
-	],
+	#install_requires=[
+	#	"wxPython >= 4.0.0",
+	#],
 )
