@@ -30,6 +30,9 @@ import wx
 def get_toolbar_icon(icon_name, size=24):
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_TOOLBAR_C", wx.Size(size, size)))
 
+def get_button_icon(icon_name, size=24):
+	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_BUTTON_C", wx.Size(size, size)))
+
 # The following code (C) 2005 Antoine Pitrou
 # https://sourceforge.net/p/wxglade/mailman/message/6475744/
 _art_provider = None
