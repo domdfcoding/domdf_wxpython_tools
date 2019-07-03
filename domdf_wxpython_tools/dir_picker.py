@@ -31,9 +31,8 @@ class dir_picker(wx.Panel):
 		self.__set_properties()
 		self.__do_layout()
 		
-		self.Bind(wx.EVT_BUTTON, self.on_clear, self.clear_btn)
-		self.Bind(wx.EVT_BUTTON, self.on_browse, self.browse_btn)
-		
+		self.Bind(wx.EVT_BUTTON, self.Clear, self.clear_btn)
+		self.Bind(wx.EVT_BUTTON, self.Browse, self.browse_btn)
 		
 		return
 		
@@ -75,6 +74,7 @@ class dir_picker(wx.Panel):
 		sizer.Fit(self)
 		self.Layout()
 		# end wxGlade
+
 	
 	def set_textctrl_width(self, width):
 		self.SetTextWidth(width)
@@ -168,7 +168,7 @@ class dir_picker(wx.Panel):
 		Copies the selected text to the clipboard and removes it from the control.
 		"""
 		return self.dir_value.Cut()
-
+		
 	def GetInsertionPoint(self):
 		"""
 		Returns the insertion point, or cursor, position.
@@ -227,7 +227,7 @@ class dir_picker(wx.Panel):
 		"""
 		return self.dir_value.IsEditable()
 
-
+	
 	def IsEmpty(self):
 		"""
 		Returns True if the control is currently empty.
@@ -237,7 +237,7 @@ class dir_picker(wx.Panel):
 		:rtype:	bool
 		"""
 		return self.dir_value.IsEmpty()
-
+	
 	def Paste(self):
 		"""
 		Pastes text from the clipboard to the text item.
