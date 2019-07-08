@@ -1,0 +1,23 @@
+language: python
+dist: xenial
+python:
+- '3.5'
+- '3.6'
+- '3.7'
+- 3.8-dev
+install:
+- pip install -U coveralls pytest
+script:
+- coverage run --source=domdf_wxpython_tools -m pytest
+after_success:
+- coveralls
+deploy:
+  provider: pypi
+  user: DomDF
+  password:
+    secure: ocyJxsOYg0kOErZ5XIkvzEz1MqA0AsrnqULRPknYIMz3RXNPVgk1nI9Ub4tKzzsgCOTXKZUMUFesHoCS1fzWs0zidC1NuD4/LNcGn0JJY0SUAxbcZvQAb5vxPU0lNh+vfZIgaoGBzArLokSy1Zp2jThr4OriMP83HT2mEqerU3ZQFMYYdOLZxhDZT3EB0l3HynvBFn2Yl1eDQW9yfvg0ykYqU6WVbOAAfIJkyMIYDHGTpKxmpwvt9X0dx5w8fjrujcNyPwmA9H2+zFovp7Kg6O5FRUZ8ecNnvc3Hi5tw4X/XaKxgKVaMSTca2x6Cb5QKeCiSkXEHO+FLId81xFsOuOyrTweKJNWcmTgArOnBjiWD0xS0Az1j2wdMBZuSC0HJEH/KAoQKu7ZrlZJHWVfmfm+oN3GwEmvhcdbTWetMBCL7yCJD3EiYUGwJDheCtOJCg1c5bHyCsdW/dulKjPRzUpeKzDaR3gotOuLpPAiwqgrVLBG2zT/j34iY3KfNhpwSr0/j7yPLQrF0lUZjUHLkFSnwXwXxCI3GlnMnGeNU9w5+ZBScz6e2O/I8YFhOsgO/KFOt1aFT6Scy6GhaDgX9oQQ9cVhKTZUe14hATiXVDKuv5RlYPDGnZDyDhr3o1qS4rPsklbtMbN9rqV3HXJ9zaBbHWlgBuciuri6c5e1R4M0=
+  on:
+    tags: true
+    python: '3.6'
+  distributions: sdist bdist_wheel
+  skip_existing: true
