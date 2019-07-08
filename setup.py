@@ -20,7 +20,8 @@ setup(
         "Operating System :: OS Independent",
 		"Development Status :: 4 - Beta",
     ],
-	#install_requires=[
+	install_requires=[
+		"matplotlib>=3.0.0"
 	#	"wxPython >= 4.0.0",
-	#],
+	],
 )
