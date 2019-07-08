@@ -9,10 +9,10 @@ install:
 - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
 
 script:
-#  - pytest tests/
-- coverage run --source=domdf_wxpython_tools -m pytest
-after_success:
-- coveralls
+ - pytest tests/
+#- coverage run --source=domdf_wxpython_tools -m pytest
+#after_success:
+#- coveralls
 deploy:
   provider: pypi
   user: DomDF
