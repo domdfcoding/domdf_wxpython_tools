@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
 	name="domdf_wxpython_tools",
-	version="0.1.12",
+	version="0.1.13",
     author='Dominic Davis-Foster',
 	author_email="dominic@davis-foster.co.uk",
 	packages=find_packages(),
