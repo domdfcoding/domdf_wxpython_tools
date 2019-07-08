@@ -6,12 +6,12 @@ python:
 - '3.7'
 - 3.8-dev
 install:
-- pip install -U coveralls pytest
+- pip install -U coveralls pytest wxpython
 script:
-  - pytest tests/
-#- coverage run --source=domdf_wxpython_tools -m pytest
-#after_success:
-#- coveralls
+#  - pytest tests/
+- coverage run --source=domdf_wxpython_tools -m pytest
+after_success:
+- coveralls
 deploy:
   provider: pypi
   user: DomDF
