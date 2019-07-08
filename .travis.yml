@@ -7,7 +7,7 @@ python:
 - 3.8-dev
 install:
 - pip install -U coveralls pytest
-- pip install -U https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
 
 script:
 #  - pytest tests/
