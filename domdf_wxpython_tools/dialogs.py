@@ -23,9 +23,22 @@
 #
 
 import os
-import wx
 
 def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
+	"""
+	
+	:param parent:
+	:param extension:
+	:param title:
+	:param filetypestring:
+	:param style:
+	:param kwargs:
+	
+	:return:
+	"""
+	
+	import wx
+	
 	with wx.FileDialog(parent, title, wildcard=f"{filetypestring} (*.{extension})|*.{extension}",
 					   style=style, **kwargs) as fileDialog:
 		
