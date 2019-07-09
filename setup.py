@@ -13,7 +13,7 @@ setup(
 	url="https://github.com/domdfcoding/domdf_wxpython_tools",
 	description='Tools and widgets for wxPython',
 	long_description=long_description,
-	long_description_content_type="text/markdown",
+	long_description_content_type="text/x-rst",
 	classifiers=[
         "Programming Language :: Python :: 3",
 		"License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
