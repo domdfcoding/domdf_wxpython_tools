@@ -5,6 +5,9 @@ import sys
 import os
 import re
 
+import subprocess
+subprocess.call(["pip", "install", "-U", "-f", "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04", "wxPython"])
+
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 sys.path.append(os.path.abspath('./demo/'))
