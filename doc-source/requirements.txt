@@ -2,3 +2,4 @@ sphinxcontrib-httpdomain
 sphinx
 matplotlib
 wget
+dummy_wx

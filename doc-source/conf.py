@@ -27,10 +27,10 @@ from __pkginfo__ import github_username, modname
 #wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/__init__.py", "../wx/__init__.py")
 #wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/stc.py", "../wx/stc.py")
 
-wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/dist/dummy_wx-0.0.0.tar.gz")
-os.system("python3 -m pip install dummy_wx-0.0.0.tar.gz --user")
+#wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/dist/dummy_wx-0.0.0.tar.gz")
+#os.system("python3 -m pip install dummy_wx-0.0.0.tar.gz --user")
 
-import wx
+#import wx
 
 github_url = f"https://github.com/{github_username}/{modname}"
 
