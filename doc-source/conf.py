@@ -6,10 +6,6 @@
 import os
 import re
 import sys
-import shutil
-
-import wget
-
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
@@ -19,18 +15,6 @@ from sphinx.locale import _
 from domdf_wxpython_tools import __author__, __version__, __copyright__
 from __pkginfo__ import github_username, modname
 
-#if os.path.exists("../wx"):
-#    shutil.rmtree("../wx")
-
-#os.mkdir("../wx")
-
-#wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/__init__.py", "../wx/__init__.py")
-#wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/stc.py", "../wx/stc.py")
-
-#wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/dist/dummy_wx-0.0.0.tar.gz")
-#os.system("python3 -m pip install dummy_wx-0.0.0.tar.gz --user")
-
-#import wx
 
 github_url = f"https://github.com/{github_username}/{modname}"
 
