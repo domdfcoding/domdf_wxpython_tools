@@ -27,6 +27,8 @@ os.mkdir("../wx")
 wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/__init__.py", "../wx/__init__.py")
 wget.download("https://raw.githubusercontent.com/domdfcoding/dummy_wx/master/wx/stc.py", "../wx/stc.py")
 
+assert os.path.isfile("../wx/__init__.py")
+
 github_url = f"https://github.com/{github_username}/{modname}"
 
 rst_prolog = f""".. |pkgname| replace:: {modname}
