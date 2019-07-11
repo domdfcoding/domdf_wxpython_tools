@@ -20,6 +20,9 @@ os.mkdir("../wx")
 
 with open("../wx/__init__.py", "w") as f:
     f.write("""
+def dummy_function(*args, **kwargs):
+    return 0
+    
 App = object
 FD_SAVE = 0
 FD_OVERWRITE_PROMPT = 0
@@ -39,8 +42,7 @@ WXK_DOWN = WXK_PAGEUP = WXK_PAGEDOWN = 0
 
 FileDialog = Bitmap = NewIdRef = dummy_function
 
-def dummy_function(*args, **kwargs):
-    return 0
+
 
 DefaultSize = 0
 CLIP_CHILDREN = 0
