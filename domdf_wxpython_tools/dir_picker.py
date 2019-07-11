@@ -99,8 +99,15 @@ class dir_picker(wx.Panel):
 		return self.dir_value.AppendText(text)
 	
 	def Browse(self, *args): # wxGlade: dir_picker.<event_handler>
+		if self.get_value() == '':
+			defaultPath = self.default_directory
+		else:
+			defaultPath = self.get_value()
+		
+		
 		dlg = wx.DirDialog(None, "Choose a directory:", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-						   defaultPath=self.default_directory)
+						   #defaultPath=self.default_directory)
+						   defaultPath=defaultPath)
 		if dlg.ShowModal() == wx.ID_OK:
 			self.dir_value.SetValue((dlg.GetPath()))
 		dlg.Destroy()
