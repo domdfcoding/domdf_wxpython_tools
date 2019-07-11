@@ -39,6 +39,8 @@ WXK_DOWN = WXK_PAGEUP = WXK_PAGEDOWN = 0
 
 FileDialog = Bitmap = NewIdRef = dummy_function
 
+def dummy_function(*args, **kwargs):
+    return 0
 
 DefaultSize = 0
 CLIP_CHILDREN = 0
