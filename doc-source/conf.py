@@ -12,9 +12,12 @@ sys.path.append(os.path.abspath('./demo/'))
 from sphinx.locale import _
 
 import os
-if not os.path.exists("../wx"):
-    os.mkdir("../wx")
-    
+import shutil
+if os.path.exists("../wx"):
+    shutil.rmtree("../wx")
+
+os.mkdir("../wx")
+
 with open("../wx/__init__.py", "w") as f:
     f.write("""
 App = object
