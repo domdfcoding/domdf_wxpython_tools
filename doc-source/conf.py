@@ -43,7 +43,7 @@ WXK_DOWN = WXK_PAGEUP = WXK_PAGEDOWN = 0
 FileDialog = Bitmap = NewIdRef = dummy_function
 
 
-
+DEFAULT_FRAME_STYLE = 0
 DefaultSize = 0
 CLIP_CHILDREN = 0
 SUNKEN_BORDER = 0
