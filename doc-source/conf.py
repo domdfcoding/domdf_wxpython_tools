@@ -27,13 +27,18 @@ Dialog = object
 Frame = object
 Dialog = object
 
+PlatformInfo = []
 
-def NewIdRef():
-    return 0
+WXK_END = WXK_LEFT = WXK_RIGHT = WXK_UP = 0
+WXK_DOWN = WXK_PAGEUP = WXK_PAGEDOWN = 0
+
+FileDialog = Bitmap = NewIdRef = dummy_function
+
 
 DefaultSize = 0
 CLIP_CHILDREN = 0
 SUNKEN_BORDER = 0
+ID_CANCEL = 0
     """)
 
 with open("../wx/stc.py", "w") as f:
