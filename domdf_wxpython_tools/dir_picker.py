@@ -15,10 +15,23 @@ from . import icons
 # TODO: Forward events
 
 class dir_picker(wx.Panel):
-	def __init__(self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.TAB_TRAVERSAL, name=b"dir_picker", default_directory=os.getcwd()):
+	"""
+	
+	"""
+	def __init__(self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.TAB_TRAVERSAL, name=b"dir_picker"):
+		"""
+		
+		:param parent:
+		:param id:
+		:param value:
+		:param pos:
+		:param size:
+		:param style:
+		:param name:
+		"""
 		self._parent = parent
 		self.initial_value = value
-		self.default_directory = default_directory
+		
 		
 		wx.Panel.__init__(self, self._parent, id=wx.ID_ANY, pos=pos, size=size, style=style, name=name)
 		self.dir_value = wx.TextCtrl(self, wx.ID_ANY, "")
@@ -100,13 +113,12 @@ class dir_picker(wx.Panel):
 	
 	def Browse(self, *args): # wxGlade: dir_picker.<event_handler>
 		if self.get_value() == '':
-			defaultPath = self.default_directory
+			defaultPath = self.initial_value
 		else:
 			defaultPath = self.get_value()
 		
 		
 		dlg = wx.DirDialog(None, "Choose a directory:", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-						   #defaultPath=self.default_directory)
 						   defaultPath=defaultPath)
 		if dlg.ShowModal() == wx.ID_OK:
 			self.dir_value.SetValue((dlg.GetPath()))

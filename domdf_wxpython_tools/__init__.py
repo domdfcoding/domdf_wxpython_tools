@@ -22,7 +22,7 @@
 #  MA 02110-1301, USA.
 #
 
-__all__ = ["utils", "dialogs", "icons", "keyboard", "dir_picker", "list_dialog", "style_picker","LogCtrl"]
+__all__ = ["dialogs", "dir_picker", "events", "icons", "keyboard", "list_dialog", "LogCtrl", "style_picker", "timer_thread", "utils"]
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019 Dominic Davis-Foster"
@@ -31,13 +31,16 @@ __license__ = "LGPL"
 __version__ = "0.1.15"
 __email__ = "dominic@davis-foster.co.uk"
 
-from . import utils
 from . import dialogs
+from . import dir_picker
+from . import events
 from . import icons
 from . import keyboard
-from . import dir_picker
 from . import list_dialog
+from . import LogCtrl
 from . import style_picker
+from . import timer_thread
+from . import utils
 
 
 

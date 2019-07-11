@@ -11,6 +11,10 @@ sys.path.append(os.path.abspath('./demo/'))
 
 from sphinx.locale import _
 
+import os
+from pathlib import Path
+os.mkdir("../wx")
+Path('../wx/__init__.py').touch()
 
 project = "domdf_wxpython_tools"
 from domdf_wxpython_tools import __author__, __version__, __copyright__
