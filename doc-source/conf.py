@@ -12,9 +12,35 @@ sys.path.append(os.path.abspath('./demo/'))
 from sphinx.locale import _
 
 import os
-from pathlib import Path
 os.mkdir("../wx")
-Path('../wx/__init__.py').touch()
+with open("../wx/__init__.py", "w") as f:
+    f.write("""
+App = object
+FD_SAVE = 0
+FD_OVERWRITE_PROMPT = 0
+ID_ANY = 0
+DefaultPosition = 0
+DefaultSize = 0
+TAB_TRAVERSAL = 0
+Panel = object
+Dialog = object
+Frame = object
+Dialog = object
+
+
+def NewIdRef():
+    return 0
+
+DefaultSize = 0
+CLIP_CHILDREN = 0
+SUNKEN_BORDER = 0
+    """)
+
+with open("../wx/stc.py", "w") as f:
+    f.write("""
+StyledTextCtrl = object
+    """)
+
 
 project = "domdf_wxpython_tools"
 from domdf_wxpython_tools import __author__, __version__, __copyright__

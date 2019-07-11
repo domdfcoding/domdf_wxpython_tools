@@ -25,6 +25,9 @@
 import wx
 
 def gen_keymap():
+	
+	import wx
+	
 	keys = ("BACK", "TAB", "RETURN", "ESCAPE", "SPACE", "DELETE", "START",
 			"LBUTTON", "RBUTTON", "CANCEL", "MBUTTON", "CLEAR", "PAUSE",
 			"CAPITAL", "END", "HOME", "LEFT", "UP", "RIGHT",
@@ -53,5 +56,8 @@ def gen_keymap():
 	return keyMap
 
 
-NAVKEYS = (wx.WXK_END, wx.WXK_LEFT, wx.WXK_RIGHT,
+def gen_navkeys():
+	return (wx.WXK_END, wx.WXK_LEFT, wx.WXK_RIGHT,
 		   wx.WXK_UP, wx.WXK_DOWN, wx.WXK_PAGEUP, wx.WXK_PAGEDOWN)
+
+NAVKEYS = gen_navkeys()
