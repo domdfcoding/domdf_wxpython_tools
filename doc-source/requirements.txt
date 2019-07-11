@@ -1,3 +1,2 @@
 sphinxcontrib-httpdomain
 sphinx
-wxPython
