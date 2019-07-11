@@ -25,7 +25,7 @@ modname            = "domdf_wxpython_tools"
 py_modules		   = None
 entry_points	   = None
 
-license            = 'GPL3'
+license            = 'LGPL3'
 
 short_desc         = 'Tools and widgets for wxPython'
 
