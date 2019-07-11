@@ -1,3 +1,4 @@
 sphinxcontrib-httpdomain
 sphinx
 matplotlib
+wget
