@@ -5,19 +5,29 @@
 """
 Reusable code for simple events
 
-
 Usage:
 
 >>> from domdf_wxpython_tools import events
 
->>> myEVT = events.Event(self)
+>>> # Create the event outside of the class
+>>> myEVT = events.SimpleEvent()
 
->>> Event.bind(self.handler)
+>>> # Set the receiver to the class you want.
+>>> # This is usually done from within the receiver class
+>>> class MyClass(object):
+... 	def __init__(self):
+... 		myEVT.set_receiver(self)
+...
+... 		# Then bind the event to a handler
+... 		myEVT.Bind(self.handler)
+...
+... 	def handler(self):
+... 		'''Handler for myEVT'''
+... 		pass
 
+>>> # From within the thread, trigger the event with the following syntax:
 
-To Trigger:
-
->>> Event.trigger()
+>>> myEVT.trigger()
 
 """
 #
