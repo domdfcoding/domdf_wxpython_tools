@@ -40,9 +40,9 @@ To Trigger:
 #
 
 from collections import OrderedDict
-from builtins import property as _property
 
 import wx
+
 
 class SimpleEvent(object):
 	"""
@@ -63,26 +63,54 @@ class SimpleEvent(object):
 		self.event = wx.NewEventType()
 		self.binder = wx.PyEventBinder(self.event, 1)
 		
-
 	def __repr__(self):
-		'Return a nicely formatted representation string'
-		return 'SimpleEvent(name=%r)' % self.name
+		"""
+		Return a nicely formatted representation string
+		"""
+		
+		return f'SimpleEvent(name={self.name})'
 
-	def _asdict(self):
-		'Return a new OrderedDict which maps field names to their values'
+	def __dict__(self):
+		"""
+		Return a new OrderedDict which maps field names to their values
+		
+		:return:
+		:rtype: OrderedDict
+		"""
+		
 		return OrderedDict(zip(self._fields, self))
-
-	__dict__ = _property(_asdict)
 	
 	def set_receiver(self, receiver):
+		"""
+		Set the class that is to receive the event trigger
+		
+		:param receiver:
+		"""
+		
 		self.receiver = receiver
 	
 	def Bind(self, handler, **kwargs):
+		"""
+		Bind the event to the handler
+		
+		:param handler: handler to bind the event to
+		:param kwargs: keyword arguments to pass through to receiver's Bind method
+		"""
+		
 		self.receiver.Bind(self.binder, handler, **kwargs)
 	
 	def Unbind(self, **kwargs):
+		"""
+		Unbind the event from the handler
+		
+		:param kwargs: keyword arguments to pass through to receiver's Unbind method
+		"""
+		
 		self.receiver.Unind(self.binder, **kwargs)
 	
 	def trigger(self):
+		"""
+		Trigger the event
+		"""
 		wx.PostEvent(self.receiver, wx.PyCommandEvent(self.event, -1))
 

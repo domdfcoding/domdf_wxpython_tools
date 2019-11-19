@@ -22,7 +22,21 @@
 #  MA 02110-1301, USA.
 #
 
-__all__ = ["dialogs", "dir_picker", "events", "icons", "keyboard", "list_dialog", "LogCtrl", "style_picker", "timer_thread", "utils"]
+__all__ = [
+	"dialogs",
+	"dir_picker",
+	"events",
+	"icons",
+	"keyboard",
+	"list_dialog",
+	"LogCtrl",
+	"style_picker",
+	"timer_thread",
+	"utils",
+	"__author__",
+	"__version__",
+	"__copyright__"
+]
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019 Dominic Davis-Foster"
