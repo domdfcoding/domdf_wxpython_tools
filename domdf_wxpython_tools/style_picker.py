@@ -39,6 +39,18 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 # begin wxGlade: extracode
 # end wxGlade
 
+default_colours = [
+	'#1f77b4',
+	'#ff7f0e',
+	'#2ca02c',
+	'#d62728',
+	'#9467bd',
+	'#8c564b',
+	'#e377c2',
+	'#7f7f7f',
+	'#bcbd22',
+	'#17becf'
+]
 
 class style_picker(wx.Dialog):
 	def __init__(self, parent, title="Choose Styles", label="Choose Styles: ",
@@ -135,18 +147,12 @@ class style_picker(wx.Dialog):
 					#print(key)
 					self.picker_list_box.Append(key)
 		self.picker_list_box.SetSelection(0)
-
-
-
-		
+	
 		self.picker_axes = self.picker_figure.add_subplot(111)
 		self.selection_axes = self.selection_figure.add_subplot(111)
 		self.update_picker_preview()
 		self.update_selection_preview()
 		
-
-
-
 	def __set_properties(self):
 		# begin wxGlade: style_picker.__set_properties
 		self.SetTitle("Choose Styles")
@@ -263,7 +269,7 @@ class style_picker(wx.Dialog):
 		self.update_selection_preview()
 		event.Skip()
 
-	def cancel(self, event):  # wxGlade: style_picker.<event_handler>
+	def cancel(self, _):  # wxGlade: style_picker.<event_handler>
 		self.Destroy()
 
 	def apply(self, event):  # wxGlade: style_picker.<event_handler>
@@ -271,11 +277,11 @@ class style_picker(wx.Dialog):
 		event.Skip()
 		self.EndModal(wx.ID_OK)
 		
-	def update_picker_preview(self, *args):  # wxGlade: style_picker.<event_handler>
+	def update_picker_preview(self, *_):  # wxGlade: style_picker.<event_handler>
 		self.update_preview(self.picker_list_box, self.picker_axes)
 		self.picker_canvas.draw_idle()
 	
-	def update_selection_preview(self, *args):  # wxGlade: style_picker.<event_handler>
+	def update_selection_preview(self, *_):  # wxGlade: style_picker.<event_handler>
 		self.update_preview(self.selection_list_box, self.selection_axes)
 		self.selection_canvas.draw_idle()
 	
@@ -292,31 +298,28 @@ class style_picker(wx.Dialog):
 	set_properties = __set_properties
 
 # end of class style_picker
+
+
 class colour_picker(style_picker):
-	def __init__(self, parent, title="Choose Colours", label="Choose Colours: ",
-				  picker_choices=None,
-				 selection_choices=None,
-				 *args, **kwds
-				 ):
+	def __init__(
+			self, parent, title="Choose Colours", label="Choose Colours: ",
+			picker_choices=None, selection_choices=None, *args, **kwds
+	):
+		
 		if picker_choices is None:
-			picker_choices = ['#000000',
-							  '#ff0000',
-							  '#ffa500',
-							  '#00ff00',
-							  '#0000ff',
-							  '#551a8b',
-							  '#008080']
+			picker_choices = [
+				'#000000',
+				'#ff0000',
+				'#ffa500',
+				'#00ff00',
+				'#0000ff',
+				'#551a8b',
+				'#008080'
+			]
+			
 		if selection_choices is None:
-			selection_choices = ['#1f77b4',
-								'#ff7f0e',
-								'#2ca02c',
-								'#d62728',
-								'#9467bd',
-								'#8c564b',
-								'#e377c2',
-								'#7f7f7f',
-								'#bcbd22',
-								'#17becf']
+			selection_choices = default_colours[:]
+			
 		self.title = title
 		self.label = label
 		self.picker_choices = picker_choices
