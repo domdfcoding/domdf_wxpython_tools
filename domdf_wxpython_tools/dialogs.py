@@ -30,17 +30,26 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 	"""
 	
 	:param parent:
+	:type parent:
 	:param extension:
+	:type extension:
 	:param title:
+	:type title:
 	:param filetypestring:
+	:type filetypestring:
 	:param style:
+	:type style:
 	:param kwargs:
+	:type kwargs:
 	
 	:return:
+	:rtype:
 	"""
 	
-	with wx.FileDialog(parent, title, wildcard=f"{filetypestring} (*.{extension})|*.{extension}",
-					   style=style, **kwargs) as fileDialog:
+	with wx.FileDialog(
+			parent, title, wildcard=f"{filetypestring} (*.{extension})|*.{extension}",
+			style=style, **kwargs
+	) as fileDialog:
 		
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
 			return  # the user changed their mind
@@ -53,14 +62,14 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 		except:
 			pathnames = [fileDialog.GetPath()]
 		
-		print(pathnames)
+		# print(pathnames)
 		
 		for index, pathname in enumerate(pathnames):
 			if extension != "*":
 				if os.path.splitext(pathname)[-1] != f".{extension}":
 					pathnames[index] = pathname + f".{extension}"
 		# else:
-		#	pathnames[index] = os.path.splitext(pathname)[0]
+		# 	pathnames[index] = os.path.splitext(pathname)[0]
 		
 		return pathnames
 
@@ -68,5 +77,5 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 def file_dialog(*args, **kwargs):
 	paths = file_dialog_multiple(*args, **kwargs)
 	
-	if paths != None:
+	if paths is not None:
 		return paths[0]

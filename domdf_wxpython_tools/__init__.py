@@ -24,7 +24,7 @@
 
 __all__ = [
 	"dialogs",
-	"dir_picker",
+	"picker",
 	"events",
 	"icons",
 	"keyboard",
@@ -46,7 +46,7 @@ __version__ = "0.1.17"
 __email__ = "dominic@davis-foster.co.uk"
 
 from . import dialogs
-from . import dir_picker
+from . import picker
 from . import events
 from . import icons
 from . import keyboard
