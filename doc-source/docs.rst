@@ -1,6 +1,6 @@
-**************************
+****************************
 :mod:`domdf_wxpython_tools`
-**************************
+****************************
 
 .. contents:: Table of Contents
 
@@ -20,11 +20,11 @@
     :special-members:
 
 ==================================
-:mod:`domdf_wxpython_tools.dir_picker`
+:mod:`domdf_wxpython_tools.picker`
 ==================================
 
 
-.. automodule:: domdf_wxpython_tools.dir_picker
+.. automodule:: domdf_wxpython_tools.picker
     :members:
     :private-members:
     :special-members:
