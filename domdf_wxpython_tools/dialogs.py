@@ -75,6 +75,25 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 
 
 def file_dialog(*args, **kwargs):
+	"""
+
+	:param parent:
+	:type parent:
+	:param extension:
+	:type extension:
+	:param title:
+	:type title:
+	:param filetypestring:
+	:type filetypestring:
+	:param style:
+	:type style:
+	:param kwargs:
+	:type kwargs:
+
+	:return:
+	:rtype:
+	"""
+	
 	paths = file_dialog_multiple(*args, **kwargs)
 	
 	if paths is not None:
