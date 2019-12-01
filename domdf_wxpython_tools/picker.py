@@ -34,7 +34,7 @@ import wx
 
 # this package
 from . import icons
-from domdf_wxpython_tools.dialogs import file_dialog_multiple
+from domdf_wxpython_tools.dialogs import file_dialog
 
 
 # begin wxGlade: dependencies
@@ -512,7 +512,7 @@ class file_picker(dir_picker):
 		else:
 			default_path = str(pathlib.Path(self.get_value()).parent)
 		
-		pathname = file_dialog_multiple(
+		pathname = file_dialog(
 			self, extension=self.file_extension,
 			style=self.style,
 			defaultDir=default_path,
@@ -592,7 +592,7 @@ class file_folder_picker(dir_picker):
 			else:
 				default_path = str(pathlib.Path(self.get_value()).parent)
 			
-			pathname = file_dialog_multiple(
+			pathname = file_dialog(
 				self, extension=self.file_extension,
 				style=self.style,
 				defaultDir=default_path,
