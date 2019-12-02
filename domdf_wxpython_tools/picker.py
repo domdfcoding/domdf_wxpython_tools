@@ -570,7 +570,7 @@ class file_folder_picker(dir_picker):
 		self.filetypestring = filetypestring
 		self.file_dialog_kwargs = kwargs
 		self.style = style
-		self.files_mode=start_as_files
+		self.files_mode = start_as_files
 		
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
 	
@@ -601,7 +601,7 @@ class file_folder_picker(dir_picker):
 			)
 			
 			if pathname:
-				self.dir_value.SetValue(pathname[0])
+				self.dir_value.SetValue(pathname)
 				self.dir_value.SetFocus()
 	
 		else:

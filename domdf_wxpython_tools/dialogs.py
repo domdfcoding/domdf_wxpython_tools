@@ -47,7 +47,8 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 	"""
 	
 	with wx.FileDialog(
-			parent, title, wildcard=f"{filetypestring} (*.{extension})|*.{extension}",
+			parent, title,
+			wildcard=f"{filetypestring} (*.{extension.lower()})|*.{extension.lower()};*.{extension.upper()}",
 			style=style, **kwargs
 	) as fileDialog:
 		
@@ -66,7 +67,7 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 		
 		for index, pathname in enumerate(pathnames):
 			if extension != "*":
-				if os.path.splitext(pathname)[-1] != f".{extension}":
+				if os.path.splitext(pathname)[-1].lower() != f".{extension}":
 					pathnames[index] = pathname + f".{extension}"
 		# else:
 		# 	pathnames[index] = os.path.splitext(pathname)[0]
