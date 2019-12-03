@@ -510,7 +510,9 @@ class file_picker(dir_picker):
 		if self.get_value() == '':
 			default_path = str(pathlib.Path(self.initial_value).parent)
 		else:
-			default_path = str(pathlib.Path(self.get_value()).parent)
+			default_path = pathlib.Path(self.get_value())
+			if default_path.is_file():
+				default_path = str(default_path.parent)
 		
 		pathname = file_dialog(
 			self, extension=self.file_extension,
@@ -590,7 +592,9 @@ class file_folder_picker(dir_picker):
 			if self.get_value() == '':
 				default_path = str(pathlib.Path(self.initial_value).parent)
 			else:
-				default_path = str(pathlib.Path(self.get_value()).parent)
+				default_path = pathlib.Path(self.get_value())
+				if default_path.is_file():
+					default_path = str(default_path.parent)
 			
 			pathname = file_dialog(
 				self, extension=self.file_extension,
