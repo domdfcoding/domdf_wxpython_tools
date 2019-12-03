@@ -512,7 +512,8 @@ class file_picker(dir_picker):
 		else:
 			default_path = pathlib.Path(self.get_value())
 			if default_path.is_file():
-				default_path = str(default_path.parent)
+				default_path = default_path.parent
+			default_path = str(default_path)
 		
 		pathname = file_dialog(
 			self, extension=self.file_extension,
@@ -594,7 +595,8 @@ class file_folder_picker(dir_picker):
 			else:
 				default_path = pathlib.Path(self.get_value())
 				if default_path.is_file():
-					default_path = str(default_path.parent)
+					default_path = default_path.parent
+				default_path = str(default_path)
 			
 			pathname = file_dialog(
 				self, extension=self.file_extension,
