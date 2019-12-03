@@ -32,8 +32,8 @@ def toggle(object):
 	return False
 
 
-def coming_soon():
-	wx.MessageBox("This feature has not been implemented yet", "Coming Soon", wx.ICON_INFORMATION | wx.OK)
+def coming_soon(msg="This feature has not been implemented yet"):
+	wx.MessageBox(msg, "Coming Soon", wx.ICON_INFORMATION | wx.OK)
 
 
 def collapse_label(text, collapsed=True):
