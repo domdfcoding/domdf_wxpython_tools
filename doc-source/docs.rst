@@ -19,12 +19,12 @@
     :private-members:
     :special-members:
 
-==================================
-:mod:`domdf_wxpython_tools.picker`
-==================================
+===================================
+:mod:`domdf_wxpython_tools.events`
+===================================
 
 
-.. automodule:: domdf_wxpython_tools.picker
+.. automodule:: domdf_wxpython_tools.events
     :members:
     :private-members:
     :special-members:
@@ -39,9 +39,9 @@
     :private-members:
     :special-members:
 
-==================================
+====================================
 :mod:`domdf_wxpython_tools.keyboard`
-==================================
+====================================
 
 
 .. automodule:: domdf_wxpython_tools.keyboard
@@ -49,9 +49,9 @@
     :private-members:
     :special-members:
 
-==================================
+=======================================
 :mod:`domdf_wxpython_tools.list_dialog`
-==================================
+=======================================
 
 
 .. automodule:: domdf_wxpython_tools.list_dialog
@@ -59,9 +59,9 @@
     :private-members:
     :special-members:
 
-==================================
+===================================
 :mod:`domdf_wxpython_tools.LogCtrl`
-==================================
+===================================
 
 
 .. automodule:: domdf_wxpython_tools.LogCtrl
@@ -69,9 +69,20 @@
     :private-members:
     :special-members:
 
+
 ==================================
+:mod:`domdf_wxpython_tools.picker`
+==================================
+
+
+.. automodule:: domdf_wxpython_tools.picker
+    :members:
+    :private-members:
+    :special-members:
+
+=========================================
 :mod:`domdf_wxpython_tools.style_picker`
-==================================
+=========================================
 
 
 .. automodule:: domdf_wxpython_tools.style_picker
