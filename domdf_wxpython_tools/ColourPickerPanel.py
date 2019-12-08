@@ -255,5 +255,7 @@ class ColourPickerPanel(StylePickerPanel):
 			self.selection_list_box.SetSelection(selection)
 			self.update_selection_preview()
 			dlg.Destroy()
-			
+	
+	# TODO: Delete the methods that pop up here after regenerating wxGlade code
+
 # end of class ColourPickerPanel
