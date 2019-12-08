@@ -39,13 +39,16 @@ from matplotlib.figure import Figure
 # end wxGlade
 
 
+default_styles = ["o", "v", "^", "<", ">", "s", "h", "X", "D", "d"]
+
+
 class StylePickerPanel(wx.Panel):
 	def __init__(
 			self, parent, label="Choose Styles: ",
 			selection_choices=None, *args, **kwds
 			):
 		if selection_choices is None:
-			selection_choices = ["o", "v", "^", "<", ">", "s", "h", "X", "D", "d"]
+			selection_choices = default_styles[:]
 		self.label = label
 		self.selection_choices = selection_choices
 

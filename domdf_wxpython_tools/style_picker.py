@@ -31,7 +31,7 @@ import sys
 import wx
 
 # this package
-from domdf_wxpython_tools.StylePickerPanel import StylePickerPanel
+from domdf_wxpython_tools.StylePickerPanel import StylePickerPanel, default_styles
 from domdf_wxpython_tools.ColourPickerPanel import ColourPickerPanel, default_colours
 
 
