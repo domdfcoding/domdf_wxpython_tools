@@ -114,7 +114,7 @@ class colour_picker(style_picker):
 
 		kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_DIALOG_STYLE
 		wx.Dialog.__init__(self, *args, **kwds)
-		self.StylePickerPanel = ColourPickerPanel(self, label, selection_choices)
+		self.StylePickerPanel = ColourPickerPanel(self, label, picker_choices, selection_choices)
 		self.button_panel = wx.Panel(self, wx.ID_ANY)
 		self.cancel_btn = wx.Button(self.button_panel, wx.ID_ANY, "Cancel")
 		self.apply_btn = wx.Button(self.button_panel, wx.ID_ANY, "Apply")
