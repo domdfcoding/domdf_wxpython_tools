@@ -96,10 +96,15 @@ class CharValidator(ValidatorBase):
 			# print(keycode)
 			key = chr(keycode)
 			# print(key)
+			if keycode in {8, 127, 22, 3, 24}:
+				# Special allowed keys, including backspace, del, Ctrl+C, Ctrl+X and Ctrl+V
+				event.Skip()
 			if self.flag == "int-only":
 				if key not in "0123456789":
 					return
 			elif self.flag == "float-only":
+				if key == "." and "." in event.GetEventObject().GetValue():
+					return
 				if key not in "0123456789.":
 					return
 			elif self.flag == 'no-alpha' and key in string.ascii_letters:
