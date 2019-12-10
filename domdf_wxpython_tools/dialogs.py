@@ -110,9 +110,12 @@ class FloatEntryDialog(wx.TextEntryDialog):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		textctrl = self.FindWindowById(3000)
+		self.textctrl = self.FindWindowById(3000)
 		
-		textctrl.SetValidator(CharValidator("float-only"))
+		self.textctrl.SetValidator(CharValidator("float-only"))
+	
+	def GetValue(self):
+		return float(self.textctrl.GetValue())
 
 
 class IntEntryDialog(wx.TextEntryDialog):
@@ -123,7 +126,9 @@ class IntEntryDialog(wx.TextEntryDialog):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		textctrl = self.FindWindowById(3000)
+		self.textctrl = self.FindWindowById(3000)
 		
-		textctrl.SetValidator(CharValidator("int-only"))
+		self.textctrl.SetValidator(CharValidator("int-only"))
 
+	def GetValue(self):
+		return int(self.textctrl.GetValue())
