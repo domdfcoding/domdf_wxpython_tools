@@ -115,7 +115,11 @@ class FloatEntryDialog(wx.TextEntryDialog):
 		self.textctrl.SetValidator(CharValidator("float-only"))
 	
 	def GetValue(self):
-		return float(self.textctrl.GetValue())
+		value = self.textctrl.GetValue()
+		if value == '':
+			return None
+		else:
+			return float(value)
 
 
 class IntEntryDialog(wx.TextEntryDialog):
@@ -131,4 +135,8 @@ class IntEntryDialog(wx.TextEntryDialog):
 		self.textctrl.SetValidator(CharValidator("int-only"))
 
 	def GetValue(self):
-		return int(self.textctrl.GetValue())
+		value = self.textctrl.GetValue()
+		if value == '':
+			return None
+		else:
+			return int(value)
