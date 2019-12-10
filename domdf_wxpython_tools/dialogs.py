@@ -24,6 +24,7 @@
 
 import os
 import wx
+from domdf_wxpython_tools.validators import CharValidator
 
 
 def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
@@ -99,3 +100,30 @@ def file_dialog(*args, **kwargs):
 	
 	if paths is not None:
 		return paths[0]
+
+
+class FloatEntryDialog(wx.TextEntryDialog):
+	"""
+
+	Based on http://wxpython-users.1045709.n5.nabble.com/Adding-Validation-to-wx-TextEntryDialog-td2371082.html
+	"""
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		textctrl = self.FindWindowById(3000)
+		
+		textctrl.SetValidator(CharValidator("float-only"))
+
+
+class IntEntryDialog(wx.TextEntryDialog):
+	"""
+
+	Based on http://wxpython-users.1045709.n5.nabble.com/Adding-Validation-to-wx-TextEntryDialog-td2371082.html
+	"""
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		textctrl = self.FindWindowById(3000)
+		
+		textctrl.SetValidator(CharValidator("int-only"))
+
