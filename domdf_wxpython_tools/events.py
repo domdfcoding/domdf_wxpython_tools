@@ -21,13 +21,17 @@ Usage:
 ... 		# Then bind the event to a handler
 ... 		myEVT.Bind(self.handler)
 ...
+...			# Alternatively the receiver and handler can be set in the same command
+...			myEVT.Bind(handler=self.handler, receiver=self.receiver)
+...			# This has the added benefit of allowing multiple handlers in different classes
+...
 ... 	def handler(self):
 ... 		'''Handler for myEVT'''
 ... 		pass
 
 >>> # From within the thread, trigger the event with the following syntax:
-
 >>> myEVT.trigger()
+
 
 """
 #
@@ -54,6 +58,22 @@ from collections import OrderedDict
 import wx
 
 
+class PayloadEvent(wx.PyCommandEvent):
+	"""Event containing a message payload"""
+	
+	def __init__(self, etype, eid, value):
+		"""Creates the event object"""
+		wx.PyCommandEvent.__init__(self, etype, eid)
+		self.value = value
+	
+	def GetValue(self):
+		"""Returns the value from the event.
+		@return: the value of this event
+
+		"""
+		return self.value
+
+
 class SimpleEvent(object):
 	"""
 	SimpleEvent(receiver, name, event, binder)
@@ -63,31 +83,29 @@ class SimpleEvent(object):
 	
 	def __init__(self, receiver=None, name="Event"):
 		"""
-		
+
 		:param receiver:
 		:param name:
 		"""
 		
-		# if receiver is None:
-		# 	self.receivers = []
-		# else:
-		# 	self.receivers = [receiver]
 		self.receiver = receiver
 		self.name = name
 		self.event = wx.NewEventType()
 		self.binder = wx.PyEventBinder(self.event, 1)
-		
+		self.value = None
+		self.bindings = {}
+	
 	def __repr__(self):
 		"""
 		Return a nicely formatted representation string
 		"""
 		
 		return f'SimpleEvent(name={self.name})'
-
+	
 	def __dict__(self):
 		"""
 		Return a new OrderedDict which maps field names to their values
-		
+
 		:return:
 		:rtype: OrderedDict
 		"""
@@ -97,48 +115,54 @@ class SimpleEvent(object):
 	def set_receiver(self, receiver):
 		"""
 		Set the class that is to receive the event trigger
-		
+
 		:param receiver:
 		"""
 		
-		# self.receivers = [receiver]
 		self.receiver = receiver
-		
-	# def add_receiver(self, receiver):
-	# 	"""
-	# 	Set the class that is to receive the event trigger
-	#
-	# 	:param receiver:
-	# 	"""
-	#
-	# 	self.receivers.append(receiver)
 	
-	def Bind(self, handler, **kwargs):
+	def Bind(self, handler, receiver=None, **kwargs):
 		"""
 		Bind the event to the handler
-		
+
 		:param handler: handler to bind the event to
 		:param kwargs: keyword arguments to pass through to receiver's Bind method
 		"""
+		if receiver is None:
+			receiver = self.receiver
 		
-		# for receiver in self.receivers:
-		self.receiver.Bind(self.binder, handler, **kwargs)
+		receiver.Bind(self.binder, handler, **kwargs)
+		self.bindings[receiver] = handler
 	
-	def Unbind(self, **kwargs):
+	# self.receiver.Bind(self.binder, handler, **kwargs)
+	
+	def Unbind(self, receiver=None, **kwargs):
 		"""
 		Unbind the event from the handler
-		
+
 		:param kwargs: keyword arguments to pass through to receiver's Unbind method
 		"""
 		
-		# for receiver in self.receivers:
-		self.receiver.Unbind(self.binder, **kwargs)
+		if receiver:
+			receiver.Unbind(self.binder, handler=self.bindings[receiver], **kwargs)
+		else:
+			for receiver, handler in self.bindings.items():
+				receiver.Unbind(self.binder, handler=handler, **kwargs)
 	
-	def trigger(self):
+	# self.receiver.Unbind(self.binder, **kwargs)
+	
+	def trigger(self, value=None):
 		"""
 		Trigger the event
 		"""
 		
-		# for receiver in self.receivers:
-		wx.PostEvent(self.receiver, wx.PyCommandEvent(self.event, -1))
+		if value is not None:
+			self.value = value
+		
+		for receiver in self.bindings:
+			wx.PostEvent(receiver, PayloadEvent(self.event, -1, self.value))
+		
+		# wx.PostEvent(self.receiver, PayloadEvent(self.event, -1, self.value))
+		self.value = None
+
 
