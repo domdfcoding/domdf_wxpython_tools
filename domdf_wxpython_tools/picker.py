@@ -89,20 +89,6 @@ class dir_picker(wx.Panel):
 		self.Bind(wx.EVT_BUTTON, self.Browse, self.browse_btn)
 		
 		return
-		
-		# begin wxGlade: dir_picker.__init__
-		kwds["style"] = kwds.get("style", 0) | wx.TAB_TRAVERSAL
-		wx.Panel.__init__(self, *args, **kwds)
-		self.dir_value = wx.TextCtrl(self, wx.ID_ANY, "")
-		self.clear_btn = wx.BitmapButton(self, wx.ID_ANY, wx.NullBitmap)
-		self.browse_btn = wx.BitmapButton(self, wx.ID_ANY, wx.NullBitmap)
-
-		self.__set_properties()
-		self.__do_layout()
-
-		self.Bind(wx.EVT_BUTTON, self.Clear, self.clear_btn)
-		self.Bind(wx.EVT_BUTTON, self.Browse, self.browse_btn)
-		# end wxGlade
 	
 	def __set_properties(self):
 		# begin wxGlade: dir_picker.__set_properties
@@ -413,6 +399,7 @@ class dir_picker(wx.Panel):
 		
 		See also SelectAll
 		"""
+		
 		return self.dir_value.SetSelection(from_, to_)
 
 	def SetTextWidth(self, width):
@@ -422,6 +409,7 @@ class dir_picker(wx.Panel):
 		:param width: The width of the TextCtrl
 		:type width: float or int
 		"""
+		
 		self.textctrl_width = width
 		self.__set_properties()
 		self.Layout()
@@ -438,6 +426,7 @@ class dir_picker(wx.Panel):
 		
 		Parameters:	value (string) – The new value to set. It may contain newline characters if the text control is multi-line.
 		"""
+		
 		return self.dir_value.SetValue(value)
 		
 	def Undo(self):
@@ -446,6 +435,7 @@ class dir_picker(wx.Panel):
 		
 		Does nothing if there is no undo facility.
 		"""
+		
 		return self.dir_value.Undo()
 
 	def WriteText(self, text):
@@ -455,6 +445,7 @@ class dir_picker(wx.Panel):
 		:param text: Text to write to the text control
 		:type text: string
 		"""
+		
 		return self.dir_value.WriteText(text)
 	
 # end of class dir_picker

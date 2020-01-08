@@ -102,7 +102,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 		self.__set_properties()
 		self.__do_layout()
-
+		# end wxGlade
 		self.Bind(wx.EVT_LISTBOX, self.update_picker_preview, self.picker_list_box)
 		self.Bind(wx.EVT_LISTBOX_DCLICK, self.add, self.picker_list_box)
 		self.Bind(wx.EVT_BUTTON, self.add, self.add_btn)
@@ -110,7 +110,6 @@ class ColourPickerPanel(StylePickerPanel):
 		self.Bind(wx.EVT_LISTBOX, self.update_selection_preview, self.selection_list_box)
 		self.Bind(wx.EVT_BUTTON, self.move_up, self.up_btn)
 		self.Bind(wx.EVT_BUTTON, self.move_down, self.down_btn)
-		# end wxGlade
 		
 		self.Bind(wx.EVT_LISTBOX_DCLICK, self.remove, self.selection_list_box)
 		
@@ -255,7 +254,5 @@ class ColourPickerPanel(StylePickerPanel):
 			self.selection_list_box.SetSelection(selection)
 			self.update_selection_preview()
 			dlg.Destroy()
-	
-	# TODO: Delete the methods that pop up here after regenerating wxGlade code
 
 # end of class ColourPickerPanel

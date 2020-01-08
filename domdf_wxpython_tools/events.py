@@ -68,6 +68,10 @@ class SimpleEvent(object):
 		:param name:
 		"""
 		
+		# if receiver is None:
+		# 	self.receivers = []
+		# else:
+		# 	self.receivers = [receiver]
 		self.receiver = receiver
 		self.name = name
 		self.event = wx.NewEventType()
@@ -97,7 +101,17 @@ class SimpleEvent(object):
 		:param receiver:
 		"""
 		
+		# self.receivers = [receiver]
 		self.receiver = receiver
+		
+	# def add_receiver(self, receiver):
+	# 	"""
+	# 	Set the class that is to receive the event trigger
+	#
+	# 	:param receiver:
+	# 	"""
+	#
+	# 	self.receivers.append(receiver)
 	
 	def Bind(self, handler, **kwargs):
 		"""
@@ -107,6 +121,7 @@ class SimpleEvent(object):
 		:param kwargs: keyword arguments to pass through to receiver's Bind method
 		"""
 		
+		# for receiver in self.receivers:
 		self.receiver.Bind(self.binder, handler, **kwargs)
 	
 	def Unbind(self, **kwargs):
@@ -116,11 +131,14 @@ class SimpleEvent(object):
 		:param kwargs: keyword arguments to pass through to receiver's Unbind method
 		"""
 		
-		self.receiver.Unind(self.binder, **kwargs)
+		# for receiver in self.receivers:
+		self.receiver.Unbind(self.binder, **kwargs)
 	
 	def trigger(self):
 		"""
 		Trigger the event
 		"""
+		
+		# for receiver in self.receivers:
 		wx.PostEvent(self.receiver, wx.PyCommandEvent(self.event, -1))
 
