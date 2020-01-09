@@ -41,7 +41,7 @@ MARGIN = 3
 
 # arguments to wxColour::ChangeLightness() for making the search/clear
 # bitmaps foreground colour, respectively
-CANCEL_BITMAP_LIGHTNESS = 16 # a bit more lighter
+CANCEL_BITMAP_LIGHTNESS = 16  # a bit more lighter
 
 
 ClearableTextCtrlNameStr = "ClearableTextCtrl"
