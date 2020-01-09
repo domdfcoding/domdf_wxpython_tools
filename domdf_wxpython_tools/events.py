@@ -21,21 +21,17 @@ Usage:
 ... 		# Then bind the event to a handler
 ... 		myEVT.Bind(self.handler)
 ...
-...			# Alternatively the receiver and handler can be set in the same command
-...			myEVT.Bind(handler=self.handler, receiver=self.receiver)
-...			# This has the added benefit of allowing multiple handlers in different classes
-...
 ... 	def handler(self):
 ... 		'''Handler for myEVT'''
 ... 		pass
 
 >>> # From within the thread, trigger the event with the following syntax:
->>> myEVT.trigger()
 
+>>> myEVT.trigger()
 
 """
 #
-#  Copyright (c) 2019.  Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020.  Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
