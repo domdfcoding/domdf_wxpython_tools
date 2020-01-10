@@ -172,7 +172,6 @@ class ClearButton(wx.Control):
 	# this would interfere with the usual TAB processing: the user expects
 	# that pressing TAB in the search control should switch focus to the next
 	# control and not give it to the button inside the same control.
-	@property
 	def AcceptsFocusFromKeyboard(self):
 		return False
 	
@@ -253,7 +252,7 @@ class ClearableTextCtrl(wx.Window):
 		self.m_text = CTCWidget(self, value, style, validator=validator)
 		self.m_clearBitmap = self.default_clear_bitmap
 		self.m_clearButton = ClearButton(self, wx.EVT_SEARCHCTRL_CANCEL_BTN, self.m_clearBitmap)
-		
+
 		self.LayoutControls()
 		
 		self.SetBackgroundColour(self.m_text.GetBackgroundColour())
@@ -261,7 +260,7 @@ class ClearableTextCtrl(wx.Window):
 		
 		self.SetInitialSize(size)
 		self.Move(pos)
-		
+
 		self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.OnClearButton, id=wx.ID_ANY)
 		self.Bind(wx.EVT_SIZE, self.OnSize)
 		
@@ -289,7 +288,7 @@ class ClearableTextCtrl(wx.Window):
 	
 		# Recreate the bitmaps as their size may have changed.
 		# TODO
-		
+
 		return True
 	
 	def SetBackgroundColour(self, colour):
@@ -306,7 +305,7 @@ class ClearableTextCtrl(wx.Window):
 		# When the background changes, re-render the bitmaps so that the correct
 		# colour shows in their "transparent" area.
 		# TODO
-		
+
 		return True
 	
 	def AppendText(self, text):
@@ -319,7 +318,7 @@ class ClearableTextCtrl(wx.Window):
 		:param text: Text to write to the text control.
 		:type text:	str
 		"""
-		
+
 		self.m_text.AppendText(text)
 	
 	def AutoComplete(self, completer):
@@ -334,7 +333,7 @@ class ClearableTextCtrl(wx.Window):
 		:return: True if the auto-completion was enabled or False if the operation failed, typically because auto-completion is not supported by the current platform.
 		:rtype: bool
 		"""
-	
+
 		return self.m_text.AutoComplete(completer)
 		
 	def AutoCompleteDirectories(self):
