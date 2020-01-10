@@ -35,6 +35,7 @@
 
 
 import wx
+from wx.lib.embeddedimage import PyEmbeddedImage
 
 # the margin between the text control and the clear button
 MARGIN = 3
@@ -271,9 +272,7 @@ class ClearableTextCtrl(wx.Window):
 	
 	@property
 	def default_clear_bitmap(self):
-		clearButtonImage = wx.Image()
-		clearButtonImage.LoadFile("./Clear_Button_16.png")
-		return wx.BitmapFromImage(clearButtonImage)
+		return Clear_Button_16.GetBitmap()
 	
 	def SetFont(self, font):
 		"""
@@ -1189,11 +1188,18 @@ class ClearableTextCtrl(wx.Window):
 	
 	
 	
+if __name__ == '__main__':
+	from wx.tools import img2py
 	
-	
+	print(img2py.img2py("./Clear_Button_16.png", __file__, append=True))
 	
 
-
-	
-
+#----------------------------------------------------------------------
+Clear_Button_16 = PyEmbeddedImage(
+    b'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlw'
+    b'SFlzAAAIJQAACCUBaAtNGQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoA'
+    b'AACwSURBVDiN3dExDgFhEAXgb9FoKJwBCSdwAzdwAKUrKEVDKzqFEygUGiqJOziAE4hGIgq/'
+    b'WJu1GyWv+jNv5r038/PziFJqZQxRzJg7YvFJYIQedh+G2zijm0Y2cUEHNdRjXAUtDLB5Fgux'
+    b'hgjzEO2AKyZhqIJlxkqgjxOqCdc1tkFIVoJbnkMeouA0i7mvvFZ4vt8SJNHw5RFLCYEjph4H'
+    b'y/vGVAEYe9wmjYN9MPoX3AF8gB60pKn/NAAAAABJRU5ErkJggg==')
 
