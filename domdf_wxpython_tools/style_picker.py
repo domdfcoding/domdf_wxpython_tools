@@ -54,7 +54,7 @@ class style_picker(wx.Dialog):
 		# begin wxGlade: style_picker.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_DIALOG_STYLE
 		wx.Dialog.__init__(self, *args, **kwds)
-		self.StylePickerPanel = StylePickerPanel(self, label, selection_choices)
+		self.StylePickerPanel = StylePickerPanel(self, label=label, selection_choices=selection_choices)
 		self.button_panel = wx.Panel(self, wx.ID_ANY)
 		self.cancel_btn = wx.Button(self.button_panel, wx.ID_ANY, "Cancel")
 		self.apply_btn = wx.Button(self.button_panel, wx.ID_ANY, "Apply")
@@ -90,11 +90,7 @@ class style_picker(wx.Dialog):
 		self.Destroy()
 	
 	def apply(self, event):  # wxGlade: style_picker.<event_handler>
-		self.style_list = [
-				self.StylePickerPanel.markers[
-					self.StylePickerPanel.selection_list_box.GetString(item)
-					] for item in range(self.StylePickerPanel.selection_list_box.GetCount())
-				]
+		self.style_list = self.StylePickerPanel.get_selection()
 		event.Skip()
 		self.EndModal(wx.ID_OK)
 
@@ -114,7 +110,7 @@ class colour_picker(style_picker):
 
 		kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_DIALOG_STYLE
 		wx.Dialog.__init__(self, *args, **kwds)
-		self.StylePickerPanel = ColourPickerPanel(self, label, picker_choices, selection_choices)
+		self.StylePickerPanel = ColourPickerPanel(self, label=label, picker_choices=picker_choices, selection_choices=selection_choices)
 		self.button_panel = wx.Panel(self, wx.ID_ANY)
 		self.cancel_btn = wx.Button(self.button_panel, wx.ID_ANY, "Cancel")
 		self.apply_btn = wx.Button(self.button_panel, wx.ID_ANY, "Apply")
@@ -127,8 +123,7 @@ class colour_picker(style_picker):
 
 	
 	def apply(self, event):
-		self.colour_list = [self.StylePickerPanel.selection_list_box.GetString(item) for item in
-							range(self.StylePickerPanel.selection_list_box.GetCount())]
+		self.colour_list = self.StylePickerPanel.get_selection()
 		event.Skip()
 		self.EndModal(wx.ID_OK)
 	

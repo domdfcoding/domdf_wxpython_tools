@@ -50,7 +50,7 @@ import wx
 from wx.lib.filebrowsebutton import FileBrowseButton
 
 # this package
-#from . import icons
+# from . import icons
 from domdf_wxpython_tools.dialogs import file_dialog_wildcard
 
 from domdf_wxpython_tools.ClearableTextCtrl import ClearableTextCtrl
@@ -64,9 +64,9 @@ class FileBrowseCtrl(FileBrowseButton):
 	"""
 	A control to allow the user to type in a filename or browse with
 	the standard file dialog to select file.
-	
-	Based on and subclassed from wx.lib.filebrowsebutton.FileBrowseButton but 
-	with a wx.SearchCtrl in place of the wx.TextCtrl to provide the cancel/clear 
+
+	Based on and subclassed from wx.lib.filebrowsebutton.FileBrowseButton but
+	with a wx.SearchCtrl in place of the wx.TextCtrl to provide the cancel/clear
 	button and with an icon on the browse button.
 	"""
 	
@@ -83,9 +83,9 @@ class FileBrowseCtrl(FileBrowseButton):
 			dialog_title="File Picker", **kwargs
 			):
 		"""
-		
 
-		
+
+
 		:param parent:			Parent window. Should not be None.
 		:type parent:			wx.Window
 		:param id:				Control identifier. A value of -1 denotes a default value.
@@ -144,10 +144,15 @@ class FileBrowseCtrl(FileBrowseButton):
 		# SetValue is used to disable the callback
 		self.SetValue(initialValue, 0)
 	
+	# self.SetMinSize((-1, 34))
+	# # if size.y < 34:
+	# # 	size.y = 34
+	# self.SetSize(size)
+	
 	def createTextControl(self):
 		"""Create the text control"""
 		# textControl = wx.TextCtrl(self, -1)
-		#textControl = SearchCtrl(self, -1, style=wx.BORDER_NONE)# TODO: make this work, style=self.style)
+		# textControl = SearchCtrl(self, -1, style=wx.BORDER_NONE)# TODO: make this work, style=self.style)
 		textControl = ClearableTextCtrl(self, -1)
 		# textControl.ShowSearchButton(False)
 		# textControl.SetDescriptiveText("")
@@ -159,16 +164,20 @@ class FileBrowseCtrl(FileBrowseButton):
 			textControl.Bind(wx.EVT_TEXT, self.OnChanged)
 			textControl.Bind(wx.EVT_COMBOBOX, self.OnChanged)
 		textControl.SetMinSize((-1, 29))
-
-		return textControl
+		# textControl.SetSize((-1, 29))
 		
+		return textControl
+	
 	def createBrowseButton(self):
 		"""Create the browse-button control"""
-		#button = wx.Button(self, -1, self.buttonText)
-		button = wx.BitmapButton(self, -1, bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16)))
-		#button.SetToolTip(self.toolTip)
+		# button = wx.Button(self, -1, self.buttonText)
+		button = wx.BitmapButton(self, -1,
+								 bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16)))
+		# button.SetToolTip(self.toolTip)
 		button.SetToolTip(self.buttonText)
 		button.Bind(wx.EVT_BUTTON, self.OnBrowse)
+		# button.SetMinSize((29, 29))
+		# button.SetSize((29, 29))
 		return button
 	
 	def OnBrowse(self, event=None):
@@ -186,25 +195,23 @@ class FileBrowseCtrl(FileBrowseButton):
 		
 		default_path = str(default_path)
 		
-		
-		
 		pathname = file_dialog_wildcard(
 				self, wildcard=self.fileMask,
 				style=self.style,
 				defaultDir=default_path,
 				title=self.dialog_title,
-				)[0]
+				)
 		
 		if pathname:
-			self.textControl.ChangeValue(pathname)
+			self.textControl.ChangeValue(pathname[0])
 			self.textControl.SetFocus()
 	
 	def GetValue(self):
 		"""
 		Gets the contents of the control.
-		
+
 		Notice that for a multiline text control, the lines will be separated by (Unix-style) \n characters, even under Windows where they are separated by a \r\n sequence in the native control.
-		
+
 		:rtype:	string
 		"""
 		
@@ -228,7 +235,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		self.textControl.SetValue(value)
 		self.textControl.SetForegroundColour(wx.BLACK)
 		self.callCallback = save
-		
+	
 	def GetLabel(self):
 		""" Retrieve the label's current text """
 		return self.label.GetLabel()
@@ -239,7 +246,6 @@ class FileBrowseCtrl(FileBrowseButton):
 		self.Refresh(True)
 		return rvalue
 	
-		
 	def GetLineLength(self, lineNo):
 		"""
 		Gets the length of the specified line, not including any trailing newline character(s).
@@ -256,10 +262,10 @@ class FileBrowseCtrl(FileBrowseButton):
 	def GetLineText(self, lineNo):
 		"""
 		Returns the contents of a given line in the text control, not including any trailing newline character(s).
-		
+
 		:param lineNo: Line number (starting from zero).
 		:type lineNo: int
-		
+
 		:return: The contents of the line.
 		:rtype: string
 		"""
@@ -281,7 +287,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		Returns True if the text has been modified by user.
 
 		Note that calling SetValue doesn’t make the control modified.
-		
+
 		:return:
 		:rtype: bool
 		"""
@@ -311,7 +317,7 @@ class FileBrowseCtrl(FileBrowseButton):
 	def MarkDirty(self):
 		"""
 		Mark text as modified (dirty).
-		
+
 		:return:
 		:rtype:
 		"""
@@ -324,7 +330,7 @@ class FileBrowseCtrl(FileBrowseButton):
 
 		:param modified:
 		:type modified: bool
-		
+
 		:return:
 		:rtype:
 		"""
@@ -339,6 +345,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		:type text: string
 		"""
 		return self.textControl.AppendText(text)
+	
 	#
 	# def AutoCompleteDirectories(self):
 	# 	"""
@@ -431,12 +438,12 @@ class FileBrowseCtrl(FileBrowseButton):
 		would return False immediately after the call to ChangeValue .
 
 		The insertion point is set to the start of the control (i.e. position 0) by this function.
-		
+
 		This functions does not generate the wxEVT_TEXT event but otherwise is identical to SetValue .
-		
+
 		:param value: The new value to set. It may contain newline characters if the text control is multi-line.
 		:type value: str
-		
+
 		:return:
 		:rtype:
 		"""
@@ -450,14 +457,14 @@ class FileBrowseCtrl(FileBrowseButton):
 		Note that this function will generate a wxEVT_TEXT event, i.e. its effect is identical to calling SetValue (“”).
 		"""
 		self.textControl.Clear()
-
+	
 	def Copy(self):
 		"""
 		Copies the selected text to the clipboard.
 		"""
 		
 		return self.textControl.Copy()
-
+	
 	def Cut(self):
 		"""
 		Copies the selected text to the clipboard and removes it from the control.
@@ -485,7 +492,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		:type from_: int
 		:param to_:
 		:type to_: int
-		
+
 		:return:
 		:rtype: str
 		"""
@@ -512,7 +519,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		Gets the text currently selected in the control.
 
 		If there is no selection, the returned string is empty.
-		
+
 		:return:
 		:rtype: string
 		"""
@@ -602,7 +609,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		"""
 		
 		return self.textControl.SelectNone()
-
+	
 	def SetSelection(self, from_, to_):
 		"""
 		Selects the text starting at the first position up to (but not including) the character at the last position.
@@ -809,7 +816,8 @@ class DirBrowseCtrl(FileBrowseCtrl):
 		dialog.Destroy()
 		
 		self.textControl.SetFocus()
-		
+
+
 #
 
 # ----------------------------------------------------------------------
@@ -906,7 +914,6 @@ if __name__ == "__main__":
 	# def test():
 	# 	app = DemoApp(0)
 	# 	app.MainLoop()
-	
 	
 	print('Creating dialog')
 	app = DemoApp(0)

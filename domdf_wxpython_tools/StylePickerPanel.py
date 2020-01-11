@@ -44,15 +44,17 @@ default_styles = ["o", "v", "^", "<", ">", "s", "h", "X", "D", "d"]
 
 class StylePickerPanel(wx.Panel):
 	def __init__(
-			self, parent, label="Choose Styles: ",
-			selection_choices=None, *args, **kwds
+			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr, label="Choose Styles: ",
+			selection_choices=None,
 			):
 		if selection_choices is None:
 			selection_choices = default_styles[:]
 		self.label = label
 		self.selection_choices = selection_choices
 
-		args = (parent,) + args
+		args = (parent, id, pos, size)
+		kwds = {"style": style, "name": name}
 		
 		# begin wxGlade: StylePickerPanel.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.TAB_TRAVERSAL
@@ -265,6 +267,13 @@ class StylePickerPanel(wx.Panel):
 	
 	do_layout = __do_layout
 	set_properties = __set_properties
+	
+	def get_selection(self):
+		return [
+				self.markers[
+					self.selection_list_box.GetString(item)
+					] for item in range(self.selection_list_box.GetCount())
+				]
 	
 	def _do_layout(self):
 		return self.__do_layout()

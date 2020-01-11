@@ -56,10 +56,14 @@ default_colours = [
 
 class ColourPickerPanel(StylePickerPanel):
 	def __init__(
-			self, parent, label="Choose Colours: ",
-			picker_choices=None, selection_choices=None, *args, **kwds
+			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr, label="Choose Colours: ",
+			picker_choices=None, selection_choices=None,
 			):
-
+		
+		args = (parent, id, pos, size)
+		kwds = {"style": style, "name": name}
+		
 		if picker_choices is None:
 			picker_choices = [
 					'#000000',
@@ -77,8 +81,6 @@ class ColourPickerPanel(StylePickerPanel):
 		self.label = label
 		self.picker_choices = picker_choices
 		self.selection_choices = selection_choices
-
-		args = (parent,) + args
 		
 		# begin wxGlade: ColourPickerPanel.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.TAB_TRAVERSAL
@@ -254,5 +256,11 @@ class ColourPickerPanel(StylePickerPanel):
 			self.selection_list_box.SetSelection(selection)
 			self.update_selection_preview()
 			dlg.Destroy()
+	
+	def get_selection(self):
+		return [
+				self.selection_list_box.GetString(item) for item in
+				range(self.selection_list_box.GetCount())
+				]
 
 # end of class ColourPickerPanel
