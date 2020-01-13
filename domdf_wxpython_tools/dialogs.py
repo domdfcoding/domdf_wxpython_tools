@@ -205,7 +205,7 @@ class IntEntryDialog(wx.TextEntryDialog):
 			return int(value)
 
 
-class FileDialogWildcards:
+class Wildcards:
 	"""
 	Class to generate glob wildcards for wx.FileDialog
 	"""
@@ -286,3 +286,5 @@ class FileDialogWildcards:
 	def __str__(self):
 		return self.wildcard
 
+
+FileDialogWildcards = Wildcards
