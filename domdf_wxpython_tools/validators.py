@@ -78,7 +78,21 @@ class CharValidator(ValidatorBase):
 		wx.Validator.__init__(self)
 		self.flag = flag
 		self.Bind(wx.EVT_CHAR, self.OnChar)
-	
+		
+		# Special allowed keys, including del, Ctrl+C, Ctrl+X and Ctrl+V
+		self.special_keys = {
+				wx.WXK_BACK,
+				wx.WXK_TAB,
+				wx.WXK_RETURN,
+				wx.WXK_SHIFT,
+				wx.WXK_CONTROL,
+				wx.WXK_ALT,
+				wx.WXK_CONTROL_C,
+				wx.WXK_CONTROL_V,
+				wx.WXK_CONTROL_X,
+				wx.WXK_DELETE,
+				}
+		
 	def Clone(self):
 		"""
 		Standard cloner.
@@ -96,8 +110,7 @@ class CharValidator(ValidatorBase):
 			# print(keycode)
 			key = chr(keycode)
 			# print(key)
-			if keycode in {8, 127, 13, 22, 3, 24}:
-				# Special allowed keys, including Enter, backspace, del, Ctrl+C, Ctrl+X and Ctrl+V
+			if keycode in self.special_keys:
 				event.Skip()
 			if self.flag == "int-only":
 				if key not in "0123456789":
