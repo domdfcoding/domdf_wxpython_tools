@@ -19,7 +19,7 @@ copyright   = """
 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.1.29"
+VERSION = "0.1.30"
 
 modname            = "domdf_wxpython_tools"
 py_modules		   = None
