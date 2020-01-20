@@ -1,0 +1,29 @@
+/*
+ * Each item in a PanelListCtrl can be styled using 'li' tags,
+ * and the text inside can be styled with 'p' tags.
+ * Use '::selection' to style the item when it is selected.
+ */
+
+
+li {
+    background-color: SYS_COLOUR_LISTBOX;
+}
+
+li::selection {
+    /*background-color: SYS_COLOUR_MENUHILIGHT;*/
+    background-color: rgb(51,51,255);
+}
+
+li p {
+    color: black;
+    /*font-size: 9pt;*/ /* If unspecified the default value for the platform will be used*/
+    font-family: default; /* One of default, decorative, roman, script, swiss, modern  */
+    font-style: normal; /* normal, slant, italic */
+    font-weight: normal; /* normal, light, bold */
+    text-decoration: none; /* none, underline */
+    /*font-face-name: "Segoe UI" !* The name of a specific font, e.g. Segoe UI. If unspecified wxPython will choose based on the family *!*/
+}
+
+li p::selection {
+    color: white;
+}
