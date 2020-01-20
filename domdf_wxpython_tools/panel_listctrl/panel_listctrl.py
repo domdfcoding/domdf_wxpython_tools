@@ -68,6 +68,8 @@ class PanelListCtrl(wx.ScrolledWindow):
 		self.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_selection_changed)
 		self.Bind(wx.EVT_LIST_KEY_DOWN, self._on_key_down)
 		
+		self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))
+		
 	def _on_selection_changed(self, event):
 		"""
 		Handler for EVT_LIST_ITEM_SELECTED, triggered by clicking on an Item
@@ -601,6 +603,8 @@ class PanelListItem(wx.Panel):
 			
 			widget.Bind(wx.EVT_LEFT_UP, self.OnClick)
 			widget.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+			widget.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
+			widget.Bind(wx.EVT_MIDDLE_UP, self.OnMiddleClick)
 			# for wxMSW
 			widget.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnRightClick)
 			
@@ -644,9 +648,10 @@ class PanelListItem(wx.Panel):
 		wx.PostEvent(self, event)
 		
 	def OnDoubleClick(self, event):
-			event = wx.ListEvent(wx.wxEVT_LIST_ITEM_ACTIVATED)
-			event.SetEventObject(self)
-			wx.PostEvent(self, event)
+		print(123)
+		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_ACTIVATED)
+		event.SetEventObject(self)
+		wx.PostEvent(self, event)
 
 	def OnKeyDown(self, event):
 		key_event = event

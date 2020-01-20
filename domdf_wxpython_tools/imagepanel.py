@@ -28,17 +28,16 @@ with a right click menu with some basic options
 
 # stdlib
 
-
 # 3rd party
-import wx
 import matplotlib
+import wx
 from matplotlib.figure import Figure
-from domdf_wxpython_tools.dialogs import file_dialog_wildcard, FileDialogWildcards
 from PIL import Image
 
 # this package
-from domdf_wxpython_tools.projections import NoZoom
 from domdf_wxpython_tools.chartpanel import ChartPanelBase
+from domdf_wxpython_tools.dialogs import file_dialog_wildcard, FileDialogWildcards
+from domdf_wxpython_tools.projections import NoZoom
 
 matplotlib.projections.register_projection(NoZoom)
 
@@ -52,26 +51,51 @@ images_wildcard.add_common_filetype("gif")
 images_wildcard.add_all_files_wildcard()
 
 
+# Events
+ImgPanelChangedEvent = wx.NewEventType()
+EVT_IMAGE_PANEL_CHANGED = wx.PyEventBinder(ImgPanelChangedEvent, 0)
+
+
+class EvtImgPanelChanged(wx.PyCommandEvent):
+	eventType = ImgPanelChangedEvent
+
+	def __init__(self, windowID, obj):
+		wx.PyCommandEvent.__init__(self, self.eventType, windowID)
+		self.SetEventObject(obj)
+
+
+
+
 class ImagePanel(ChartPanelBase):
-	def __init__(self, parent, image, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-				 style=0, name=wx.PanelNameStr):
+	default_image = ("RGB", (640, 480), (0, 0, 0))
+	
+	def __init__(
+			self, parent, image=None, id=wx.ID_ANY, pos=wx.DefaultPosition,
+			size=wx.DefaultSize, style=0, name=wx.PanelNameStr):
 		
 		fig = Figure()
 		ax = fig.add_subplot(111, frameon=False, projection="NoZoom")  # 1x1 grid, first subplot
 		
 		ChartPanelBase.__init__(self, parent, fig, ax, id, pos, size, style, name)
 		
-		# self.image = mpimg.imread(image)
-		self.image = Image.open(image)
-		
+		if isinstance(image, Image.Image):
+			# PIL Image object, load directly
+			self._image = image
+		elif image is None:
+			self._image = Image.new(*self.default_image)
+		else:
+			# Filename, load from file
+			# self._image = mpimg.imread(image)
+			self._image = Image.open(image)
+			
 		self.editable = True
 		
-		self.__setup_context_menu()
+		self._setup_context_menu()
 		
-		self.load_image()
+		self._load_image()
 		wx.CallAfter(self.reset_view)
 	
-	def __setup_context_menu(self):
+	def _setup_context_menu(self):
 		self.context_menu = wx.Menu()
 		
 		self.context_menu.Append(ID_ImagePanel_Reset_View, "Reset View")
@@ -85,25 +109,46 @@ class ImagePanel(ChartPanelBase):
 		self.Bind(wx.EVT_MENU, self.paste, id=ID_ImagePanel_Paste_Image)
 		
 		self.context_menu.Append(ID_ImagePanel_Save_Image, "Save Image")
-		self.Bind(wx.EVT_MENU, self.save, id=ID_ImagePanel_Save_Image)
+		self.Bind(wx.EVT_MENU, self.on_save, id=ID_ImagePanel_Save_Image)
 		
 		self.context_menu.AppendSeparator()
 		
 		self.context_menu.Append(ID_ImagePanel_Load_Image, "Load Image")
-		self.Bind(wx.EVT_MENU, self.load, id=ID_ImagePanel_Load_Image)
+		self.Bind(wx.EVT_MENU, self.on_load, id=ID_ImagePanel_Load_Image)
 		
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 	
+	def load_image(self, new_image):
+		self.clear()
+		
+		# if not new_image:
+		# 	return
+		
+		if isinstance(new_image, Image.Image):
+			# PIL Image object, load directly
+			self._image = new_image
+		elif new_image is None:
+			self._image = Image.new(*self.default_image)
+		else:
+			# Filename, load from file
+			# self._image = mpimg.imread(image)
+			self._image = Image.open(new_image)
+		
+		#self._image = Image.open(new_image)
+		self._load_image()
+		self.pan(True)
+		
+		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 	
-	def load_image(self):
+	def _load_image(self):
 		# self.ax = self.fig.add_subplot(111, projection="XPanAxes_NoZoom")  # 1x1 grid, first subplot
 		
-		# self.image = mpimg.imread(image)
-		# self.image = Image.open(image)
+		# self._image = mpimg.imread(image)
+		# self._image = Image.open(image)
 		#
 		self.ax.clear()
-		self.ax.imshow(self.image)
+		self.ax.imshow(self._image)
 		
 		self.ax.axes.get_xaxis().set_visible(False)
 		self.ax.axes.get_yaxis().set_visible(False)
@@ -116,7 +161,7 @@ class ImagePanel(ChartPanelBase):
 		self.ax.autoscale(tight=True)
 		self.setup_scrollwheel_zooming()
 		self.canvas.mpl_connect('button_press_event', self.on_context_menu)
-	
+		
 	def on_context_menu(self, event):
 		if event.button == matplotlib.backend_bases.MouseButton.RIGHT:
 			event.guiEvent.GetEventObject().ReleaseMouse()
@@ -126,8 +171,8 @@ class ImagePanel(ChartPanelBase):
 	# UIActionSimulator().MouseClick(wx.MOUSE_BTN_RIGHT)
 	
 	def copy(self, event):
-		width, height = self.image.size
-		bmp = wx.Bitmap.FromBuffer(width, height, self.image.tobytes())
+		width, height = self._image.size
+		bmp = wx.Bitmap.FromBuffer(width, height, self._image.tobytes())
 		
 		# Create BitmapDataObject
 		bmp_data = wx.BitmapDataObject(bmp)
@@ -153,15 +198,18 @@ class ImagePanel(ChartPanelBase):
 			size = tuple(bmp.GetSize())
 			buf = size[0] * size[1] * 3 * b"\x00"
 			bmp.CopyToBuffer(buf)
-			self.image = Image.frombuffer("RGB", size, buf, "raw", "RGB", 0, 1)
-			self.load_image()
+			self._image = Image.frombuffer("RGB", size, buf, "raw", "RGB", 0, 1)
+			self._load_image()
 			self.pan(True)
 			event.Skip()
+		
+			wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
+		
 		else:
 			# No image on clipboard
 			wx.TheClipboard.Close()
 	
-	def save(self, event):
+	def on_save(self, event):
 		save_location = file_dialog_wildcard(
 				self, "Save Image",
 				images_wildcard.wildcard,
@@ -171,9 +219,9 @@ class ImagePanel(ChartPanelBase):
 		if not save_location:
 			return
 		
-		self.image.save(save_location[0])
+		self._image.save(save_location[0])
 	
-	def load(self, event):
+	def on_load(self, event):
 		new_image = file_dialog_wildcard(
 				self, "Choose an Image",
 				images_wildcard.wildcard,
@@ -183,25 +231,53 @@ class ImagePanel(ChartPanelBase):
 		if not new_image:
 			return
 		
-		self.image = Image.open(new_image[0])
-		self.load_image()
+		self._image = Image.open(new_image[0])
+		self._load_image()
 		self.pan(True)
 		event.Skip()
+		
+		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 	
-	def clear(self, event):
+	def clear(self, event=None):
 		self.ax.clear()
-		self.image = None
-		self.image = None
-		event.Skip()
+		self._image = None
+		self._image = None
+		if event:
+			event.Skip()
+		
+		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 		
 	def reset_view(self, *_):
-		self.load_image()
+		self._load_image()
 		self.fig.tight_layout()
 		self.canvas.SetSize(self.GetSize())
 		self.Refresh()
 		self.canvas.draw()
 		self.canvas.Refresh()
 		self.pan(True)
+		# wx.CallAfter(self.pan)
+	
+	@property
+	def image(self):
+		return self._image
+	#
+	# @image.setter
+	# def image(self, new_image):
+	#
+	# 	if isinstance(new_image, Image.Image):
+	# 		# PIL Image object, load directly
+	# 		self._image = new_image
+	# 	elif new_image is None:
+	# 		self._image = Image.new("RGB", (640, 480), (73, 109, 137))
+	# 	else:
+	# 		# Filename, load from file
+	# 		# self._image = mpimg.imread(image)
+	# 		self._image = Image.open(new_image)
+	#
+	# 	self.load_image()
+	# 	#self.reset_view()
+	# 	wx.CallAfter(self.reset_view)
+		
 
 ID_ImagePanel_Reset_View = wx.NewIdRef()
 ID_ImagePanel_Copy_Image = wx.NewIdRef()
