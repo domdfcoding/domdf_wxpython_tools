@@ -213,7 +213,9 @@ class Wildcards:
 	def __init__(self):
 		self._wildcards = []
 	
-	def add_filetype(self, description, extensions=None, hint_format=style_lowercase, value_format=style_lowercase):
+	def add_filetype(
+			self, description, extensions=None, hint_format=style_lowercase,
+			value_format=style_lowercase | style_uppercase):
 		"""
 		
 		:param description:
@@ -234,6 +236,10 @@ class Wildcards:
 			value = []
 			
 			for extension in extensions:
+				
+				if not extension.startswith("*."):
+					extension = f"*.{extension}"
+				
 				# Hint
 				if not hint_format & style_hidden:
 					if hint_format & style_lowercase:
@@ -261,10 +267,12 @@ class Wildcards:
 	def wildcard(self):
 		return "|".join(self._wildcards)
 	
-	def add_common_filetype(self, filetype, hint_format=style_lowercase, value_format=style_lowercase):
+	def add_common_filetype(
+			self, filetype, hint_format=style_lowercase,
+			value_format=style_lowercase | style_uppercase):
 		self.add_filetype(*common_filetypes[filetype], hint_format=hint_format, value_format=value_format)
 
-	def add_image_wildcard(self, value_format=style_lowercase):
+	def add_image_wildcard(self, value_format=style_lowercase | style_uppercase):
 		image_extensions = []
 		for key, item in common_filetypes.items():
 			if key in {"jpeg", "png", "bmp", "tiff", "gif"}:

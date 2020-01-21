@@ -36,12 +36,12 @@ from PIL import Image
 
 # this package
 from domdf_wxpython_tools.chartpanel import ChartPanelBase
-from domdf_wxpython_tools.dialogs import file_dialog_wildcard, FileDialogWildcards
+from domdf_wxpython_tools.dialogs import file_dialog_wildcard, Wildcards
 from domdf_wxpython_tools.projections import NoZoom
 
 matplotlib.projections.register_projection(NoZoom)
 
-images_wildcard = FileDialogWildcards()
+images_wildcard = Wildcards()
 images_wildcard.add_image_wildcard()
 images_wildcard.add_common_filetype("jpeg")
 images_wildcard.add_common_filetype("png")
