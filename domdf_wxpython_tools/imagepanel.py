@@ -119,8 +119,19 @@ class ImagePanel(ChartPanelBase):
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 	
-	def load_image(self, new_image):
-		self.clear()
+	def load_image(self, new_image, suppress_event=False):
+		"""
+		
+		:param new_image:
+		:type new_image:
+		:param suppress_event: Whether the event that the image has changed should be suppressed
+		:type suppress_event:
+		:return:
+		:rtype:
+		"""
+		self.ax.clear()
+		self._image = None
+		self._image = None
 		
 		# if not new_image:
 		# 	return
@@ -139,7 +150,8 @@ class ImagePanel(ChartPanelBase):
 		self._load_image()
 		self.pan(True)
 		
-		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
+		if not suppress_event:
+			wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 	
 	def _load_image(self):
 		# self.ax = self.fig.add_subplot(111, projection="XPanAxes_NoZoom")  # 1x1 grid, first subplot
@@ -202,7 +214,7 @@ class ImagePanel(ChartPanelBase):
 			self._load_image()
 			self.pan(True)
 			event.Skip()
-		
+			
 			wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 		
 		else:
