@@ -43,7 +43,7 @@ __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019 Dominic Davis-Foster"
 
 __license__ = "LGPL"
-__version__ = "0.1.32"
+__version__ = "0.1.33"
 __email__ = "dominic@davis-foster.co.uk"
 
 from . import dialogs
