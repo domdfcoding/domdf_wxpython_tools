@@ -60,6 +60,7 @@ from domdf_wxpython_tools.ClearableTextCtrl import ClearableTextCtrl
 # TODO: validate filetypes
 # TODO: Change SearchCtrl cancel button to something more resembling clearing the control. DDF 08/01/2020
 
+
 class FileBrowseCtrl(FileBrowseButton):
 	"""
 	A control to allow the user to type in a filename or browse with
@@ -83,9 +84,6 @@ class FileBrowseCtrl(FileBrowseButton):
 			dialog_title="File Picker", **kwargs
 			):
 		"""
-
-
-
 		:param parent:			Parent window. Should not be None.
 		:type parent:			wx.Window
 		:param id:				Control identifier. A value of -1 denotes a default value.
@@ -181,7 +179,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		return button
 	
 	def OnBrowse(self, event=None):
-		""" Going to browse for file... """
+		"""Going to browse for file..."""
 		
 		if self.GetValue() == '':
 			default_path = pathlib.Path(self.initialValue).parent

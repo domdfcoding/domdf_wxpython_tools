@@ -2,8 +2,9 @@
 #   -*- coding: utf-8 -*-
 #
 #  LogCtrl.py
-"""Log Control, supporting text copying and zoom."""
-#
+"""
+Log Control, supporting text copying and zoom.
+"""
 #
 #  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #  Based on PyCrust by Patrick K. O'Brien <pobrien@orbtech.com>
@@ -26,13 +27,21 @@
 #
 #
 
-import os
-import keyword
 
+# stdlib
+import keyword
+import os
+
+# 3rd party
 import wx
 from wx import stc
 
+# this package
+from domdf_wxpython_tools.utils import generate_faces
+from domdf_wxpython_tools.keyboard import gen_keymap
 
+
+# IDs
 ID_WRAP = wx.NewIdRef()
 ID_SHOW_LINENUMBERS = wx.NewIdRef()
 ID_ZOOM_IN = wx.NewIdRef()
@@ -55,21 +64,34 @@ ID_ZOOM_SET = wx.NewIdRef()
 #
 
 class Log(stc.StyledTextCtrl):
-	"""Log based on StyledTextCtrl."""
+	"""
+	Log Window based on StyledTextCtrl.
+	"""
 	
-	name = 'Log'
-	
-	def __init__(self, parent, id=-1, pos=wx.DefaultPosition, size=wx.DefaultSize,
-				 style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER, *args, **kwds):
-		"""Create Log instance."""
-		stc.StyledTextCtrl.__init__(self, parent, id, pos, size, style)
+	def __init__(
+			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+			style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER, name="Log"
+			):
+		"""
+		:param parent: The parent window.
+		:type parent: wx.Window
+		:param id: An identifier for the Log window. wx.ID_ANY is taken to mean a default.
+		:type id: wx.WindowID, optional
+		:param pos: The Log window position. The value ::wxDefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+		:type pos: wx.Point, optional
+		:param size: The Log window size. The value ::wxDefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
+		:type size: wx.Size, optional
+		:param style: The window style. See wxPanel.
+		:type style: int, optional
+		:param name: Window name.
+		:type name: str, optional
+		"""
 		
-		from .utils import generate_faces
-		from .keyboard import gen_keymap
+		stc.StyledTextCtrl.__init__(self, parent, id, pos, size, style, name)
 		
 		self._FACES = generate_faces()
 		self._keyMap = gen_keymap()
-		self.__config()
+		self._config()
 		self.default_zoom = self.GetZoom()
 		self._styles = [None] * 32
 		self._free = 1
@@ -85,8 +107,8 @@ class Log(stc.StyledTextCtrl):
 		self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
 		self.Bind(wx.EVT_FIND_CLOSE, self.OnFindClose)
 		self.Bind(wx.EVT_KEY_DOWN, self.onKeyPress)
-		self.Bind(wx.EVT_MENU, lambda evt: self.Copy(), id=wx.ID_COPY)
-		self.Bind(wx.EVT_MENU, lambda evt: self.SelectAll(), id=wx.ID_SELECTALL)
+		self.Bind(wx.EVT_MENU, lambda event: self.Copy(), id=wx.ID_COPY)
+		self.Bind(wx.EVT_MENU, lambda event: self.SelectAll(), id=wx.ID_SELECTALL)
 		self.Bind(wx.EVT_MENU, self.OnFindText, id=wx.ID_FIND)
 		#self.Bind(wx.EVT_MENU, self.OnWrap, id=ID_WRAP)
 		self.Bind(wx.EVT_MENU, self.ToggleWrap, id=ID_WRAP)
@@ -102,11 +124,11 @@ class Log(stc.StyledTextCtrl):
 		
 Right click for options
 ''')
+		# TODO: Make this not specific to GSMatch
+		
 		wx.CallAfter(self.ScrollToLine, 0)
 	
-	"""General Functions"""
-	
-	def __config(self):
+	def _config(self):
 		self.wrap()
 		self.setDisplayLineNumbers(False)
 		
@@ -123,14 +145,17 @@ Right click for options
 		
 		self.SetMargins(5, 5)
 	
-	def onKeyPress(self, evt):
-		keycode = evt.GetKeyCode()
+	def onKeyPress(self, event):
+		"""Event Handler for key being pressed"""
+		keycode = event.GetKeyCode()
 		keyname = self._keyMap.get(keycode, None)
 		modifiers = ""
-		for mod, ch in ((evt.ControlDown(), 'Ctrl+'),
-						(evt.AltDown(), 'Alt+'),
-						(evt.ShiftDown(), 'Shift+'),
-						(evt.MetaDown(), 'Meta+')):
+		for mod, ch in (
+				(event.ControlDown(), 'Ctrl+'),
+				(event.AltDown(), 'Alt+'),
+				(event.ShiftDown(), 'Shift+'),
+				(event.MetaDown(), 'Meta+')
+				):
 			if mod:
 				modifiers += ch
 		
@@ -142,35 +167,36 @@ Right click for options
 		
 		combination = modifiers + keyname
 		
-		commands = {"Ctrl+A": self.SelectAll,
-					"Ctrl+C": self.Copy,
-					"Ctrl+F": self.OnFindText,
-					"UP": self.LineUp,
-					"DOWN": self.LineDown,
-					"RIGHT": self.CharRight,
-					"LEFT": self.CharLeft,
-					"Ctrl+RIGHT": self.WordRight,
-					"Ctrl+LEFT": self.WordLeft,
-					"END": self.LineEnd,
-					"Shift+END": self.LineEndExtend,
-					"HOME": self.Home,
-					"Shift+HOME": self.HomeExtend,
-					"PAGEDOWN": self.PageDown,
-					"PAGEUP": self.PageUp,
-					"Shift+PAGEDOWN": self.PageDownExtend,
-					"Shift+PAGEUP": self.PageUpExtend,
-					"Shift+LEFT": self.CharLeftExtend,
-					"Shift+RIGHT": self.CharRightExtend,
-					"Shift+UP": self.LineUpExtend,
-					"Shift+DOWN": self.LineDownExtend,
-					"Ctrl+Shift+LEFT": self.WordLeftExtend,
-					"Ctrl+Shift+RIGHT": self.WordRightExtend,
-					"Ctrl+]": self.ZoomIn,
-					"Ctrl+[": self.ZoomOut,
-					# "ESCAPE": here we should remove focus from the widget,
-					"Ctrl+W": self.ToggleWrap,
-					"Ctrl+L": self.ToggleLineNumbers,
-					}
+		commands = {
+				"Ctrl+A": self.SelectAll,
+				"Ctrl+C": self.Copy,
+				"Ctrl+F": self.OnFindText,
+				"UP": self.LineUp,
+				"DOWN": self.LineDown,
+				"RIGHT": self.CharRight,
+				"LEFT": self.CharLeft,
+				"Ctrl+RIGHT": self.WordRight,
+				"Ctrl+LEFT": self.WordLeft,
+				"END": self.LineEnd,
+				"Shift+END": self.LineEndExtend,
+				"HOME": self.Home,
+				"Shift+HOME": self.HomeExtend,
+				"PAGEDOWN": self.PageDown,
+				"PAGEUP": self.PageUp,
+				"Shift+PAGEDOWN": self.PageDownExtend,
+				"Shift+PAGEUP": self.PageUpExtend,
+				"Shift+LEFT": self.CharLeftExtend,
+				"Shift+RIGHT": self.CharRightExtend,
+				"Shift+UP": self.LineUpExtend,
+				"Shift+DOWN": self.LineDownExtend,
+				"Ctrl+Shift+LEFT": self.WordLeftExtend,
+				"Ctrl+Shift+RIGHT": self.WordRightExtend,
+				"Ctrl+]": self.ZoomIn,
+				"Ctrl+[": self.ZoomOut,
+				# "ESCAPE": here we should remove focus from the widget,
+				"Ctrl+W": self.ToggleWrap,
+				"Ctrl+L": self.ToggleLineNumbers,
+				}
 		
 		if combination in commands:
 			commands[combination]()
@@ -180,7 +206,16 @@ Right click for options
 		print(combination)
 	
 	def fixLineEndings(self, text):
-		"""Return text with line endings replaced by OS-specific endings."""
+		"""
+		Return text with line endings replaced by OS-specific endings.
+
+		:param text:
+		:type text:
+
+		:return:
+		:rtype:
+		"""
+		
 		lines = text.split('\r\n')
 		for l in range(len(lines)):
 			chunks = lines[l].split('\r')
@@ -191,12 +226,21 @@ Right click for options
 		return text
 	
 	def setStyles(self, faces):
-		"""Configure font size, typeface and color for lexer."""
+		"""
+		Configure font size, typeface and color for lexer.
+		
+		:param faces:
+		:type faces:
+		
+		:return:
+		:rtype:
+		"""
 		
 		# Default style
-		self.StyleSetSpec(stc.STC_STYLE_DEFAULT,
-						  "face:%(mono)s,size:%(size)d,back:%(backcol)s" % \
-						  faces)
+		self.StyleSetSpec(
+				stc.STC_STYLE_DEFAULT,
+				"face:{mono},size:{size:d},back:{backcol}".format(**faces)
+				)
 		
 		self.StyleClearAll()
 		self.SetSelForeground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
@@ -222,7 +266,7 @@ Right click for options
 			(stc.STC_P_IDENTIFIER, ""),
 			(stc.STC_P_COMMENTBLOCK, "fore:#7F7F7F"),
 			(stc.STC_P_STRINGEOL, f"fore:#000000,face:{faces}(mono)s,back:#E0C0E0,eolfilled"),
-		]
+			]
 		
 		for style in styles:
 			self.StyleSetSpec(*style)
@@ -257,20 +301,17 @@ Right click for options
 			self._free = free
 			return style
 
-	
-	"""Zoom Options"""
-	
 	def OnZoomIn(self, *args):
+		"""Event Handler for zooming in"""
 		self.ZoomIn()
 	
 	def OnZoomOut(self, *args):
+		"""Event Handler for zooming out"""
 		self.ZoomOut()
 	
 	def OnZoomDefault(self, *args):
+		"""Event Handler for resetting the zoom"""
 		self.SetZoom(self.default_zoom)
-	
-	
-	"""Line Numbers"""
 
 	def setDisplayLineNumbers(self, state):
 		self.lineNumbers = state
@@ -282,93 +323,108 @@ Right click for options
 			self.SetMarginType(1, 0)
 			self.SetMarginWidth(1, 10)
 	
-#	def OnShowLineNumbers(self, event):
-#		print("sln")
-#		if hasattr(self, 'lineNumbers'):
-#			self.lineNumbers = event.IsChecked()
-#			self.setDisplayLineNumbers(self.lineNumbers)
+	# def OnShowLineNumbers(self, event):
+	# 	print("sln")
+	# 	if hasattr(self, 'lineNumbers'):
+	# 		self.lineNumbers = event.IsChecked()
+	# 		self.setDisplayLineNumbers(self.lineNumbers)
 	
 	def ToggleLineNumbers(self, *args):
 		self.setDisplayLineNumbers(not self.lineNumbers)
-	
-	
-	"""Copy"""
-	
+
 	def CanCopy(self):
-		"""Return True if text is selected and can be copied."""
+		"""
+		Returns True if text is selected and can be copied, False otherwise.
+		
+		:rtype: bool
+		"""
 		return self.GetSelectionStart() != self.GetSelectionEnd()
 
 	def Copy(self):
-		"""Copy selection and place it on the clipboard."""
+		"""
+		Copy the selection and place it on the clipboard.
+		"""
+		
 		if self.CanCopy():
 			command = self.GetSelectedText()
 			data = wx.TextDataObject(command)
 			self._clip(data)
 
 	def _clip(self, data):
+		"""
+		Internal function for copying to clipboard
+		"""
+		
 		if wx.TheClipboard.Open():
 			wx.TheClipboard.UsePrimarySelection(False)
 			wx.TheClipboard.SetData(data)
 			wx.TheClipboard.Flush()
 			wx.TheClipboard.Close()
 
-
-	"""Wrap Lines"""
-	
 	def wrap(self, wrap=True):
-		"""Sets whether text is word wrapped."""
+		"""
+		Set whether text is word wrapped.
+		
+		:param wrap: Whether the text should be word wrapped
+		:type wrap: bool
+		"""
+		
 		try:
 			self.SetWrapMode(wrap)
 		except AttributeError:
 			return 'Wrapping is not available in this version.'
-	
-#	def OnWrap(self, event):
-#		self.SetWrapMode(event.IsChecked())
+	#
+	# def OnWrap(self, event):
+	# 	self.SetWrapMode(event.IsChecked())
 	
 	def ToggleWrap(self, *args):
+		"""
+		Toggle word wrap
+		"""
+		
 		self.SetWrapMode(not self.GetWrapMode())
-
-	
-	"""Context Menu"""
 	
 	def GetContextMenu(self):
 		"""
-			Create and return a context menu for the log.
-			This is used instead of the scintilla default menu
-			in order to correctly respect our immutable buffer.
+		Create and return a context menu for the log.
+		This is used instead of the scintilla default menu
+		in order to correctly respect our immutable buffer.
 		"""
+		
 		menu = wx.Menu()
 		menu.Append(wx.ID_COPY, "&Copy")
 		menu.Append(wx.ID_SELECTALL, "Select &All \tCtrl+A")
 		menu.AppendSeparator()
-		menu.Append(wx.ID_FIND, '&Find \tCtrl+F',
-					'Search for text in the log')
-		menu.Append(ID_WRAP, '&Wrap Lines\tCtrl+W',
-					'Wrap lines at right edge', wx.ITEM_CHECK)
-		menu.Append(ID_SHOW_LINENUMBERS, '&Show Line Numbers\tCtrl+L',
-					'Show Line Numbers', wx.ITEM_CHECK)
+		menu.Append(
+				wx.ID_FIND, '&Find \tCtrl+F',
+				'Search for text in the log'
+				)
+		menu.Append(
+				ID_WRAP, '&Wrap Lines\tCtrl+W',
+				'Wrap lines at right edge', wx.ITEM_CHECK
+				)
+		menu.Append(
+				ID_SHOW_LINENUMBERS, '&Show Line Numbers\tCtrl+L',
+				'Show Line Numbers', wx.ITEM_CHECK
+				)
 		menu.AppendSeparator()
-		menu.Append(ID_ZOOM_IN, 'Zoom &In\tCtrl+]',
-					'Zoom In')
-		menu.Append(ID_ZOOM_OUT, 'Zoom &Out\tCtrl+[',
-					'Zoom Out')
-		menu.Append(ID_ZOOM_DEFAULT, '&Reset Zoom\tCtrl+=',
-					'Zoom Out')
-		menu.Append(ID_ZOOM_SET, 'Set &Zoom',
-					'Zoom Out')
+		menu.Append(ID_ZOOM_IN, 'Zoom &In\tCtrl+]', 'Zoom In')
+		menu.Append(ID_ZOOM_OUT, 'Zoom &Out\tCtrl+[', 'Zoom Out')
+		menu.Append(ID_ZOOM_DEFAULT, '&Reset Zoom\tCtrl+=', 'Zoom Out')
+		menu.Append(ID_ZOOM_SET, 'Set &Zoom', 'Zoom Out')
 		
 		menu.Check(ID_WRAP, self.GetWrapMode())
 		menu.Check(ID_SHOW_LINENUMBERS, self.lineNumbers)
 		
 		return menu
 	
-	def OnContextMenu(self, evt):
+	def OnContextMenu(self, event):
+		"""Event Handler for showing the context menu"""
 		menu = self.GetContextMenu()
 		self.PopupMenu(menu)
 
 
-	"""Find Dialog"""
-	
+	# Find Dialog Methods
 	def GetLastPosition(self):
 		return self.GetLength()
 	
@@ -440,8 +496,7 @@ Right click for options
 		self.findDlg = None
 
 
-	"""Save"""
-
+	# Save Methods
 	def bufferHasChanged(self):
 		# the log buffers can always be saved
 		return True
@@ -450,34 +505,42 @@ Right click for options
 		import time
 		appname = wx.GetApp().GetAppName()
 		default = appname + '-' + time.strftime("%Y%m%d-%H%M.py")
-		fileName = wx.FileSelector("Save File As", "Saving",
-								   default_filename=default,
-								   default_extension="py",
-								   wildcard="*.py",
-								   flags=wx.SAVE | wx.OVERWRITE_PROMPT)
-		if not fileName:
+		filename = wx.FileSelector(
+				"Save File As", "Saving",
+				default_filename=default,
+				default_extension="py",
+				wildcard="*.py",
+				flags=wx.SAVE | wx.OVERWRITE_PROMPT
+				)
+		
+		if not filename:
 			return
 		
 		text = self.GetText()
 		
 		try:
-			f = open(fileName, "w")
+			f = open(filename, "w")
 			f.write(text)
 			f.close()
-		except:
-			d = wx.MessageDialog(self, u'Error saving session', u'Error',
-								 wx.OK | wx.ICON_ERROR)
+		except:  # TODO: Find error type
+			d = wx.MessageDialog(
+					self, u'Error saving session', u'Error',
+					wx.OK | wx.ICON_ERROR
+					)
+			
 			d.ShowModal()
 			d.Destroy()
-	
-	
-	
-	"""Add Text"""
-	
+		
 	def write(self, text):
-		"""Display text in the log.
+		"""
+		Display text in the log.
 
-		Replace line endings with OS-specific endings."""
+		Replace line endings with OS-specific endings.
+		
+		:param text:
+		:type text:
+		"""
+		
 		text = self.fixLineEndings(text)
 		self.AddText(text)
 		self.EnsureCaretVisible()
@@ -487,8 +550,12 @@ Right click for options
 		Add the text to the end of the control using colour c which
 		should be suitable for feeding directly to wx.NamedColour.
 
-		'text' should be a unicode string or contain only ascii data.
+		:param text: ... Should be a unicode string or contain only ascii data.
+		:type text:
+		:param c:
+		:type c:
 		"""
+		
 		style = self.getStyle(c)
 		lenText = len(text.encode('utf8'))
 		end = self.GetLength()
@@ -501,17 +568,19 @@ Right click for options
 		"""
 		Add the stderr text to the end of the control using colour "red"
 
-		'text' should be a unicode string or contain only ascii data.
+		:param text: ... Should be a unicode string or contain only ascii data.
+		:type text:
 		"""
+		
 		self.Append(text, "red")
 
 
-class CrustFrame(wx.Frame):
+class DemoFrame(wx.Frame):
 	"""Frame containing all the PyCrust components."""
 	
-	name = 'CrustFrame foo'
+	name = 'LogCtrl Demo'
 	
-	def __init__(self, parent=None, id=-1, title='PyCrust foo',
+	def __init__(self, parent=None, id=-1, title='LogCtrl Demo',
 				 pos=wx.DefaultPosition, size=wx.DefaultSize,
 				 style=wx.DEFAULT_FRAME_STYLE,
 				 *args, **kwds):
@@ -528,10 +597,10 @@ class CrustFrame(wx.Frame):
 
 
 class App(wx.App):
-	"""PyCrust standalone application."""
+	"""LogCtrl Demo application."""
 	
 	def OnInit(self):
-		self.frame = CrustFrame()
+		self.frame = DemoFrame()
 		self.frame.Show()
 		self.SetTopWindow(self.frame)
 		return True

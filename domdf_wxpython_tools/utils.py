@@ -45,44 +45,49 @@ def collapse_label(text, collapsed=True):
 
 
 def generate_faces():
-	FACES = {'backcol': '#FFFFFF',
-			 'calltipbg': '#FFFFB8',
-			 'calltipfg': '#404040',
-			 'size': 12,
-			 'lnsize': 10,
-			 'other': 'new century schoolbook',
-			 'times': 'Times',
-			 'mono': 'Courier',
-			 'helv': 'Helvetica',
-			 }
+	FACES = {
+			'backcol': '#FFFFFF',
+			'calltipbg': '#FFFFB8',
+			'calltipfg': '#404040',
+			'size': 12,
+			'lnsize': 10,
+			'other': 'new century schoolbook',
+			'times': 'Times',
+			'mono': 'Courier',
+			'helv': 'Helvetica',
+			}
 	
 	if 'wxMSW' in wx.PlatformInfo:
-		FACES = {**FACES,
-				 'times': 'Times New Roman',
-				 'mono': 'Courier New',
-				 'helv': 'Arial',
-				 'lucida': 'Lucida Console',
-				 'other': 'Comic Sans MS',
-				 'size': 10,
-				 'lnsize': 8,
-				 }
+		FACES = {
+				**FACES,
+				'times': 'Times New Roman',
+				'mono': 'Courier New',
+				'helv': 'Arial',
+				'lucida': 'Lucida Console',
+				'other': 'Comic Sans MS',
+				'size': 10,
+				'lnsize': 8,
+				}
 	
-	elif 'wxGTK' in wx.PlatformInfo and ('gtk2' in wx.PlatformInfo or
-										 'gtk3' in wx.PlatformInfo):
-		FACES = {**FACES,
-				 'times': 'Serif',
-				 'mono': 'Monospace',
-				 'helv': 'Sans',
-				 'size': 10,
-				 'lnsize': 9,
+	elif 'wxGTK' in wx.PlatformInfo and (
+			'gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo
+			):
+		FACES = {
+				**FACES,
+				'times': 'Serif',
+				'mono': 'Monospace',
+				'helv': 'Sans',
+				'size': 10,
+				'lnsize': 9,
 				 }
 	
 	elif 'wxMac' in wx.PlatformInfo:
-		FACES = {**FACES,
-				 'times': 'Lucida Grande',
-				 'mono': 'Monaco',
-				 'helv': 'Geneva',
-				 }
+		FACES = {
+				**FACES,
+				'times': 'Lucida Grande',
+				'mono': 'Monaco',
+				'helv': 'Geneva',
+				}
 	
 	return FACES
 

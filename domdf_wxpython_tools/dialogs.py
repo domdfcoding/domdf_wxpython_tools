@@ -32,6 +32,7 @@ import wx
 
 # this package
 from domdf_wxpython_tools.validators import CharValidator
+from domdf_wxpython_tools.list_dialog import list_dialog
 
 # style enumeration
 style_uppercase = 4
@@ -180,7 +181,8 @@ def file_dialog(*args, **kwargs):
 
 class FloatEntryDialog(wx.TextEntryDialog):
 	"""
-
+	Alternative to wx.NumberEntryDialog that provides a TextCtrl which only allows numbers and decimal points to be entered.
+	
 	Based on http://wxpython-users.1045709.n5.nabble.com/Adding-Validation-to-wx-TextEntryDialog-td2371082.html
 	"""
 	
@@ -200,6 +202,7 @@ class FloatEntryDialog(wx.TextEntryDialog):
 
 class IntEntryDialog(wx.TextEntryDialog):
 	"""
+	Alternative to wx.NumberEntryDialog that provides a TextCtrl which only allows numbers to be entered.
 
 	Based on http://wxpython-users.1045709.n5.nabble.com/Adding-Validation-to-wx-TextEntryDialog-td2371082.html
 	"""
@@ -230,18 +233,19 @@ class Wildcards:
 			self, description, extensions=None, hint_format=style_lowercase,
 			value_format=style_lowercase | style_uppercase):
 		"""
+		Add a filetype to the wildcards
 		
-		:param description:
-		:type description:
-		:param extensions:
-		:type extensions:	list
-		:param hint_format:
-		:type hint_format:	int
-		:param value_format:
+		:param description: Description of the filetype
+		:type description: str
+		:param extensions: A list of valid file extensions for the filetype
+		:type extensions: list of str
+		:param hint_format: How the hints should be formatted.
+		:type hint_format: int
+		:param value_format: How the values should be formatted.
 		:type value_format:	int
 		
-		:return:
-		:rtype:
+		Valid values for `hint_format` and `value_format` are `style_uppercase`,
+		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
 		"""
 		
 		if extensions:
@@ -278,14 +282,44 @@ class Wildcards:
 	
 	@property
 	def wildcard(self):
+		"""
+		Returns a string representing the wildcards for use in wx.FileDialog or file_dialog_wildcards
+		
+		:rtype: str
+		"""
+		
 		return "|".join(self._wildcards)
 	
 	def add_common_filetype(
 			self, filetype, hint_format=style_lowercase,
 			value_format=style_lowercase | style_uppercase):
+		"""
+		Add a common filetype.
+		
+		:param filetype: The name of the filetype, Possible values are in common_filetypes
+		:type filetype: str
+		:param hint_format: How the hints should be formatted.
+		:type hint_format: int
+		:param value_format: How the values should be formatted.
+		:type value_format:	int
+		
+		Valid values for `hint_format` and `value_format` are `style_uppercase`,
+		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
+		"""
+		
 		self.add_filetype(*common_filetypes[filetype], hint_format=hint_format, value_format=value_format)
 
 	def add_image_wildcard(self, value_format=style_lowercase | style_uppercase):
+		"""
+		Add a wildcard for all image filetypes.
+
+		:param value_format: How the values should be formatted.
+		:type value_format:	int
+
+		Valid values for `value_format` are `style_uppercase`,
+		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
+		"""
+		
 		image_extensions = []
 		for key, item in common_filetypes.items():
 			if key in {"jpeg", "png", "bmp", "tiff", "gif"}:
@@ -295,7 +329,14 @@ class Wildcards:
 				
 		self.add_filetype("Image files", image_extensions, hint_format=style_hidden, value_format=value_format)
 	
-	def add_all_files_wildcard(self, hint_format=style_lowercase):
+	def add_all_files_wildcard(self, hint_format=None):
+		"""
+		Add a wildcard for 'All Files'.
+
+		:param hint_format: How the hints should be formatted. Valid values are None and `style_hidden`.
+		:type hint_format: int
+		"""
+		
 		if hint_format & style_hidden:
 			self._wildcards.append("All files|*.*")
 		else:
@@ -308,4 +349,5 @@ class Wildcards:
 		return self.wildcard
 
 
+# legacy name
 FileDialogWildcards = Wildcards

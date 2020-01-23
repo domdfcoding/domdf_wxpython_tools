@@ -316,6 +316,6 @@ class ColourPickerPanel(StylePickerPanel):
 				range(self.selection_list_box.GetCount())
 				]
 	
-	get_selection = GetSelection()
+	get_selection = GetSelection
 	
 # end of class ColourPickerPanel

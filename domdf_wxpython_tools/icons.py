@@ -7,7 +7,7 @@
 #
 #  GetStockBitmap and GetStockToolbarBitmap from
 #  		https://sourceforge.net/p/wxglade/mailman/message/6475744/
-#		Copyright (C) 2005 Antoine Pitrou
+#       Copyright (C) 2005 Antoine Pitrou
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -27,8 +27,10 @@
 
 import wx
 
+
 def get_toolbar_icon(icon_name, size=24):
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_TOOLBAR_C", wx.Size(size, size)))
+
 
 def get_button_icon(icon_name, size=24):
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_BUTTON_C", wx.Size(size, size)))

@@ -3,8 +3,7 @@
 #
 #  keyboard.py
 #
-#  Copyright 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#
+#  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +24,6 @@
 import wx
 
 def gen_keymap():
-	
 	
 	keys = ("BACK", "TAB", "RETURN", "ESCAPE", "SPACE", "DELETE", "START",
 			"LBUTTON", "RBUTTON", "CANCEL", "MBUTTON", "CLEAR", "PAUSE",
@@ -55,6 +53,7 @@ def gen_keymap():
 	return keyMap
 
 
-
-NAVKEYS = (wx.WXK_END, wx.WXK_LEFT, wx.WXK_RIGHT,
-		   wx.WXK_UP, wx.WXK_DOWN, wx.WXK_PAGEUP, wx.WXK_PAGEDOWN)
+NAVKEYS = {
+		wx.WXK_END, wx.WXK_PAGEUP, wx.WXK_PAGEDOWN,
+		wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN,
+		}
