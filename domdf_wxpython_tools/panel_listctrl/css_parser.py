@@ -3,6 +3,8 @@
 #
 #  css_parser.py
 #
+#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 3 of the License, or
@@ -30,10 +32,51 @@ import wx
 from domdf_wxpython_tools.panel_listctrl.constants import text_defaults, sys_colour_lookup
 
 
+# Setup tinycss
 parser = tinycss.make_parser("page3")
 
 
+def parse_css_file(filename):
+	"""
+	Parse the stylesheet in the given file
+	
+	:param filename: The filename of the stylesheet to parse
+	:type filename: str or pathlib.Path
+	
+	:return: Parsed CSS stylesheet
+	:rtype: dict
+	"""
+	
+	stylesheet = parser.parse_stylesheet_file(css_file=str(filename))
+	
+	return _parse_css(stylesheet)
+
+
+def parse_css(css_data):
+	"""
+	Parse the stylesheet from the given string
+
+	:param css_data: A string representing a CSS stylesheel
+	:type css_data: str
+
+	:return: Parsed CSS stylesheet
+	:rtype: dict
+	"""
+	
+	stylesheet = parser.parse_stylesheet(css_unicode=css_data)
+	
+	return _parse_css(stylesheet)
+
+
 def _parse_css(stylesheet):
+	"""
+	Internal function for actual parsing of css
+	
+	:param stylesheet: A tinycss parsed stylesheel
+	:type stylesheet: :class:`tinycss.css21.Stylesheet`
+	:return: Parsed CSS stylesheet
+	:rtype: dict
+	"""
 	print(stylesheet)
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
@@ -145,15 +188,4 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 	
 	return styles
 
-
-def parse_css_file(filename):
-	stylesheet = parser.parse_stylesheet_file(css_file=filename)
-	
-	return _parse_css(stylesheet)
-
-
-def parse_css(css_data):
-	stylesheet = parser.parse_stylesheet(css_unicode=css_data)
-	
-	return _parse_css(stylesheet)
 

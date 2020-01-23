@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 #
 #  dialogs.py
+"""
+Several dialog classes and helper functions for file/folder dialogs
+"""
 #
-#  Copyright 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#
+#  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -22,14 +24,20 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import os
+
+# 3rd party
 import wx
+
+# this package
 from domdf_wxpython_tools.validators import CharValidator
 
-
+# style enumeration
 style_uppercase = 4
 style_lowercase = 8
 style_hidden = 16
+
 
 common_filetypes = {
 		"jpeg": ("JPEG files", ["jpg", "jpeg"]),
@@ -37,12 +45,14 @@ common_filetypes = {
 		"bmp": ("BMP files", ["bmp"]),
 		"tiff": ("TIFF files", ["tiff", "tif"]),
 		"gif": ("GIF files", ["gif"])
+		# TODO: Add more
 		}
 
 
 def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
 	"""
-
+	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
+	
 	:param parent:
 	:type parent:
 	:param wildcard:
@@ -54,8 +64,8 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 	:param kwargs:
 	:type kwargs:
 
-	:return:
-	:rtype:
+	:return: List of filenames for the selected files. If wx.FD_MULTIPLE is not in the style, the list will contain only one element
+	:rtype: list of str
 	"""
 	
 	with wx.FileDialog(
@@ -90,8 +100,10 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 		
 		return pathnames
 
+
 def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
 	"""
+	Create a wx.FileDialog with for the extension and filetypestring given, and return a list of the files selected.
 	
 	:param parent:
 	:type parent:
@@ -106,8 +118,8 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 	:param kwargs:
 	:type kwargs:
 	
-	:return:
-	:rtype:
+	:return: List of filenames for the selected files. If wx.FD_MULTIPLE is not in the style, the list will contain only one element
+	:rtype: list of str
 	"""
 	
 	with wx.FileDialog(
@@ -141,7 +153,8 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 
 def file_dialog(*args, **kwargs):
 	"""
-
+	Create a wx.FileDialog with for the extension and filetypestring given, and return the filename selected.
+	
 	:param parent:
 	:type parent:
 	:param extension:
@@ -154,9 +167,9 @@ def file_dialog(*args, **kwargs):
 	:type style:
 	:param kwargs:
 	:type kwargs:
-
-	:return:
-	:rtype:
+	
+	:return: The filename selected in the dialog. If wx.FD_MULTIPLE is in the style, this will be the first filename selected.
+	:rtype: str
 	"""
 	
 	paths = file_dialog_multiple(*args, **kwargs)

@@ -33,7 +33,7 @@
 #  MA 02110-1301, USA.
 #
 
-
+# 3rd party
 import wx
 from wx.lib.embeddedimage import PyEmbeddedImage
 
@@ -49,16 +49,18 @@ ClearableTextCtrlNameStr = "ClearableTextCtrl"
 
 
 class CTCWidget(wx.TextCtrl):
+	"""
+	CTCWidget: text control used by ClearableTextCtrl
+	"""
+	
 	def __init__(self, parent, value, style, validator):
 		"""
-		CTCWidget: text control used by ClearableTextCtrl
-		
-		:param parent:
-		:type parent:  ClearableTextCtrl
-		:param value:
-		:type value: 	str
-		:param style:
-		:type style: 	int
+		:param parent: The parent window.
+		:type parent: ClearableTextCtrl
+		:param value: The initial value of the text control
+		:type value: str
+		:param style: The style of the text control
+		:type style: int
 		"""
 		
 		wx.TextCtrl.__init__(self, parent, value=value, style=style, validator=validator)
@@ -74,28 +76,28 @@ class CTCWidget(wx.TextCtrl):
 	def GetMainWindowOfCompositeControl(self):
 		return self.parent
 	
-	# protected:
-	def OnText(self, eventText):
+	def OnText(self, event):
+		"""
+		Event handler for text being entered in the control
 		"""
 		
-		:param eventText:
-		:type eventText:	wxCommandEvent
-		"""
-		
-		event = wx.CommandEvent(eventText)
+		event = wx.CommandEvent(event)
 		event.SetEventObject(self.parent)
 		event.SetId(self.parent.GetId())
 		
 		self.parent.GetEventHandler().ProcessEvent(event)
 	
 	def OnTextEnter(self, event):
+		"""
+		Event handler for the enter/return key being pressed
+		"""
+		
 		if not self.IsEmpty():
 			event = wx.CommandEvent(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.parent.GetId)
 			event.SetEventObject(self.parent)
 			event.SetString(self.parent.GetValue())
 			
 			self.parent.ProcessWindowEvent(event)
-	
 	
 	"""
 	
@@ -136,11 +138,12 @@ class CTCWidget(wx.TextCtrl):
 
 
 class ClearButton(wx.Control):
+	"""
+	Clear button for the ClearableTextCtrl
+	"""
 	def __init__(self, parent, eventType, bmp):
 		"""
-		ClearButton: clear button used by ClearableTextCtrl
-		
-		:param parent:
+		:param parent: The parent window.
 		:type parent: ClearableTextCtrl
 		:param eventType:
 		:type eventType:wx.PyEventBinder
@@ -160,8 +163,9 @@ class ClearButton(wx.Control):
 		
 	def SetBitmapLabel(self, label):
 		"""
+		Set bitmap for the button
 		
-		:param label:
+		:param label: Bitmap to set for the button
 		:type label: wx.Bitmap
 		"""
 		
@@ -178,16 +182,14 @@ class ClearButton(wx.Control):
 	def GetMainWindowOfCompositeControl(self):
 		return self.parent
 	
-	# protected:
 	def GetBestSize(self):
 		return wx.Size(self.m_bmp.GetWidth(), self.m_bmp.GetHeight())
 	
 	def OnLeftUp(self, event):
 		"""
-		
-		:param event:
-		:type event:	wx.MouseEvent
+		Event Handler for left mouse button being released
 		"""
+		
 		print(self.m_eventType)
 		event = wx.CommandEvent(self.m_eventType, self.parent.GetId())
 		event.SetEventObject(self.parent)
@@ -204,9 +206,7 @@ class ClearButton(wx.Control):
 		
 	def OnPaint(self, event):
 		"""
-		
-		:param event:
-		:type event:	wx.PaintEvent
+		Event Handler for widget being painted
 		"""
 		
 		dc = wx.PaintDC(self)
@@ -221,30 +221,32 @@ class ClearButton(wx.Control):
 		
 
 class ClearableTextCtrl(wx.Window):
+	"""
+	TextCtrl with button to clear its contents
+	"""
+	
 	def __init__(
 			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition,
 			size=wx.DefaultSize, style=0, validator=wx.DefaultValidator,
 			name=ClearableTextCtrlNameStr
 			):
 		"""
-		ClearableTextCtrl creation
-		
-		:param parent:
-		:type parent:	wx.Window
-		:param id:
-		:type id:		wx.WindowID
-		:param value:
-		:type value:	str
-		:param pos:
-		:type pos:		wx.Point
-		:param size:
-		:type size:		wx.Size
-		:param style:
-		:type style:	int
-		:param validator:
-		:type validator:wx.Validator
-		:param name:
-		:type name:		str
+		:param parent: The parent window.
+		:type parent: wx.Window
+		:param id: An identifier for the control. wx.ID_ANY is taken to mean a default.
+		:type id: wx.WindowID, optional
+		:param value: Default text value
+		:type value: str
+		:param pos: The control position. The value wx.DefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+		:type pos: wx.Point, optional
+		:param size: The control size. The value wx.DefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
+		:type size: wx.Size, optional
+		:param style: The window style. See wx.TextCtrl.
+		:type style: int, optional
+		:param validator: Window validator
+		:type validator: wx.Validator, optional
+		:param name: Window name.
+		:type name: str, optional
 		"""
 		
 		wx.Window.__init__(self, parent, id, pos, size, style, name)
@@ -271,40 +273,53 @@ class ClearableTextCtrl(wx.Window):
 	
 	@property
 	def default_clear_bitmap(self):
+		"""
+		Returns the default clear button bitmap for the control
+
+		:rtype: wx.Bitmap
+		"""
+		
 		return Clear_Button_16.GetBitmap()
 	
 	def SetFont(self, font):
 		"""
+		Sets the font for the control
 		
-		:param font:
+		:param font: Font to associate with this control, pass wx.NullFont to reset to the default font.
 		:type font: wx.Font
 		
-		:return:
+		:return: True if the operation completes successfully, False otherwise
 		:rtype: bool
 		"""
 		
 		if not self.m_text.SetFont(font):
 			return False
 	
-		# Recreate the bitmaps as their size may have changed.
-		# TODO
+		# TODO: Recreate the bitmaps as their size may have changed.
 
 		return True
 	
 	def SetBackgroundColour(self, colour):
 		"""
+		Sets the background colour of the control
 		
+		:param colour: The colour to be used as the background colour; pass wx.NullColour to reset to the default colour.
 		:type colour: wx.Colour
 		
+		.. note::
+		
+			You may want to use wx.SystemSettings.GetColour to retrieve a
+			suitable colour to use rather than setting an hard-coded one.
+		
+		:return: True if the operation completes successfully, False otherwise
 		:rtype: bool
 		"""
 		
 		if not self.m_text.SetBackgroundColour(colour):
 			return False
 	
-		# When the background changes, re-render the bitmaps so that the correct
-		# colour shows in their "transparent" area.
-		# TODO
+		# TODO: When the background changes, re-render the bitmaps so that the correct
+		#  colour shows in their "transparent" area.
 
 		return True
 	
@@ -312,8 +327,10 @@ class ClearableTextCtrl(wx.Window):
 		"""
 		Appends the text to the end of the text control.
 
-		.. note::  After the text is appended, the insertion point will be at the end of the text control.
-		If this behaviour is not desired, the programmer should use GetInsertionPoint and SetInsertionPoint.
+		.. note::
+			
+			After the text is appended, the insertion point will be at the end of the text control.
+			If this behaviour is not desired, the programmer should use GetInsertionPoint and SetInsertionPoint.
 
 		:param text: Text to write to the text control.
 		:type text:	str

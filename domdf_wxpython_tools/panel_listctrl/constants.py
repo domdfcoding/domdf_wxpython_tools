@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 #
 #  constants.py
+"""
+Constants for panel_listctrl
+"""
+#
+#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +23,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 
-
+# 3rd party
 import webcolors
 import wx
 
@@ -42,6 +47,7 @@ elif wx.Platform == "__WXGTK__":
 	if "Ubuntu" in lsb_release.get_distro_information().values():
 		text_defaults["font-face-name"] = "Ubuntu"
 
+# System colours
 sys_colour_lookup = {
 		"SYS_COLOUR_SCROLLBAR": wx.SYS_COLOUR_SCROLLBAR,
 		"SYS_COLOUR_DESKTOP": wx.SYS_COLOUR_DESKTOP,
