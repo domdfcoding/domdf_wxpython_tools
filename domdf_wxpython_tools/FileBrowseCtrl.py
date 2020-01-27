@@ -60,6 +60,7 @@ from domdf_wxpython_tools.ClearableTextCtrl import ClearableTextCtrl
 # TODO: validate filetypes
 # TODO: Change SearchCtrl cancel button to something more resembling clearing the control. DDF 08/01/2020
 
+# TODO: Control doesn;t indicate when it has focus; on GTK there should be an orange border but there isn't
 
 class FileBrowseCtrl(FileBrowseButton):
 	"""
