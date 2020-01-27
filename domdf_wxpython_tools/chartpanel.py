@@ -110,9 +110,7 @@ class ChartPanelBase(wx.Panel):
 		:type x_data:
 		"""
 		
-		# def on_xlims_change(ax):
 		def update_ylim(*args):
-			# print(*args)
 			# print(str(*args).startswith("MPL MouseEvent")) # Pan
 			if (str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN") or (
 					str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM"):  # Zoom, Pan

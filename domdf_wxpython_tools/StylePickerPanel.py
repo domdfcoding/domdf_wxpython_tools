@@ -123,7 +123,6 @@ class StylePickerPanel(wx.Panel):
 		for marker in self.selection_choices:
 			for key in self.markers.keys():
 				if marker == self.markers[key]:
-					# print(key)
 					self.selection_list_box.Append(key)
 		if not self.selection_list_box.IsEmpty():
 			self.selection_list_box.SetSelection(0)
@@ -131,7 +130,6 @@ class StylePickerPanel(wx.Panel):
 		for marker in list(filter(lambda x: x not in self.selection_choices, [self.markers[y] for y in self.markers])):
 			for key in self.markers.keys():
 				if marker == self.markers[key]:
-					# print(key)
 					self.picker_list_box.Append(key)
 		self.picker_list_box.SetSelection(0)
 		

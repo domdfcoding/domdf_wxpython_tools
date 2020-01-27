@@ -190,7 +190,6 @@ class ClearButton(wx.Control):
 		Event Handler for left mouse button being released
 		"""
 		
-		print(self.m_eventType)
 		event = wx.CommandEvent(self.m_eventType, self.parent.GetId())
 		event.SetEventObject(self.parent)
 		

@@ -77,10 +77,9 @@ def _parse_css(stylesheet):
 	:return: Parsed CSS stylesheet
 	:rtype: dict
 	"""
-	print(stylesheet)
+	
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
-	print(stylesheet.rules)
 	
 	styles = {}
 	

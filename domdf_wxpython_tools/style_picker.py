@@ -151,15 +151,15 @@ class colour_picker(style_picker):
 if __name__ == "__main__":
 	app = wx.App(False)
 	frame = wx.Frame(None, wx.ID_ANY, "")
+	
 	dlg = style_picker(frame)
 	res = dlg.ShowModal()
 	if res == wx.ID_OK:
-		print(dlg.style_list)
 		dlg.Destroy()
+		
 	dlg = colour_picker(frame)
 	res = dlg.ShowModal()
 	if res == wx.ID_OK:
-		print(dlg.colour_list)
 		dlg.Destroy()
 	
 	print("Goodbye :)")

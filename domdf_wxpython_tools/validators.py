@@ -106,9 +106,8 @@ class CharValidator(ValidatorBase):
 	def OnChar(self, event):
 		keycode = int(event.GetKeyCode())
 		if keycode < 256:
-			# print(keycode)
 			key = chr(keycode)
-			# print(key)
+			
 			if keycode in self.special_keys:
 				event.Skip()
 			if self.flag == "int-only":

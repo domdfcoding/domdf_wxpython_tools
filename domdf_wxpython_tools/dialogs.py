@@ -77,16 +77,11 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 		
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
 			return  # the user changed their mind
-			
-		# print(style)
-		# print(wx.FD_MULTIPLE in style)
 		
 		try:
 			pathnames = fileDialog.GetPaths()
 		except:
 			pathnames = [fileDialog.GetPath()]
-		
-		# print(pathnames)
 		
 		filter_extension_list = wildcard.split("|")[1::2]
 		valid_extensions = [os.path.splitext(ext)[1] for ext in ";".join(filter_extension_list).split(";")]
@@ -132,15 +127,10 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
 			return  # the user changed their mind
 		
-		# print(style)
-		# print(wx.FD_MULTIPLE in style)
-		
 		try:
 			pathnames = fileDialog.GetPaths()
 		except:
 			pathnames = [fileDialog.GetPath()]
-		
-		# print(pathnames)
 		
 		for index, pathname in enumerate(pathnames):
 			if extension != "*":

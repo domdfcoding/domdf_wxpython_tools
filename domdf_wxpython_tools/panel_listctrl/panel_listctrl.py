@@ -543,7 +543,6 @@ class PanelListItem(wx.Panel):
 			try:
 				# CSS
 				style_data = parse_css(style_data)
-				print(style_data)
 			except ValueError:
 				# Filename
 				style_data = parse_css_file(style_data)
@@ -590,7 +589,6 @@ class PanelListItem(wx.Panel):
 		main_grid = wx.FlexGridSizer(len(text_dict), 2, 0, left_padding)
 		
 		for index, (css_class, text) in enumerate(text_dict.items()):
-			print(index, css_class, text)
 			widget = wx.StaticText(self, wx.ID_ANY, text, style=wx.ST_ELLIPSIZE_MIDDLE)
 			self._items[css_class] = widget
 			
@@ -648,7 +646,6 @@ class PanelListItem(wx.Panel):
 		wx.PostEvent(self, event)
 		
 	def OnDoubleClick(self, event):
-		print(123)
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_ACTIVATED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
