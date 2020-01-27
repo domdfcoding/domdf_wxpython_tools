@@ -167,6 +167,9 @@ class ImagePanel(ChartPanelBase):
 		:type new_image: :class:`PIL.Image.Image` or str or pathlib.Path, optional
 		:param suppress_event: Whether the event that the image has changed should be suppressed, default False
 		:type suppress_event: bool, optional
+		
+		TODO: Do we even need to be triggering an event here, since "load_image"
+		 is only ever going to be called by the programmer
 		"""
 		
 		self.ax.clear()
@@ -195,12 +198,12 @@ class ImagePanel(ChartPanelBase):
 		"""
 		
 		self.ax.clear()
-		self.ax.imshow(self._image)
+		self.ax.imshow(self._image, aspect='equal')
 		
 		self.ax.axes.get_xaxis().set_visible(False)
 		self.ax.axes.get_yaxis().set_visible(False)
-		self.fig.tight_layout()
-		# self.fig.subplots_adjust(left=0.1, bottom=0.125, top=0.9, right=0.97)
+		# self.fig.tight_layout()
+		self.fig.subplots_adjust(left=0, bottom=0, top=1, right=1)
 		
 		self.canvas.draw()
 		
@@ -325,7 +328,8 @@ class ImagePanel(ChartPanelBase):
 		"""
 		
 		self._load_image()
-		self.fig.tight_layout()
+		# self.fig.tight_layout()
+		self.fig.subplots_adjust(left=0, bottom=0, top=1, right=1)
 		self.canvas.SetSize(self.GetSize())
 		self.Refresh()
 		self.canvas.draw()
@@ -359,3 +363,49 @@ class ImagePanel(ChartPanelBase):
 	# 	#self.reset_view()
 	# 	wx.CallAfter(self.reset_view)
 
+
+
+if __name__ == '__main__':
+	
+	# Get splash image from GitHub
+	import os
+	import tempfile
+	import urllib.request
+	
+	with tempfile.TemporaryDirectory() as tmp:
+		urllib.request.urlretrieve(
+				"https://github.com/wxWidgets/Phoenix/raw/master/demo/bitmaps/splash.png",
+				os.path.join(tmp, "wxsplash.png")
+				)
+	
+		class DemoFrame(wx.Frame):
+			
+			def __init__(self, parent, id, title, position, size):
+				wx.Frame.__init__(self, parent, id, title, position, size)
+				
+				panel = ImagePanel(self, os.path.join(tmp, "wxsplash.png"))
+				
+				MainSizer = wx.BoxSizer(wx.VERTICAL)
+				MainSizer.Add(panel, 4, wx.EXPAND)
+				
+				self.SetSizer(MainSizer)
+				self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+			
+			def OnCloseWindow(self, event):
+				self.Destroy()
+		
+		class DemoApp(wx.App):
+				
+			def __init__(self, *args, **kwargs):
+				wx.App.__init__(self, *args, **kwargs)
+			
+			def OnInit(self):
+				wx.InitAllImageHandlers()
+				frame = DemoFrame(None, -1, "ImagePanel Demo App", wx.DefaultPosition, (700, 700))
+				
+				self.SetTopWindow(frame)
+				frame.Show()
+				return True
+		
+		app = DemoApp(False)
+		app.MainLoop()

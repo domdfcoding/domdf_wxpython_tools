@@ -329,7 +329,7 @@ class Wildcards:
 				
 		self.add_filetype("Image files", image_extensions, hint_format=style_hidden, value_format=value_format)
 	
-	def add_all_files_wildcard(self, hint_format=None):
+	def add_all_files_wildcard(self, hint_format=0):
 		"""
 		Add a wildcard for 'All Files'.
 

@@ -239,7 +239,7 @@ class ChartPanelBase(wx.Panel):
 		self.size_change()
 		# event.Skip()
 	
-	def setup_scrollwheel_zooming(self, scale=1.5):
+	def setup_scrollwheel_zooming(self, scale=1.1):
 		"""
 		Allow zooming of the chart with the scrollwheel
 		
@@ -247,7 +247,7 @@ class ChartPanelBase(wx.Panel):
 		:type scale:
 		"""
 		
-		def zoom_factory(ax, base_scale=2.0):
+		def zoom_factory(ax, base_scale=1.1):
 			def zoom_fun(event):
 				# get the current x and y limits
 				cur_xlim = ax.get_xlim()
