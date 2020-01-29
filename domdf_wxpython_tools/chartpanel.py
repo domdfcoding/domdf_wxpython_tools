@@ -49,6 +49,7 @@ from matplotlib.backends.backend_wxagg import (
 from domdf_wxpython_tools.border_config import border_config
 from domdf_wxpython_tools.projections import XPanAxes
 
+
 # Constrain zoom to X axis
 matplotlib.projections.register_projection(XPanAxes)
 

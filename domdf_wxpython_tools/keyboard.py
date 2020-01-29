@@ -23,9 +23,11 @@
 
 import wx
 
+
 def gen_keymap():
 	
-	keys = ("BACK", "TAB", "RETURN", "ESCAPE", "SPACE", "DELETE", "START",
+	keys = (
+			"BACK", "TAB", "RETURN", "ESCAPE", "SPACE", "DELETE", "START",
 			"LBUTTON", "RBUTTON", "CANCEL", "MBUTTON", "CLEAR", "PAUSE",
 			"CAPITAL", "END", "HOME", "LEFT", "UP", "RIGHT",
 			"DOWN", "SELECT", "PRINT", "EXECUTE", "SNAPSHOT", "INSERT", "HELP",
@@ -41,7 +43,8 @@ def gen_keymap():
 			"NUMPAD_PAGEDOWN", "NUMPAD_END", "NUMPAD_BEGIN",
 			"NUMPAD_INSERT", "NUMPAD_DELETE", "NUMPAD_EQUAL", "NUMPAD_MULTIPLY",
 			"NUMPAD_ADD", "NUMPAD_SEPARATOR", "NUMPAD_SUBTRACT", "NUMPAD_DECIMAL",
-			"NUMPAD_DIVIDE")
+			"NUMPAD_DIVIDE"
+			)
 	
 	keyMap = {}
 	

@@ -10,7 +10,7 @@ Useful for timeouts or updating timers, clocks etc.
 Includes code from https://gist.github.com/samarthbhargav/5a515a399f7113137331
 """
 #
-#  Copyright (c) 2019.  Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ from threading import Thread, Event
 from domdf_wxpython_tools.events import SimpleEvent
 
 timer_event = SimpleEvent("Timer")
+
 
 class Timer(Thread):
 	"""

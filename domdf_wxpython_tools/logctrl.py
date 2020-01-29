@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
-#  LogCtrl.py
+#  logctrl.py
 """
 Log Control, supporting text copying and zoom.
 """
@@ -63,7 +63,7 @@ ID_ZOOM_SET = wx.NewIdRef()
 # TODO: F3                Search next
 #
 
-class Log(stc.StyledTextCtrl):
+class LogCtrl(stc.StyledTextCtrl):
 	"""
 	Log Window based on StyledTextCtrl.
 	"""
@@ -575,38 +575,4 @@ Right click for options
 		self.Append(text, "red")
 
 
-class DemoFrame(wx.Frame):
-	"""Frame containing all the PyCrust components."""
-	
-	name = 'LogCtrl Demo'
-	
-	def __init__(self, parent=None, id=-1, title='LogCtrl Demo',
-				 pos=wx.DefaultPosition, size=wx.DefaultSize,
-				 style=wx.DEFAULT_FRAME_STYLE,
-				 *args, **kwds):
-		wx.Frame.__init__(self, parent, id, title, pos, size, style)
-		
-		self.log = Log(parent=self, *args, **kwds)
-		
-		self.Bind(wx.EVT_CLOSE, self.OnClose)
-	
-	def OnClose(self, event):
-		"""Event handler for closing."""
-		self.log.Destroy()
-		self.Destroy()
-
-
-class App(wx.App):
-	"""LogCtrl Demo application."""
-	
-	def OnInit(self):
-		self.frame = DemoFrame()
-		self.frame.Show()
-		self.SetTopWindow(self.frame)
-		return True
-
-
-if __name__ == '__main__':
-	app = App(0)
-	app.MainLoop()
 

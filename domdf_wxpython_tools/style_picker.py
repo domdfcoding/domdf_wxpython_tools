@@ -146,21 +146,3 @@ class colour_picker(style_picker):
 		parent_sizer.Fit(self)
 		self.Layout()
 		# end wxGlade
-	
-
-if __name__ == "__main__":
-	app = wx.App(False)
-	frame = wx.Frame(None, wx.ID_ANY, "")
-	
-	dlg = style_picker(frame)
-	res = dlg.ShowModal()
-	if res == wx.ID_OK:
-		dlg.Destroy()
-		
-	dlg = colour_picker(frame)
-	res = dlg.ShowModal()
-	if res == wx.ID_OK:
-		dlg.Destroy()
-	
-	print("Goodbye :)")
-	sys.exit(0)

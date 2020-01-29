@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 #
 #  validators.py
+"""
+Various validator classes
+"""
 #
-#  Copyright 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -21,8 +24,11 @@
 #  MA 02110-1301, USA.
 #
 
-import wx
+# stdlib
 import string
+
+# 3rd party
+import wx
 
 
 class ValidatorBase(wx.Validator):
@@ -70,6 +76,12 @@ class ValidatorBase(wx.Validator):
 
 class CharValidator(ValidatorBase):
 	"""
+	A Validator that only allows the type of characters selected to be entered.
+	
+	The possible flags are:
+		int-only - only the numbers 0123456789 can be entered
+		float-only - only numbers and decimal points can be entered
+	
 	Based on http://wxpython-users.1045709.n5.nabble.com/best-way-to-restrict-input-to-integers-td2370605.html
 	"""
 	
@@ -122,5 +134,39 @@ class CharValidator(ValidatorBase):
 				return
 			elif self.flag == 'no-digit' and key in string.digits:
 				return
+		
+		event.Skip()
+
+
+class FloatValidator(CharValidator):
+	"""
+	A Validator that only allows numbers and decimal points to be entered.
+	If a decimal point has already been entered, a second one cannot be entered.
+	The argument `flag` is used to limit the number of decimal places that can be entered.
+	"""
+	def OnChar(self, event):
+		
+		keycode = int(event.GetKeyCode())
+		if keycode < 256:
+			key = chr(keycode)
+			if keycode in self.special_keys:
+				event.Skip()
+			
+			current_value = event.GetEventObject().GetValue()
+			
+			if key not in "0123456789.":
+				return
+			
+			if "." in current_value:
+				if key == ".":
+					if "." not in event.GetEventObject().GetStringSelection():
+						return
+				
+				# Current decimal places
+				current_dp = len(current_value.split(".")[1])
+				
+				if current_dp == self.flag:
+					# Already at maximum decimal places
+					return
 		
 		event.Skip()

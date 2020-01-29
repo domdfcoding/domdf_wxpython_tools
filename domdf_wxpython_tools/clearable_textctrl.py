@@ -2,20 +2,16 @@
 #   -*- coding: utf-8 -*-
 #
 #  ClearableTextCtrl.py
+"""
+A TextCtrl with a button to clear its contents
+"""
 #
-#  Copyright (c) 2020  Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  Adapted from srchctlg.cpp (part of wxWidgets, https://github.com/wxWidgets/wxWidgets)
+#  Adapted from src/generic/srchctlg.cpp (part of wxWidgets, https://github.com/wxWidgets/wxWidgets)
 #  Copyright (c) 2006 Vince Harron.
-#  Original header below:
-# ///////////////////////////////////////////////////////////////////////////////
-# // Name:        src/generic/srchctlg.cpp
-# // Purpose:     implements wxSearchCtrl as a composite control
-# // Author:      Vince Harron
-# // Created:     2006-02-19
-# // Copyright:   Vince Harron
-# // Licence:     wxWindows licence
-# ///////////////////////////////////////////////////////////////////////////////#
+#  Licenced under the wxWindows licence
+#
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -136,6 +132,34 @@ class CTCWidget(wx.TextCtrl):
 	}
 #endif # __WXMSW__"""
 
+#b"                       ",
+
+clear_btn = [
+	b"25 19 2 1",
+	b"   c None",
+	b"+  c #000000",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"         +++++++++++++   ",
+	b"        ++           +   ",
+	b"       ++    +   +   +   ",
+	b"      ++      + +    +   ",
+	b"     ++        +     +   ",
+	b"      ++      + +    +   ",
+	b"       ++    +   +   +   ",
+	b"        ++           +   ",
+	b"         +++++++++++++   ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+	b"                         ",
+		]
+
 
 class ClearButton(wx.Control):
 	"""
@@ -219,7 +243,7 @@ class ClearButton(wx.Control):
 		dc.DrawBitmap(self.m_bmp, 0, 0, True)
 		
 
-class ClearableTextCtrl(wx.Window):
+class ClearableTextCtrl(wx.Panel):
 	"""
 	TextCtrl with button to clear its contents
 	"""
@@ -248,18 +272,26 @@ class ClearableTextCtrl(wx.Window):
 		:type name: str, optional
 		"""
 		
-		wx.Window.__init__(self, parent, id, pos, size, style, name)
+		wx.Panel.__init__(self, parent, id, pos, size, style | wx.BORDER_SUNKEN, name)
 		
-		self.m_text = CTCWidget(self, value, style, validator=validator)
+		textctrl_style = style | wx.TAB_TRAVERSAL | wx.BORDER_NONE | wx.TE_RICH2
+		
+		if wx.Platform == "__WXGTK__":
+			print(122)
+			# wx.BORDER_NONE doesn't work unless its a multiline textctrl
+			textctrl_style |= wx.TE_MULTILINE | wx.TE_DONTWRAP
+		
+		self.m_text = CTCWidget(self, value, textctrl_style, validator=validator)
 		self.m_clearBitmap = self.default_clear_bitmap
 		self.m_clearButton = ClearButton(self, wx.EVT_SEARCHCTRL_CANCEL_BTN, self.m_clearBitmap)
-
+		self.m_clearButton.SetSize((16, 16))
 		self.LayoutControls()
 		
 		self.SetBackgroundColour(self.m_text.GetBackgroundColour())
-		self.m_text.SetBackgroundColour(wx.Colour())
+		# self.m_text.SetBackgroundColour(wx.Colour())
 		
 		self.SetInitialSize(size)
+		self.SetMinSize((-1, 29))
 		self.Move(pos)
 
 		self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.OnClearButton, id=wx.ID_ANY)
@@ -278,7 +310,8 @@ class ClearableTextCtrl(wx.Window):
 		:rtype: wx.Bitmap
 		"""
 		
-		return Clear_Button_16.GetBitmap()
+		#return Clear_Button_16.GetBitmap()
+		return wx.Bitmap(clear_btn)
 	
 	def SetFont(self, font):
 		"""
@@ -314,7 +347,10 @@ class ClearableTextCtrl(wx.Window):
 		:rtype: bool
 		"""
 		
-		if not self.m_text.SetBackgroundColour(colour):
+		if not all([
+				self.m_text.SetBackgroundColour(colour),
+				wx.Window.SetBackgroundColour(self, colour)
+				]):
 			return False
 	
 		# TODO: When the background changes, re-render the bitmaps so that the correct
@@ -476,9 +512,6 @@ class ClearableTextCtrl(wx.Window):
 		"""
 		
 		return self.m_text.EmulateKeyPress(event)
-	
-	def FromDIP(self, val):
-		return val
 	
 	def GetBestClientSize(self):
 		"""
@@ -760,24 +793,26 @@ class ClearableTextCtrl(wx.Window):
 		if not self.m_text:
 			return
 		
-		sizeTotal = self.GetClientSize()
-		width = sizeTotal.x
-		height = sizeTotal.y
+		total_size = self.GetClientSize()
+		overall_width = total_size.x
+		overall_height = total_size.y
 		
-		sizeText = self.m_text.GetBestSize()
-		sizeClear = self.m_clearButton.GetBestSize()
-		clearMargin = self.FromDIP(MARGIN)
+
+		
+		text_size = self.m_text.GetBestSize()
+		clear_size = self.m_clearButton.GetBestSize()
+		clear_margin = MARGIN
 		
 		# make room for the clear button
-		horizontalBorder = self.FromDIP(1) + (sizeText.y - sizeText.y * 14 / 21) / 2
+		horizontalBorder = 1 + (text_size.y - text_size.y * 14 / 21) / 2
 		
 		x = 0
-		textWidth = width
+		textWidth = overall_width
 		
 		
 		textWidth -= horizontalBorder
 		
-		textWidth -= + sizeClear.x + clearMargin + self.FromDIP(1)
+		textWidth -= + clear_size.x + clear_margin + 1
 		if textWidth < 0:
 			textWidth = 0
 		
@@ -788,16 +823,26 @@ class ClearableTextCtrl(wx.Window):
 			# of the white border that's part of the theme border. We can also remove a pixel from
 			# the height to fit the text control in, because the padding in EDIT_HEIGHT_FROM_CHAR_HEIGHT
 			# is already generous.
-			textY = self.FromDIP(1)
+			textY = 1
 		else:
 			textY = 0
 		
-		self.m_text.SetSize(x, textY, textWidth, height - textY)
+		self.m_text.SetSize(x, textY, textWidth, overall_height - textY - 10)
+		
+		text_pos = self.m_text.GetPosition()
+		self.m_text.SetPosition((text_pos.x + 3, text_pos.y + 5))
+
 		x += textWidth
 		
-		x += clearMargin
-		self.m_clearButton.SetSize(x, (height - sizeClear.y) / 2,
-								   sizeClear.x, sizeClear.y)
+		x += clear_margin
+		self.m_clearButton.SetSize(
+				x,
+				(overall_height - clear_size.y) / 2,
+				clear_size.x, clear_size.y
+				)
+	
+		clear_pos = self.m_clearButton.GetPosition()
+		self.m_clearButton.SetPosition((clear_pos.x, clear_pos.y))
 	
 	def MarkDirty(self):
 		"""Mark text as modified (dirty)."""
@@ -823,6 +868,7 @@ class ClearableTextCtrl(wx.Window):
 		:type event: wx.SizeEvent
 		"""
 		
+		# pass
 		self.LayoutControls()
 	
 	def Paste(self):
@@ -1200,21 +1246,3 @@ class ClearableTextCtrl(wx.Window):
 		"""
 		
 		return self.m_text.XYToPosition(x, y)
-	
-	
-	
-if __name__ == '__main__':
-	from wx.tools import img2py
-	
-	print(img2py.img2py("./Clear_Button_16.png", __file__, append=True))
-	
-
-#----------------------------------------------------------------------
-Clear_Button_16 = PyEmbeddedImage(
-    b'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlw'
-    b'SFlzAAAIJQAACCUBaAtNGQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoA'
-    b'AACwSURBVDiN3dExDgFhEAXgb9FoKJwBCSdwAzdwAKUrKEVDKzqFEygUGiqJOziAE4hGIgq/'
-    b'WJu1GyWv+jNv5r038/PziFJqZQxRzJg7YvFJYIQedh+G2zijm0Y2cUEHNdRjXAUtDLB5Fgux'
-    b'hgjzEO2AKyZhqIJlxkqgjxOqCdc1tkFIVoJbnkMeouA0i7mvvFZ4vt8SJNHw5RFLCYEjph4H'
-    b'y/vGVAEYe9wmjYN9MPoX3AF8gB60pKn/NAAAAABJRU5ErkJggg==')
-
