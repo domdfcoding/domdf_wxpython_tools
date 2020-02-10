@@ -15,48 +15,53 @@
 
 # This script based on https://github.com/rocky/python-uncompyle6/blob/master/__pkginfo__.py
 
-copyright   = """
+copyright = """
 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
 VERSION = "0.2.0"
 
-modname            = "domdf_wxpython_tools"
-py_modules		   = None
-entry_points	   = None
+modname = "domdf_wxpython_tools"
+py_modules = None
+entry_points = None
 
-license            = 'LGPL3'
+license = 'LGPL3'
 
-short_desc         = 'Tools and widgets for wxPython'
+short_desc = 'Tools and widgets for wxPython'
 
-classifiers =  ['Development Status :: 4 - Beta',
-				'Intended Audience :: Developers',
-				"License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
-				'Operating System :: OS Independent',
-				'Programming Language :: Python',
-				'Programming Language :: Python :: 3.6',
-				'Programming Language :: Python :: 3.7',
-				'Programming Language :: Python :: 3.8',
-				'Topic :: Software Development :: Libraries :: Python Modules',
-				]
+classifiers = ['Development Status :: 4 - Beta',
+			   'Intended Audience :: Developers',
+			   "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+			   'Operating System :: OS Independent',
+			   'Programming Language :: Python',
+			   'Programming Language :: Python :: 3.6',
+			   'Programming Language :: Python :: 3.7',
+			   'Programming Language :: Python :: 3.8',
+			   'Topic :: Software Development :: Libraries :: Python Modules',
+			   ]
 
-author             = "Dominic Davis-Foster"
-author_email       = "dominic@davis-foster.co.uk"
-github_username	   = "domdfcoding"
-web                = github_url = f"https://github.com/{github_username}/{modname}"
-
-install_requires   = ["matplotlib>=3.0.0"]
-
+author = "Dominic Davis-Foster"
+author_email = "dominic@davis-foster.co.uk"
+github_username = "domdfcoding"
+web = github_url = f"https://github.com/{github_username}/{modname}"
 
 import os.path
+
+
 def get_srcdir():
 	filename = os.path.normcase(os.path.dirname(os.path.abspath(__file__)))
 	return os.path.realpath(filename)
 
+
 srcdir = get_srcdir()
+
 
 def read(*rnames):
 	return open(os.path.join(srcdir, *rnames)).read()
 
+
 # Get info from files; set: long_description
-long_description   = ( read("README.rst") + '\n' )
+long_description = read("README.rst") + '\n'
+
+# Get requirements
+install_requires = list(filter(None, read("requirements.txt").split("\n")))
