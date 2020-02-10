@@ -1,5 +1,4 @@
 tinycss>=0.4
-Sphinx>=2.1.2
 matplotlib>=3.0.0
 frozendict>=1.2
 webcolors>=1.10
