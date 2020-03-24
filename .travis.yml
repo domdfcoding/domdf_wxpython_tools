@@ -3,7 +3,7 @@ dist: xenial
 python:
 - '3.6'
 - '3.7'
-- "3.8-dev"
+- "3.8"
 #install:
 #- pip install -U coveralls pytest matplotlib
 #- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
