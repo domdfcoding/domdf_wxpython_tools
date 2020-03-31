@@ -121,6 +121,6 @@ __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019-2020 Dominic Davis-Foster"
 
 __license__ = "LGPL"
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __email__ = "dominic@davis-foster.co.uk"
 
