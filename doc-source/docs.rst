@@ -6,8 +6,6 @@
 
 .. automodule:: domdf_wxpython_tools
     :members:
-    :private-members:
-    :special-members:
 
 
 ===================================
@@ -16,9 +14,6 @@
 
 .. automodule:: domdf_wxpython_tools.border_config
     :members:
-    :private-members:
-    :special-members:
-
 
 ===================================
 :mod:`domdf_wxpython_tools.chartpanel`
@@ -26,8 +21,6 @@
 
 .. automodule:: domdf_wxpython_tools.chartpanel
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -36,8 +29,6 @@
 
 .. automodule:: domdf_wxpython_tools.clearable_textctrl
     :members:
-    :private-members:
-    :special-members:
 
 
 ====================================
@@ -46,8 +37,6 @@
 
 .. automodule:: domdf_wxpython_tools.ColourPickerPanel
     :members:
-    :private-members:
-    :special-members:
 
 
 =======================================
@@ -56,8 +45,6 @@
 
 .. automodule:: domdf_wxpython_tools.dialogs
     :members:
-    :private-members:
-    :special-members:
 
 
 ===================================
@@ -66,8 +53,6 @@
 
 .. automodule:: domdf_wxpython_tools.editable_listbox
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -76,8 +61,6 @@
 
 .. automodule:: domdf_wxpython_tools.events
     :members:
-    :private-members:
-    :special-members:
 
 
 =========================================
@@ -86,8 +69,6 @@
 
 .. automodule:: domdf_wxpython_tools.filebrowsectrl
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -96,8 +77,6 @@
 
 .. automodule:: domdf_wxpython_tools.icons
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -106,8 +85,6 @@
 
 .. automodule:: domdf_wxpython_tools.imagepanel
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -116,8 +93,6 @@
 
 .. automodule:: domdf_wxpython_tools.keyboard
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -126,8 +101,6 @@
 
 .. automodule:: domdf_wxpython_tools.list_dialog
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -136,8 +109,6 @@
 
 .. automodule:: domdf_wxpython_tools.logctrl
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -146,8 +117,6 @@
 
 .. automodule:: domdf_wxpython_tools.panel_listctrl
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -156,8 +125,6 @@
 
 .. automodule:: domdf_wxpython_tools.picker
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -166,8 +133,6 @@
 
 .. automodule:: domdf_wxpython_tools.projections
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -176,8 +141,6 @@
 
 .. automodule:: domdf_wxpython_tools.style_picker
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -186,8 +149,6 @@
 
 .. automodule:: domdf_wxpython_tools.StylePickerPanel
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -196,8 +157,6 @@
 
 .. automodule:: domdf_wxpython_tools.tabbable_textctrl
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -206,8 +165,6 @@
 
 .. automodule:: domdf_wxpython_tools.timer_thread
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -216,8 +173,6 @@
 
 .. automodule:: domdf_wxpython_tools.utils
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -227,8 +182,6 @@
 
 .. automodule:: domdf_wxpython_tools.validators
     :members:
-    :private-members:
-    :special-members:
 
 
 ==================================
@@ -237,5 +190,3 @@
 
 .. automodule:: domdf_wxpython_tools.WebView
     :members:
-    :private-members:
-    :special-members:
