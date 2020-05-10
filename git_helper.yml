@@ -1,0 +1,88 @@
+modname: domdf_wxpython_tools
+
+# Files not to generate
+exclude_files:
+  - tox
+
+enable_tests: False
+enable_conda: False
+
+conda_channels:
+  - domdfcoding
+  - conda-forge
+
+python_deploy_version: 3.6
+
+# Additional lines for .gitignore
+additional_ignore:
+  - "*/output"
+
+# Paths to additional requirements.txt files, relative to repo root
+#additional_requirements_files:
+#  -
+
+# Versions to run tests for
+python_versions:
+  - '3.6'
+  - '3.7'
+  - "3.8"
+
+# Additional python requirements for travis
+#travis_additional_requirements:
+#  -
+
+# travis secure password for PyPI
+travis_pypi_secure: "ocyJxsOYg0kOErZ5XIkvzEz1MqA0AsrnqULRPknYIMz3RXNPVgk1nI9Ub4tKzzsgCOTXKZUMUFesHoCS1fzWs0zidC1NuD4/LNcGn0JJY0SUAxbcZvQAb5vxPU0lNh+vfZIgaoGBzArLokSy1Zp2jThr4OriMP83HT2mEqerU3ZQFMYYdOLZxhDZT3EB0l3HynvBFn2Yl1eDQW9yfvg0ykYqU6WVbOAAfIJkyMIYDHGTpKxmpwvt9X0dx5w8fjrujcNyPwmA9H2+zFovp7Kg6O5FRUZ8ecNnvc3Hi5tw4X/XaKxgKVaMSTca2x6Cb5QKeCiSkXEHO+FLId81xFsOuOyrTweKJNWcmTgArOnBjiWD0xS0Az1j2wdMBZuSC0HJEH/KAoQKu7ZrlZJHWVfmfm+oN3GwEmvhcdbTWetMBCL7yCJD3EiYUGwJDheCtOJCg1c5bHyCsdW/dulKjPRzUpeKzDaR3gotOuLpPAiwqgrVLBG2zT/j34iY3KfNhpwSr0/j7yPLQrF0lUZjUHLkFSnwXwXxCI3GlnMnGeNU9w5+ZBScz6e2O/I8YFhOsgO/KFOt1aFT6Scy6GhaDgX9oQQ9cVhKTZUe14hATiXVDKuv5RlYPDGnZDyDhr3o1qS4rPsklbtMbN9rqV3HXJ9zaBbHWlgBuciuri6c5e1R4M0="
+
+# additional lines for MANIFEST.in
+#manifest_additional:
+#  -
+
+# additional requirements for tox
+#tox_requirements:
+#  -
+
+# additional build requirements for tox
+#tox_build_requirements:
+#  -
+
+# directory that contains tests
+tests_dir: "tests"
+
+# Additional arguments for setup.py
+#additional_setup_args:
+#  foo: bar
+
+copyright_years: "2019-2020"
+author: "Dominic Davis-Foster"
+email: "dominic@davis-foster.co.uk"
+version: "0.2.5"
+username: "domdfcoding"
+license: 'LGPLv3+'
+short_desc: 'Tools and widgets for wxPython'
+
+conda_description: "Tools and widgets for wxPython
+
+
+
+Before installing please ensure you have added the \"conda-forge\" channel.
+"
+
+classifiers:
+  - 'Development Status :: 4 - Beta'
+  - 'Intended Audience :: Developers'
+  - "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)"
+  - 'Operating System :: OS Independent'
+  - 'Programming Language :: Python'
+  - 'Programming Language :: Python :: 3.6'
+  - 'Programming Language :: Python :: 3.7'
+  - 'Programming Language :: Python :: 3.8'
+  - 'Topic :: Software Development :: Libraries :: Python Modules'
+
+travis_extra_install_pre:
+#- pip install -U coveralls pytest matplotlib
+#- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+
+
+travis_extra_install_post:
+  -

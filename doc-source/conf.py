@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#### No need to change anything in this file ####
+# This file is managed by `git_helper`. Don't edit it directly
 
 import os
 import re
@@ -12,35 +12,35 @@ sys.path.append(os.path.abspath('..'))
 
 from sphinx.locale import _
 
-from domdf_wxpython_tools import __author__, __version__, __copyright__
-from __pkginfo__ import github_username, modname
+from __pkginfo__ import VERSION
 
 
-github_url = f"https://github.com/{github_username}/{modname}"
+github_url = f"https://github.com/domdfcoding/domdf_wxpython_tools"
 
-rst_prolog = f""".. |pkgname| replace:: {modname}
-.. |pkgname2| replace:: ``{modname}``
+rst_prolog = f""".. |pkgname| replace:: domdf_wxpython_tools
+.. |pkgname2| replace:: ``domdf_wxpython_tools``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
 .. |ghurl| replace:: {github_url}
 """
 
-project = modname
-slug = re.sub(r'\W+', '-', modname.lower())
-version = __version__
-release = __version__
-author = __author__
-copyright = __copyright__
+author = "Dominic Davis-Foster"
+project = "domdf_wxpython_tools"
+slug = re.sub(r'\W+', '-', project.lower())
+release = version = VERSION
+copyright = "Copyright 2019-2020 Dominic Davis-Foster"
 language = 'en'
 
 extensions = [
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinxcontrib.httpdomain',
-]
+		'sphinx.ext.intersphinx',
+		'sphinx.ext.autodoc',
+		'sphinx.ext.mathjax',
+		'sphinx.ext.viewcode',
+		'sphinxcontrib.httpdomain',
+		
+		]
 
 templates_path = ['_templates']
+html_static_path = ['_static']
 source_suffix = '.rst'
 exclude_patterns = []
 
@@ -48,66 +48,68 @@ master_doc = 'index'
 suppress_warnings = ['image.nonlocal_uri']
 pygments_style = 'default'
 
-intersphinx_mapping = { # Is this where those mystery links are specified?
-    'rtd': ('https://docs.readthedocs.io/en/latest/', None),
-    'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
-}
+intersphinx_mapping = {
+		'rtd': ('https://docs.readthedocs.io/en/latest/', None),
+		'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
+		'python': ('https://docs.python.org/3/', None),
+		
+		}
 
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    'logo_only': False,  # True will show just the logo
-}
+		'logo_only': False,  # True will show just the logo
+		}
 html_theme_path = ["../.."]
-#html_logo = "logo/pyms.png"
-html_show_sourcelink = False    # True will show link to source
+# html_logo = "logo/pyms.png"
+html_show_sourcelink = False  # True will show link to source
 
 html_context = {
-    # Github Settings
-    "display_github": True, # Integrate GitHub
-    "github_user": "domdfcoding", # Username
-    "github_repo": "domdf_wxpython_tools", # Repo name
-    "github_version": "master", # Version
-    "conf_py_path": "/", # Path in the checkout to the docs root
-}
+		# Github Settings
+		"display_github": True,  # Integrate GitHub
+		"github_user": "domdfcoding",  # Username
+		"github_repo": "domdf_wxpython_tools",  # Repo name
+		"github_version": "master",  # Version
+		"conf_py_path": "/",  # Path in the checkout to the docs root
+		}
 
 htmlhelp_basename = slug
 
 latex_documents = [
-  ('index', '{0}.tex'.format(slug), project, author, 'manual'),
-]
+		('index', '{0}.tex'.format(slug), project, author, 'manual'),
+		]
 
 man_pages = [
-    ('index', slug, project, [author], 1)
-]
+		('index', slug, project, [author], 1)
+		]
 
 texinfo_documents = [
-  ('index', slug, project, author, slug, project, 'Miscellaneous'),
-]
+		('index', slug, project, author, slug, project, 'Miscellaneous'),
+		]
 
 
 # Extensions to theme docs
 def setup(app):
-    from sphinx.domains.python import PyField
-    from sphinx.util.docfields import Field
-
-    app.add_object_type(
-        'confval',
-        'confval',
-        objname='configuration value',
-        indextemplate='pair: %s; configuration value',
-        doc_field_types=[
-            PyField(
-                'type',
-                label=_('Type'),
-                has_arg=False,
-                names=('type',),
-                bodyrolename='class'
-            ),
-            Field(
-                'default',
-                label=_('Default'),
-                has_arg=False,
-                names=('default',),
-            ),
-        ]
-    )
+	from sphinx.domains.python import PyField
+	from sphinx.util.docfields import Field
+	
+	app.add_object_type(
+			'confval',
+			'confval',
+			objname='configuration value',
+			indextemplate='pair: %s; configuration value',
+			doc_field_types=[
+					PyField(
+							'type',
+							label=_('Type'),
+							has_arg=False,
+							names=('type',),
+							bodyrolename='class'
+							),
+					Field(
+							'default',
+							label=_('Default'),
+							has_arg=False,
+							names=('default',),
+							),
+					]
+			)
