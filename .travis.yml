@@ -14,7 +14,8 @@ install:
   
   
   
-
+script:
+  - echo "skipping tests"
 deploy:
   provider: pypi
   user: "DomDF"
