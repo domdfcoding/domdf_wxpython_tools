@@ -7,9 +7,9 @@ exclude_files:
 enable_tests: False
 enable_conda: False
 
-conda_channels:
-  - domdfcoding
-  - conda-forge
+#conda_channels:
+#  - domdfcoding
+#  - conda-forge
 
 python_deploy_version: 3.6
 
@@ -37,17 +37,6 @@ travis_pypi_secure: "ocyJxsOYg0kOErZ5XIkvzEz1MqA0AsrnqULRPknYIMz3RXNPVgk1nI9Ub4t
 # additional lines for MANIFEST.in
 #manifest_additional:
 #  -
-
-# additional requirements for tox
-#tox_requirements:
-#  -
-
-# additional build requirements for tox
-#tox_build_requirements:
-#  -
-
-# directory that contains tests
-tests_dir: "tests"
 
 # Additional arguments for setup.py
 #additional_setup_args:
@@ -79,10 +68,6 @@ classifiers:
   - 'Programming Language :: Python :: 3.8'
   - 'Topic :: Software Development :: Libraries :: Python Modules'
 
-travis_extra_install_pre:
+#travis_extra_install_pre:
 #- pip install -U coveralls pytest matplotlib
 #- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
-
-
-travis_extra_install_post:
-  -

@@ -10,12 +10,13 @@ python:
 install:
   - sudo apt-get update
   
-  - pip install rst2txt 
+  - pip install rst2txt yolk3k 
   
   
   
 script:
   - echo "skipping tests"
+
 deploy:
   provider: pypi
   user: "DomDF"

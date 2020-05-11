@@ -25,7 +25,7 @@ copyright = """
 VERSION = "0.2.5"
 
 modname = "domdf_wxpython_tools"
-py_modules = None
+py_modules = []
 entry_points = None
 
 license = 'LGPLv3+'
@@ -51,7 +51,7 @@ conda_description = """Tools and widgets for wxPython
 
 Before installing please ensure you have added the "conda-forge" channel. """
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {}
+extras_require = {'all': []}
 
 classifiers = [
 		'Development Status :: 4 - Beta',
@@ -65,3 +65,5 @@ classifiers = [
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		
 		]
+
+keywords = ""
