@@ -50,12 +50,7 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: 'Tools and widgets for wxPython'
 
-conda_description: "Tools and widgets for wxPython
-
-
-
-Before installing please ensure you have added the \"conda-forge\" channel.
-"
+conda_description: "Tools and widgets for wxPython"
 
 classifiers:
   - 'Development Status :: 4 - Beta'

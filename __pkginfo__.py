@@ -49,7 +49,7 @@ long_description = (repo_root / "README.rst").read_text() + '\n'
 conda_description = """Tools and widgets for wxPython
 
 
-Before installing please ensure you have added the "conda-forge" channel. """
+"""
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
 extras_require = {'all': []}
 
