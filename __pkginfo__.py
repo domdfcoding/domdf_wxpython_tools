@@ -46,10 +46,7 @@ repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
 long_description = (repo_root / "README.rst").read_text() + '\n'
-conda_description = """Tools and widgets for wxPython
 
-
-"""
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
 extras_require = {'all': []}
 
