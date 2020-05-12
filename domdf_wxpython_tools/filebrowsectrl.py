@@ -50,9 +50,10 @@ import wx
 from wx.lib.filebrowsebutton import FileBrowseButton
 
 # this package
-# from . import icons
-from domdf_wxpython_tools.dialogs import file_dialog_wildcard
 from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
+from domdf_wxpython_tools.dialogs import file_dialog_wildcard
+from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
+
 
 # ----------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
 # TODO: Control doesn't indicate when it has focus; on GTK there should be an orange border but there isn't
 
 
-class FileBrowseCtrl(FileBrowseButton):
+class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	"""
 	A control to allow the user to type in a filename or browse with
 	the standard file dialog to select file.
@@ -141,6 +142,8 @@ class FileBrowseCtrl(FileBrowseButton):
 		# In this case that would be before the return of the
 		# constructor. Not good. So a default value on
 		# SetValue is used to disable the callback
+
+		self.textcontrol = self.textControl
 		self.SetValue(initialValue, 0)
 	
 	# self.SetMinSize((-1, 34))
@@ -204,18 +207,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		if pathname:
 			self.textControl.ChangeValue(pathname[0])
 			self.textControl.SetFocus()
-	
-	def GetValue(self):
-		"""
-		Gets the contents of the control.
 
-		Notice that for a multiline text control, the lines will be separated by (Unix-style) \n characters, even under Windows where they are separated by a \r\n sequence in the native control.
-
-		:rtype:	string
-		"""
-		
-		return self.textControl.GetValue()
-	
 	def SetValue(self, value, callBack=1):
 		"""
 		Sets the new text control value.
@@ -335,16 +327,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		"""
 		
 		return self.textControl.SetModified(modified)
-	
-	def AppendText(self, text):
-		"""
-		Appends the text to the end of the text control.
 
-		:param text: Text to write to the text control
-		:type text: string
-		"""
-		return self.textControl.AppendText(text)
-	
 	#
 	# def AutoCompleteDirectories(self):
 	# 	"""
@@ -382,52 +365,6 @@ class FileBrowseCtrl(FileBrowseButton):
 	# 	return self.textControl.AutoCompleteFileNames()
 	#
 	#
-	def CanCopy(self):
-		"""
-		Returns True if the selection can be copied to the clipboard.
-
-		:rtype: bool
-		"""
-		
-		return self.textControl.CanCopy()
-	
-	def CanCut(self):
-		"""
-		Returns True if the selection can be cut to the clipboard.
-
-		:rtype: bool
-		"""
-		
-		return self.textControl.CanCut()
-	
-	def CanPaste(self):
-		"""
-		Returns True if the contents of the clipboard can be pasted into the text control.
-
-		On some platforms (Motif, GTK) this is an approximation and returns True if the control is editable, False otherwise.
-
-		:rtype: bool
-		"""
-		
-		return self.textControl.CanPaste()
-	
-	def CanRedo(self):
-		"""
-		Returns True if there is a redo facility available and the last operation can be redone.
-
-		:rtype: bool
-		"""
-		
-		return self.textControl.CanRedo()
-	
-	def CanUndo(self):
-		"""
-		Returns True if there is an undo facility available and the last operation can be undone.
-
-		:rtype:	bool
-		"""
-		
-		return self.textControl.CanUndo()
 	
 	def ChangeValue(self, value):
 		"""
@@ -448,38 +385,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		"""
 		
 		return self.textControl.ChangeValue(value)
-	
-	def Clear(self):
-		"""
-		Clears the text in the control.
 
-		Note that this function will generate a wxEVT_TEXT event, i.e. its effect is identical to calling SetValue (“”).
-		"""
-		self.textControl.Clear()
-	
-	def Copy(self):
-		"""
-		Copies the selected text to the clipboard.
-		"""
-		
-		return self.textControl.Copy()
-	
-	def Cut(self):
-		"""
-		Copies the selected text to the clipboard and removes it from the control.
-		"""
-		
-		return self.textControl.Cut()
-	
-	def GetLastPosition(self):
-		"""
-		Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.
-
-		:rtype:	wx.TextPos
-		"""
-		
-		return self.textControl.GetLastPosition()
-	
 	def GetRange(self, from_, to_):
 		"""
 		Returns the string containing the text starting in the positions
@@ -497,34 +403,7 @@ class FileBrowseCtrl(FileBrowseButton):
 		"""
 		
 		return self.textControl.GetRange(from_, to_)
-	
-	def GetSelection(self):
-		"""
-		Gets the current selection span.
 
-		If the returned values are equal, there was no selection. Please note
-		that the indices returned may be used with the other wx.TextCtrl methods
-		but don’t necessarily represent the correct indices into the string
-		returned by GetValue.
-
-		:return:
-		:rtype: tuple
-		"""
-		
-		return self.textControl.GetSelection()
-	
-	def GetStringSelection(self):
-		"""
-		Gets the text currently selected in the control.
-
-		If there is no selection, the returned string is empty.
-
-		:return:
-		:rtype: string
-		"""
-		
-		return self.textControl.GetStringSelection()
-	
 	def IsEditable(self):
 		"""
 		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
@@ -535,116 +414,6 @@ class FileBrowseCtrl(FileBrowseButton):
 		"""
 		
 		return True
-	
-	def IsEmpty(self):
-		"""
-		Returns True if the control is currently empty.
-
-		This is the same as GetValue .empty() but can be much more efficient for the multiline controls containing big amounts of text.
-
-		:rtype:	bool
-		"""
-		
-		return self.textControl.IsEmpty()
-	
-	def Paste(self):
-		"""
-		Pastes text from the clipboard to the text item.
-		"""
-		
-		return self.textControl.Paste()
-	
-	def Redo(self):
-		"""
-		If there is a redo facility and the last operation can be redone, redoes the last operation.
-
-		Does nothing if there is no redo facility.
-		"""
-		
-		return self.textControl.Redo()
-	
-	def Remove(self, from_, to_):
-		"""
-		Removes the text starting at the first given position up to (but not including) the character at the last position.
-
-		This function puts the current insertion point position at to as a side effect.
-
-		:param from_: The first position
-		:type from_: int
-		:param to_: The last position
-		:type to_: int
-		"""
-		
-		return self.textControl.Remove(from_, to_)
-	
-	def Replace(self, from_, to_, value):
-		"""
-		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
-
-		This function puts the current insertion point position at to as a side effect.
-
-		:param from_: The first position
-		:type from_: int
-		:param to_: The last position
-		:type to_: int
-		:param value: The value to replace the existing text with
-		:type value: string
-		"""
-		
-		return self.textControl.Replace(from_, to_, value)
-	
-	def SelectAll(self):
-		"""
-		Selects all text in the control.
-
-		See also SetSelection
-		"""
-		
-		return self.textControl.SelectAll()
-	
-	def SelectNone(self):
-		"""
-		Deselects selected text in the control.
-		"""
-		
-		return self.textControl.SelectNone()
-	
-	def SetSelection(self, from_, to_):
-		"""
-		Selects the text starting at the first position up to (but not including) the character at the last position.
-
-		If both parameters are equal to -1 all text in the control is selected.
-
-		Notice that the insertion point will be moved to from by this function.
-
-		:param from_: The first position
-		:type from_: long
-		:param to_: The last position
-		:type to_: long
-
-		See also SelectAll
-		"""
-		
-		return self.textControl.SetSelection(from_, to_)
-	
-	def Undo(self):
-		"""
-		If there is an undo facility and the last operation can be undone, undoes the last operation.
-
-		Does nothing if there is no undo facility.
-		"""
-		
-		return self.textControl.Undo()
-	
-	def WriteText(self, text):
-		"""
-		Writes the text into the text control at the current insertion position.
-
-		:param text: Text to write to the text control
-		:type text: string
-		"""
-		
-		return self.textControl.WriteText(text)
 
 
 class FileBrowseCtrlWithHistory(FileBrowseCtrl):
