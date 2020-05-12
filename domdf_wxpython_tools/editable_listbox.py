@@ -371,8 +371,8 @@ class EditableListBox(wx.Panel):
 		"""
 
 		self.m_listCtrl.DeleteAllItems()
-		for i in range(len(strings)):
-			self.m_listCtrl.InsertItem(i, str(strings[i]))
+		for idx, string in enumerate(strings):
+			self.m_listCtrl.InsertItem(idx, str(string))
 
 		self.m_listCtrl.InsertItem(len(strings), '')
 		self.m_listCtrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
@@ -602,8 +602,8 @@ class EditableNumericalListBox(EditableListBox):
 		"""
 
 		self.m_listCtrl.DeleteAllItems()
-		for i in range(len(values)):
-			self.m_listCtrl.InsertItem(i, str(values[i]))
+		for idx, value in enumerate(values):
+			self.m_listCtrl.InsertItem(idx, str(value))
 
 		self.m_listCtrl.InsertItem(len(values), '')
 		self.m_listCtrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)

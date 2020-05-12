@@ -490,7 +490,10 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		return self.textControl
 
 	def SetHistory(self, value=(), selectionIndex=None, control=None):
-		"""Set the current history list"""
+		"""
+		Set the current history list
+		"""
+
 		if control is None:
 			control = self.GetHistoryControl()
 		if self.history == value:
@@ -508,8 +511,11 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 			control.SetSelection(selectionIndex)
 
 	def GetHistory(self):
-		"""Return the current history list"""
-		if self.historyCallBack != None:
+		"""
+		Return the current history list
+		"""
+
+		if self.historyCallBack is not None:
 			return self.historyCallBack()
 		elif self.history:
 			return list(self.history)
@@ -517,15 +523,21 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 			return []
 
 	def OnSetFocus(self, event):
-		"""When the history scroll is selected, update the history"""
-		if self.historyCallBack != None:
+		"""
+		When the history scroll is selected, update the history
+		"""
+
+		if self.historyCallBack is not None:
 			self.SetHistory(self.historyCallBack(), control=self.textControl)
 		event.Skip()
 
 	if wx.Platform == "__WXMSW__":
 		def SetValue(self, value, callBack=1):
-			""" Convenient setting of text control value, works
-				around limitation of wx.ComboBox """
+			"""
+			Convenient setting of text control value,
+			works around limitation of wx.ComboBox
+			"""
+
 			save = self.callCallback
 			self.callCallback = callBack
 			self.textControl.SetValue(value)

@@ -1115,7 +1115,7 @@ class ClearableTextCtrl(wx.Panel):
 
 	# SetMargins
 
-	def SetMaxLength(self, len):
+	def SetMaxLength(self, length):
 		"""
 		This function sets the maximum number of characters the user can enter into the control.
 
@@ -1125,11 +1125,11 @@ class ClearableTextCtrl(wx.Panel):
 
 		Note that in wxGTK this function may only be used with single line text controls.
 
-		:param len:
-		:type len:	long
+		:param length:
+		:type length: long
 		"""
 
-		self.m_text.SetMaxLength(len)
+		self.m_text.SetMaxLength(length)
 
 	def SetModified(self, modified):
 		"""

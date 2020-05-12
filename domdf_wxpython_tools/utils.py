@@ -25,9 +25,9 @@
 import wx
 
 
-def toggle(object):
-	if object.IsEnabled():
-		object.SetValue(not object.GetValue())
+def toggle(obj):
+	if obj.IsEnabled():
+		obj.SetValue(not obj.GetValue())
 		return True
 	return False
 
@@ -69,9 +69,10 @@ def generate_faces():
 				'lnsize': 8,
 				}
 
-	elif 'wxGTK' in wx.PlatformInfo and (
-			'gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo
-			):
+	elif (
+			'wxGTK' in wx.PlatformInfo
+			and ('gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo)
+		):
 		FACES = {
 				**FACES,
 				'times': 'Serif',
@@ -79,7 +80,7 @@ def generate_faces():
 				'helv': 'Sans',
 				'size': 10,
 				'lnsize': 9,
-				 }
+				}
 
 	elif 'wxMac' in wx.PlatformInfo:
 		FACES = {

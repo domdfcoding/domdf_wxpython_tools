@@ -217,11 +217,11 @@ Right click for options
 		"""
 
 		lines = text.split('\r\n')
-		for l in range(len(lines)):
-			chunks = lines[l].split('\r')
-			for c in range(len(chunks)):
-				chunks[c] = os.linesep.join(chunks[c].split('\n'))
-			lines[l] = os.linesep.join(chunks)
+		for idx, line in enumerate(lines):
+			chunks = line.split('\r')
+			for idx, chunk in enumerate(chunks):
+				chunks[idx] = os.linesep.join(chunk.split('\n'))
+			lines[idx] = os.linesep.join(chunks)
 		text = os.linesep.join(lines)
 		return text
 
