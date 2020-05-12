@@ -6,14 +6,14 @@ python:
   - '3.6'
   - '3.7'
   - '3.8'
-  
+
 install:
   - sudo apt-get update
-  
-  - pip install rst2txt yolk3k 
-  
-  
-  
+
+  - pip install rst2txt yolk3k
+
+
+
 script:
   - echo "skipping tests"
 
@@ -27,4 +27,3 @@ deploy:
     python: "3.6"
   distributions: "sdist bdist_wheel"
   skip_existing: true
-
