@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # fix these
 declare -a errors=(
   E301 E302 E303 E304 E305 E306 E502 E265
