@@ -18,19 +18,41 @@
 
 import pathlib
 
-copyright = """
+__all__ = [
+		"__copyright__",
+		"__version__",
+		"modname",
+		"py_modules",
+		"entry_points",
+		"__license__",
+		"short_desc",
+		"author",
+		"author_email",
+		"github_username",
+		"web",
+		"github_url",
+		"project_urls",
+		"repo_root",
+		"long_description",
+		"install_requires",
+		"extras_require",
+		"classifiers",
+		"keywords",
+		]
+
+__copyright__ = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.2.5"
+__version__ = "0.2.5"
 
 modname = "domdf_wxpython_tools"
 py_modules = []
 entry_points = None
 
-license = 'LGPLv3+'
+__license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
-short_desc = 'Tools and widgets for wxPython'
+short_desc = "Tools and widgets for wxPython"
 
 author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
@@ -45,7 +67,7 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text() + '\n'
+long_description = (repo_root / "README.rst").read_text().replace("0.2.5", __version__) + '\n'
 
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
 extras_require = {'all': []}
@@ -60,6 +82,9 @@ classifiers = [
 		'Programming Language :: Python :: 3.7',
 		'Programming Language :: Python :: 3.8',
 		'Topic :: Software Development :: Libraries :: Python Modules',
+		'Programming Language :: Python :: Implementation :: CPython',
+		'Programming Language :: Python :: 3 :: Only',
+		'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
 
 		]
 
