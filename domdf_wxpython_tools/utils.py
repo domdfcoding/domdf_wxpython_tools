@@ -56,7 +56,7 @@ def generate_faces():
 			'mono': 'Courier',
 			'helv': 'Helvetica',
 			}
-	
+
 	if 'wxMSW' in wx.PlatformInfo:
 		FACES = {
 				**FACES,
@@ -68,7 +68,7 @@ def generate_faces():
 				'size': 10,
 				'lnsize': 8,
 				}
-	
+
 	elif 'wxGTK' in wx.PlatformInfo and (
 			'gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo
 			):
@@ -80,7 +80,7 @@ def generate_faces():
 				'size': 10,
 				'lnsize': 9,
 				 }
-	
+
 	elif 'wxMac' in wx.PlatformInfo:
 		FACES = {
 				**FACES,
@@ -88,7 +88,5 @@ def generate_faces():
 				'mono': 'Monaco',
 				'helv': 'Geneva',
 				}
-	
+
 	return FACES
-
-

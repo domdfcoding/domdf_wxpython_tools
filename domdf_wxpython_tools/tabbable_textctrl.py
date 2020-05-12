@@ -32,7 +32,7 @@ class TabbableTextCtrl(wx.TextCtrl):
 	"""
 	Multiline wx.TextCtrl that allows tabbing to the next or previous control.
 	"""
-	
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, value='',
 			pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
@@ -55,14 +55,14 @@ class TabbableTextCtrl(wx.TextCtrl):
 		:param name: Window name.
 		:type name: str
 		"""
-		
+
 		wx.TextCtrl.__init__(
 				self, parent, id, value=value, pos=pos, size=size,
 				style=style | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER,
 				validator=validator, name=name)
-		
+
 		self.Bind(wx.EVT_CHAR, self.on_char)
-	
+
 	@staticmethod
 	def on_char(event):
 		"""

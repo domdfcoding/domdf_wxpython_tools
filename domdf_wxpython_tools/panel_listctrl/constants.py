@@ -43,7 +43,7 @@ if wx.Platform == "__WXMSW__":
 elif wx.Platform == "__WXGTK__":
 	text_defaults["font-size"] = "11pt"
 	import lsb_release
-	
+
 	if "Ubuntu" in lsb_release.get_distro_information().values():
 		text_defaults["font-face-name"] = "Ubuntu"
 

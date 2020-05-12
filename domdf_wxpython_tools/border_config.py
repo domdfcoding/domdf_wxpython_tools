@@ -120,7 +120,7 @@ class border_config(wx.Dialog):
 		parent_sizer.Fit(self)
 		self.Layout()
 		# end wxGlade
-	
+
 	def update_borders(self, event):  # wxGlade: border_config.<event_handler>
 		self.chromatogram_figure.subplots_adjust(
 			self.left_border_value.GetValue(),
@@ -129,17 +129,17 @@ class border_config(wx.Dialog):
 			self.top_border_value.GetValue()
 		)
 		self.chromatogram_figure.canvas.draw_idle()
-	
+
 	def apply_tight_layout(self, event):  # wxGlade: border_config.<event_handler>
 		self.chromatogram_figure.tight_layout()
 		self.chromatogram_figure.canvas.draw_idle()
-		
+
 		# set SpinCtrls to new values
 		self.right_border_value.SetValue(self.chromatogram_figure.subplotpars.right)
 		self.left_border_value.SetValue(self.chromatogram_figure.subplotpars.left)
 		self.bottom_border_value.SetValue(self.chromatogram_figure.subplotpars.bottom)
 		self.top_border_value.SetValue(self.chromatogram_figure.subplotpars.top)
-	
+
 	def close_dialog(self, event):  # wxGlade: border_config.<event_handler>
 		self.Destroy()
 

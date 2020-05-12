@@ -41,7 +41,7 @@ class Timer(Thread):
 	"""
 	Background Timer Class
 	"""
-	
+
 	def __init__(self, parent, interval=1.0):
 		"""
 		Init Timer Thread Class
@@ -50,17 +50,17 @@ class Timer(Thread):
 		:param interval: Interval to trigger events at, in seconds. Default 1.0
 		:type interval: float
 		"""
-		
+
 		self._stopevent = Event()
 		Thread.__init__(self, name="TimerThread")
 		self._parent = parent
 		self._interval = interval
-	
+
 	def run(self):
 		"""
 		Run Timer Thread
 		"""
-		
+
 		wait_time = 0 + self._interval
 		while not self._stopevent.isSet():
 			time.sleep(0.1)
@@ -68,7 +68,7 @@ class Timer(Thread):
 			if wait_time < 0.0:
 				timer_event.trigger()
 				wait_time = 0 + self._interval
-	
+
 	def join(self, timeout=None):
 		"""
 		Stop the thread and wait for it to end
@@ -76,6 +76,6 @@ class Timer(Thread):
 		:param timeout:
 		:type:
 		"""
-		
+
 		self._stopevent.set()
 		Thread.join(self, timeout)

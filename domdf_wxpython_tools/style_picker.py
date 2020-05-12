@@ -47,9 +47,9 @@ class style_picker(wx.Dialog):
 			self, parent, title="Choose Styles", label="Choose Styles: ",
 			selection_choices=None, *args, **kwds
 			):
-		
+
 		self.title = title
-		
+
 		args = (parent,) + args
 		# begin wxGlade: style_picker.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_DIALOG_STYLE
@@ -65,13 +65,13 @@ class style_picker(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.cancel, self.cancel_btn)
 		self.Bind(wx.EVT_BUTTON, self.apply, self.apply_btn)
 		# end wxGlade
-	
+
 	def __set_properties(self):
 		# begin wxGlade: style_picker.__set_properties
 		self.SetTitle("Choose Styles")
 		# end wxGlade
 		self.SetTitle(self.title)
-	
+
 	def __do_layout(self):
 		# begin wxGlade: style_picker.__do_layout
 		parent_sizer = wx.FlexGridSizer(2, 1, 0, 0)
@@ -88,7 +88,7 @@ class style_picker(wx.Dialog):
 
 	def cancel(self, _):  # wxGlade: style_picker.<event_handler>
 		self.Destroy()
-	
+
 	def apply(self, event):  # wxGlade: style_picker.<event_handler>
 		self.style_list = self.StylePickerPanel.get_selection()
 		event.Skip()
@@ -102,7 +102,7 @@ class colour_picker(style_picker):
 			self, parent, title="Choose Colours", label="Choose Colours: ",
 			picker_choices=None, selection_choices=None, *args, **kwds
 			):
-		
+
 		self.title = title
 		self.picker_choices = picker_choices
 
@@ -121,18 +121,17 @@ class colour_picker(style_picker):
 		self.Bind(wx.EVT_BUTTON, self.cancel, self.cancel_btn)
 		self.Bind(wx.EVT_BUTTON, self.apply, self.apply_btn)
 
-	
 	def apply(self, event):
 		self.colour_list = self.StylePickerPanel.get_selection()
 		event.Skip()
 		self.EndModal(wx.ID_OK)
-	
+
 	def __set_properties(self):
 		# begin wxGlade: style_picker.__set_properties
 		self.SetTitle("Choose Styles")
 		# end wxGlade
 		self.SetTitle(self.title)
-	
+
 	def __do_layout(self):
 		# begin wxGlade: style_picker.__do_layout
 		parent_sizer = wx.FlexGridSizer(2, 1, 0, 0)

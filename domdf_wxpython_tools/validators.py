@@ -36,7 +36,7 @@ class ValidatorBase(wx.Validator):
 	Based on the wxPython Demo
 	Licenced under the wxWindows Library Licence, Version 3.1
 	"""
-	
+
 	def Clone(self):
 		"""
 		Standard cloner.
@@ -44,7 +44,7 @@ class ValidatorBase(wx.Validator):
 		Note that every validator must implement the Clone() method.
 		"""
 		return self.__class__()
-	
+
 	def TransferToWindow(self):
 		""" Transfer data from validator to window.
 
@@ -52,7 +52,7 @@ class ValidatorBase(wx.Validator):
 			occurred.  We simply return True, as we don't do any data transfer.
 		"""
 		return True  # Prevent wxDialog from complaining.
-	
+
 	def TransferFromWindow(self):
 		""" Transfer data from window to validator.
 
@@ -60,13 +60,13 @@ class ValidatorBase(wx.Validator):
 			occurred.  We simply return True, as we don't do any data transfer.
 		"""
 		return True  # Prevent wxDialog from complaining.
-	
+
 	def set_warning(self):
 		self.GetWindow().SetBackgroundColour("pink")
 		self.GetWindow().SetFocus()
 		self.GetWindow().Refresh()
 		return False
-	
+
 	def reset_ctrl(self):
 		self.GetWindow().SetBackgroundColour(
 				wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
@@ -77,19 +77,19 @@ class ValidatorBase(wx.Validator):
 class CharValidator(ValidatorBase):
 	"""
 	A Validator that only allows the type of characters selected to be entered.
-	
+
 	The possible flags are:
 		int-only - only the numbers 0123456789 can be entered
 		float-only - only numbers and decimal points can be entered
-	
+
 	Based on http://wxpython-users.1045709.n5.nabble.com/best-way-to-restrict-input-to-integers-td2370605.html
 	"""
-	
+
 	def __init__(self, flag):
 		wx.Validator.__init__(self)
 		self.flag = flag
 		self.Bind(wx.EVT_CHAR, self.OnChar)
-		
+
 		# Special allowed keys, including del, Ctrl+C, Ctrl+X and Ctrl+V
 		self.special_keys = {
 				wx.WXK_BACK,
@@ -103,7 +103,7 @@ class CharValidator(ValidatorBase):
 				wx.WXK_CONTROL_X,
 				wx.WXK_DELETE,
 				}
-		
+
 	def Clone(self):
 		"""
 		Standard cloner.
@@ -111,15 +111,15 @@ class CharValidator(ValidatorBase):
 		Note that every validator must implement the Clone() method.
 		"""
 		return self.__class__(self.flag)
-	
+
 	def Validate(self, win):
 		return True
-	
+
 	def OnChar(self, event):
 		keycode = int(event.GetKeyCode())
 		if keycode < 256:
 			key = chr(keycode)
-			
+
 			if keycode in self.special_keys:
 				event.Skip()
 			if self.flag == "int-only":
@@ -134,7 +134,7 @@ class CharValidator(ValidatorBase):
 				return
 			elif self.flag == 'no-digit' and key in string.digits:
 				return
-		
+
 		event.Skip()
 
 
@@ -144,29 +144,30 @@ class FloatValidator(CharValidator):
 	If a decimal point has already been entered, a second one cannot be entered.
 	The argument `flag` is used to limit the number of decimal places that can be entered.
 	"""
+
 	def OnChar(self, event):
-		
+
 		keycode = int(event.GetKeyCode())
 		if keycode < 256:
 			key = chr(keycode)
 			if keycode in self.special_keys:
 				event.Skip()
-			
+
 			current_value = event.GetEventObject().GetValue()
-			
+
 			if key not in "0123456789.":
 				return
-			
+
 			if "." in current_value:
 				if key == ".":
 					if "." not in event.GetEventObject().GetStringSelection():
 						return
-				
+
 				# Current decimal places
 				current_dp = len(current_value.split(".")[1])
-				
+
 				if current_dp == self.flag:
 					# Already at maximum decimal places
 					return
-		
+
 		event.Skip()

@@ -39,16 +39,16 @@ parser = tinycss.make_parser("page3")
 def parse_css_file(filename):
 	"""
 	Parse the stylesheet in the given file
-	
+
 	:param filename: The filename of the stylesheet to parse
 	:type filename: str or pathlib.Path
-	
+
 	:return: Parsed CSS stylesheet
 	:rtype: dict
 	"""
-	
+
 	stylesheet = parser.parse_stylesheet_file(css_file=str(filename))
-	
+
 	return _parse_css(stylesheet)
 
 
@@ -62,39 +62,39 @@ def parse_css(css_data):
 	:return: Parsed CSS stylesheet
 	:rtype: dict
 	"""
-	
+
 	stylesheet = parser.parse_stylesheet(css_unicode=css_data)
-	
+
 	return _parse_css(stylesheet)
 
 
 def _parse_css(stylesheet):
 	"""
 	Internal function for actual parsing of css
-	
+
 	:param stylesheet: A tinycss parsed stylesheel
 	:type stylesheet: :class:`tinycss.css21.Stylesheet`
 	:return: Parsed CSS stylesheet
 	:rtype: dict
 	"""
-	
+
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
-	
+
 	styles = {}
-	
+
 	# Remove declarations for other platforms and make
-	
+
 	for rule in stylesheet.rules:
 		styles[rule.selector.as_css()] = {}
-		
+
 		for declaration in rule.declarations:
 			name = declaration.name
 			value = declaration.value.as_css()
-			
+
 			if "color" in name:
 				value.lstrip("wx.")
-				
+
 				if value.startswith("SYS_COLOUR"):
 					# wx.SystemColour
 					if value in sys_colour_lookup:
@@ -102,39 +102,39 @@ def _parse_css(stylesheet):
 					else:
 						raise ValueError(f"""wx.SystemColour 'value' not recognised.
 See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values""")
-				
+
 				elif value.startswith("#"):
 					# Hex value, pass to wx.Colour directly
 					pass
-				
+
 				elif value.startswith("rgb("):
 					# RGB value, convert to hex
 					rgb_triplet = (int(x) for x in value.lstrip("rgb(").rstrip(")").split(","))
 					value = webcolors.rgb_to_hex(rgb_triplet)
-				
+
 				else:
 					# Named colour, convert to hex
 					value = webcolors.name_to_hex(value)
-			
+
 			if name == "font-family":
 				if value == "decorative":
 					value = wx.FONTFAMILY_DECORATIVE
-				
+
 				elif value == "roman":
 					value = wx.FONTFAMILY_ROMAN
-				
+
 				elif value == "script":
 					value = wx.FONTFAMILY_SCRIPT
-				
+
 				elif value == "swiss":
 					value = wx.FONTFAMILY_SWISS
-				
+
 				elif value == "modern":
 					value = wx.FONTFAMILY_MODERN
-				
+
 				else:
 					value = wx.FONTFAMILY_DEFAULT
-			
+
 			elif name == "font-style":
 				if value == "slant":
 					value = wx.FONTSTYLE_SLANT
@@ -142,7 +142,7 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 					value = wx.FONTSTYLE_ITALIC
 				else:
 					value = wx.FONTSTYLE_NORMAL
-			
+
 			elif name == "font-weight":
 				if value == "light":
 					value = wx.FONTWEIGHT_LIGHT
@@ -150,23 +150,23 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 					value = wx.FONTWEIGHT_BOLD
 				else:
 					value = wx.FONTWEIGHT_NORMAL
-			
+
 			styles[rule.selector.as_css()][name] = value
-	
+
 	# if li p is not styled, use the default values
 	if "li p" not in styles:
 		styles["li p"] = text_defaults.copy()
-	
+
 	# If li p is missing any parameters, add them from the default values
 	styles["li p"] = {**text_defaults, **styles["li p"]}
-	
+
 	# if li p::selection is not styled, use the values from p
 	if "li p::selection" not in styles:
 		styles["li p::selection"] = styles["li p"].copy()
-	
+
 	# If li p is missing any parameters, add them from p
 	styles["li p::selection"] = {**styles["li p"], **styles["li p::selection"]}
-	
+
 	# For each li p class, add undefined values from p
 	for style in styles:
 		if style.split(".")[0] == "li p":
@@ -175,7 +175,7 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 			if "::selection" in style:
 				continue
 			styles[style] = {**styles["li p"], **styles[style]}
-	
+
 	# For each p::selection class, add undefined values from p::selection
 	for style in styles:
 		if style.split(".")[0] == "li p":
@@ -184,7 +184,5 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 			if "::selection" not in style:
 				continue
 			styles[style] = {**styles["li p::selection"], **styles[style]}
-	
+
 	return styles
-
-

@@ -50,45 +50,45 @@ wxWEBVIEWIE_EMU_IE11_FORCE = 11001
 
 def MSWSetEmulationLevel(level=wxWEBVIEWIE_EMU_DEFAULT, program_name=None):
 	"""
-	
+
 	:param level: The emulation level to use, one of the constants specified above
 	:type level: int
 	:param program_name: The name of the program to set the emulation level for. Defaults to the Python executable
 	:type program_name: str or pathlib.Path object
-	
+
 	:return: Whether the operation completed successfully
 	:rtype: bool
 	"""
-	
+
 	if not program_name:
 		program_name = sys.executable
-	
+
 	if not isinstance(program_name, pathlib.Path):
 		program_name = pathlib.Path(program_name)
-	
+
 	# Registry key where emulation level for programs are set
 	IE_EMULATION_KEY = "SOFTWARE\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION"
-	
+
 	try:
 		key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, IE_EMULATION_KEY, access=winreg.KEY_ALL_ACCESS)
 	except OSError:
 		warnings.warn("Failed to find web view emulation level in the registry")
 		return False
-	
+
 	if level != wxWEBVIEWIE_EMU_DEFAULT:
-		
+
 		winreg.SetValueEx(key, program_name, 0, 4, level)
 		winreg.SetValueEx(key, str(program_name.name), 0, 4, level)
-	
+
 	else:
 		try:
 			winreg.DeleteValue(key, program_name)
 		except OSError:
 			pass
-		
+
 		try:
 			winreg.DeleteValue(key, str(program_name.name))
 		except OSError:
 			pass
-	
+
 	return True

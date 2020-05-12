@@ -115,7 +115,7 @@ __all__ = [
 		"__author__",
 		"__version__",
 		"__copyright__"
-]
+		]
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019-2020 Dominic Davis-Foster"
@@ -123,4 +123,3 @@ __copyright__ = "Copyright 2019-2020 Dominic Davis-Foster"
 __license__ = "LGPL"
 __version__ = "0.2.5"
 __email__ = "dominic@davis-foster.co.uk"
-

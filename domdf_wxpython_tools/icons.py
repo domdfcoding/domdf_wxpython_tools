@@ -35,6 +35,7 @@ def get_toolbar_icon(icon_name, size=24):
 def get_button_icon(icon_name, size=24):
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_BUTTON_C", wx.Size(size, size)))
 
+
 # The following code (C) 2005 Antoine Pitrou
 # https://sourceforge.net/p/wxglade/mailman/message/6475744/
 _art_provider = None
@@ -47,8 +48,8 @@ def GetStockBitmap(art_id, art_client=None):
 	global _art_provider
 	if _art_provider is None:
 		_art_provider = wx.ArtProvider()
-	return _art_provider.GetBitmap(id=art_id,
-								   client=art_client or wx.ART_OTHER)
+	return _art_provider.GetBitmap(
+			id=art_id, client=art_client or wx.ART_OTHER)
 
 
 def GetStockToolbarBitmap(art_id):

@@ -67,7 +67,7 @@ class LogCtrl(stc.StyledTextCtrl):
 	"""
 	Log Window based on StyledTextCtrl.
 	"""
-	
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
 			style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER, name="Log"
@@ -86,24 +86,24 @@ class LogCtrl(stc.StyledTextCtrl):
 		:param name: Window name.
 		:type name: str, optional
 		"""
-		
+
 		stc.StyledTextCtrl.__init__(self, parent, id, pos, size, style, name)
-		
+
 		self._FACES = generate_faces()
 		self._keyMap = gen_keymap()
 		self._config()
 		self.default_zoom = self.GetZoom()
 		self._styles = [None] * 32
 		self._free = 1
-		
+
 		# dispatcher.connect(receiver=self._fontsizer, signal='FontIncrease')
 		# dispatcher.connect(receiver=self._fontsizer, signal='FontDecrease')
 		# dispatcher.connect(receiver=self._fontsizer, signal='FontDefault')
-		
+
 		self.findDlg = None
 		self.findData = wx.FindReplaceData()
 		self.findData.SetFlags(wx.FR_DOWN)
-		
+
 		self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
 		self.Bind(wx.EVT_FIND_CLOSE, self.OnFindClose)
 		self.Bind(wx.EVT_KEY_DOWN, self.onKeyPress)
@@ -118,23 +118,23 @@ class LogCtrl(stc.StyledTextCtrl):
 		self.Bind(wx.EVT_MENU, self.OnZoomOut, id=ID_ZOOM_OUT)
 		self.Bind(wx.EVT_MENU, self.OnZoomDefault, id=ID_ZOOM_DEFAULT)
 		# TODO: Default Zoom and Set Zoom
-		
+
 		# Display the introductory banner information.
 		self.AppendText('''Click "▶ Run Comparison" to start
-		
+
 Right click for options
 ''')
 		# TODO: Make this not specific to GSMatch
-		
+
 		wx.CallAfter(self.ScrollToLine, 0)
-	
+
 	def _config(self):
 		self.wrap()
 		self.setDisplayLineNumbers(False)
-		
+
 		self.SetLexer(stc.STC_LEX_PYTHON)
 		self.SetKeyWords(0, ' '.join(keyword.kwlist))
-		
+
 		self.setStyles(self._FACES)
 		self.SetViewWhiteSpace(False)
 		self.SetWrapMode(True)
@@ -142,9 +142,9 @@ Right click for options
 			self.SetEndAtLastLine(False)
 		except AttributeError:
 			pass
-		
+
 		self.SetMargins(5, 5)
-	
+
 	def onKeyPress(self, event):
 		"""Event Handler for key being pressed"""
 		keycode = event.GetKeyCode()
@@ -158,15 +158,15 @@ Right click for options
 				):
 			if mod:
 				modifiers += ch
-		
+
 		if keyname is None:
 			if 27 < keycode < 256:
 				keyname = chr(keycode)
 			else:
 				keyname = "(%s)unknown" % keycode
-		
+
 		combination = modifiers + keyname
-		
+
 		commands = {
 				"Ctrl+A": self.SelectAll,
 				"Ctrl+C": self.Copy,
@@ -197,14 +197,14 @@ Right click for options
 				"Ctrl+W": self.ToggleWrap,
 				"Ctrl+L": self.ToggleLineNumbers,
 				}
-		
+
 		if combination in commands:
 			commands[combination]()
 		elif combination == "Ctrl+=":
 			self.SetZoom(self.default_zoom)
-		
+
 		print(combination)
-	
+
 	def fixLineEndings(self, text):
 		"""
 		Return text with line endings replaced by OS-specific endings.
@@ -215,7 +215,7 @@ Right click for options
 		:return:
 		:rtype:
 		"""
-		
+
 		lines = text.split('\r\n')
 		for l in range(len(lines)):
 			chunks = lines[l].split('\r')
@@ -224,28 +224,28 @@ Right click for options
 			lines[l] = os.linesep.join(chunks)
 		text = os.linesep.join(lines)
 		return text
-	
+
 	def setStyles(self, faces):
 		"""
 		Configure font size, typeface and color for lexer.
-		
+
 		:param faces:
 		:type faces:
-		
+
 		:return:
 		:rtype:
 		"""
-		
+
 		# Default style
 		self.StyleSetSpec(
 				stc.STC_STYLE_DEFAULT,
 				"face:{mono},size:{size:d},back:{backcol}".format(**faces)
 				)
-		
+
 		self.StyleClearAll()
 		self.SetSelForeground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 		self.SetSelBackground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
-		
+
 		styles = [  # Built in styles
 			(stc.STC_STYLE_LINENUMBER, f"back:#C0C0C0,face:{faces}(mono)s,size:{faces}(lnsize)d"),
 			(stc.STC_STYLE_CONTROLCHAR, f"face:{faces}(mono)s"),
@@ -267,10 +267,10 @@ Right click for options
 			(stc.STC_P_COMMENTBLOCK, "fore:#7F7F7F"),
 			(stc.STC_P_STRINGEOL, f"fore:#000000,face:{faces}(mono)s,back:#E0C0E0,eolfilled"),
 			]
-		
+
 		for style in styles:
 			self.StyleSetSpec(*style)
-	
+
 	def getStyle(self, c='black'):
 		"""
 		Returns a style for a given colour if one exists.  If no style
@@ -285,16 +285,16 @@ Right click for options
 			c = c.lower()
 		else:
 			c = 'black'
-		
+
 		try:
 			style = self._styles.index(c)
 			return style
-		
+
 		except ValueError:
 			style = free
 			self._styles[style] = c
 			self.StyleSetForeground(style, wx.NamedColour(c))
-			
+
 			free += 1
 			if free > 31:
 				free = 0
@@ -304,11 +304,11 @@ Right click for options
 	def OnZoomIn(self, *args):
 		"""Event Handler for zooming in"""
 		self.ZoomIn()
-	
+
 	def OnZoomOut(self, *args):
 		"""Event Handler for zooming out"""
 		self.ZoomOut()
-	
+
 	def OnZoomDefault(self, *args):
 		"""Event Handler for resetting the zoom"""
 		self.SetZoom(self.default_zoom)
@@ -322,20 +322,20 @@ Right click for options
 			# Leave a small margin so the feature hidden lines marker can be seen
 			self.SetMarginType(1, 0)
 			self.SetMarginWidth(1, 10)
-	
+
 	# def OnShowLineNumbers(self, event):
 	# 	print("sln")
 	# 	if hasattr(self, 'lineNumbers'):
 	# 		self.lineNumbers = event.IsChecked()
 	# 		self.setDisplayLineNumbers(self.lineNumbers)
-	
+
 	def ToggleLineNumbers(self, *args):
 		self.setDisplayLineNumbers(not self.lineNumbers)
 
 	def CanCopy(self):
 		"""
 		Returns True if text is selected and can be copied, False otherwise.
-		
+
 		:rtype: bool
 		"""
 		return self.GetSelectionStart() != self.GetSelectionEnd()
@@ -344,7 +344,7 @@ Right click for options
 		"""
 		Copy the selection and place it on the clipboard.
 		"""
-		
+
 		if self.CanCopy():
 			command = self.GetSelectedText()
 			data = wx.TextDataObject(command)
@@ -354,7 +354,7 @@ Right click for options
 		"""
 		Internal function for copying to clipboard
 		"""
-		
+
 		if wx.TheClipboard.Open():
 			wx.TheClipboard.UsePrimarySelection(False)
 			wx.TheClipboard.SetData(data)
@@ -364,11 +364,11 @@ Right click for options
 	def wrap(self, wrap=True):
 		"""
 		Set whether text is word wrapped.
-		
+
 		:param wrap: Whether the text should be word wrapped
 		:type wrap: bool
 		"""
-		
+
 		try:
 			self.SetWrapMode(wrap)
 		except AttributeError:
@@ -376,21 +376,21 @@ Right click for options
 	#
 	# def OnWrap(self, event):
 	# 	self.SetWrapMode(event.IsChecked())
-	
+
 	def ToggleWrap(self, *args):
 		"""
 		Toggle word wrap
 		"""
-		
+
 		self.SetWrapMode(not self.GetWrapMode())
-	
+
 	def GetContextMenu(self):
 		"""
 		Create and return a context menu for the log.
 		This is used instead of the scintilla default menu
 		in order to correctly respect our immutable buffer.
 		"""
-		
+
 		menu = wx.Menu()
 		menu.Append(wx.ID_COPY, "&Copy")
 		menu.Append(wx.ID_SELECTALL, "Select &All \tCtrl+A")
@@ -412,33 +412,33 @@ Right click for options
 		menu.Append(ID_ZOOM_OUT, 'Zoom &Out\tCtrl+[', 'Zoom Out')
 		menu.Append(ID_ZOOM_DEFAULT, '&Reset Zoom\tCtrl+=', 'Zoom Out')
 		menu.Append(ID_ZOOM_SET, 'Set &Zoom', 'Zoom Out')
-		
+
 		menu.Check(ID_WRAP, self.GetWrapMode())
 		menu.Check(ID_SHOW_LINENUMBERS, self.lineNumbers)
-		
+
 		return menu
-	
+
 	def OnContextMenu(self, event):
 		"""Event Handler for showing the context menu"""
 		menu = self.GetContextMenu()
 		self.PopupMenu(menu)
 
-
 	# Find Dialog Methods
+
 	def GetLastPosition(self):
 		return self.GetLength()
-	
+
 	def GetRange(self, start, end):
 		return self.GetTextRange(start, end)
-	
+
 	def GetSelection(self):
 		return self.GetAnchor(), self.GetCurrentPos()
-	
+
 	def ShowPosition(self, pos):
 		line = self.LineFromPosition(pos)
 		# self.EnsureVisible(line)
 		self.GotoLine(line)
-	
+
 	def DoFindNext(self, findData, findDlg=None):
 		backward = not (findData.GetFlags() & wx.FR_DOWN)
 		matchcase = (findData.GetFlags() & wx.FR_MATCHCASE) != 0
@@ -455,7 +455,7 @@ Right click for options
 		else:
 			start = self.GetSelection()[1]
 			loc = textstring.find(findstring, start)
-		
+
 		# if it wasn't found then restart at begining
 		if loc == -1 and start != 0:
 			if backward:
@@ -464,7 +464,7 @@ Right click for options
 			else:
 				start = 0
 				loc = textstring.find(findstring, start)
-		
+
 		# was it still not found?
 		if loc == -1:
 			dlg = wx.MessageDialog(self, 'Unable to find the search text.',
@@ -478,29 +478,29 @@ Right click for options
 				return
 			else:
 				findDlg.Close()
-		
+
 		# show and select the found text
 		self.ShowPosition(loc)
 		self.SetSelection(loc, loc + len(findstring))
-	
+
 	def OnFindText(self, *args):
 		if self.findDlg is not None:
 			return
-		
+
 		self.findDlg = wx.FindReplaceDialog(self, self.findData,
 											"Find", wx.FR_NOWHOLEWORD)
 		self.findDlg.Show()
-	
+
 	def OnFindClose(self, event):
 		self.findDlg.Destroy()
 		self.findDlg = None
 
-
 	# Save Methods
+
 	def bufferHasChanged(self):
 		# the log buffers can always be saved
 		return True
-	
+
 	def bufferSave(self):
 		import time
 		appname = wx.GetApp().GetAppName()
@@ -512,12 +512,12 @@ Right click for options
 				wildcard="*.py",
 				flags=wx.SAVE | wx.OVERWRITE_PROMPT
 				)
-		
+
 		if not filename:
 			return
-		
+
 		text = self.GetText()
-		
+
 		try:
 			f = open(filename, "w")
 			f.write(text)
@@ -527,20 +527,20 @@ Right click for options
 					self, u'Error saving session', u'Error',
 					wx.OK | wx.ICON_ERROR
 					)
-			
+
 			d.ShowModal()
 			d.Destroy()
-		
+
 	def write(self, text):
 		"""
 		Display text in the log.
 
 		Replace line endings with OS-specific endings.
-		
+
 		:param text:
 		:type text:
 		"""
-		
+
 		text = self.fixLineEndings(text)
 		self.AddText(text)
 		self.EnsureCaretVisible()
@@ -555,7 +555,7 @@ Right click for options
 		:param c:
 		:type c:
 		"""
-		
+
 		style = self.getStyle(c)
 		lenText = len(text.encode('utf8'))
 		end = self.GetLength()
@@ -563,7 +563,7 @@ Right click for options
 		self.StartStyling(end, 31)
 		self.SetStyling(lenText, style)
 		self.EnsureCaretVisible()
-	
+
 	def AppendStderr(self, text):
 		"""
 		Add the stderr text to the end of the control using colour "red"
@@ -571,8 +571,5 @@ Right click for options
 		:param text: ... Should be a unicode string or contain only ascii data.
 		:type text:
 		"""
-		
+
 		self.Append(text, "red")
-
-
-

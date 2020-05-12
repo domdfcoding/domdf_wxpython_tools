@@ -45,14 +45,15 @@ from . import icons
 
 class dir_picker(TextCtrlWrapper, wx.Panel):
 	"""
-	
+
 	"""
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition,
 			size=wx.DefaultSize, style=wx.TAB_TRAVERSAL, name=b"dir_picker",
 			):
 		"""
-		
+
 		:param parent:
 		:type parent:
 		:param id:
@@ -68,24 +69,24 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		:param name:
 		:type name:
 		"""
-		
+
 		self._parent = parent
 		self.initial_value = value
-		
+
 		wx.Panel.__init__(self, self._parent, id=id, pos=pos, size=size, style=style, name=name)
 		self.textctrl = self.dir_value = wx.TextCtrl(self, wx.ID_ANY, "")
 		self.clear_btn = wx.BitmapButton(self, wx.ID_ANY, icons.get_button_icon("ART_GO_BACK", 16))
 		self.browse_btn = wx.BitmapButton(self, wx.ID_ANY, icons.get_button_icon("ART_FOLDER_OPEN", 16))
-		
+
 		self.textctrl_width = 150
 		self.height = 29
-		
+
 		self.__set_properties()
 		self.__do_layout()
-		
+
 		self.Bind(wx.EVT_BUTTON, self.Clear, self.clear_btn)
 		self.Bind(wx.EVT_BUTTON, self.Browse, self.browse_btn)
-		
+
 	def __set_properties(self):
 		# begin wxGlade: dir_picker.__set_properties
 		self.dir_value.SetMinSize((-1, 29))
@@ -97,7 +98,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		# self.clear_btn.SetMinSize((self.height, self.height))
 		# self.browse_btn.SetMinSize((self.height, self.height))
 		# self.SetMinSize((self.textctrl_width + 5 + (2*self.height), self.height+5))
-	
+
 	def __do_layout(self):
 		# begin wxGlade: dir_picker.__do_layout
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -110,16 +111,16 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		sizer.Fit(self)
 		self.Layout()
 		# end wxGlade
-	
+
 	def set_textctrl_width(self, width):
 		self.SetTextWidth(width)
-	
+
 	def set_height(self, height):
 		self.SetHeight(height)
-		
+
 	def get_value(self):
 		return self.GetValue()
-	
+
 	def reset_value(self):
 		return self.ResetValue()
 
@@ -128,13 +129,13 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 			default_path = self.initial_value
 		else:
 			default_path = self.get_value()
-		
+
 		dlg = wx.DirDialog(
 			None, "Choose a directory:",
 			style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
 			defaultPath=default_path
 		)
-		
+
 		if dlg.ShowModal() == wx.ID_OK:
 			self.dir_value.SetValue((dlg.GetPath()))
 		dlg.Destroy()
@@ -152,9 +153,9 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def GetInsertionPoint(self):
 		"""
 		Returns the insertion point, or cursor, position.
-	
+
 		This is defined as the zero based index of the character position to the right of the insertion point. For example, if the insertion point is at the end of the single-line text control, it is equal to GetLastPosition .
-	
+
 		:rtype:	long
 		"""
 		return self.dir_value.GetInsertionPoint()
@@ -168,7 +169,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def SetHeight(self, height):
 		"""
 		Set the height of the widgets
-		
+
 		:param height: Height of the widgets
 		:type height: float or int
 		"""
@@ -179,16 +180,16 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def SetInitialValue(self, value):
 		"""
 		Sets the initial value for the text ctrl
-		
+
 		:param value: Initial value for the text ctrl
 		:type value: string
 		"""
 		self.initial_value = value
-		
+
 	def SetInsertionPoint(self, pos):
 		"""
 		Sets the insertion point at the given position.
-		
+
 		:param pos: Position to set, in the range from 0 to GetLastPosition inclusive.
 		:type pos: long
 		:return:
@@ -198,7 +199,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def SetInsertionPointEnd(self):
 		"""
 		Sets the insertion point at the end of the text control.
-		
+
 		This is equivalent to calling wx.TextCtrl.SetInsertionPoint with wx.TextCtrl.GetLastPosition argument.
 		"""
 		return self.dir_value.SetInsertionPointEnd()
@@ -206,15 +207,15 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def SetTextWidth(self, width):
 		"""
 		Sets the width of the TextCtrl
-		
+
 		:param width: The width of the TextCtrl
 		:type width: float or int
 		"""
-		
+
 		self.textctrl_width = width
 		self.__set_properties()
 		self.Layout()
-	
+
 # end of class dir_picker
 
 
@@ -222,7 +223,7 @@ class file_picker(dir_picker):
 	"""
 
 	"""
-	
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, name=b"file_picker",
@@ -253,7 +254,7 @@ class file_picker(dir_picker):
 		:param kwargs:
 		:type kwargs:
 		"""
-		
+
 		self._parent = parent
 		self.initial_value = value
 		self.file_extension = extension
@@ -261,9 +262,9 @@ class file_picker(dir_picker):
 		self.filetypestring = filetypestring
 		self.file_dialog_kwargs = kwargs
 		self.style = style
-		
+
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
-	
+
 	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
 		if self.get_value() == '':
 			default_path = str(pathlib.Path(self.initial_value).parent)
@@ -272,7 +273,7 @@ class file_picker(dir_picker):
 			if default_path.is_file():
 				default_path = default_path.parent
 			default_path = str(default_path)
-		
+
 		pathname = file_dialog(
 			self, extension=self.file_extension,
 			style=self.style,
@@ -280,7 +281,7 @@ class file_picker(dir_picker):
 			filetypestring=self.filetypestring,
 			title=self.dialog_title,
 		)
-		
+
 		if pathname:
 			self.dir_value.SetValue(pathname)
 			self.dir_value.SetFocus()
@@ -290,9 +291,9 @@ class file_picker(dir_picker):
 
 class file_folder_picker(dir_picker):
 	"""
-	
+
 	"""
-	
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, name=b"file_picker",
@@ -323,7 +324,7 @@ class file_folder_picker(dir_picker):
 		:param kwargs:
 		:type kwargs:
 		"""
-		
+
 		self._parent = parent
 		self.initial_value = value
 		self.file_extension = extension
@@ -332,22 +333,22 @@ class file_folder_picker(dir_picker):
 		self.file_dialog_kwargs = kwargs
 		self.style = style
 		self.files_mode = start_as_files
-		
+
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
-	
+
 	def set_folders_mode(self):
 		self.files_mode = False
-	
+
 	def set_files_mode(self):
 		self.files_mode = True
-	
+
 	def toggle_mode(self):
 		self.files_mode = not self.files_mode
-		
+
 	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
-		
+
 		if self.files_mode:
-		
+
 			if self.get_value() == '':
 				default_path = str(pathlib.Path(self.initial_value).parent)
 			else:
@@ -355,7 +356,7 @@ class file_folder_picker(dir_picker):
 				if default_path.is_file():
 					default_path = default_path.parent
 				default_path = str(default_path)
-			
+
 			pathname = file_dialog(
 				self, extension=self.file_extension,
 				style=self.style,
@@ -363,23 +364,23 @@ class file_folder_picker(dir_picker):
 				filetypestring=self.filetypestring,
 				title=self.dialog_title,
 			)
-			
+
 			if pathname:
 				self.dir_value.SetValue(pathname)
 				self.dir_value.SetFocus()
-	
+
 		else:
 			if self.get_value() == '':
 				default_path = self.initial_value
 			else:
 				default_path = self.get_value()
-			
+
 			dlg = wx.DirDialog(
 				None, "Choose a directory:",
 				style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
 				defaultPath=default_path
 			)
-			
+
 			if dlg.ShowModal() == wx.ID_OK:
 				self.dir_value.SetValue((dlg.GetPath()))
 			dlg.Destroy()

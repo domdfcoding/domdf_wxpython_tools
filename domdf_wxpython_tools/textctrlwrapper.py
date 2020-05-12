@@ -51,7 +51,7 @@ class TextCtrlWrapper:
 		"""
 
 		return self.textctrl.CanCopy()
-	
+
 	def CanCut(self):
 		"""
 		Returns True if the selection can be cut to the clipboard.
@@ -60,22 +60,22 @@ class TextCtrlWrapper:
 		"""
 
 		return self.textctrl.CanCut()
-	
+
 	def CanPaste(self):
 		"""
 		Returns True if the contents of the clipboard can be pasted into the text control.
-		
+
 		On some platforms (Motif, GTK) this is an approximation and returns True if the control is editable, False otherwise.
 
 		:rtype: bool
 		"""
 
 		return self.textctrl.CanPaste()
-	
+
 	def CanRedo(self):
 		"""
 		Returns True if there is a redo facility available and the last operation can be redone.
-		
+
 		:rtype: bool
 		"""
 
@@ -84,7 +84,7 @@ class TextCtrlWrapper:
 	def CanUndo(self):
 		"""
 		Returns True if there is an undo facility available and the last operation can be undone.
-		
+
 		:rtype:	bool
 		"""
 
@@ -116,7 +116,7 @@ class TextCtrlWrapper:
 	def GetLastPosition(self):
 		"""
 		Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.
-	
+
 		:rtype:	wx.TextPos
 		"""
 
@@ -125,9 +125,9 @@ class TextCtrlWrapper:
 	def GetSelection(self):
 		"""
 		Gets the current selection span.
-	
+
 		If the returned values are equal, there was no selection. Please note that the indices returned may be used with the other wx.TextCtrl methods but don’t necessarily represent the correct indices into the string returned by GetValue for multiline controls under Windows (at least,) you should use GetStringSelection to get the selected text.
-	
+
 		:rtype:	tuple
 		"""
 
@@ -136,9 +136,9 @@ class TextCtrlWrapper:
 	def GetStringSelection(self):
 		"""
 		Gets the text currently selected in the control.
-	
+
 		If there is no selection, the returned string is empty.
-	
+
 		:rtype:	string
 		"""
 
@@ -147,20 +147,20 @@ class TextCtrlWrapper:
 	def GetValue(self):
 		"""
 		Gets the contents of the control.
-		
+
 		Notice that for a multiline text control, the lines will be separated by (Unix-style) \n characters, even under Windows where they are separated by a \r\n sequence in the native control.
-		
+
 		:rtype:	string
 		"""
 
 		return self.textctrl.GetValue()
-	
+
 	def IsEditable(self):
 		"""
 		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
-		
+
 		In other words, this functions returns True if the control hasn’t been put in read-only mode by a previous call to SetEditable .
-		
+
 		:rtype:	bool
 		"""
 
@@ -169,14 +169,14 @@ class TextCtrlWrapper:
 	def IsEmpty(self):
 		"""
 		Returns True if the control is currently empty.
-		
+
 		This is the same as GetValue .empty() but can be much more efficient for the multiline controls containing big amounts of text.
-		
+
 		:rtype:	bool
 		"""
 
 		return self.textctrl.IsEmpty()
-	
+
 	def Paste(self):
 		"""
 		Pastes text from the clipboard to the text item.
@@ -187,18 +187,18 @@ class TextCtrlWrapper:
 	def Redo(self):
 		"""
 		If there is a redo facility and the last operation can be redone, redoes the last operation.
-		
+
 		Does nothing if there is no redo facility.
 		"""
 
 		return self.textctrl.Redo()
-		
+
 	def Remove(self, from_, to_):
 		"""
 		Removes the text starting at the first given position up to (but not including) the character at the last position.
-		
+
 		This function puts the current insertion point position at to as a side effect.
-		
+
 		:param from_: The first position
 		:type from_: long
 		:param to_: The last position
@@ -206,13 +206,13 @@ class TextCtrlWrapper:
 		"""
 
 		return self.textctrl.Remove(from_, to_)
-	
+
 	def Replace(self, from_, to_, value):
 		"""
 		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
-		
+
 		This function puts the current insertion point position at to as a side effect.
-		
+
 		:param from_: The first position
 		:type from_: long
 		:param to_: The last position
@@ -226,7 +226,7 @@ class TextCtrlWrapper:
 	def SelectAll(self):
 		"""
 		Selects all text in the control.
-		
+
 		See also SetSelection
 		"""
 
@@ -242,43 +242,43 @@ class TextCtrlWrapper:
 	def SetSelection(self, from_, to_):
 		"""
 		Selects the text starting at the first position up to (but not including) the character at the last position.
-		
+
 		If both parameters are equal to -1 all text in the control is selected.
-		
+
 		Notice that the insertion point will be moved to from by this function.
-		
+
 		:param from_: The first position
 		:type from_: long
 		:param to_: The last position
 		:type to_: long
-		
+
 		See also SelectAll
 		"""
-		
+
 		return self.textctrl.SetSelection(from_, to_)
 
 	def SetValue(self, value):
 		"""
 		Sets the new text control value.
-		
+
 		It also marks the control as not-modified which means that IsModified() would return False immediately after the call to SetValue .
-		
+
 		The insertion point is set to the start of the control (i.e. position 0) by this function unless the control value doesn’t change at all, in which case the insertion point is left at its original position.
-		
+
 		Note that, unlike most other functions changing the controls values, this function generates a wxEVT_TEXT event. To avoid this you can use ChangeValue instead.
-		
+
 		Parameters:	value (string) – The new value to set. It may contain newline characters if the text control is multi-line.
 		"""
-		
+
 		return self.textctrl.SetValue(value)
-		
+
 	def Undo(self):
 		"""
 		If there is an undo facility and the last operation can be undone, undoes the last operation.
-		
+
 		Does nothing if there is no undo facility.
 		"""
-		
+
 		return self.textctrl.Undo()
 
 	def WriteText(self, text):
@@ -288,7 +288,7 @@ class TextCtrlWrapper:
 		:param text: Text to write to the text control
 		:type text: string
 		"""
-		
+
 		return self.textctrl.WriteText(text)
-	
+
 # end of class TextCtrlWrapper

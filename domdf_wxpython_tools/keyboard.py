@@ -25,7 +25,7 @@ import wx
 
 
 def gen_keymap():
-	
+
 	keys = (
 			"BACK", "TAB", "RETURN", "ESCAPE", "SPACE", "DELETE", "START",
 			"LBUTTON", "RBUTTON", "CANCEL", "MBUTTON", "CLEAR", "PAUSE",
@@ -45,14 +45,14 @@ def gen_keymap():
 			"NUMPAD_ADD", "NUMPAD_SEPARATOR", "NUMPAD_SUBTRACT", "NUMPAD_DECIMAL",
 			"NUMPAD_DIVIDE"
 			)
-	
+
 	keyMap = {}
-	
+
 	for i in keys:
 		keyMap[getattr(wx, "WXK_" + i)] = i
 	for i in ("SHIFT", "ALT", "CONTROL", "MENU"):
 		keyMap[getattr(wx, "WXK_" + i)] = ''
-	
+
 	return keyMap
 
 

@@ -69,7 +69,7 @@ class ColourPickerPanel(StylePickerPanel):
 	"""
 	Based on StylePickerPanel, a Panel for selecting a list of colours, and their order
 	"""
-	
+
 	def __init__(
 			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr, label="Choose Colours: ",
@@ -95,10 +95,10 @@ class ColourPickerPanel(StylePickerPanel):
 		:param selection_choices: A list of hex value choices to populate the 'selection' size of the panel with
 		:type selection_choices: list of str
 		"""
-		
+
 		args = (parent, id, pos, size)
 		kwds = {"style": style, "name": name}
-		
+
 		if picker_choices is None:
 			picker_choices = default_picker_choices
 
@@ -108,25 +108,25 @@ class ColourPickerPanel(StylePickerPanel):
 		self.label = label
 		self.picker_choices = picker_choices
 		self.selection_choices = selection_choices
-		
+
 		# begin wxGlade: ColourPickerPanel.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.TAB_TRAVERSAL
 		wx.Panel.__init__(self, *args, **kwds)
 		self.main_panel = wx.Panel(self, wx.ID_ANY)
 		self.move_panel = wx.Panel(self.main_panel, wx.ID_ANY)
 		self.picker_list_box = wx.ListBox(self.main_panel, wx.ID_ANY, choices=[])
-		
+
 		self.picker_figure = Figure()
-		
+
 		self.picker_canvas = FigureCanvas(self.main_panel, wx.ID_ANY, self.picker_figure)
 		self.add_btn = wx.Button(self.main_panel, wx.ID_ANY, u"Add 🡲")
 		self.remove_btn = wx.Button(self.main_panel, wx.ID_ANY, u"🡰 Remove")
 		self.selection_list_box = wx.ListBox(self.main_panel, wx.ID_ANY, choices=[])
 		self.up_btn = wx.Button(self.main_panel, wx.ID_ANY, u"🡱 Up")
 		self.down_btn = wx.Button(self.main_panel, wx.ID_ANY, u"🡳 Down")
-		
+
 		self.selection_figure = Figure()
-		
+
 		self.selection_canvas = FigureCanvas(self.main_panel, wx.ID_ANY, self.selection_figure)
 
 		self.__set_properties()
@@ -139,21 +139,21 @@ class ColourPickerPanel(StylePickerPanel):
 		self.Bind(wx.EVT_LISTBOX, self.update_selection_preview, self.selection_list_box)
 		self.Bind(wx.EVT_BUTTON, self.move_up, self.up_btn)
 		self.Bind(wx.EVT_BUTTON, self.move_down, self.down_btn)
-		
+
 		self.Bind(wx.EVT_LISTBOX_DCLICK, self.remove, self.selection_list_box)
-		
+
 		self.remove_btn.SetLabel("Remove")
-		
+
 		self.selection_list_box.Clear()
 		self.selection_list_box.AppendItems(self.selection_choices)
 		if not self.selection_list_box.IsEmpty():
 			self.selection_list_box.SetSelection(0)
-		
+
 		self.picker_list_box.Clear()
 		self.picker_list_box.AppendItems(self.picker_choices)
 		if not self.picker_list_box.IsEmpty():
 			self.picker_list_box.SetSelection(0)
-		
+
 		self.picker_axes = self.picker_figure.add_subplot(111)
 		self.selection_axes = self.selection_figure.add_subplot(111)
 		self.update_picker_preview()
@@ -218,24 +218,24 @@ class ColourPickerPanel(StylePickerPanel):
 		self.Layout()
 		# end wxGlade
 		borders_label.SetLabel(self.label)
-	
+
 	def add(self, event):  # wxGlade: ColourPickerPanel.<event_handler>
 		"""
 		Event handler for adding the colour currently selected in the 'picker' to the 'selection'
 		"""
-		
+
 		selection = self.picker_list_box.GetSelection()
 		if selection == -1:
 			return
-		
+
 		selection_string = self.picker_list_box.GetString(selection)
 		if selection_string == '':
 			return
-		
+
 		self.selection_list_box.Append(selection_string)
-		
+
 		self.update_picker_preview()
-		
+
 		self.selection_list_box.SetSelection(self.selection_list_box.GetCount() - 1)
 		self.update_selection_preview()
 		event.Skip()
@@ -244,43 +244,43 @@ class ColourPickerPanel(StylePickerPanel):
 		"""
 		Event handler for removing the colour currently selected in the 'selection'
 		"""
-		
+
 		selection = self.selection_list_box.GetSelection()
 		if selection == -1:
 			return
-		
+
 		selection_string = self.selection_list_box.GetString(selection)
 		if selection_string == '':
 			return
-		
+
 		self.selection_list_box.Delete(self.selection_list_box.GetSelection())
-		
+
 		self.update_selection_preview()
 		event.Skip()
 
 	def update_preview(self, list_obj, axes):
 		"""
 		Update the preview from the given list
-		
+
 		:param list_obj: The list to update the preview for
 		:type list_obj: wx.ListBox
 		:param axes: The preview axes to update
 		:type axes: matplotlib.axes.Axes
 		"""
-		
+
 		axes.clear()
 		axes.axis('off')
 		selection_string = list_obj.GetStringSelection()
 		if selection_string == '':
 			return
-		
+
 		axes.scatter(1, 1, s=400, color=selection_string, marker="s")
-	
+
 	def pick(self, *args):
 		"""
 		Open a wx.ColourDialog to edit the colour currently selected in the picker
 		"""
-		
+
 		selection = self.selection_list_box.GetSelection()
 		if selection == -1:
 			return
@@ -304,18 +304,18 @@ class ColourPickerPanel(StylePickerPanel):
 			self.selection_list_box.SetSelection(selection)
 			self.update_selection_preview()
 			dlg.Destroy()
-	
+
 	def GetSelection(self):
 		"""
 		Returns a list of the currently selected colours
-		
+
 		:rtype: list of str
 		"""
 		return [
 				self.selection_list_box.GetString(item) for item in
 				range(self.selection_list_box.GetCount())
 				]
-	
+
 	get_selection = GetSelection
-	
+
 # end of class ColourPickerPanel

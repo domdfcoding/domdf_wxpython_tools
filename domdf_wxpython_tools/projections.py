@@ -31,9 +31,9 @@ from matplotlib import axes
 
 class XPanAxes(matplotlib.axes.Axes):
 	"""Constrain pan to x-axis"""
-	
+
 	name = "XPanAxes"
-	
+
 	def drag_pan(self, button, key, x, y):
 		# pretend key=='x'
 		matplotlib.axes.Axes.drag_pan(self, button, 'x', x, y)
@@ -41,9 +41,9 @@ class XPanAxes(matplotlib.axes.Axes):
 
 class XPanAxes_NoZoom(matplotlib.axes.Axes):
 	"""Constrain pan to x-axis and prevent zooming"""
-	
+
 	name = "XPanAxes_NoZoom"
-	
+
 	def drag_pan(self, button, key, x, y):
 		# pretend key=='x'
 		if button != 1:
@@ -53,9 +53,9 @@ class XPanAxes_NoZoom(matplotlib.axes.Axes):
 
 class NoZoom(matplotlib.axes.Axes):
 	"""Prevent zooming in pan mode"""
-	
+
 	name = "NoZoom"
-	
+
 	def drag_pan(self, button, key, x, y):
 		# pretend key=='x'
 		if button != 1:
