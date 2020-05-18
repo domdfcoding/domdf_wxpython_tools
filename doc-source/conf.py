@@ -15,7 +15,6 @@ from sphinx.locale import _
 from __pkginfo__ import __version__
 
 
-
 github_url = f"https://github.com/domdfcoding/domdf_wxpython_tools"
 
 rst_prolog = f""".. |pkgname| replace:: domdf_wxpython_tools
