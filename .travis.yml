@@ -10,10 +10,11 @@ python:
 install:
 
   - pip install pip  --upgrade
+  - pip install tox tox-travis
 
 
 script:
-  - echo "skipping tests"
+  - tox
 
 
 stages:
