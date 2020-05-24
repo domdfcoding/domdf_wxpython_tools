@@ -11,7 +11,7 @@ domdf_wxpython_tools
 	* - Docs
 	  - |docs|
 	* - Tests
-	  - |travis| |requires| |coveralls| |codefactor|
+	  - |travis| |requires| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Other
