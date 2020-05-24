@@ -1,9 +1,5 @@
 modname: domdf_wxpython_tools
 
-# Files not to generate
-exclude_files:
-  - tox
-
 enable_tests: False
 enable_conda: False
 
