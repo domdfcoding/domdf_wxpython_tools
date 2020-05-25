@@ -2,6 +2,7 @@
 
 language: python
 dist: xenial
+cache: pip
 python:
   - '3.6'
   - '3.7'
@@ -49,4 +50,4 @@ jobs:
         on:
           repo: domdfcoding/domdf_wxpython_tools
         provider: script
-        script: python .ci/copy_pypi_2_github.py || travis_terminate 1;
+        script: python .ci/copy_pypi_2_github.py || travis_terminate 1
