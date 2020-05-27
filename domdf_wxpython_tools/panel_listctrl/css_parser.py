@@ -29,8 +29,7 @@ import webcolors
 import wx
 
 # this package
-from domdf_wxpython_tools.panel_listctrl.constants import text_defaults, sys_colour_lookup
-
+from domdf_wxpython_tools.panel_listctrl.constants import sys_colour_lookup, text_defaults
 
 # Setup tinycss
 parser = tinycss.make_parser("page3")
@@ -100,8 +99,10 @@ def _parse_css(stylesheet):
 					if value in sys_colour_lookup:
 						value = wx.SystemSettings.GetColour(sys_colour_lookup[value])
 					else:
-						raise ValueError(f"""wx.SystemColour 'value' not recognised.
-See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values""")
+						raise ValueError(
+								f"""wx.SystemColour 'value' not recognised.
+See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values"""
+								)
 
 				elif value.startswith("#"):
 					# Hex value, pass to wx.Colour directly

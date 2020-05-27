@@ -33,8 +33,8 @@ can be used as the basis for custom list items
 from pathlib import Path
 
 # this package
-from domdf_wxpython_tools.panel_listctrl.panel_listctrl import PanelListCtrl, PanelListItem
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
 from domdf_wxpython_tools.panel_listctrl.font_parser import parse_font
+from domdf_wxpython_tools.panel_listctrl.panel_listctrl import PanelListCtrl, PanelListItem
 
 default_css = Path(__file__).parent / "Default.css"

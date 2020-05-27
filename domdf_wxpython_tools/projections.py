@@ -62,6 +62,7 @@ class NoZoom(matplotlib.axes.Axes):
 			return
 		matplotlib.axes.Axes.drag_pan(self, button, key, x, y)
 
+
 #
 # matplotlib.projections.register_projection(NoZoom)
 # matplotlib.projections.register_projection(XPanAxes_NoZoom)

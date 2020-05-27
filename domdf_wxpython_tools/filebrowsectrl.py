@@ -40,7 +40,6 @@
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 import os
 import pathlib
@@ -53,7 +52,6 @@ from wx.lib.filebrowsebutton import FileBrowseButton
 from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
 from domdf_wxpython_tools.dialogs import file_dialog_wildcard
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
-
 
 # ----------------------------------------------------------------------
 
@@ -74,16 +72,26 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE, labelText="File Entry:", buttonText="Browse",
+			self,
+			parent,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
+			labelText="File Entry:",
+			buttonText="Browse",
 			toolTip="Type a filename or click the browse button to choose a file",
 			# following are the values for a file dialog box
-			dialogTitle="Choose a file", initialValue="",
+			dialogTitle="Choose a file",
+			initialValue="",
 			# callback for when value changes (optional)
 			changeCallback=lambda x: x,
-			labelWidth=0, name='fileBrowseButton', show_cancel_btn=True,
+			labelWidth=0,
+			name='fileBrowseButton',
+			show_cancel_btn=True,
 			fileMask="All files (*.*)|*.*",
-			dialog_title="File Picker", **kwargs
+			dialog_title="File Picker",
+			**kwargs
 			):
 		"""
 		:param parent:			Parent window. Should not be None.
@@ -174,8 +182,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		"""Create the browse-button control"""
 		# button = wx.Button(self, -1, self.buttonText)
 		button = wx.BitmapButton(
-				self, -1,
-				bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16)))
+				self, -1, bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16))
+				)
 		# button.SetToolTip(self.toolTip)
 		button.SetToolTip(self.buttonText)
 		button.Bind(wx.EVT_BUTTON, self.OnBrowse)
@@ -199,7 +207,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		default_path = str(default_path)
 
 		pathname = file_dialog_wildcard(
-				self, wildcard=self.fileMask,
+				self,
+				wildcard=self.fileMask,
 				style=self.style,
 				defaultDir=default_path,
 				title=self.dialog_title,
@@ -532,6 +541,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		event.Skip()
 
 	if wx.Platform == "__WXMSW__":
+
 		def SetValue(self, value, callBack=1):
 			"""
 			Convenient setting of text control value,
@@ -545,6 +555,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 			# Hack to call an event handler
 			class LocalEvent:
+
 				def __init__(self, string):
 					self._string = string
 
@@ -558,11 +569,20 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 
 class DirBrowseCtrl(FileBrowseCtrl):
+
 	def __init__(
-			self, parent, id=-1, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON, labelText='Select a directory:',
-			buttonText='Browse', toolTip='Type directory name or browse to select',
-			dialogTitle='', initialValue=None, changeCallback=None,
+			self,
+			parent,
+			id=-1,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
+			labelText='Select a directory:',
+			buttonText='Browse',
+			toolTip='Type directory name or browse to select',
+			dialogTitle='',
+			initialValue=None,
+			changeCallback=None,
 			name='DirBrowseCtrl'
 			):
 
@@ -570,9 +590,21 @@ class DirBrowseCtrl(FileBrowseCtrl):
 			initialValue = os.getcwd()
 
 		FileBrowseCtrl.__init__(
-				self, parent, id, pos, size, style, labelText, buttonText,
-				toolTip, dialogTitle, initialValue,
-				changeCallback=changeCallback, name=name)
+				self,
+				parent,
+				id=id,
+				pos=pos,
+				size=size,
+				style=style,
+				labelText=labelText,
+				buttonText=buttonText,
+				toolTip=toolTip,
+				dialogTitle=dialogTitle,
+				initialValue=initialValue,
+				# callback for when value changes (optional)
+				changeCallback=changeCallback,
+				name=name,
+				)
 
 	def OnBrowse(self, ev=None):
 
@@ -588,9 +620,7 @@ class DirBrowseCtrl(FileBrowseCtrl):
 
 		default_path = str(default_path)
 
-		dialog = wx.DirDialog(
-				self, message=self.dialogTitle,
-				defaultPath=default_path, style=self.style)
+		dialog = wx.DirDialog(self, message=self.dialogTitle, defaultPath=default_path, style=self.style)
 
 		if dialog.ShowModal() == wx.ID_OK:
 			self.ChangeValue(dialog.GetPath())

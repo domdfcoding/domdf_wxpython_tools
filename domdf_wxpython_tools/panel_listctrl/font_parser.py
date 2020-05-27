@@ -45,8 +45,7 @@ def freezeargs(func):
 
 	@wraps(func)
 	def wrapped(*args, **kwargs):
-		args = tuple(
-				[frozendict(arg) if isinstance(arg, dict) else arg for arg in args])
+		args = tuple([frozendict(arg) if isinstance(arg, dict) else arg for arg in args])
 		kwargs = {k: frozendict(v) if isinstance(v, dict) else v for k, v in kwargs.items()}
 		return func(*args, **kwargs)
 
@@ -94,7 +93,7 @@ def parse_font(style_dict):
 			"family": style_dict["font-family"],
 			"style": style_dict["font-style"],
 			"weight": style_dict["font-weight"],
-			"faceName": style_dict["font-face-name"]
+			"faceName": style_dict["font-face-name"],
 			}
 
 	if style_dict["text-decoration"].lower() == "underline":
@@ -103,7 +102,7 @@ def parse_font(style_dict):
 	# if style_dict["font-size"] is None:
 	# 	font_data["pointSize"] = None
 	# else:
-	font_size_value, pt_or_px = filter(None, re.split("(\d+|\D+)", style_dict["font-size"]))
+	font_size_value, pt_or_px = filter(None, re.split(r"(\d+|\D+)", style_dict["font-size"]))
 
 	if pt_or_px.lower() == "pt":
 		font_data["pointSize"] = int(font_size_value)

@@ -38,7 +38,6 @@ import wx
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
 from domdf_wxpython_tools.panel_listctrl.font_parser import parse_font
 
-
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -47,9 +46,17 @@ from domdf_wxpython_tools.panel_listctrl.font_parser import parse_font
 
 
 class PanelListCtrl(wx.ScrolledWindow):
+
 	def __init__(
-			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr, left_padding=32):
+			self,
+			parent,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL,
+			name=wx.PanelNameStr,
+			left_padding=32
+			):
 
 		wx.ScrolledWindow.__init__(self, parent, id, pos=pos, size=size, style=style | wx.TAB_TRAVERSAL, name=name)
 
@@ -379,7 +386,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		otherwise.
 # 		"""
 # 		return 0
-		# TODO: Trigger EVT_LIST_INSERT_ITEM
+# TODO: Trigger EVT_LIST_INSERT_ITEM
 #
 
 	def IsEmpty(self):
@@ -465,7 +472,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		Call this function to sort the items in the list control.
 # 		"""
 # 		return False
-#
+
 	@property
 	def ColumnCount(self):
 		"""
@@ -484,6 +491,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # in the list control (icon or small icon view)."""
 #
 #
+
 	@property
 	def FocusedItem(self):
 		"""
@@ -504,13 +512,21 @@ class PanelListCtrl(wx.ScrolledWindow):
 		"""
 		return len(self._items)
 
+
 # end of class RecentProjectsPanel
 
 
 class PanelListItem(wx.Panel):
+
 	def __init__(
-			self, parent, text_dict, style_data, id=wx.ID_ANY,
-			style=0, name=wx.PanelNameStr, left_padding=32
+			self,
+			parent,
+			text_dict,
+			style_data,
+			id=wx.ID_ANY,
+			style=0,
+			name=wx.PanelNameStr,
+			left_padding=32,
 			):
 		"""
 
@@ -548,10 +564,12 @@ class PanelListItem(wx.Panel):
 				style_data = parse_css_file(style_data)
 
 		elif not isinstance(style_data, dict):
-			raise TypeError("""'style_data' must be either:
+			raise TypeError(
+					"""'style_data' must be either:
 	> A string or pathlib.Path object pointing to a css file, or
 	> A dictionary containing the style data, or
-	> A string containing css properties.""")
+	> A string containing css properties."""
+					)
 
 		self.style_data = style_data
 
@@ -697,5 +715,6 @@ class PanelListItem(wx.Panel):
 
 	def GetContents(self):
 		return self._items.values()
+
 
 # end of class RecentProjectItem

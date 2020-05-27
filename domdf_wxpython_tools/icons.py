@@ -48,8 +48,7 @@ def GetStockBitmap(art_id, art_client=None):
 	global _art_provider
 	if _art_provider is None:
 		_art_provider = wx.ArtProvider()
-	return _art_provider.GetBitmap(
-			id=art_id, client=art_client or wx.ART_OTHER)
+	return _art_provider.GetBitmap(id=art_id, client=art_client or wx.ART_OTHER)
 
 
 def GetStockToolbarBitmap(art_id):

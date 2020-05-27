@@ -39,7 +39,6 @@ style_uppercase = 4
 style_lowercase = 8
 style_hidden = 16
 
-
 common_filetypes = {
 		"jpeg": ("JPEG files", ["jpg", "jpeg"]),
 		"png": ("PNG files", ["png"]),
@@ -69,11 +68,7 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 	:rtype: list of str
 	"""
 
-	with wx.FileDialog(
-			parent, title,
-			wildcard=wildcard,
-			style=style, **kwargs
-			) as fileDialog:
+	with wx.FileDialog(parent, title, wildcard=wildcard, style=style, **kwargs) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
 			return  # the user changed their mind
@@ -87,7 +82,8 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 		valid_extensions = [os.path.splitext(ext)[1] for ext in ";".join(filter_extension_list).split(";")]
 		selected_filter_index = fileDialog.GetFilterIndex()
 
-		selected_filter_extensions = filter_extension_list[selected_filter_index].replace("*.", ".").split(";")
+		selected_filter_extensions = filter_extension_list[selected_filter_index]
+		selected_filter_extensions = selected_filter_extensions.replace("*.", ".").split(";")
 
 		for index, pathname in enumerate(pathnames):
 			if selected_filter_extensions[0] != ".*":
@@ -97,7 +93,9 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 		return pathnames
 
 
-def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
+def file_dialog_multiple(
+		parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs
+		):
 	"""
 	Create a wx.FileDialog with for the extension and filetypestring given, and return a list of the files selected.
 
@@ -119,9 +117,11 @@ def file_dialog_multiple(parent, extension, title, filetypestring, style=wx.FD_S
 	"""
 
 	with wx.FileDialog(
-			parent, title,
+			parent,
+			title,
 			wildcard=f"{filetypestring} (*.{extension.lower()})|*.{extension.lower()};*.{extension.upper()}",
-			style=style, **kwargs
+			style=style,
+			**kwargs
 			) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
@@ -220,8 +220,12 @@ class Wildcards:
 		self._wildcards = []
 
 	def add_filetype(
-			self, description, extensions=None, hint_format=style_lowercase,
-			value_format=style_lowercase | style_uppercase):
+			self,
+			description,
+			extensions=None,
+			hint_format=style_lowercase,
+			value_format=style_lowercase | style_uppercase
+			):
 		"""
 		Add a filetype to the wildcards
 
@@ -281,8 +285,11 @@ class Wildcards:
 		return "|".join(self._wildcards)
 
 	def add_common_filetype(
-			self, filetype, hint_format=style_lowercase,
-			value_format=style_lowercase | style_uppercase):
+			self,
+			filetype,
+			hint_format=style_lowercase,
+			value_format=style_lowercase | style_uppercase,
+			):
 		"""
 		Add a common filetype.
 

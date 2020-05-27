@@ -6,7 +6,7 @@
 Log Control, supporting text copying and zoom.
 """
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #  Based on PyCrust by Patrick K. O'Brien <pobrien@orbtech.com>
 #   and https://wiki.wxpython.org/StyledTextCtrl%20Log%20Window%20Demo
 #
@@ -27,7 +27,6 @@ Log Control, supporting text copying and zoom.
 #
 #
 
-
 # stdlib
 import keyword
 import os
@@ -37,9 +36,8 @@ import wx
 from wx import stc
 
 # this package
-from domdf_wxpython_tools.utils import generate_faces
 from domdf_wxpython_tools.keyboard import gen_keymap
-
+from domdf_wxpython_tools.utils import generate_faces
 
 # IDs
 ID_WRAP = wx.NewIdRef()
@@ -48,7 +46,6 @@ ID_ZOOM_IN = wx.NewIdRef()
 ID_ZOOM_OUT = wx.NewIdRef()
 ID_ZOOM_DEFAULT = wx.NewIdRef()
 ID_ZOOM_SET = wx.NewIdRef()
-
 
 # Key bindings:
 # Home              Go to the beginning of the line.
@@ -61,7 +58,7 @@ ID_ZOOM_SET = wx.NewIdRef()
 # Ctrl+=            Default font size.
 # Ctrl+F            Search
 # TODO: F3                Search next
-#
+
 
 class LogCtrl(stc.StyledTextCtrl):
 	"""
@@ -69,8 +66,13 @@ class LogCtrl(stc.StyledTextCtrl):
 	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER, name="Log"
+			self,
+			parent,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
+			name="Log"
 			):
 		"""
 		:param parent: The parent window.
@@ -146,16 +148,15 @@ Right click for options
 		self.SetMargins(5, 5)
 
 	def onKeyPress(self, event):
-		"""Event Handler for key being pressed"""
+		"""
+		Event Handler for key being pressed
+		"""
+
 		keycode = event.GetKeyCode()
 		keyname = self._keyMap.get(keycode, None)
 		modifiers = ""
-		for mod, ch in (
-				(event.ControlDown(), 'Ctrl+'),
-				(event.AltDown(), 'Alt+'),
-				(event.ShiftDown(), 'Shift+'),
-				(event.MetaDown(), 'Meta+')
-				):
+		for mod, ch in ((event.ControlDown(), 'Ctrl+'), (event.AltDown(), 'Alt+'), (event.ShiftDown(), 'Shift+'),
+			(event.MetaDown(), 'Meta+')):
 			if mod:
 				modifiers += ch
 
@@ -192,8 +193,7 @@ Right click for options
 				"Ctrl+Shift+LEFT": self.WordLeftExtend,
 				"Ctrl+Shift+RIGHT": self.WordRightExtend,
 				"Ctrl+]": self.ZoomIn,
-				"Ctrl+[": self.ZoomOut,
-				# "ESCAPE": here we should remove focus from the widget,
+				"Ctrl+[": self.ZoomOut,  # "ESCAPE": here we should remove focus from the widget,
 				"Ctrl+W": self.ToggleWrap,
 				"Ctrl+L": self.ToggleLineNumbers,
 				}
@@ -237,10 +237,7 @@ Right click for options
 		"""
 
 		# Default style
-		self.StyleSetSpec(
-				stc.STC_STYLE_DEFAULT,
-				"face:{mono},size:{size:d},back:{backcol}".format(**faces)
-				)
+		self.StyleSetSpec(stc.STC_STYLE_DEFAULT, "face:{mono},size:{size:d},back:{backcol}".format(**faces))
 
 		self.StyleClearAll()
 		self.SetSelForeground(True, wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
@@ -301,16 +298,25 @@ Right click for options
 			self._free = free
 			return style
 
-	def OnZoomIn(self, *args):
-		"""Event Handler for zooming in"""
+	def OnZoomIn(self, *_):
+		"""
+		Event Handler for zooming in
+		"""
+
 		self.ZoomIn()
 
-	def OnZoomOut(self, *args):
-		"""Event Handler for zooming out"""
+	def OnZoomOut(self, *_):
+		"""
+		Event Handler for zooming out
+		"""
+
 		self.ZoomOut()
 
-	def OnZoomDefault(self, *args):
-		"""Event Handler for resetting the zoom"""
+	def OnZoomDefault(self, *_):
+		"""
+		Event Handler for resetting the zoom
+		"""
+
 		self.SetZoom(self.default_zoom)
 
 	def setDisplayLineNumbers(self, state):
@@ -329,7 +335,7 @@ Right click for options
 	# 		self.lineNumbers = event.IsChecked()
 	# 		self.setDisplayLineNumbers(self.lineNumbers)
 
-	def ToggleLineNumbers(self, *args):
+	def ToggleLineNumbers(self, *_):
 		self.setDisplayLineNumbers(not self.lineNumbers)
 
 	def CanCopy(self):
@@ -350,7 +356,8 @@ Right click for options
 			data = wx.TextDataObject(command)
 			self._clip(data)
 
-	def _clip(self, data):
+	@staticmethod
+	def _clip(data):
 		"""
 		Internal function for copying to clipboard
 		"""
@@ -373,11 +380,12 @@ Right click for options
 			self.SetWrapMode(wrap)
 		except AttributeError:
 			return 'Wrapping is not available in this version.'
+
 	#
 	# def OnWrap(self, event):
 	# 	self.SetWrapMode(event.IsChecked())
 
-	def ToggleWrap(self, *args):
+	def ToggleWrap(self, *_):
 		"""
 		Toggle word wrap
 		"""
@@ -395,18 +403,9 @@ Right click for options
 		menu.Append(wx.ID_COPY, "&Copy")
 		menu.Append(wx.ID_SELECTALL, "Select &All \tCtrl+A")
 		menu.AppendSeparator()
-		menu.Append(
-				wx.ID_FIND, '&Find \tCtrl+F',
-				'Search for text in the log'
-				)
-		menu.Append(
-				ID_WRAP, '&Wrap Lines\tCtrl+W',
-				'Wrap lines at right edge', wx.ITEM_CHECK
-				)
-		menu.Append(
-				ID_SHOW_LINENUMBERS, '&Show Line Numbers\tCtrl+L',
-				'Show Line Numbers', wx.ITEM_CHECK
-				)
+		menu.Append(wx.ID_FIND, '&Find \tCtrl+F', 'Search for text in the log')
+		menu.Append(ID_WRAP, '&Wrap Lines\tCtrl+W', 'Wrap lines at right edge', wx.ITEM_CHECK)
+		menu.Append(ID_SHOW_LINENUMBERS, '&Show Line Numbers\tCtrl+L', 'Show Line Numbers', wx.ITEM_CHECK)
 		menu.AppendSeparator()
 		menu.Append(ID_ZOOM_IN, 'Zoom &In\tCtrl+]', 'Zoom In')
 		menu.Append(ID_ZOOM_OUT, 'Zoom &Out\tCtrl+[', 'Zoom Out')
@@ -418,8 +417,11 @@ Right click for options
 
 		return menu
 
-	def OnContextMenu(self, event):
-		"""Event Handler for showing the context menu"""
+	def OnContextMenu(self, _):
+		"""
+		vent Handler for showing the context menu
+		"""
+
 		menu = self.GetContextMenu()
 		self.PopupMenu(menu)
 
@@ -467,9 +469,9 @@ Right click for options
 
 		# was it still not found?
 		if loc == -1:
-			dlg = wx.MessageDialog(self, 'Unable to find the search text.',
-								   'Not found!',
-								   wx.OK | wx.ICON_INFORMATION)
+			dlg = wx.MessageDialog(
+					self, 'Unable to find the search text.', 'Not found!', wx.OK | wx.ICON_INFORMATION
+					)
 			dlg.ShowModal()
 			dlg.Destroy()
 		if findDlg:
@@ -483,15 +485,14 @@ Right click for options
 		self.ShowPosition(loc)
 		self.SetSelection(loc, loc + len(findstring))
 
-	def OnFindText(self, *args):
+	def OnFindText(self, *_):
 		if self.findDlg is not None:
 			return
 
-		self.findDlg = wx.FindReplaceDialog(self, self.findData,
-											"Find", wx.FR_NOWHOLEWORD)
+		self.findDlg = wx.FindReplaceDialog(self, self.findData, "Find", wx.FR_NOWHOLEWORD)
 		self.findDlg.Show()
 
-	def OnFindClose(self, event):
+	def OnFindClose(self, _):
 		self.findDlg.Destroy()
 		self.findDlg = None
 
@@ -506,7 +507,8 @@ Right click for options
 		appname = wx.GetApp().GetAppName()
 		default = appname + '-' + time.strftime("%Y%m%d-%H%M.py")
 		filename = wx.FileSelector(
-				"Save File As", "Saving",
+				"Save File As",
+				"Saving",
 				default_filename=default,
 				default_extension="py",
 				wildcard="*.py",
@@ -523,10 +525,7 @@ Right click for options
 			f.write(text)
 			f.close()
 		except:  # TODO: Find error type
-			d = wx.MessageDialog(
-					self, u'Error saving session', u'Error',
-					wx.OK | wx.ICON_ERROR
-					)
+			d = wx.MessageDialog(self, u'Error saving session', u'Error', wx.OK | wx.ICON_ERROR)
 
 			d.ShowModal()
 			d.Destroy()

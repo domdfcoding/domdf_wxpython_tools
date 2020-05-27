@@ -38,9 +38,10 @@ import wx
 
 
 class border_config(wx.Dialog):
+
 	def __init__(self, parent, chromatogram_figure, *args, **kwds):
 		self.chromatogram_figure = chromatogram_figure
-		args = (parent,) + args
+		args = (parent, ) + args
 		# begin wxGlade: border_config.__init__
 		kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_DIALOG_STYLE
 		wx.Dialog.__init__(self, *args, **kwds)
@@ -123,11 +124,11 @@ class border_config(wx.Dialog):
 
 	def update_borders(self, event):  # wxGlade: border_config.<event_handler>
 		self.chromatogram_figure.subplots_adjust(
-			self.left_border_value.GetValue(),
-			self.bottom_border_value.GetValue(),
-			self.right_border_value.GetValue(),
-			self.top_border_value.GetValue()
-		)
+				self.left_border_value.GetValue(),
+				self.bottom_border_value.GetValue(),
+				self.right_border_value.GetValue(),
+				self.top_border_value.GetValue()
+				)
 		self.chromatogram_figure.canvas.draw_idle()
 
 	def apply_tight_layout(self, event):  # wxGlade: border_config.<event_handler>
@@ -142,5 +143,6 @@ class border_config(wx.Dialog):
 
 	def close_dialog(self, event):  # wxGlade: border_config.<event_handler>
 		self.Destroy()
+
 
 # end of class border_config

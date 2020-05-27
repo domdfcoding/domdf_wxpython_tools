@@ -68,8 +68,7 @@ class ValidatorBase(wx.Validator):
 		return False
 
 	def reset_ctrl(self):
-		self.GetWindow().SetBackgroundColour(
-				wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
+		self.GetWindow().SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 		self.GetWindow().Refresh()
 		return True
 

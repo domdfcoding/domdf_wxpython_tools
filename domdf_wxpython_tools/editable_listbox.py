@@ -45,7 +45,6 @@ from mathematical.utils import rounders
 # This package
 from domdf_wxpython_tools.validators import FloatValidator
 
-
 # IDs
 ID_ELB_DELETE = wx.NewIdRef()
 ID_ELB_EDIT = wx.NewIdRef()
@@ -54,145 +53,144 @@ ID_ELB_UP = wx.NewIdRef()
 ID_ELB_DOWN = wx.NewIdRef()
 ID_ELB_LISTCTRL = wx.NewIdRef()
 
-
 # XPM for Buttons
 
 edit_btn_xpm = [
-	b"16 16 3 1",
-	b"   c None",
-	b".  c #000000",
-	b"+  c #00007F",
-	b"                ",
-	b"                ",
-	b"      .. ..     ",
-	b"        .       ",
-	b"        .       ",
-	b"  ++++  .  ++++ ",
-	b"     ++ . ++  ++",
-	b"  +++++ . ++++++",
-	b" ++  ++ . ++    ",
-	b" ++  ++ . ++  ++",
-	b"  +++++ .  ++++ ",
-	b"        .       ",
-	b"        .       ",
-	b"      .. ..     ",
-	b"                ",
-	b"                "
+		b"16 16 3 1",
+		b"   c None",
+		b".  c #000000",
+		b"+  c #00007F",
+		b"                ",
+		b"                ",
+		b"      .. ..     ",
+		b"        .       ",
+		b"        .       ",
+		b"  ++++  .  ++++ ",
+		b"     ++ . ++  ++",
+		b"  +++++ . ++++++",
+		b" ++  ++ . ++    ",
+		b" ++  ++ . ++  ++",
+		b"  +++++ .  ++++ ",
+		b"        .       ",
+		b"        .       ",
+		b"      .. ..     ",
+		b"                ",
+		b"                "
 		]
 
 numerical_edit_btn_xpm = [
-	b"16 16 3 1",
-	b"   c None",
-	b".  c #000000",
-	b"+  c #00007F",
-	b"                ",
-	b"                ",
-	b"      .. ..     ",
-	b"        .       ",
-	b"   ++   .  ++++ ",
-	b"  +++   . ++  ++",
-	b" ++++   . ++  ++",
-	b"   ++   . ++  ++",
-	b"   ++   . ++  ++",
-	b"   ++   . ++  ++",
-	b" ++++++ .  ++++ ",
-	b"        .       ",
-	b"        .       ",
-	b"      .. ..     ",
-	b"                ",
-	b"                "
+		b"16 16 3 1",
+		b"   c None",
+		b".  c #000000",
+		b"+  c #00007F",
+		b"                ",
+		b"                ",
+		b"      .. ..     ",
+		b"        .       ",
+		b"   ++   .  ++++ ",
+		b"  +++   . ++  ++",
+		b" ++++   . ++  ++",
+		b"   ++   . ++  ++",
+		b"   ++   . ++  ++",
+		b"   ++   . ++  ++",
+		b" ++++++ .  ++++ ",
+		b"        .       ",
+		b"        .       ",
+		b"      .. ..     ",
+		b"                ",
+		b"                "
 		]
 
 new_btn_xpm = [
-	b"16 16 5 1",
-	b"   c None",
-	b".  c #7F7F7F",
-	b"+  c #FFFFFF",
-	b"@  c #FFFF00",
-	b"#  c #000000",
-	b"                ",
-	b"                ",
-	b" .  .+ .@       ",
-	b"  . .@.@# # #   ",
-	b"  @.@+....   #  ",
-	b" ... @@         ",
-	b"  @ . @.     #  ",
-	b" .# .@          ",
-	b"    .        #  ",
-	b"  #             ",
-	b"             #  ",
-	b"  #             ",
-	b"             #  ",
-	b"  # # # # # #   ",
-	b"                ",
-	b"                "
+		b"16 16 5 1",
+		b"   c None",
+		b".  c #7F7F7F",
+		b"+  c #FFFFFF",
+		b"@  c #FFFF00",
+		b"#  c #000000",
+		b"                ",
+		b"                ",
+		b" .  .+ .@       ",
+		b"  . .@.@# # #   ",
+		b"  @.@+....   #  ",
+		b" ... @@         ",
+		b"  @ . @.     #  ",
+		b" .# .@          ",
+		b"    .        #  ",
+		b"  #             ",
+		b"             #  ",
+		b"  #             ",
+		b"             #  ",
+		b"  # # # # # #   ",
+		b"                ",
+		b"                "
 		]
 
 delete_btn_xpm = [
-	b"16 16 3 1",
-	b"   c None",
-	b".  c #7F0000",
-	b"+  c #FFFFFF",
-	b"                ",
-	b"                ",
-	b"                ",
-	b" ..+        ..+ ",
-	b" ....+     ..+  ",
-	b"  ....+   ..+   ",
-	b"    ...+ .+     ",
-	b"     .....+     ",
-	b"      ...+      ",
-	b"     .....+     ",
-	b"    ...+ ..+    ",
-	b"   ...+   ..+   ",
-	b"  ...+     .+   ",
-	b"  ...+      .+  ",
-	b"   .         .  ",
-	b"                "
+		b"16 16 3 1",
+		b"   c None",
+		b".  c #7F0000",
+		b"+  c #FFFFFF",
+		b"                ",
+		b"                ",
+		b"                ",
+		b" ..+        ..+ ",
+		b" ....+     ..+  ",
+		b"  ....+   ..+   ",
+		b"    ...+ .+     ",
+		b"     .....+     ",
+		b"      ...+      ",
+		b"     .....+     ",
+		b"    ...+ ..+    ",
+		b"   ...+   ..+   ",
+		b"  ...+     .+   ",
+		b"  ...+      .+  ",
+		b"   .         .  ",
+		b"                "
 		]
 
 down_btn_xpm = [
-	b"16 16 2 1",
-	b"   c None",
-	b".  c #000000",
-	b"                ",
-	b"                ",
-	b"         ...    ",
-	b"        ...     ",
-	b"       ...      ",
-	b"       ...      ",
-	b"       ...      ",
-	b"       ...      ",
-	b"   ...........  ",
-	b"    .........   ",
-	b"     .......    ",
-	b"      .....     ",
-	b"       ...      ",
-	b"        .       ",
-	b"                ",
-	b"                "
+		b"16 16 2 1",
+		b"   c None",
+		b".  c #000000",
+		b"                ",
+		b"                ",
+		b"         ...    ",
+		b"        ...     ",
+		b"       ...      ",
+		b"       ...      ",
+		b"       ...      ",
+		b"       ...      ",
+		b"   ...........  ",
+		b"    .........   ",
+		b"     .......    ",
+		b"      .....     ",
+		b"       ...      ",
+		b"        .       ",
+		b"                ",
+		b"                "
 		]
 
 up_btn_xpm = [
-	b"16 16 2 1",
-	b"   c None",
-	b".  c #000000",
-	b"                ",
-	b"        .       ",
-	b"       ...      ",
-	b"      .....     ",
-	b"     .......    ",
-	b"    .........   ",
-	b"   ...........  ",
-	b"       ...      ",
-	b"       ...      ",
-	b"       ...      ",
-	b"       ...      ",
-	b"      ...       ",
-	b"     ...        ",
-	b"                ",
-	b"                ",
-	b"                "
+		b"16 16 2 1",
+		b"   c None",
+		b".  c #000000",
+		b"                ",
+		b"        .       ",
+		b"       ...      ",
+		b"      .....     ",
+		b"     .......    ",
+		b"    .........   ",
+		b"   ...........  ",
+		b"       ...      ",
+		b"       ...      ",
+		b"       ...      ",
+		b"       ...      ",
+		b"      ...       ",
+		b"     ...        ",
+		b"                ",
+		b"                ",
+		b"                "
 		]
 
 
@@ -202,9 +200,14 @@ class CleverListCtrl(wx.ListCtrl):
 	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
-			size=wx.DefaultSize, style=wx.LC_ICON,
-			validator=wx.DefaultValidator, name=wx.ListCtrlNameStr
+			self,
+			parent,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.LC_ICON,
+			validator=wx.DefaultValidator,
+			name=wx.ListCtrlNameStr
 			):
 		"""
 		:param parent:
@@ -252,9 +255,16 @@ class CleverListCtrl(wx.ListCtrl):
 
 
 class EditableListBox(wx.Panel):
-	def __init__(self, parent, id=wx.ID_ANY, label="",
-			pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.adv.EL_DEFAULT_STYLE, name=wx.adv.EditableListBoxNameStr
+
+	def __init__(
+			self,
+			parent,
+			id=wx.ID_ANY,
+			label="",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.adv.EL_DEFAULT_STYLE,
+			name=wx.adv.EditableListBoxNameStr
 			):
 		"""
 		This class provides a composite control that lets the user easily enter
@@ -290,22 +300,17 @@ class EditableListBox(wx.Panel):
 		subp = wx.Panel(self, style=wx.SUNKEN_BORDER | wx.TAB_TRAVERSAL)
 		subsizer = wx.BoxSizer(wx.HORIZONTAL)
 
-		subsizer.Add(
-				wx.StaticText(subp, wx.ID_ANY, label),
-				1, wx.CENTER | wx.LEFT, 5)
+		subsizer.Add(wx.StaticText(subp, wx.ID_ANY, label), 1, wx.CENTER | wx.LEFT, 5)
 		# TODO: if width too small put label on row above buttons
 		# Min width to see all buttons = (152, 250)
 
 		if self.m_style & wx.adv.EL_ALLOW_EDIT:
-			self.m_bEdit = wx.BitmapButton(subp, ID_ELB_EDIT, wx.Bitmap(
-				edit_btn_xpm))  # wx.ArtProvider.GetBitmap(wx.ART_EDIT, wx.ART_BUTTON))
+			self.m_bEdit = wx.BitmapButton(subp, ID_ELB_EDIT, wx.Bitmap(edit_btn_xpm))
 			self.m_bEdit.SetToolTip("Edit item")
 			subsizer.Add(self.m_bEdit, 0, wx.CENTER)
 
 		if self.m_style & wx.adv.EL_ALLOW_NEW:
-			self.m_bNew = wx.BitmapButton(
-					subp, ID_ELB_NEW,
-					wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_BUTTON))
+			self.m_bNew = wx.BitmapButton(subp, ID_ELB_NEW, wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_BUTTON))
 			self.m_bNew.SetToolTip("New item")
 			subsizer.Add(self.m_bNew, 0, wx.CENTER)
 
@@ -315,15 +320,13 @@ class EditableListBox(wx.Panel):
 			subsizer.Add(self.m_bDel, 0, wx.CENTER)
 
 		if not (self.m_style & wx.adv.EL_NO_REORDER):
-			self.m_bUp = wx.BitmapButton(
-					subp, ID_ELB_UP,
-					wx.ArtProvider.GetBitmap(wx.ART_GO_UP, wx.ART_BUTTON))
+			self.m_bUp = wx.BitmapButton(subp, ID_ELB_UP, wx.ArtProvider.GetBitmap(wx.ART_GO_UP, wx.ART_BUTTON))
 			self.m_bUp.SetToolTip("Move up")
 			subsizer.Add(self.m_bUp, 0, wx.CENTER)
 
 			self.m_bDown = wx.BitmapButton(
-					subp, ID_ELB_DOWN,
-					wx.ArtProvider.GetBitmap(wx.ART_GO_DOWN, wx.ART_BUTTON))
+					subp, ID_ELB_DOWN, wx.ArtProvider.GetBitmap(wx.ART_GO_DOWN, wx.ART_BUTTON)
+					)
 			self.m_bDown.SetToolTip("Move down")
 			subsizer.Add(self.m_bDown, 0, wx.CENTER)
 
@@ -407,8 +410,7 @@ class EditableListBox(wx.Panel):
 
 	def OnNewItem(self, event):
 		self.m_listCtrl.SetItemState(
-				self.m_listCtrl.GetItemCount() - 1,
-				wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
+				self.m_listCtrl.GetItemCount() - 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
 				)
 
 		self.m_listCtrl.EditLabel(self.m_selection)
@@ -478,16 +480,12 @@ class EditableListBox(wx.Panel):
 	def OnUpItem(self, event):
 
 		self.SwapItems(self.m_selection - 1, self.m_selection)
-		self.m_listCtrl.SetItemState(
-				self.m_selection - 1,
-				wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+		self.m_listCtrl.SetItemState(self.m_selection - 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
 	def OnDownItem(self, event):
 
 		self.SwapItems(self.m_selection + 1, self.m_selection)
-		self.m_listCtrl.SetItemState(
-				self.m_selection + 1,
-				wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+		self.m_listCtrl.SetItemState(self.m_selection + 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
 	def GetListCtrl(self):
 		"""
@@ -536,9 +534,17 @@ class EditableListBox(wx.Panel):
 
 
 class EditableNumericalListBox(EditableListBox):
-	def __init__(self, parent, id=wx.ID_ANY, label="", decimal_places=-1,
-			pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.adv.EL_DEFAULT_STYLE, name=wx.adv.EditableListBoxNameStr
+
+	def __init__(
+			self,
+			parent,
+			id=wx.ID_ANY,
+			label="",
+			decimal_places=-1,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.adv.EL_DEFAULT_STYLE,
+			name=wx.adv.EditableListBoxNameStr
 			):
 		"""
 

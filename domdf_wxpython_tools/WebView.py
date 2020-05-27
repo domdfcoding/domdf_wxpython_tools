@@ -6,35 +6,36 @@
 """
 Set the emulation level for wxWidgets WebView purely in Python
 
-Based on https://github.com/wxWidgets/wxWidgets/blob/master/include/wx/msw/webview_ie.h
-by Marianne Gagnon
-Copyright (c) 2010 Marianne Gagnon, 2011 Steven Lamerton
-
-and also based on https://github.com/wxWidgets/Phoenix/blob/master/etg/webview.py
-by Robin Dunn
-Copyright (c) 2012-2018 by Total Control Software
-
-Both licensed under the wxWindows Licence
-
-"""
-
-import sys
-import winreg
-import warnings
-import pathlib
-
-"""
 Note that the highest emulation level may be used even when the
 corresponding browser version is not installed.
 
 Using FORCE options is not recommended, DEFAULT can be used to reset level
 to the system default.
 
-The value of the constants were taken from
+The values of the constants were taken from
 
 	https://msdn.microsoft.com/library/ee330730.aspx#browser_emulation
 
 and must not be changed.
+
+"""
+
+#  Based on https://github.com/wxWidgets/wxWidgets/blob/master/include/wx/msw/webview_ie.h
+#    by Marianne Gagnon
+#    Copyright (c) 2010 Marianne Gagnon, 2011 Steven Lamerton
+#
+#  Also based on https://github.com/wxWidgets/Phoenix/blob/master/etg/webview.py
+#    by Robin Dunn
+#    Copyright (c) 2012-2018 by Total Control Software
+#
+#  Both licensed under the wxWindows Licence
+
+import sys
+import winreg
+import warnings
+import pathlib
+"""
+
 """
 wxWEBVIEWIE_EMU_DEFAULT = 0,
 wxWEBVIEWIE_EMU_IE7 = 7000,

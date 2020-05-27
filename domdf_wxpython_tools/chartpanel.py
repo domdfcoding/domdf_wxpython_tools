@@ -6,7 +6,7 @@
 A canvas for displaying a chart within a wxPython window
 """
 #
-#  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  Method ``constrain_zoom`` based on https://stackoverflow.com/a/16709952/3092681
 #  Copyright 2013 simonb
@@ -32,7 +32,6 @@ A canvas for displaying a chart within a wxPython window
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 import types
 
@@ -41,14 +40,13 @@ import matplotlib
 import numpy
 import wx.html2
 from matplotlib.backends.backend_wxagg import (
-	FigureCanvasWxAgg as FigureCanvas,
-	NavigationToolbar2WxAgg as NavigationToolbar,
-	)
+		FigureCanvasWxAgg as FigureCanvas,
+		NavigationToolbar2WxAgg as NavigationToolbar,
+		)
 
 # this package
 from domdf_wxpython_tools.border_config import border_config
 from domdf_wxpython_tools.projections import XPanAxes
-
 
 # Constrain zoom to X axis
 matplotlib.projections.register_projection(XPanAxes)
@@ -63,8 +61,15 @@ class ChartPanelBase(wx.Panel):
 	"""
 
 	def __init__(
-			self, parent, fig, ax, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=0, name=wx.PanelNameStr
+			self,
+			parent,
+			fig,
+			ax,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			name=wx.PanelNameStr
 			):
 		"""
 		:param parent: The parent window.
@@ -113,8 +118,8 @@ class ChartPanelBase(wx.Panel):
 
 		def update_ylim(*args):
 			# print(str(*args).startswith("MPL MouseEvent")) # Pan
-			if (str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN") or (
-					str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM"):  # Zoom, Pan
+			if ((str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN") or
+				(str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM")):  # Zoom, Pan
 				# print("updated xlims: ", axes.get_xlim())
 				min_x_index = (numpy.abs(x_data - self.ax.get_xlim()[0])).argmin()
 				max_x_index = (numpy.abs(x_data - self.ax.get_xlim()[1])).argmin()
@@ -196,10 +201,7 @@ class ChartPanelBase(wx.Panel):
 			event.key = key
 			NavigationToolbar.press_zoom(self, event)
 
-		self.fig.canvas.toolbar.press_zoom = types.MethodType(
-				press_zoom,
-				self.fig.canvas.toolbar
-				)
+		self.fig.canvas.toolbar.press_zoom = types.MethodType(press_zoom, self.fig.canvas.toolbar)
 
 	# Other Toolbar Options
 	# Save chromatogram as image: save_figure(self, *args)
@@ -248,6 +250,7 @@ class ChartPanelBase(wx.Panel):
 		"""
 
 		def zoom_factory(ax, base_scale=1.1):
+
 			def zoom_fun(event):
 				# get the current x and y limits
 				cur_xlim = ax.get_xlim()
@@ -267,14 +270,8 @@ class ChartPanelBase(wx.Panel):
 					scale_factor = 1
 					print(event.button)
 				# set new limits
-				ax.set_xlim([
-						xdata - cur_xrange * scale_factor,
-						xdata + cur_xrange * scale_factor
-						])
-				ax.set_ylim([
-						ydata - cur_yrange * scale_factor,
-						ydata + cur_yrange * scale_factor
-						])
+				ax.set_xlim([xdata - cur_xrange * scale_factor, xdata + cur_xrange * scale_factor])
+				ax.set_ylim([ydata - cur_yrange * scale_factor, ydata + cur_yrange * scale_factor])
 				self.canvas.draw()  # force re-draw
 
 			fig = ax.get_figure()  # get the figure of interest

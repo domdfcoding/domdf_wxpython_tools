@@ -92,8 +92,15 @@ class ImagePanel(ChartPanelBase):
 	default_image = ("RGB", (640, 480), (240, 240, 240))
 
 	def __init__(
-			self, parent, image=None, id=wx.ID_ANY, pos=wx.DefaultPosition,
-			size=wx.DefaultSize, style=0, name=wx.PanelNameStr):
+			self,
+			parent,
+			image=None,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			name=wx.PanelNameStr
+			):
 		"""
 		:param parent: The parent window.
 		:type parent: wx.Window
@@ -277,9 +284,7 @@ class ImagePanel(ChartPanelBase):
 		"""
 
 		save_location = file_dialog_wildcard(
-				self, "Save Image",
-				images_wildcard.wildcard,
-				style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+				self, "Save Image", images_wildcard.wildcard, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
 				)
 
 		if not save_location:
@@ -293,9 +298,7 @@ class ImagePanel(ChartPanelBase):
 		"""
 
 		new_image = file_dialog_wildcard(
-				self, "Choose an Image",
-				images_wildcard.wildcard,
-				style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+				self, "Choose an Image", images_wildcard.wildcard, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
 				)
 
 		if not new_image:
@@ -345,6 +348,7 @@ class ImagePanel(ChartPanelBase):
 		:rtype: PIL.Image.Image
 		"""
 		return self._image
+
 	#
 	# @image.setter
 	# def image(self, new_image):

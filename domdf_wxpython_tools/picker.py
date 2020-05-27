@@ -35,7 +35,6 @@ from domdf_wxpython_tools.dialogs import file_dialog
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
 from . import icons
 
-
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -49,8 +48,14 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition,
-			size=wx.DefaultSize, style=wx.TAB_TRAVERSAL, name=b"dir_picker",
+			self,
+			parent,
+			id=wx.ID_ANY,
+			value="",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL,
+			name=b"dir_picker",
 			):
 		"""
 
@@ -131,10 +136,11 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 			default_path = self.get_value()
 
 		dlg = wx.DirDialog(
-			None, "Choose a directory:",
-			style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-			defaultPath=default_path
-		)
+				None,
+				"Choose a directory:",
+				style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
+				defaultPath=default_path
+				)
 
 		if dlg.ShowModal() == wx.ID_OK:
 			self.dir_value.SetValue((dlg.GetPath()))
@@ -216,19 +222,26 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.__set_properties()
 		self.Layout()
 
+
 # end of class dir_picker
 
 
 class file_picker(dir_picker):
-	"""
-
-	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, name=b"file_picker",
-			extension="*", title="File Picker", filetypestring="All Files", **kwargs
-	):
+			self,
+			parent,
+			id=wx.ID_ANY,
+			value="",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+			name=b"file_picker",
+			extension="*",
+			title="File Picker",
+			filetypestring="All Files",
+			**kwargs
+			):
 		"""
 
 		:param parent:
@@ -275,30 +288,39 @@ class file_picker(dir_picker):
 			default_path = str(default_path)
 
 		pathname = file_dialog(
-			self, extension=self.file_extension,
-			style=self.style,
-			defaultDir=default_path,
-			filetypestring=self.filetypestring,
-			title=self.dialog_title,
-		)
+				self,
+				extension=self.file_extension,
+				style=self.style,
+				defaultDir=default_path,
+				filetypestring=self.filetypestring,
+				title=self.dialog_title,
+				)
 
 		if pathname:
 			self.dir_value.SetValue(pathname)
 			self.dir_value.SetFocus()
 
+
 # end of class file_picker
 
 
 class file_folder_picker(dir_picker):
-	"""
-
-	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, name=b"file_picker",
-			extension="*", title="File Picker", filetypestring="All Files", start_as_files=True, **kwargs
-	):
+			self,
+			parent,
+			id=wx.ID_ANY,
+			value="",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+			name=b"file_picker",
+			extension="*",
+			title="File Picker",
+			filetypestring="All Files",
+			start_as_files=True,
+			**kwargs
+			):
 		"""
 
 		:param parent:
@@ -358,12 +380,13 @@ class file_folder_picker(dir_picker):
 				default_path = str(default_path)
 
 			pathname = file_dialog(
-				self, extension=self.file_extension,
-				style=self.style,
-				defaultDir=default_path,
-				filetypestring=self.filetypestring,
-				title=self.dialog_title,
-			)
+					self,
+					extension=self.file_extension,
+					style=self.style,
+					defaultDir=default_path,
+					filetypestring=self.filetypestring,
+					title=self.dialog_title,
+					)
 
 			if pathname:
 				self.dir_value.SetValue(pathname)
@@ -376,10 +399,11 @@ class file_folder_picker(dir_picker):
 				default_path = self.get_value()
 
 			dlg = wx.DirDialog(
-				None, "Choose a directory:",
-				style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-				defaultPath=default_path
-			)
+					None,
+					"Choose a directory:",
+					style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
+					defaultPath=default_path
+					)
 
 			if dlg.ShowModal() == wx.ID_OK:
 				self.dir_value.SetValue((dlg.GetPath()))

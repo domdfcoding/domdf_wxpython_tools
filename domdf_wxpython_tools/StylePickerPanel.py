@@ -35,14 +35,20 @@ from matplotlib.figure import Figure
 # begin wxGlade: extracode
 # end wxGlade
 
-
 default_styles = ["o", "v", "^", "<", ">", "s", "h", "X", "D", "d"]
 
 
 class StylePickerPanel(wx.Panel):
+
 	def __init__(
-			self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr, label="Choose Styles: ",
+			self,
+			parent,
+			id=wx.ID_ANY,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=wx.TAB_TRAVERSAL,
+			name=wx.PanelNameStr,
+			label="Choose Styles: ",
 			selection_choices=None,
 			):
 		if selection_choices is None:
@@ -124,7 +130,9 @@ class StylePickerPanel(wx.Panel):
 		if not self.selection_list_box.IsEmpty():
 			self.selection_list_box.SetSelection(0)
 
-		for marker in list(filter(lambda x: x not in self.selection_choices, [self.markers[y] for y in self.markers])):
+		for marker in list(
+				filter(lambda x: x not in self.selection_choices, [self.markers[y] for y in self.markers])
+				):
 			for key in self.markers.keys():
 				if marker == self.markers[key]:
 					self.picker_list_box.Append(key)
@@ -265,9 +273,8 @@ class StylePickerPanel(wx.Panel):
 
 	def get_selection(self):
 		return [
-				self.markers[
-					self.selection_list_box.GetString(item)
-					] for item in range(self.selection_list_box.GetCount())
+				self.markers[self.selection_list_box.GetString(item)]
+				for item in range(self.selection_list_box.GetCount())
 				]
 
 	def _do_layout(self):
@@ -275,5 +282,6 @@ class StylePickerPanel(wx.Panel):
 
 	def _set_properties(self):
 		return self.__set_properties()
+
 
 # end of class StylePickerPanel

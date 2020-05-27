@@ -69,10 +69,7 @@ def generate_faces():
 				'lnsize': 8,
 				}
 
-	elif (
-			'wxGTK' in wx.PlatformInfo
-			and ('gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo)
-		):
+	elif 'wxGTK' in wx.PlatformInfo and ('gtk2' in wx.PlatformInfo or 'gtk3' in wx.PlatformInfo):
 		FACES = {
 				**FACES,
 				'times': 'Serif',

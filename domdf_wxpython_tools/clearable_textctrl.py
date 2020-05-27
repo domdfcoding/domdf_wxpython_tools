@@ -12,7 +12,6 @@ A TextCtrl with a button to clear its contents
 #  Copyright (c) 2006 Vince Harron.
 #  Licenced under the wxWindows licence
 #
-#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 3 of the License, or
@@ -31,7 +30,6 @@ A TextCtrl with a button to clear its contents
 
 # 3rd party
 import wx
-from wx.lib.embeddedimage import PyEmbeddedImage
 
 # the margin between the text control and the clear button
 MARGIN = 3
@@ -39,7 +37,6 @@ MARGIN = 3
 # arguments to wxColour::ChangeLightness() for making the search/clear
 # bitmaps foreground colour, respectively
 CANCEL_BITMAP_LIGHTNESS = 16  # a bit more lighter
-
 
 ClearableTextCtrlNameStr = "ClearableTextCtrl"
 
@@ -132,33 +129,33 @@ class CTCWidget(wx.TextCtrl):
 	}
 #endif # __WXMSW__"""
 
+
 #b"                       ",
 
-
 clear_btn = [
-	b"25 19 2 1",
-	b"   c None",
-	b"+  c #000000",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"         +++++++++++++   ",
-	b"        ++           +   ",
-	b"       ++    +   +   +   ",
-	b"      ++      + +    +   ",
-	b"     ++        +     +   ",
-	b"      ++      + +    +   ",
-	b"       ++    +   +   +   ",
-	b"        ++           +   ",
-	b"         +++++++++++++   ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
-	b"                         ",
+		b"25 19 2 1",
+		b"   c None",
+		b"+  c #000000",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"         +++++++++++++   ",
+		b"        ++           +   ",
+		b"       ++    +   +   +   ",
+		b"      ++      + +    +   ",
+		b"     ++        +     +   ",
+		b"      ++      + +    +   ",
+		b"       ++    +   +   +   ",
+		b"        ++           +   ",
+		b"         +++++++++++++   ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
+		b"                         ",
 		]
 
 
@@ -251,8 +248,14 @@ class ClearableTextCtrl(wx.Panel):
 	"""
 
 	def __init__(
-			self, parent, id=wx.ID_ANY, value="", pos=wx.DefaultPosition,
-			size=wx.DefaultSize, style=0, validator=wx.DefaultValidator,
+			self,
+			parent,
+			id=wx.ID_ANY,
+			value="",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			validator=wx.DefaultValidator,
 			name=ClearableTextCtrlNameStr
 			):
 		"""
@@ -349,10 +352,7 @@ class ClearableTextCtrl(wx.Panel):
 		:rtype: bool
 		"""
 
-		if not all([
-				self.m_text.SetBackgroundColour(colour),
-				wx.Window.SetBackgroundColour(self, colour)
-				]):
+		if not all([self.m_text.SetBackgroundColour(colour), wx.Window.SetBackgroundColour(self, colour)]):
 			return False
 
 		# TODO: When the background changes, re-render the bitmaps so that the correct
@@ -811,7 +811,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		textWidth -= horizontalBorder
 
-		textWidth -= + clear_size.x + clear_margin + 1
+		textWidth -= +clear_size.x + clear_margin + 1
 		if textWidth < 0:
 			textWidth = 0
 
@@ -834,11 +834,7 @@ class ClearableTextCtrl(wx.Panel):
 		x += textWidth
 
 		x += clear_margin
-		self.m_clearButton.SetSize(
-				x,
-				(overall_height - clear_size.y) / 2,
-				clear_size.x, clear_size.y
-				)
+		self.m_clearButton.SetSize(x, (overall_height - clear_size.y) / 2, clear_size.x, clear_size.y)
 
 		clear_pos = self.m_clearButton.GetPosition()
 		self.m_clearButton.SetPosition((clear_pos.x, clear_pos.y))
@@ -1203,15 +1199,13 @@ class ClearableTextCtrl(wx.Panel):
 		self.m_text.ShowPosition(pos)
 
 	def ShouldInheritColours(self):
-			"""
+		"""
 
-			:rtype: bool
+		:return:
+		:rtype: bool
+		"""
 
-			:return:
-			:rtype:
-			"""
-
-			return True
+		return True
 
 	def Undo(self):
 		"""

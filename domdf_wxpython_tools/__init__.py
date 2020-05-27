@@ -27,17 +27,27 @@ from domdf_wxpython_tools.chartpanel import ChartPanelBase
 from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
 from . import ColourPickerPanel  # TODO: ColourPickerPanel
 from domdf_wxpython_tools.dialogs import (
-	file_dialog_wildcard, file_dialog_multiple, file_dialog, FloatEntryDialog, IntEntryDialog, Wildcards,
-	)
+		file_dialog_wildcard,
+		file_dialog_multiple,
+		file_dialog,
+		FloatEntryDialog,
+		IntEntryDialog,
+		Wildcards,
+		)
 from domdf_wxpython_tools.editable_listbox import EditableListBox, CleverListCtrl, EditableNumericalListBox
 from domdf_wxpython_tools.events import PayloadEvent, SimpleEvent
 from domdf_wxpython_tools.filebrowsectrl import FileBrowseCtrl, FileBrowseCtrlWithHistory, DirBrowseCtrl
 from domdf_wxpython_tools.icons import get_button_icon, get_toolbar_icon, GetStockBitmap, GetStockToolbarBitmap
 from domdf_wxpython_tools.imagepanel import (
-	ID_ImagePanel_Copy_Image, ID_ImagePanel_Delete_Image, ID_ImagePanel_Load_Image,
-	ID_ImagePanel_Paste_Image, ID_ImagePanel_Reset_View, ID_ImagePanel_Save_Image,
-	EVT_IMAGE_PANEL_CHANGED, ImagePanel,
-	)
+		ID_ImagePanel_Copy_Image,
+		ID_ImagePanel_Delete_Image,
+		ID_ImagePanel_Load_Image,
+		ID_ImagePanel_Paste_Image,
+		ID_ImagePanel_Reset_View,
+		ID_ImagePanel_Save_Image,
+		EVT_IMAGE_PANEL_CHANGED,
+		ImagePanel,
+		)
 from domdf_wxpython_tools.keyboard import gen_keymap, NAVKEYS
 from . import list_dialog  # TODO: list_dialog
 from domdf_wxpython_tools.logctrl import LogCtrl
@@ -52,7 +62,6 @@ from domdf_wxpython_tools.timer_thread import Timer
 from domdf_wxpython_tools.utils import toggle, coming_soon, collapse_label, generate_faces
 from domdf_wxpython_tools.validators import ValidatorBase, FloatValidator, CharValidator
 # TODO: WebView
-
 
 __all__ = [
 		"BorderConfigDialog",
@@ -114,7 +123,7 @@ __all__ = [
 		"ColourPickerDialog",
 		"__author__",
 		"__version__",
-		"__copyright__"
+		"__copyright__",
 		]
 
 __author__ = "Dominic Davis-Foster"

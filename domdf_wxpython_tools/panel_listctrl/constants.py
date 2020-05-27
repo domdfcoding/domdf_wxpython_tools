@@ -35,7 +35,7 @@ text_defaults = {
 		"font-style": "normal",
 		"font-weight": "normal",
 		"text-decoration": "none",
-		"font-face-name": ''
+		"font-face-name": '',
 		}
 
 if wx.Platform == "__WXMSW__":
