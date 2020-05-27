@@ -130,8 +130,6 @@ class CTCWidget(wx.TextCtrl):
 #endif # __WXMSW__"""
 
 
-#b"                       ",
-
 clear_btn = [
 		b"25 19 2 1",
 		b"   c None",
