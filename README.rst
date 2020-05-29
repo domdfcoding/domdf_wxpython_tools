@@ -16,7 +16,7 @@ domdf_wxpython_tools
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Other
 	  - |license| |language| |commits-since| |commits-latest| |maintained| 
-	
+
 .. |docs| image:: https://readthedocs.org/projects/domdf_wxpython_tools/badge/?version=latest
 	:target: https://domdf_wxpython_tools.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
@@ -24,7 +24,7 @@ domdf_wxpython_tools
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/domdf_wxpython_tools/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/domdf_wxpython_tools
 	:alt: Travis Build Status
-	
+
 .. |requires| image:: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements/?branch=master
 	:alt: Requirements Status
