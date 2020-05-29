@@ -1,7 +1,12 @@
-**********************
+=====================
 domdf_wxpython_tools
-**********************
+=====================
 
+.. start short_desc
+
+**Tools and widgets for wxPython**
+
+.. end short_desc
 .. start shields 
 
 .. list-table::
@@ -69,20 +74,18 @@ domdf_wxpython_tools
 
 .. end shields
 
-Tools and widgets for wxPython
+Installation
+----------------
 
+.. start installation
 
+``domdf_wxpython_tools`` can be installed from PyPI.
 
+To install with ``pip``:
 
+.. code-block:: bash
 
+	$ python -m pip install domdf_wxpython_tools
 
-
-
-
-
-
-
-
-
-
+.. end installation
 
