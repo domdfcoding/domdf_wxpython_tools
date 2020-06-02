@@ -155,8 +155,12 @@ Right click for options
 		keycode = event.GetKeyCode()
 		keyname = self._keyMap.get(keycode, None)
 		modifiers = ""
-		for mod, ch in ((event.ControlDown(), 'Ctrl+'), (event.AltDown(), 'Alt+'), (event.ShiftDown(), 'Shift+'),
-			(event.MetaDown(), 'Meta+')):
+		for mod, ch in (
+			(event.ControlDown(), 'Ctrl+'),
+			(event.AltDown(), 'Alt+'),
+			(event.ShiftDown(), 'Shift+'),
+			(event.MetaDown(), 'Meta+'),
+			):
 			if mod:
 				modifiers += ch
 

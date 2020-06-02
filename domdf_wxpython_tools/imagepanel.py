@@ -170,13 +170,15 @@ class ImagePanel(ChartPanelBase):
 		"""
 		Load the 'new_image' into the contol
 
-		:param new_image: The image to load, or a string pointing to the image on a filesystem
+		:param new_image: The image to load, or a string pointing to the image
+			on a filesystem
 		:type new_image: :class:`PIL.Image.Image` or str or pathlib.Path, optional
-		:param suppress_event: Whether the event that the image has changed should be suppressed, default False
+		:param suppress_event: Whether the event that the image has changed should
+			be suppressed, default False
 		:type suppress_event: bool, optional
 
 		TODO: Do we even need to be triggering an event here, since "load_image"
-		 is only ever going to be called by the programmer
+		is only ever going to be called by the programmer
 		"""
 
 		self.ax.clear()

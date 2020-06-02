@@ -6,10 +6,12 @@
 A Python implementation of wx.EditableListBox, a ListBox with editable items.
 
 Available in two flavours:
-	> Vanilla, that accepts any string value; and
-	> Numerical, that only accepts numerical values.
-	  Those could be str, int, float or decimal.Decimal, but decimal.Decimal
-	  is used internally and is the type that will be returned.
+
+* Vanilla, that accepts any string value; and
+* Numerical, that only accepts numerical values.
+	Those could be str, int, float or decimal.Decimal, but decimal.Decimal
+	is used internally and is the type that will be returned.
+
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
