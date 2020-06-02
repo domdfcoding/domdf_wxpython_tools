@@ -44,7 +44,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.2.5"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Tools and widgets for wxPython'
+short_desc: 'Tools and widgets for wxPython.'
 
 conda_description: "Tools and widgets for wxPython."
 

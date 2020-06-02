@@ -4,7 +4,7 @@ domdf_wxpython_tools
 
 .. start short_desc
 
-**Tools and widgets for wxPython**
+**Tools and widgets for wxPython.**
 
 .. end short_desc
 .. start shields 
