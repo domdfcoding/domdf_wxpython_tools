@@ -31,8 +31,8 @@ import os
 import wx
 
 # this package
-from domdf_wxpython_tools.validators import CharValidator
 from domdf_wxpython_tools.list_dialog import list_dialog
+from domdf_wxpython_tools.validators import CharValidator
 
 # style enumeration
 style_uppercase = 4

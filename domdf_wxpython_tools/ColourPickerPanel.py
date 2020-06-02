@@ -31,6 +31,8 @@ Based on StylePickerPanel, a Panel for selecting a list of colours, and their or
 import wx
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.figure import Figure
+
+# this package
 from domdf_wxpython_tools.StylePickerPanel import StylePickerPanel
 
 # begin wxGlade: dependencies

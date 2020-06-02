@@ -39,10 +39,8 @@ import types
 import matplotlib
 import numpy
 import wx.html2
-from matplotlib.backends.backend_wxagg import (
-		FigureCanvasWxAgg as FigureCanvas,
-		NavigationToolbar2WxAgg as NavigationToolbar,
-		)
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
 
 # this package
 from domdf_wxpython_tools.border_config import border_config

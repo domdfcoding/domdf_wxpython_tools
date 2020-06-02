@@ -33,6 +33,8 @@ import wx
 # this package
 from domdf_wxpython_tools.dialogs import file_dialog
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
+
+# this package
 from . import icons
 
 # begin wxGlade: dependencies

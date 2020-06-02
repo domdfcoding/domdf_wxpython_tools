@@ -33,7 +33,7 @@ from PIL import Image
 
 # this package
 from domdf_wxpython_tools.chartpanel import ChartPanelBase
-from domdf_wxpython_tools.dialogs import file_dialog_wildcard, Wildcards
+from domdf_wxpython_tools.dialogs import Wildcards, file_dialog_wildcard
 from domdf_wxpython_tools.projections import NoZoom
 
 # Prevent zooming of axis with mouse click

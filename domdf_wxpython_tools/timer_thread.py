@@ -28,10 +28,11 @@ Includes code from https://gist.github.com/samarthbhargav/5a515a399f7113137331
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import time
+from threading import Event, Thread
 
-from threading import Thread, Event
-
+# this package
 from domdf_wxpython_tools.events import SimpleEvent
 
 timer_event = SimpleEvent("Timer")

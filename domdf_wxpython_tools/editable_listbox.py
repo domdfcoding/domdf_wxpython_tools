@@ -42,7 +42,7 @@ import wx
 import wx.adv
 from mathematical.utils import rounders
 
-# This package
+# this package
 from domdf_wxpython_tools.validators import FloatValidator
 
 # IDs

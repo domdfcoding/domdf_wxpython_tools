@@ -30,10 +30,12 @@ and must not be changed.
 #
 #  Both licensed under the wxWindows Licence
 
-import sys
-import winreg
-import warnings
+# stdlib
 import pathlib
+import sys
+import warnings
+import winreg
+
 """
 
 """

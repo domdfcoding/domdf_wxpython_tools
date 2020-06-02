@@ -49,8 +49,10 @@ Usage:
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 from collections import OrderedDict
 
+# 3rd party
 import wx
 
 
