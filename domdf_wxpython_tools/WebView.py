@@ -35,7 +35,6 @@ import pathlib
 import sys
 import warnings
 import winreg
-
 """
 
 """

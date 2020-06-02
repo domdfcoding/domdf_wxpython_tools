@@ -22,11 +22,11 @@
 #  MA 02110-1301, USA.
 #
 
-from domdf_wxpython_tools.border_config import border_config as BorderConfigDialog
-from domdf_wxpython_tools.chartpanel import ChartPanelBase
-from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
-from . import ColourPickerPanel  # TODO: ColourPickerPanel
-from domdf_wxpython_tools.dialogs import (
+from domdf_wxpython_tools.border_config import border_config as BorderConfigDialog  # isort: skip
+from domdf_wxpython_tools.chartpanel import ChartPanelBase  # isort: skip
+from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl  # isort: skip
+from . import ColourPickerPanel  # isort: skip  # TODO: ColourPickerPanel
+from domdf_wxpython_tools.dialogs import (  # isort: skip
 		file_dialog_wildcard,
 		file_dialog_multiple,
 		file_dialog,
@@ -34,11 +34,11 @@ from domdf_wxpython_tools.dialogs import (
 		IntEntryDialog,
 		Wildcards,
 		)
-from domdf_wxpython_tools.editable_listbox import EditableListBox, CleverListCtrl, EditableNumericalListBox
-from domdf_wxpython_tools.events import PayloadEvent, SimpleEvent
-from domdf_wxpython_tools.filebrowsectrl import FileBrowseCtrl, FileBrowseCtrlWithHistory, DirBrowseCtrl
-from domdf_wxpython_tools.icons import get_button_icon, get_toolbar_icon, GetStockBitmap, GetStockToolbarBitmap
-from domdf_wxpython_tools.imagepanel import (
+from domdf_wxpython_tools.editable_listbox import EditableListBox, CleverListCtrl, EditableNumericalListBox  # isort: skip
+from domdf_wxpython_tools.events import PayloadEvent, SimpleEvent  # isort: skip
+from domdf_wxpython_tools.filebrowsectrl import FileBrowseCtrl, FileBrowseCtrlWithHistory, DirBrowseCtrl  # isort: skip
+from domdf_wxpython_tools.icons import get_button_icon, get_toolbar_icon, GetStockBitmap, GetStockToolbarBitmap  # isort: skip
+from domdf_wxpython_tools.imagepanel import (  # isort: skip
 		ID_ImagePanel_Copy_Image,
 		ID_ImagePanel_Delete_Image,
 		ID_ImagePanel_Load_Image,
@@ -48,19 +48,19 @@ from domdf_wxpython_tools.imagepanel import (
 		EVT_IMAGE_PANEL_CHANGED,
 		ImagePanel,
 		)
-from domdf_wxpython_tools.keyboard import gen_keymap, NAVKEYS
-from . import list_dialog  # TODO: list_dialog
-from domdf_wxpython_tools.logctrl import LogCtrl
-from . import panel_listctrl
-from . import picker  # TODO: picker
-from domdf_wxpython_tools.projections import XPanAxes, XPanAxes_NoZoom, NoZoom
-from domdf_wxpython_tools.style_picker import style_picker as StylePickerDialog
-from domdf_wxpython_tools.style_picker import colour_picker as ColourPickerDialog
-from . import StylePickerPanel  # TODO: StylePickerPanel
-from domdf_wxpython_tools.tabbable_textctrl import TabbableTextCtrl
-from domdf_wxpython_tools.timer_thread import Timer
-from domdf_wxpython_tools.utils import toggle, coming_soon, collapse_label, generate_faces
-from domdf_wxpython_tools.validators import ValidatorBase, FloatValidator, CharValidator
+from domdf_wxpython_tools.keyboard import gen_keymap, NAVKEYS  # isort: skip
+from . import list_dialog  # isort: skip  # TODO: list_dialog
+from domdf_wxpython_tools.logctrl import LogCtrl  # isort: skip
+from . import panel_listctrl  # isort: skip
+from . import picker  # isort: skip  # TODO: picker
+from domdf_wxpython_tools.projections import XPanAxes, XPanAxes_NoZoom, NoZoom  # isort: skip
+from domdf_wxpython_tools.style_picker import style_picker as StylePickerDialog  # isort: skip
+from domdf_wxpython_tools.style_picker import colour_picker as ColourPickerDialog  # isort: skip
+from . import StylePickerPanel  # isort: skip  # TODO: StylePickerPanel
+from domdf_wxpython_tools.tabbable_textctrl import TabbableTextCtrl  # isort: skip
+from domdf_wxpython_tools.timer_thread import Timer  # isort: skip
+from domdf_wxpython_tools.utils import toggle, coming_soon, collapse_label, generate_faces  # isort: skip
+from domdf_wxpython_tools.validators import ValidatorBase, FloatValidator, CharValidator  # isort: skip
 # TODO: WebView
 
 __all__ = [
