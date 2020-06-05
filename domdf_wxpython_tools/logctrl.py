@@ -32,7 +32,7 @@ import keyword
 import os
 
 # 3rd party
-import wx
+import wx  # type: ignore
 from wx import stc
 
 # this package

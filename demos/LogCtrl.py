@@ -26,7 +26,7 @@ import sys
 import tempfile
 import urllib.request
 
-import wx
+import wx  # type: ignore
 
 sys.path.append("..")
 from domdf_wxpython_tools import LogCtrl

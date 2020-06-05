@@ -22,7 +22,7 @@
 #
 
 import sys
-import wx
+import wx  # type: ignore
 
 sys.path.append("..")
 from domdf_wxpython_tools import StylePickerDialog

@@ -22,8 +22,8 @@
 #
 
 import sys
-import wx
-import wx.adv
+import wx  # type: ignore
+import wx.adv  # type: ignore
 
 sys.path.append("..")
 from domdf_wxpython_tools import EditableNumericalListBox

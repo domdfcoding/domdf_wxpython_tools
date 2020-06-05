@@ -53,7 +53,7 @@ Usage:
 from collections import OrderedDict
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 
 class PayloadEvent(wx.PyCommandEvent):

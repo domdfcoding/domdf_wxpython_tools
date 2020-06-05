@@ -33,7 +33,7 @@ import re
 from functools import lru_cache, wraps
 
 # 3rd party
-from frozendict import frozendict
+from cawdrey import frozendict
 
 
 def freezeargs(func):

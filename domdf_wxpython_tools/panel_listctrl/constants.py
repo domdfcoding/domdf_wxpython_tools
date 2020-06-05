@@ -25,7 +25,7 @@ Constants for panel_listctrl
 
 # 3rd party
 import webcolors
-import wx
+import wx  # type: ignore
 
 # Default text settings
 text_defaults = {
@@ -42,7 +42,7 @@ if wx.Platform == "__WXMSW__":
 	text_defaults["font-size"] = "9pt"
 elif wx.Platform == "__WXGTK__":
 	text_defaults["font-size"] = "11pt"
-	import lsb_release
+	import lsb_release  # type: ignore
 
 	if "Ubuntu" in lsb_release.get_distro_information().values():
 		text_defaults["font-face-name"] = "Ubuntu"

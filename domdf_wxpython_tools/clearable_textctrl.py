@@ -29,7 +29,7 @@ A TextCtrl with a button to clear its contents
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # the margin between the text control and the clear button
 MARGIN = 3

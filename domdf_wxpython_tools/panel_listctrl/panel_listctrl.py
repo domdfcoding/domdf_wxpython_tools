@@ -32,7 +32,7 @@ can be used as the basis for custom list items
 import pathlib
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file

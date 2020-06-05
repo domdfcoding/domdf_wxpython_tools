@@ -26,10 +26,10 @@ using PIL and matplotlib, with a right click menu with some basic options
 #
 
 # 3rd party
-import matplotlib
-import wx
-from matplotlib.figure import Figure
-from PIL import Image
+import matplotlib  # type: ignore
+import wx  # type: ignore
+from matplotlib.figure import Figure  # type: ignore
+from PIL import Image  # type: ignore
 
 # this package
 from domdf_wxpython_tools.chartpanel import ChartPanelBase

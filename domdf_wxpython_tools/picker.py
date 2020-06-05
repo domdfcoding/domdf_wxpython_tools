@@ -28,7 +28,7 @@
 import pathlib
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.dialogs import file_dialog

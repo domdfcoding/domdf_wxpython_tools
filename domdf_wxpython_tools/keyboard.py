@@ -22,7 +22,7 @@
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 
 def gen_keymap():

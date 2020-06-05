@@ -34,7 +34,7 @@ and must not be changed.
 import pathlib
 import sys
 import warnings
-import winreg
+import winreg  # type: ignore
 """
 
 """

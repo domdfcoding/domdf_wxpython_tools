@@ -24,9 +24,9 @@
 #
 
 # 3rd party
-import tinycss
+import tinycss  # type: ignore
 import webcolors
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.constants import sys_colour_lookup, text_defaults

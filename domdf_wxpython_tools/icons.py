@@ -26,10 +26,11 @@
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 
 def get_toolbar_icon(icon_name, size=24):
+
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_TOOLBAR_C", wx.Size(size, size)))
 
 

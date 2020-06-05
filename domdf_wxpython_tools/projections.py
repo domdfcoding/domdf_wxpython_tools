@@ -26,8 +26,8 @@
 #
 
 # 3rd party
-import matplotlib
-from matplotlib import axes
+import matplotlib  # type: ignore
+from matplotlib import axes  # type: ignore
 
 
 class XPanAxes(matplotlib.axes.Axes):

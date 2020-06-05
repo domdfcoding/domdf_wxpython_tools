@@ -1,6 +1,6 @@
 tinycss>=0.4
 matplotlib>=3.0.0
-frozendict>=1.2
+cawdrey >=0.1.5
 webcolors>=1.10
 numpy>=1.13.3
 Pillow>=6.0.0

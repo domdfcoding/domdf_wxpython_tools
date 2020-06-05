@@ -25,7 +25,7 @@
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.ColourPickerPanel import ColourPickerPanel

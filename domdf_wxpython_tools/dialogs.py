@@ -28,7 +28,7 @@ Several dialog classes and helper functions for file/folder dialogs
 import os
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.list_dialog import list_dialog

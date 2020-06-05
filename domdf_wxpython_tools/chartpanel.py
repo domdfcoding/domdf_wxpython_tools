@@ -36,11 +36,11 @@ A canvas for displaying a chart within a wxPython window
 import types
 
 # 3rd party
-import matplotlib
-import numpy
-import wx.html2
-from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
-from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
+import matplotlib  # type: ignore
+import numpy  # type: ignore
+import wx.html2  # type: ignore
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
+from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar  # type: ignore
 
 # this package
 from domdf_wxpython_tools.border_config import border_config

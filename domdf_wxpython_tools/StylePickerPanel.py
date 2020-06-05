@@ -25,9 +25,9 @@
 #
 
 # 3rd party
-import wx
-from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
-from matplotlib.figure import Figure
+import wx  # type: ignore
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
+from matplotlib.figure import Figure  # type: ignore
 
 # begin wxGlade: dependencies
 # end wxGlade

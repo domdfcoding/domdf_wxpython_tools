@@ -28,7 +28,7 @@ Dialog for configuring borders for charts
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # begin wxGlade: dependencies
 # end wxGlade

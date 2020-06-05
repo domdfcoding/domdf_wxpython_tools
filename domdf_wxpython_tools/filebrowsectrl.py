@@ -45,8 +45,8 @@ import os
 import pathlib
 
 # 3rd party
-import wx
-from wx.lib.filebrowsebutton import FileBrowseButton
+import wx  # type: ignore
+from wx.lib.filebrowsebutton import FileBrowseButton  # type: ignore
 
 # this package
 from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl

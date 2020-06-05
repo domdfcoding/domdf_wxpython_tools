@@ -23,10 +23,11 @@
 #
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 
 def toggle(obj):
+
 	if obj.IsEnabled():
 		obj.SetValue(not obj.GetValue())
 		return True

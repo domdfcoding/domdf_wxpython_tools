@@ -28,7 +28,7 @@ Various validator classes
 import string
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 
 class ValidatorBase(wx.Validator):
