@@ -32,6 +32,8 @@ can be used as the basis for custom list items
 import pathlib
 
 # 3rd party
+from typing import Dict
+
 import wx  # type: ignore
 
 # this package
@@ -601,7 +603,7 @@ class PanelListItem(wx.Panel):
 			self._selected_background = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUHILIGHT)
 
 		self._items = {}
-		self._text_properties = {}
+		self._text_properties: Dict = {}
 
 		self.outer_sizer = wx.BoxSizer(wx.HORIZONTAL)
 		main_grid = wx.FlexGridSizer(len(text_dict), 2, 0, left_padding)

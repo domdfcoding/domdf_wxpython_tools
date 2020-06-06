@@ -29,6 +29,8 @@ A TextCtrl with a button to clear its contents
 #
 
 # 3rd party
+from typing import Tuple
+
 import wx  # type: ignore
 
 # the margin between the text control and the clear button
@@ -531,7 +533,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return size
 
-	def GetCompositeWindowParts(self) -> wxWindowList:
+	def GetCompositeWindowParts(self) -> wx.WindowList:
 		"""
 
 		:return:
@@ -1047,7 +1049,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SelectNone()
 
-	def SetClearBitmap(self, bitmap): wx.Bitmap
+	def SetClearBitmap(self, bitmap) -> wx.Bitmap:
 		"""
 
 		:param bitmap:

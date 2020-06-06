@@ -75,7 +75,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 			self,
 			parent: wx.Window,
 			id:wx.WindowID = wx.ID_ANY,
-			pos wx.Point = wx.DefaultPosition,
+			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: wx.Style = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
 			labelText: str = "File Entry:",

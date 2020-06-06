@@ -28,6 +28,9 @@ Based on StylePickerPanel, a Panel for selecting a list of colours, and their or
 #
 
 # 3rd party
+from typing import List
+
+import matplotlib
 import wx  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
@@ -80,7 +83,7 @@ class ColourPickerPanel(StylePickerPanel):
 			name: str = wx.PanelNameStr,
 			label: str = "Choose Colours: ",
 			picker_choices: List[str] = None,
-			selection_choices: List[str[ = None,
+			selection_choices: List[str] = None,
 			):
 		"""
 		:param parent: The parent window.

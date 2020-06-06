@@ -26,12 +26,15 @@
 
 # TODO: Forward events
 from typing import Tuple
+import wx  # type: ignore
 
 
 class TextCtrlWrapper:
 	"""
 	Must set the value of self.textctrl
 	"""
+
+	textctrl: wx.TextCtrl
 
 	def AppendText(self, text: str):
 		"""
@@ -193,7 +196,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Redo()
 
-	def Remove(self, from_; int, to_: int):
+	def Remove(self, from_: int, to_: int):
 		"""
 		Removes the text starting at the first given position up to (but not including) the character at the last position.
 

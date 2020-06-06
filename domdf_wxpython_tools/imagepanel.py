@@ -26,9 +26,8 @@ using PIL and matplotlib, with a right click menu with some basic options
 #
 
 # 3rd party
-import PIL
+import PIL  # type: ignore
 import matplotlib  # type: ignore
-import obj as obj
 import wx  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
 from PIL import Image  # type: ignore
@@ -70,7 +69,7 @@ class EvtImgPanelChanged(wx.PyCommandEvent):
 	"""
 	eventType = ImgPanelChangedEvent
 
-	def __init__(self, windowID: int, obj: obj):
+	def __init__(self, windowID: int, obj):
 		"""
 
 		:param windowID:
@@ -98,9 +97,9 @@ class ImagePanel(ChartPanelBase):
 			parent: wx.Window,
 			image=None,
 			id: wx.WindowID = wx.ID_ANY,
-			pos: wx.PointPo = wx.DefaultPosition,
+			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
-			styl: int = 0,
+			style: int = 0,
 			name: str = wx.PanelNameStr
 			):
 		"""

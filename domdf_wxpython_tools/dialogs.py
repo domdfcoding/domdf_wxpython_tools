@@ -28,7 +28,7 @@ Several dialog classes and helper functions for file/folder dialogs
 import os
 
 # 3rd party
-from typing import List
+from typing import List, Sequence
 
 import wx  # type: ignore
 
@@ -127,7 +127,7 @@ def file_dialog_multiple(
 			) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
-			return  # the user changed their mind
+			return None  # the user changed their mind
 
 		try:
 			pathnames = fileDialog.GetPaths()
@@ -224,7 +224,7 @@ class Wildcards:
 	def add_filetype(
 			self,
 			description: str,
-			extensions: str = None,
+			extensions: Sequence[str] = None,
 			hint_format: int = style_lowercase,
 			value_format: int = style_lowercase | style_uppercase
 			):

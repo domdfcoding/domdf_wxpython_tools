@@ -24,7 +24,8 @@
 #
 
 # 3rd party
-from typing import Dict
+import pathlib
+from typing import Dict, Union
 
 import tinycss  # type: ignore
 import webcolors

@@ -40,7 +40,7 @@ Available in two flavours:
 from decimal import Decimal
 
 # 3rd party
-from typing import List
+from typing import List, Sequence, Union
 
 import wx  # type: ignore
 import wx.adv  # type: ignore
@@ -600,7 +600,7 @@ class EditableNumericalListBox(EditableListBox):
 	def SetStrings(self, strings):
 		self.SetValues(strings)
 
-	def SetValues(self, values: List[int]. List[float, List[decimal]):
+	def SetValues(self, values: Sequence[Union[float, Decimal]]):
 		"""
 		Replaces current contents with given values.
 

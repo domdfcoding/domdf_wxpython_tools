@@ -35,6 +35,8 @@ import pathlib
 import sys
 import warnings
 import winreg  # type: ignore
+from typing import Union
+
 """
 
 """
@@ -50,7 +52,7 @@ wxWEBVIEWIE_EMU_IE11 = 11000,
 wxWEBVIEWIE_EMU_IE11_FORCE = 11001
 
 
-def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: str = one) -> bool:
+def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: Union[str, pathlib.Path] = None) -> bool:
 	"""
 
 	:param level: The emulation level to use, one of the constants specified above

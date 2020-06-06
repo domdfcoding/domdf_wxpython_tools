@@ -104,6 +104,8 @@ def parse_font(style_dict: Dict) -> Tuple[str, dict]:
 	# if style_dict["font-size"] is None:
 	# 	font_data["pointSize"] = None
 	# else:
+	font_size_value: str
+	pt_or_px: str
 	font_size_value, pt_or_px = filter(None, re.split(r"(\d+|\D+)", style_dict["font-size"]))
 
 	if pt_or_px.lower() == "pt":
