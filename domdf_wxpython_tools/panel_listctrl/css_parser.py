@@ -24,6 +24,8 @@
 #
 
 # 3rd party
+from typing import Dict
+
 import tinycss  # type: ignore
 import webcolors
 import wx  # type: ignore
@@ -35,7 +37,7 @@ from domdf_wxpython_tools.panel_listctrl.constants import sys_colour_lookup, tex
 parser = tinycss.make_parser("page3")
 
 
-def parse_css_file(filename):
+def parse_css_file(filename: Union[str, pathlib.Path]) -> dict:
 	"""
 	Parse the stylesheet in the given file
 
@@ -51,7 +53,7 @@ def parse_css_file(filename):
 	return _parse_css(stylesheet)
 
 
-def parse_css(css_data):
+def parse_css(css_data: str) -> Dict:
 	"""
 	Parse the stylesheet from the given string
 
@@ -67,7 +69,7 @@ def parse_css(css_data):
 	return _parse_css(stylesheet)
 
 
-def _parse_css(stylesheet):
+def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 	"""
 	Internal function for actual parsing of css
 

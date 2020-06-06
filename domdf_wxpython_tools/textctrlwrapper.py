@@ -25,6 +25,7 @@
 #
 
 # TODO: Forward events
+from typing import Tuple
 
 
 class TextCtrlWrapper:
@@ -32,7 +33,7 @@ class TextCtrlWrapper:
 	Must set the value of self.textctrl
 	"""
 
-	def AppendText(self, text):
+	def AppendText(self, text: str):
 		"""
 		Appends the text to the end of the text control.
 
@@ -42,7 +43,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.AppendText(text)
 
-	def CanCopy(self):
+	def CanCopy(self) -> float:
 		"""
 		Returns True if the selection can be copied to the clipboard.
 
@@ -51,7 +52,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.CanCopy()
 
-	def CanCut(self):
+	def CanCut(self) -> bool:
 		"""
 		Returns True if the selection can be cut to the clipboard.
 
@@ -60,7 +61,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.CanCut()
 
-	def CanPaste(self):
+	def CanPaste(self) -> bool:
 		"""
 		Returns True if the contents of the clipboard can be pasted into the text control.
 
@@ -71,7 +72,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.CanPaste()
 
-	def CanRedo(self):
+	def CanRedo(self) -> bool:
 		"""
 		Returns True if there is a redo facility available and the last operation can be redone.
 
@@ -80,7 +81,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.CanRedo()
 
-	def CanUndo(self):
+	def CanUndo(self) -> bool:
 		"""
 		Returns True if there is an undo facility available and the last operation can be undone.
 
@@ -112,7 +113,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Cut()
 
-	def GetLastPosition(self):
+	def GetLastPosition(self) -> wx.TextPos:
 		"""
 		Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.
 
@@ -121,7 +122,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.GetLastPosition()
 
-	def GetSelection(self):
+	def GetSelection(self) -> Tuple:
 		"""
 		Gets the current selection span.
 
@@ -132,7 +133,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.GetSelection()
 
-	def GetStringSelection(self):
+	def GetStringSelection(self) -> str:
 		"""
 		Gets the text currently selected in the control.
 
@@ -143,7 +144,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.GetStringSelection()
 
-	def GetValue(self):
+	def GetValue(self) -> str:
 		"""
 		Gets the contents of the control.
 
@@ -154,7 +155,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.GetValue()
 
-	def IsEditable(self):
+	def IsEditable(self) -> bool:
 		"""
 		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
 
@@ -165,7 +166,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.IsEditable()
 
-	def IsEmpty(self):
+	def IsEmpty(self) -> bool:
 		"""
 		Returns True if the control is currently empty.
 
@@ -192,7 +193,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Redo()
 
-	def Remove(self, from_, to_):
+	def Remove(self, from_; int, to_: int):
 		"""
 		Removes the text starting at the first given position up to (but not including) the character at the last position.
 
@@ -206,7 +207,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Remove(from_, to_)
 
-	def Replace(self, from_, to_, value):
+	def Replace(self, from_: int, to_: int, value) ->str:
 		"""
 		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
 
@@ -238,7 +239,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.SelectNone()
 
-	def SetSelection(self, from_, to_):
+	def SetSelection(self, from_: int, to_: int):
 		"""
 		Selects the text starting at the first position up to (but not including) the character at the last position.
 
@@ -280,7 +281,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Undo()
 
-	def WriteText(self, text):
+	def WriteText(self, text: str):
 		"""
 		Writes the text into the text control at the current insertion position.
 

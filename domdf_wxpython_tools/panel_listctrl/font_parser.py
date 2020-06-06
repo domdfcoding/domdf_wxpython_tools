@@ -33,10 +33,12 @@ import re
 from functools import lru_cache, wraps
 
 # 3rd party
+from typing import Tuple, Dict, Callable
+
 from cawdrey import frozendict
 
 
-def freezeargs(func):
+def freezeargs(func: Callable) -> Callable:
 	"""
 	Make mutable dictionary immutable for lru_cache
 
@@ -54,7 +56,7 @@ def freezeargs(func):
 
 @freezeargs
 @lru_cache(5)
-def parse_font(style_dict):
+def parse_font(style_dict: Dict) -> Tuple[str, dict]:
 	"""
 	Parse the font from the style_dict
 

@@ -46,7 +46,7 @@ class CTCWidget(wx.TextCtrl):
 	CTCWidget: text control used by ClearableTextCtrl
 	"""
 
-	def __init__(self, parent, value, style, validator):
+	def __init__(self, parent: ClearableTextCtrl, value: str, style: int, validator):
 		"""
 		:param parent: The parent window.
 		:type parent: ClearableTextCtrl
@@ -162,7 +162,7 @@ class ClearButton(wx.Control):
 	Clear button for the ClearableTextCtrl
 	"""
 
-	def __init__(self, parent, eventType, bmp):
+	def __init__(self, parent: ClearableTextCtrl, eventType: wx.PyEventBinder, bmp: wx.Bitmap):
 		"""
 		:param parent: The parent window.
 		:type parent: ClearableTextCtrl
@@ -182,7 +182,7 @@ class ClearButton(wx.Control):
 		self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
 		self.Bind(wx.EVT_PAINT, self.OnPaint)
 
-	def SetBitmapLabel(self, label):
+	def SetBitmapLabel(self, label: wx.Bitmap):
 		"""
 		Set bitmap for the button
 
@@ -247,14 +247,14 @@ class ClearableTextCtrl(wx.Panel):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			value="",
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			validator=wx.DefaultValidator,
-			name=ClearableTextCtrlNameStr
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			value: str = "",
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = 0,
+			validator: wx.Validator = wx.DefaultValidator,
+			name: str = ClearableTextCtrlNameStr
 			):
 		"""
 		:param parent: The parent window.
@@ -306,7 +306,7 @@ class ClearableTextCtrl(wx.Panel):
 	# 	wx.Control.Destroy(self)
 
 	@property
-	def default_clear_bitmap(self):
+	def default_clear_bitmap(self) -> wx.Bitmap:
 		"""
 		Returns the default clear button bitmap for the control
 
@@ -334,7 +334,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return True
 
-	def SetBackgroundColour(self, colour):
+	def SetBackgroundColour(self, colour: wx.Colour) -> bool:
 		"""
 		Sets the background colour of the control
 
@@ -358,7 +358,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return True
 
-	def AppendText(self, text):
+	def AppendText(self, text: str):
 		"""
 		Appends the text to the end of the text control.
 
@@ -373,7 +373,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.AppendText(text)
 
-	def AutoComplete(self, completer):
+	def AutoComplete(self, completer: wx.TextCompleter) -> bool:
 		"""
 		Enable auto-completion using the provided completer object.
 
@@ -388,7 +388,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.AutoComplete(completer)
 
-	def AutoCompleteDirectories(self):
+	def AutoCompleteDirectories(self) -> bool:
 		"""
 		Call this function to enable auto-completion of the text using the file system directories.
 
@@ -402,7 +402,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.AutoCompleteDirectories()
 
-	def AutoCompleteFileNames(self):
+	def AutoCompleteFileNames(self) -> bool:
 		"""
 		Call this function to enable auto-completion of the text typed in a single-line text control using all valid file system paths.
 
@@ -414,7 +414,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.AutoCompleteFileNames()
 
-	def CanCopy(self):
+	def CanCopy(self) -> bool:
 		"""
 		:return: True if the selection can be copied to the clipboard.
 		:rtype:	bool
@@ -422,7 +422,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.CanCopy()
 
-	def CanCut(self):
+	def CanCut(self) -> bool:
 		"""
 		:return: True if the selection can be cut to the clipboard.
 		:rtype:	bool
@@ -430,7 +430,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.CanCut()
 
-	def CanPaste(self):
+	def CanPaste(self) -> bool:
 		"""
 		:return: True if the contents of the clipboard can be pasted into the text control.
 		:rtype:	bool
@@ -440,7 +440,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.CanPaste()
 
-	def CanRedo(self):
+	def CanRedo(self) -> bool:
 		"""
 		:return: True if there is a redo facility available and the last operation can be redone.
 		:rtype: bool
@@ -448,7 +448,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.CanRedo()
 
-	def CanUndo(self):
+	def CanUndo(self) -> bool:
 		"""
 		:return: True if there is an undo facility available and the last operation can be undone.
 		:rtype: bool
@@ -456,7 +456,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.CanUndo()
 
-	def ChangeValue(self, value):
+	def ChangeValue(self, value: str):
 		"""
 		Sets the new text control value.
 
@@ -513,7 +513,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.EmulateKeyPress(event)
 
-	def GetBestClientSize(self):
+	def GetBestClientSize(self) -> wx.Size:
 		"""
 
 		:return:
@@ -531,7 +531,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return size
 
-	def GetCompositeWindowParts(self):
+	def GetCompositeWindowParts(self) -> wxWindowList:
 		"""
 
 		:return:
@@ -540,7 +540,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return [self.m_text, self.m_clearButton]
 
-	def GetDefaultStyle(self):
+	def GetDefaultStyle(self) -> wx.TextAttr:
 		"""
 		:return: The style currently used for the new text.
 		:rtype: wx.TextAttr
@@ -548,7 +548,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetDefaultStyle()
 
-	def GetInsertionPoint(self):
+	def GetInsertionPoint(self) -> int:
 		"""
 		Returns the insertion point, or cursor, position.
 
@@ -560,7 +560,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetInsertionPoint()
 
-	def GetLastPosition(self):
+	def GetLastPosition(self) -> wx.TextPos:
 		"""
 		Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.
 
@@ -569,7 +569,7 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		return self.m_text.GetLastPosition()
 
-	def GetLineLength(self, lineNo):
+	def GetLineLength(self, lineNo: int) -> int:
 		"""
 		Gets the length of the specified line, not including any trailing newline character(s).
 
@@ -582,7 +582,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetLineLength(lineNo)
 
-	def GetLineText(self, lineNo):
+	def GetLineText(self, lineNo: int) -> int:
 		"""
 		Returns the contents of a given line in the text control, not including any trailing newline character(s).
 
@@ -613,7 +613,7 @@ class ClearableTextCtrl(wx.Panel):
 	# 	else:
 	# 		return 6
 
-	def GetNumberOfLines(self):
+	def GetNumberOfLines(self) -> int:
 		"""
 		Returns the number of lines in the text control buffer.
 
@@ -623,7 +623,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return 1
 
-	def GetRange(self, from_, to_):
+	def GetRange(self, from_: int, to_: int) -> str:
 		"""
 		Returns the string containing the text starting in the positions from and up to to in the control.
 
@@ -640,7 +640,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetRange(from_, to_)
 
-	def GetSelection(self):
+	def GetSelection(self) -> Tuple:
 		"""
 		Gets the current selection span.
 
@@ -652,7 +652,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetSelection()
 
-	def GetStringSelection(self):
+	def GetStringSelection(self) -> str:
 		"""
 		Gets the text currently selected in the control.
 
@@ -664,7 +664,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetStringSelection()
 
-	def GetStyle(self, position, style):
+	def GetStyle(self, position: int, style: wx.TextAttr) -> bool:
 		"""
 		Returns the style at this position in the text control.
 
@@ -681,7 +681,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetStyle(position, style)
 
-	def GetValue(self):
+	def GetValue(self) -> str:
 		"""
 		Gets the contents of the control.
 
@@ -693,7 +693,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetValue()
 
-	def HitTestPos(self, pt):
+	def HitTestPos(self, pt) -> wx.TextCtrlHitTestResult:
 		"""
 		Finds the position of the character at the specified point.
 
@@ -710,7 +710,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.HitTestPos(pt)
 
-	def HitTest(self, pt):
+	def HitTest(self, pt) -> wx.TextCtrlHitTestResult:
 		"""
 		Finds the row and column of the character at the specified point.
 
@@ -733,7 +733,7 @@ class ClearableTextCtrl(wx.Panel):
 		"""Returns the clear button’s visibility state"""
 		return self.m_clearButton and self.m_clearButton.IsShown()
 
-	def IsEditable(self):
+	def IsEditable(self) -> bool:
 		"""
 		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
 
@@ -745,7 +745,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.IsEditable()
 
-	def IsEmpty(self):
+	def IsEmpty(self) -> bool:
 		"""
 		Returns True if the control is currently empty.
 
@@ -757,7 +757,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.IsEmpty()
 
-	def IsModified(self):
+	def IsModified(self) -> bool:
 		"""
 		Returns True if the text has been modified by user.
 
@@ -769,7 +769,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.IsModified()
 
-	def IsMultiLine(self):
+	def IsMultiLine(self) -> bool:
 		"""
 		Returns True if this is a multi line edit control and False otherwise.
 
@@ -779,7 +779,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.IsMultiLine()
 
-	def IsSingleLine(self):
+	def IsSingleLine(self) -> bool:
 		"""
 		Returns True if this is a single line edit control and False otherwise.
 
@@ -853,7 +853,7 @@ class ClearableTextCtrl(wx.Panel):
 		self.m_text.Clear()
 		event.Skip()
 
-	def OnSize(self, event):
+	def OnSize(self, event: wx.SizeEvent):
 		"""
 		Event handler for the size of the control being changed
 
@@ -867,7 +867,7 @@ class ClearableTextCtrl(wx.Panel):
 	def Paste(self):
 		self.m_text.Paste()
 
-	def PositionToXY(self, pos):
+	def PositionToXY(self, pos: int) -> Tuple:
 		"""
 		Converts given position to a zero-based column, line number pair.
 
@@ -889,7 +889,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.Redo()
 
-	def Remove(self, from_, to_):
+	def Remove(self, from_: int, to_: int):
 		"""
 		Removes the text starting at the first given position up to (but not including) the character at the last position.
 
@@ -992,7 +992,7 @@ class ClearableTextCtrl(wx.Panel):
 	#
 	# 	return bitmap
 
-	def Replace(self, from_, to_, value):
+	def Replace(self, from_: int, to_: int, value: str):
 		"""
 		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
 
@@ -1009,7 +1009,7 @@ class ClearableTextCtrl(wx.Panel):
 		self.m_text.Replace(from_, to_, value)
 
 	@staticmethod
-	def RescaleBitmap(bmp, sizeNeeded):
+	def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size):
 		"""
 
 		:param bmp:
@@ -1047,7 +1047,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SelectNone()
 
-	def SetClearBitmap(self, bitmap):
+	def SetClearBitmap(self, bitmap): wx.Bitmap
 		"""
 
 		:param bitmap:
@@ -1059,7 +1059,7 @@ class ClearableTextCtrl(wx.Panel):
 			if self.m_clearButton:
 				self.m_clearButton.SetBitmapLabel(self.m_clearBitmap)
 
-	def SetDefaultStyle(self, style):
+	def SetDefaultStyle(self, style: wx.TextAttr) -> bool:
 		"""
 		Changes the default style to use for the new text which is going to be added to the control.
 
@@ -1078,7 +1078,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.SetDefaultStyle(style)
 
-	def SetEditable(self, editable):
+	def SetEditable(self, editable: bool):
 		"""
 		Makes the text item editable or read-only, overriding the wx.TE_READONLY flag.
 
@@ -1088,7 +1088,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetEditable(editable)
 
-	def SetInsertionPoint(self, pos):
+	def SetInsertionPoint(self, pos: int):
 		"""
 		Sets the insertion point at the given position.
 
@@ -1109,7 +1109,7 @@ class ClearableTextCtrl(wx.Panel):
 
 	# SetMargins
 
-	def SetMaxLength(self, length):
+	def SetMaxLength(self, length: int):
 		"""
 		This function sets the maximum number of characters the user can enter into the control.
 
@@ -1125,7 +1125,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetMaxLength(length)
 
-	def SetModified(self, modified):
+	def SetModified(self, modified: bool):
 		"""
 		Marks the control as being modified by the user or not.
 
@@ -1135,7 +1135,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetModified(modified)
 
-	def SetSelection(self, from_, to_):
+	def SetSelection(self, from_: int, to_: int):
 		"""
 		Selects the text starting at the first position up to (but not including) the character at the last position.
 
@@ -1151,7 +1151,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetSelection(from_, to_)
 
-	def SetStyle(self, start, end, style):
+	def SetStyle(self, start: int, end: int, style: wx.TextAttr) -> bool:
 		"""
 		Changes the style of the given range.
 
@@ -1170,7 +1170,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.SetStyle(start, end, style)
 
-	def SetValue(self, value):
+	def SetValue(self, value: str):
 		"""
 		Sets the new text control value.
 
@@ -1186,7 +1186,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetValue(value)
 
-	def ShowPosition(self, pos):
+	def ShowPosition(self, pos: int):
 		"""
 		Makes the line containing the given position visible.
 
@@ -1196,7 +1196,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.ShowPosition(pos)
 
-	def ShouldInheritColours(self):
+	def ShouldInheritColours(self) -> bool:
 		"""
 
 		:return:
@@ -1214,7 +1214,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.Undo()
 
-	def WriteText(self, text):
+	def WriteText(self, text: str):
 		"""
 		Writes the text into the text control at the current insertion position.
 
@@ -1224,7 +1224,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.WriteText(text)
 
-	def XYToPosition(self, x, y):
+	def XYToPosition(self, x: int, y: int) -> int:
 		"""
 		Converts the given zero based column and line number to a position.
 

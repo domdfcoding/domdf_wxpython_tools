@@ -67,12 +67,12 @@ class LogCtrl(stc.StyledTextCtrl):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
-			name="Log"
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
+			name: str = "Log"
 			):
 		"""
 		:param parent: The parent window.
@@ -342,7 +342,7 @@ Right click for options
 	def ToggleLineNumbers(self, *_):
 		self.setDisplayLineNumbers(not self.lineNumbers)
 
-	def CanCopy(self):
+	def CanCopy(self) -> bool:
 		"""
 		Returns True if text is selected and can be copied, False otherwise.
 
@@ -372,7 +372,7 @@ Right click for options
 			wx.TheClipboard.Flush()
 			wx.TheClipboard.Close()
 
-	def wrap(self, wrap=True):
+	def wrap(self, wrap=True) -> bool:
 		"""
 		Set whether text is word wrapped.
 

@@ -73,24 +73,24 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
-			labelText="File Entry:",
-			buttonText="Browse",
-			toolTip="Type a filename or click the browse button to choose a file",
+			parent: wx.Window,
+			id:wx.WindowID = wx.ID_ANY,
+			pos wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: wx.Style = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
+			labelText: str = "File Entry:",
+			buttonText: str = "Browse",
+			toolTip: str = "Type a filename or click the browse button to choose a file",
 			# following are the values for a file dialog box
-			dialogTitle="Choose a file",
-			initialValue="",
+			dialogTitle: str = "Choose a file",
+			initialValue:str = "",
 			# callback for when value changes (optional)
-			changeCallback=lambda x: x,
+			changeCallback = lambda x: x,
 			labelWidth=0,
 			name='fileBrowseButton',
-			show_cancel_btn=True,
-			fileMask="All files (*.*)|*.*",
-			dialog_title="File Picker",
+			show_cancel_btn: bool = True,
+			fileMask: str = "All files (*.*)|*.*",
+			dialog_title: str = "File Picker",
 			**kwargs
 			):
 		"""
@@ -247,7 +247,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		self.Refresh(True)
 		return rvalue
 
-	def GetLineLength(self, lineNo):
+	def GetLineLength(self, lineNo: int) -> int:
 		"""
 		Gets the length of the specified line, not including any trailing newline character(s).
 
@@ -260,7 +260,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.GetLineLength(lineNo)
 
-	def GetLineText(self, lineNo):
+	def GetLineText(self, lineNo: int) -> str:
 		"""
 		Returns the contents of a given line in the text control, not including any trailing newline character(s).
 
@@ -273,7 +273,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.GetLineText(lineNo)
 
-	def GetNumberOfLines(self):
+	def GetNumberOfLines(self) -> int:
 		"""
 		Returns the number of lines in the text control buffer.
 
@@ -283,7 +283,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return 1
 
-	def IsModified(self):
+	def IsModified(self) -> bool:
 		"""
 		Returns True if the text has been modified by user.
 
@@ -295,7 +295,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.IsModified()
 
-	def IsMultiLine(self):
+	def IsMultiLine(self) -> bool:
 		"""
 		Returns True if this is a multi line edit control and False otherwise.
 
@@ -305,7 +305,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return False
 
-	def IsSingleLine(self):
+	def IsSingleLine(self) -> bool:
 		"""
 		Returns True if this is a single line edit control and False otherwise.
 
@@ -325,7 +325,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.MarkDirty()
 
-	def SetModified(self, modified):
+	def SetModified(self, modified: bool):
 		"""
 		Marks the control as being modified by the user or not.
 
@@ -376,7 +376,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	#
 	#
 
-	def ChangeValue(self, value):
+	def ChangeValue(self, value: str):
 		"""
 		Sets the new text control value.
 
@@ -396,7 +396,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.ChangeValue(value)
 
-	def GetRange(self, from_, to_):
+	def GetRange(self, from_: int, to_: int) -> str:
 		"""
 		Returns the string containing the text starting in the positions
 		from and up to to in the control.
@@ -414,7 +414,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.textControl.GetRange(from_, to_)
 
-	def IsEditable(self):
+	def IsEditable(self) -> bool:
 		"""
 		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
 

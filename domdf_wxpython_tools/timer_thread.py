@@ -43,7 +43,7 @@ class Timer(Thread):
 	Background Timer Class
 	"""
 
-	def __init__(self, parent, interval=1.0):
+	def __init__(self, parent, interval: float = 1.0):
 		"""
 		Init Timer Thread Class
 

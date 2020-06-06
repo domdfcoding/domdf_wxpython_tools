@@ -72,15 +72,15 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL,
-			name=wx.PanelNameStr,
-			label="Choose Colours: ",
-			picker_choices=None,
-			selection_choices=None,
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL,
+			name: str = wx.PanelNameStr,
+			label: str = "Choose Colours: ",
+			picker_choices: List[str] = None,
+			selection_choices: List[str[ = None,
 			):
 		"""
 		:param parent: The parent window.
@@ -265,7 +265,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.update_selection_preview()
 		event.Skip()
 
-	def update_preview(self, list_obj, axes):
+	def update_preview(self, list_obj: wx.LostBox, axes: matplotlib.axes.Axes):
 		"""
 		Update the preview from the given list
 
@@ -311,7 +311,7 @@ class ColourPickerPanel(StylePickerPanel):
 			self.update_selection_preview()
 			dlg.Destroy()
 
-	def GetSelection(self):
+	def GetSelection(self) -> List[str]:
 		"""
 		Returns a list of the currently selected colours
 

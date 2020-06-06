@@ -120,7 +120,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		event.Skip()
 		# TODO: Keyboard autocompletion?
 
-	def SetSelection(self, idx):
+	def SetSelection(self, idx: int):
 		"""
 		Set the current selection to the item at the given index
 
@@ -198,7 +198,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return True
 
-	def DeleteItem(self, item):
+	def DeleteItem(self, item) -> bool:
 		"""
 		Deletes the specified item from the control.
 
@@ -242,7 +242,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		return 1
 
 #
-# 	def GetCountPerPage(self):
+# 	def GetCountPerPage(self) -> int:
 # 		"""
 # 		GetCountPerPage() -> int
 #
@@ -320,7 +320,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return len(self._items)
 
-	def GetItemPosition(self, item):
+	def GetItemPosition(self, item)-> wx.Point:
 		"""
 		GetItemPosition(item) -> Point
 
@@ -352,7 +352,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return -1
 
-	def GetSelectedItemCount(self):
+	def GetSelectedItemCount(self) -> int:
 		"""
 		GetSelectedItemCount() -> int
 
@@ -442,7 +442,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		for index in range(itemFrom, itemTo + 1):
 			self.RefreshItem(self._items[index])
 #
-# 	def ScrollList(self, dx, dy):
+# 	def ScrollList(self, dx, dy) -> bool:
 # 		"""
 # 		ScrollList(dx, dy) -> bool
 #
@@ -450,7 +450,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		"""
 # 		return False
 
-	def Select(self, idx, on=1):
+	def Select(self, idx, on: int = 1):
 		"""
 		Selects/deselects an item.
 
@@ -465,7 +465,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		self._items[idx].SelectItem(on)
 
-# 	def SortItems(self, fnSortCallBack):
+# 	def SortItems(self, fnSortCallBack) -> bool:
 # 		"""
 # 		SortItems(fnSortCallBack) -> bool
 #
@@ -474,7 +474,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		return False
 
 	@property
-	def ColumnCount(self):
+	def ColumnCount(self) -> int:
 		"""
 		Returns the number of columns.
 
@@ -504,7 +504,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		return self.GetFocusedItem()
 
 	@property
-	def ItemCount(self):
+	def ItemCount(self) -> int:
 		"""
 		Returns the number of items in the list control.
 
@@ -520,13 +520,13 @@ class PanelListItem(wx.Panel):
 
 	def __init__(
 			self,
-			parent,
+			parent: PanelListCtrl,
 			text_dict,
 			style_data,
-			id=wx.ID_ANY,
-			style=0,
-			name=wx.PanelNameStr,
-			left_padding=32,
+			id: wx.WindowID = wx.ID_ANY,
+			style: int = 0,
+			name: str = wx.PanelNameStr,
+			left_padding: int = 32,
 			):
 		"""
 
@@ -635,7 +635,7 @@ class PanelListItem(wx.Panel):
 
 		self.Refresh()
 
-	def SelectItem(self, select=True):
+	def SelectItem(self, select: bool = True):
 		self.selected = select
 		if select:
 			self.SetFocus()

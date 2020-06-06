@@ -50,7 +50,7 @@ wxWEBVIEWIE_EMU_IE11 = 11000,
 wxWEBVIEWIE_EMU_IE11_FORCE = 11001
 
 
-def MSWSetEmulationLevel(level=wxWEBVIEWIE_EMU_DEFAULT, program_name=None):
+def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: str = one) -> bool:
 	"""
 
 	:param level: The emulation level to use, one of the constants specified above

@@ -158,7 +158,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.dir_value.Clear()
 		self.dir_value.SetFocus()
 
-	def GetInsertionPoint(self):
+	def GetInsertionPoint(self) -> int:
 		"""
 		Returns the insertion point, or cursor, position.
 
@@ -174,7 +174,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		return self.dir_value.SetValue(self.initial_value)
 
-	def SetHeight(self, height):
+	def SetHeight(self, height: float, int):
 		"""
 		Set the height of the widgets
 
@@ -185,7 +185,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.__set_properties()
 		self.Layout()
 
-	def SetInitialValue(self, value):
+	def SetInitialValue(self, value: str):
 		"""
 		Sets the initial value for the text ctrl
 
@@ -194,7 +194,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		self.initial_value = value
 
-	def SetInsertionPoint(self, pos):
+	def SetInsertionPoint(self, pos: int):
 		"""
 		Sets the insertion point at the given position.
 
@@ -212,7 +212,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		return self.dir_value.SetInsertionPointEnd()
 
-	def SetTextWidth(self, width):
+	def SetTextWidth(self, width: float, int):
 		"""
 		Sets the width of the TextCtrl
 
