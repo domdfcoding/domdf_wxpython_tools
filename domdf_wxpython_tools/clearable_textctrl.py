@@ -28,9 +28,10 @@ A TextCtrl with a button to clear its contents
 #  MA 02110-1301, USA.
 #
 
-# 3rd party
+# stdlib
 from typing import Tuple
 
+# 3rd party
 import wx  # type: ignore
 
 # the margin between the text control and the clear button

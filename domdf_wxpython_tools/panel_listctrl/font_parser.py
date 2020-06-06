@@ -31,10 +31,9 @@
 # stdlib
 import re
 from functools import lru_cache, wraps
+from typing import Callable, Dict, Tuple
 
 # 3rd party
-from typing import Tuple, Dict, Callable
-
 from cawdrey import frozendict
 
 

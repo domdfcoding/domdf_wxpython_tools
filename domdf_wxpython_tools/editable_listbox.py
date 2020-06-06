@@ -38,10 +38,9 @@ Available in two flavours:
 
 # stdlib
 from decimal import Decimal
-
-# 3rd party
 from typing import List, Sequence, Union
 
+# 3rd party
 import wx  # type: ignore
 import wx.adv  # type: ignore
 from mathematical.utils import rounders  # type: ignore  # TODO

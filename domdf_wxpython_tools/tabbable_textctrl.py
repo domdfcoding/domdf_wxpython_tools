@@ -38,10 +38,10 @@ class TabbableTextCtrl(wx.TextCtrl):
 			self,
 			parent: wx.Window,
 			id: wx.WindowID = wx.ID_ANY,
-			value: str= '',
+			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
-			style:int = 0,
+			style: int = 0,
 			validator: wx.Validator = wx.DefaultValidator,
 			name: str = wx.TextCtrlNameStr
 			):

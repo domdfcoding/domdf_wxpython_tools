@@ -74,7 +74,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id:wx.WindowID = wx.ID_ANY,
+			id: wx.WindowID = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: wx.Style = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
@@ -83,9 +83,9 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 			toolTip: str = "Type a filename or click the browse button to choose a file",
 			# following are the values for a file dialog box
 			dialogTitle: str = "Choose a file",
-			initialValue:str = "",
+			initialValue: str = "",
 			# callback for when value changes (optional)
-			changeCallback = lambda x: x,
+			changeCallback=lambda x: x,
 			labelWidth=0,
 			name='fileBrowseButton',
 			show_cancel_btn: bool = True,

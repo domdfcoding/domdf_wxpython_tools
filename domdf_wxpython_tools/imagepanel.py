@@ -26,8 +26,8 @@ using PIL and matplotlib, with a right click menu with some basic options
 #
 
 # 3rd party
-import PIL  # type: ignore
 import matplotlib  # type: ignore
+import PIL  # type: ignore
 import wx  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
 from PIL import Image  # type: ignore
@@ -167,7 +167,7 @@ class ImagePanel(ChartPanelBase):
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 
-	def load_image(self, new_image = None, suppress_event: bool = False):
+	def load_image(self, new_image=None, suppress_event: bool = False):
 		"""
 		Load the 'new_image' into the contol
 

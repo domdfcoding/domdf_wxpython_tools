@@ -30,10 +30,9 @@ can be used as the basis for custom list items
 
 # stdlib
 import pathlib
-
-# 3rd party
 from typing import Dict
 
+# 3rd party
 import wx  # type: ignore
 
 # this package
@@ -322,7 +321,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return len(self._items)
 
-	def GetItemPosition(self, item)-> wx.Point:
+	def GetItemPosition(self, item) -> wx.Point:
 		"""
 		GetItemPosition(item) -> Point
 

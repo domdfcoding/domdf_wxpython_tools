@@ -26,10 +26,9 @@ Several dialog classes and helper functions for file/folder dialogs
 
 # stdlib
 import os
-
-# 3rd party
 from typing import List, Sequence
 
+# 3rd party
 import wx  # type: ignore
 
 # this package
@@ -51,7 +50,11 @@ common_filetypes = {
 		}
 
 
-def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs) -> List[str]:
+def file_dialog_wildcard(parent,
+							title,
+							wildcard,
+							style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+							**kwargs) -> List[str]:
 	"""
 	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
 
@@ -96,7 +99,12 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 
 
 def file_dialog_multiple(
-		parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs
+		parent,
+		extension,
+		title,
+		filetypestring,
+		style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+		**kwargs
 		) -> List[str]:
 	"""
 	Create a wx.FileDialog with for the extension and filetypestring given, and return a list of the files selected.

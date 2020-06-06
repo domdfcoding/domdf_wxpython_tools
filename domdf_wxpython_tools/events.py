@@ -100,7 +100,7 @@ class SimpleEvent(object):
 
 		return f'SimpleEvent(name={self.name})'
 
-	def __dict__(self)->OrderedDict :
+	def __dict__(self) -> OrderedDict:
 		"""
 		Return a new OrderedDict which maps field names to their values
 
