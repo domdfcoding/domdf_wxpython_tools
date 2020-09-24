@@ -31,7 +31,7 @@ Based on StylePickerPanel, a Panel for selecting a list of colours, and their or
 from typing import List
 
 # 3rd party
-import matplotlib
+import matplotlib # type: ignore
 import wx  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.figure import Figure  # type: ignore

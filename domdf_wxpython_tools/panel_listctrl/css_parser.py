@@ -29,7 +29,7 @@ from typing import Dict, Union
 
 # 3rd party
 import tinycss  # type: ignore
-import webcolors
+import webcolors # type: ignore
 import wx  # type: ignore
 
 # this package
@@ -84,7 +84,7 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
 
-	styles = {}
+	styles = {} # type: ignore
 
 	# Remove declarations for other platforms and make
 

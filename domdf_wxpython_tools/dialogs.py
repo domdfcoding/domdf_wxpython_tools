@@ -26,7 +26,7 @@ Several dialog classes and helper functions for file/folder dialogs
 
 # stdlib
 import os
-from typing import List, Sequence
+from typing import List, Sequence, Optional
 
 # 3rd party
 import wx  # type: ignore
@@ -54,7 +54,7 @@ def file_dialog_wildcard(parent,
 							title,
 							wildcard,
 							style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
-							**kwargs) -> List[str]:
+							**kwargs) -> Optional[List[str]]:
 	"""
 	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
 
@@ -76,7 +76,7 @@ def file_dialog_wildcard(parent,
 	with wx.FileDialog(parent, title, wildcard=wildcard, style=style, **kwargs) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
-			return  # the user changed their mind
+			return None  # the user changed their mind
 
 		try:
 			pathnames = fileDialog.GetPaths()
