@@ -24,7 +24,7 @@ Constants for panel_listctrl
 #  MA 02110-1301, USA.
 
 # 3rd party
-import webcolors
+import webcolors # type: ignore
 import wx  # type: ignore
 
 # Default text settings

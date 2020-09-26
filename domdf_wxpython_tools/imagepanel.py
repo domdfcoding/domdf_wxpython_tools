@@ -27,6 +27,7 @@ using PIL and matplotlib, with a right click menu with some basic options
 
 # 3rd party
 import matplotlib  # type: ignore
+import PIL  # type: ignore
 import wx  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
 from PIL import Image  # type: ignore
@@ -68,7 +69,7 @@ class EvtImgPanelChanged(wx.PyCommandEvent):
 	"""
 	eventType = ImgPanelChangedEvent
 
-	def __init__(self, windowID, obj):
+	def __init__(self, windowID: int, obj):
 		"""
 
 		:param windowID:
@@ -93,13 +94,13 @@ class ImagePanel(ChartPanelBase):
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			image=None,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			name=wx.PanelNameStr
+			id: wx.WindowID = wx.ID_ANY,
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = 0,
+			name: str = wx.PanelNameStr
 			):
 		"""
 		:param parent: The parent window.
@@ -166,7 +167,7 @@ class ImagePanel(ChartPanelBase):
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 
-	def load_image(self, new_image=None, suppress_event=False):
+	def load_image(self, new_image=None, suppress_event: bool = False):
 		"""
 		Load the 'new_image' into the contol
 
@@ -343,7 +344,7 @@ class ImagePanel(ChartPanelBase):
 		# wx.CallAfter(self.pan)
 
 	@property
-	def image(self):
+	def image(self) -> PIL.Image.Image:
 		"""
 		Returns the image being displayed in the control
 

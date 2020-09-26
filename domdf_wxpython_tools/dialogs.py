@@ -26,6 +26,7 @@ Several dialog classes and helper functions for file/folder dialogs
 
 # stdlib
 import os
+from typing import List, Sequence, Optional
 
 # 3rd party
 import wx  # type: ignore
@@ -49,7 +50,11 @@ common_filetypes = {
 		}
 
 
-def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs):
+def file_dialog_wildcard(parent,
+							title,
+							wildcard,
+							style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+							**kwargs) -> Optional[List[str]]:
 	"""
 	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
 
@@ -71,7 +76,7 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 	with wx.FileDialog(parent, title, wildcard=wildcard, style=style, **kwargs) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
-			return  # the user changed their mind
+			return None  # the user changed their mind
 
 		try:
 			pathnames = fileDialog.GetPaths()
@@ -94,8 +99,13 @@ def file_dialog_wildcard(parent, title, wildcard, style=wx.FD_SAVE | wx.FD_OVERW
 
 
 def file_dialog_multiple(
-		parent, extension, title, filetypestring, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, **kwargs
-		):
+		parent,
+		extension,
+		title,
+		filetypestring,
+		style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+		**kwargs
+		) -> List[str]:
 	"""
 	Create a wx.FileDialog with for the extension and filetypestring given, and return a list of the files selected.
 
@@ -125,7 +135,7 @@ def file_dialog_multiple(
 			) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
-			return  # the user changed their mind
+			return None  # the user changed their mind
 
 		try:
 			pathnames = fileDialog.GetPaths()
@@ -142,7 +152,7 @@ def file_dialog_multiple(
 		return pathnames
 
 
-def file_dialog(*args, **kwargs):
+def file_dialog(*args, **kwargs) -> str:
 	"""
 	Create a wx.FileDialog with for the extension and filetypestring given, and return the filename selected.
 
@@ -221,10 +231,10 @@ class Wildcards:
 
 	def add_filetype(
 			self,
-			description,
-			extensions=None,
-			hint_format=style_lowercase,
-			value_format=style_lowercase | style_uppercase
+			description: str,
+			extensions: Sequence[str] = None,
+			hint_format: int = style_lowercase,
+			value_format: int = style_lowercase | style_uppercase
 			):
 		"""
 		Add a filetype to the wildcards
@@ -275,7 +285,7 @@ class Wildcards:
 			self._wildcards.append(f"{description}")
 
 	@property
-	def wildcard(self):
+	def wildcard(self) -> str:
 		"""
 		Returns a string representing the wildcards for use in wx.FileDialog or file_dialog_wildcards
 
@@ -286,9 +296,9 @@ class Wildcards:
 
 	def add_common_filetype(
 			self,
-			filetype,
-			hint_format=style_lowercase,
-			value_format=style_lowercase | style_uppercase,
+			filetype: str,
+			hint_format: int = style_lowercase,
+			value_format: int = style_lowercase | style_uppercase,
 			):
 		"""
 		Add a common filetype.
@@ -306,7 +316,7 @@ class Wildcards:
 
 		self.add_filetype(*common_filetypes[filetype], hint_format=hint_format, value_format=value_format)
 
-	def add_image_wildcard(self, value_format=style_lowercase | style_uppercase):
+	def add_image_wildcard(self, value_format: int = style_lowercase | style_uppercase):
 		"""
 		Add a wildcard for all image filetypes.
 
@@ -326,7 +336,7 @@ class Wildcards:
 
 		self.add_filetype("Image files", image_extensions, hint_format=style_hidden, value_format=value_format)
 
-	def add_all_files_wildcard(self, hint_format=0):
+	def add_all_files_wildcard(self, hint_format: int = 0):
 		"""
 		Add a wildcard for 'All Files'.
 

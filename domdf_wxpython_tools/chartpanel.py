@@ -60,14 +60,14 @@ class ChartPanelBase(wx.Panel):
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			fig,
 			ax,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
+			id: wx.WindowID = wx.ID_ANY,
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Sixe = wx.DefaultSize,
 			style=0,
-			name=wx.PanelNameStr
+			name: str = wx.PanelNameStr
 			):
 		"""
 		:param parent: The parent window.
@@ -158,7 +158,7 @@ class ChartPanelBase(wx.Panel):
 
 		self.canvas.toolbar.back()
 
-	def zoom(self, enable=True):
+	def zoom(self, enable: bool = True):
 		"""
 		Enable the Zoom tool
 		"""
@@ -167,7 +167,7 @@ class ChartPanelBase(wx.Panel):
 			self.canvas.toolbar.zoom()
 		self.canvas.Refresh()
 
-	def pan(self, enable=True):
+	def pan(self, enable: bool = True):
 		"""
 		Enable the Pan tool
 		"""
@@ -241,7 +241,7 @@ class ChartPanelBase(wx.Panel):
 		self.size_change()
 		# event.Skip()
 
-	def setup_scrollwheel_zooming(self, scale=1.1):
+	def setup_scrollwheel_zooming(self, scale: float = 1.1):
 		"""
 		Allow zooming of the chart with the scrollwheel
 
@@ -249,7 +249,7 @@ class ChartPanelBase(wx.Panel):
 		:type scale:
 		"""
 
-		def zoom_factory(ax, base_scale=1.1):
+		def zoom_factory(ax, base_scale: float = 1.1):
 
 			def zoom_fun(event):
 				# get the current x and y limits

@@ -36,14 +36,14 @@ class TabbableTextCtrl(wx.TextCtrl):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			value='',
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			validator=wx.DefaultValidator,
-			name=wx.TextCtrlNameStr
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			value: str = '',
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = 0,
+			validator: wx.Validator = wx.DefaultValidator,
+			name: str = wx.TextCtrlNameStr
 			):
 		"""
 		:param parent: Parent window. Should not be None.

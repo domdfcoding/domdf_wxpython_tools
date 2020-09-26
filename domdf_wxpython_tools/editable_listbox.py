@@ -38,6 +38,7 @@ Available in two flavours:
 
 # stdlib
 from decimal import Decimal
+from typing import List, Sequence, Union
 
 # 3rd party
 import wx  # type: ignore
@@ -203,13 +204,13 @@ class CleverListCtrl(wx.ListCtrl):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.LC_ICON,
-			validator=wx.DefaultValidator,
-			name=wx.ListCtrlNameStr
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = wx.LC_ICON,
+			validator: wx.Validator = wx.DefaultValidator,
+			name: str = wx.ListCtrlNameStr
 			):
 		"""
 		:param parent:
@@ -260,13 +261,13 @@ class EditableListBox(wx.Panel):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			label="",
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.adv.EL_DEFAULT_STYLE,
-			name=wx.adv.EditableListBoxNameStr
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			label: wx.String = "",
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = wx.adv.EL_DEFAULT_STYLE,
+			name: str = wx.adv.EditableListBoxNameStr
 			):
 		"""
 		This class provides a composite control that lets the user easily enter
@@ -367,7 +368,7 @@ class EditableListBox(wx.Panel):
 		self.m_listCtrl.EditLabel(self.curRow)
 		evt.Skip()
 
-	def SetStrings(self, strings):
+	def SetStrings(self, strings: List[str]):
 		"""
 		Replaces current contents with given strings.
 
@@ -382,7 +383,7 @@ class EditableListBox(wx.Panel):
 		self.m_listCtrl.InsertItem(len(strings), '')
 		self.m_listCtrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
-	def GetStrings(self):
+	def GetStrings(self) -> List[str]:
 		"""
 		Returns a list of the current contents of the control.
 
@@ -458,7 +459,7 @@ class EditableListBox(wx.Panel):
 
 		self.m_listCtrl.EditLabel(self.m_selection)
 
-	def SwapItems(self, i1, i2):
+	def SwapItems(self, i1: int, i2: int):
 		"""
 
 		:param i1:
@@ -489,7 +490,7 @@ class EditableListBox(wx.Panel):
 		self.SwapItems(self.m_selection + 1, self.m_selection)
 		self.m_listCtrl.SetItemState(self.m_selection + 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
-	def GetListCtrl(self):
+	def GetListCtrl(self) -> wx.ListCtrl:
 		"""
 		Returns a reference to the actual list control portion of the custom control.
 
@@ -539,14 +540,14 @@ class EditableNumericalListBox(EditableListBox):
 
 	def __init__(
 			self,
-			parent,
-			id=wx.ID_ANY,
-			label="",
+			parent: wx.Window,
+			id: wx.WindowID = wx.ID_ANY,
+			label: wx.String = "",
 			decimal_places=-1,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.adv.EL_DEFAULT_STYLE,
-			name=wx.adv.EditableListBoxNameStr
+			pos: wx.Point = wx.DefaultPosition,
+			size: wx.Size = wx.DefaultSize,
+			style: int = wx.adv.EL_DEFAULT_STYLE,
+			name: str = wx.adv.EditableListBoxNameStr
 			):
 		"""
 
@@ -598,7 +599,7 @@ class EditableNumericalListBox(EditableListBox):
 	def SetStrings(self, strings):
 		self.SetValues(strings)
 
-	def SetValues(self, values):
+	def SetValues(self, values: Sequence[Union[float, Decimal]]):
 		"""
 		Replaces current contents with given values.
 
