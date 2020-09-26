@@ -49,7 +49,7 @@ class CTCWidget(wx.TextCtrl):
 	CTCWidget: text control used by ClearableTextCtrl
 	"""
 
-	def __init__(self, parent: ClearableTextCtrl, value: str, style: int, validator):
+	def __init__(self, parent: ("ClearableTextCtrl)", value: str, style: int, validator):
 		"""
 		:param parent: The parent window.
 		:type parent: ClearableTextCtrl

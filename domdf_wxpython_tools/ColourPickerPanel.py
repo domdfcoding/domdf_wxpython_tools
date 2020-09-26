@@ -269,7 +269,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.update_selection_preview()
 		event.Skip()
 
-	def update_preview(self, list_obj: wx.LostBox, axes: matplotlib.axes.Axes):
+	def update_preview(self, list_obj: wx.ListBox, axes: matplotlib.axes.Axes):
 		"""
 		Update the preview from the given list
 
