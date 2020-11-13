@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  ImagePanel.py
 #
@@ -21,44 +20,57 @@
 #  MA 02110-1301, USA.
 #
 
-import os
+# stdlib
 import sys
-import tempfile
-import urllib.request
 
+# 3rd party
 import wx  # type: ignore
 
 sys.path.append("..")
+
+# this package
 from domdf_wxpython_tools import LogCtrl
 
 
 class DemoFrame(wx.Frame):
-	"""Frame containing all the PyCrust components."""
-	
-	name = 'LogCtrl Demo'
-	
+	"""
+	Frame containing all the PyCrust components.
+	"""
+
+	name = "LogCtrl Demo"
+
 	def __init__(
-			self, parent=None, id=-1, title='LogCtrl Demo',
-			pos=wx.DefaultPosition, size=wx.DefaultSize,
+			self,
+			parent=None,
+			id=-1,
+			title="LogCtrl Demo",
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
 			style=wx.DEFAULT_FRAME_STYLE,
-			*args, **kwds
+			*args,
+			**kwds
 			):
-		
+
 		wx.Frame.__init__(self, parent, id, title, pos, size, style)
-		
+
 		self.log = LogCtrl(parent=self, *args, **kwds)
-		
+
 		self.Bind(wx.EVT_CLOSE, self.OnClose)
-	
-	def OnClose(self, event):
-		"""Event handler for closing."""
+
+	def OnClose(self, _) -> None:
+		"""
+		Event handler for closing.
+		"""
+
 		self.log.Destroy()
 		self.Destroy()
 
 
 class App(wx.App):
-	"""LogCtrl Demo application."""
-	
+	"""
+	LogCtrl Demo application.
+	"""
+
 	def OnInit(self):
 		self.frame = DemoFrame()
 		self.frame.Show()
@@ -66,6 +78,6 @@ class App(wx.App):
 		return True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	app = App(0)
 	app.MainLoop()

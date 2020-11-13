@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  ColourPickerDialog.py
 #
@@ -21,9 +20,15 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import sys
+
+# 3rd party
 import wx  # type: ignore
+
 sys.path.append("..")
+
+# this package
 from domdf_wxpython_tools import ColourPickerDialog
 
 app = wx.App(False)

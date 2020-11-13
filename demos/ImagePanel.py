@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  ImagePanel.py
 #
@@ -21,16 +20,19 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import os
 import sys
 import tempfile
 import urllib.request
 
+# 3rd party
 import wx  # type: ignore
 
 sys.path.append("..")
-from domdf_wxpython_tools import ImagePanel
 
+# this package
+from domdf_wxpython_tools import ImagePanel
 
 with tempfile.TemporaryDirectory() as tmp:
 	# Get splash image from GitHub
@@ -38,38 +40,35 @@ with tempfile.TemporaryDirectory() as tmp:
 			"https://github.com/wxWidgets/Phoenix/raw/master/demo/bitmaps/splash.png",
 			os.path.join(tmp, "wxsplash.png")
 			)
-	
-	
+
 	class DemoFrame(wx.Frame):
-		
-		def __init__(self, parent, id, title, position, size):
+
+		def __init__(self, parent: wx.Window, id, title, position, size):
 			wx.Frame.__init__(self, parent, id, title, position, size)
-			
+
 			panel = ImagePanel(self, os.path.join(tmp, "wxsplash.png"))
-			
+
 			MainSizer = wx.BoxSizer(wx.VERTICAL)
 			MainSizer.Add(panel, 4, wx.EXPAND)
-			
+
 			self.SetSizer(MainSizer)
 			self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-		
-		def OnCloseWindow(self, event):
+
+		def OnCloseWindow(self, _) -> None:
 			self.Destroy()
-	
-	
+
 	class DemoApp(wx.App):
-		
+
 		def __init__(self, *args, **kwargs):
 			wx.App.__init__(self, *args, **kwargs)
-		
+
 		def OnInit(self):
 			wx.InitAllImageHandlers()
 			frame = DemoFrame(None, -1, "ImagePanel Demo App", wx.DefaultPosition, (700, 700))
-			
+
 			self.SetTopWindow(frame)
 			frame.Show()
 			return True
-	
-	
+
 	app = DemoApp(False)
 	app.MainLoop()

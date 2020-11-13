@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  EditableNumericalListBox.py
 #
@@ -21,52 +20,60 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import sys
+
+# 3rd party
 import wx  # type: ignore
 import wx.adv  # type: ignore
 
 sys.path.append("..")
+
+# this package
 from domdf_wxpython_tools import EditableNumericalListBox
 
 
 class DemoFrame(wx.Frame):
+
 	def __init__(self, ):
 		wx.Frame.__init__(
-				self, None, -1, "Numerical EditableListBox",
-				size=(350, 350), style=wx.DEFAULT_FRAME_STYLE
+				self, None, -1, "Numerical EditableListBox", size=(350, 350), style=wx.DEFAULT_FRAME_STYLE,
 				)
-		
+
 		self.Bind(wx.EVT_CLOSE, self.OnClose)
-		
 		self.panel = wx.Panel(self, -1)
-		
+
 		# Put the label above the buttons
 		self.elb = EditableNumericalListBox(
-				self.panel, -1, "", 5, (50, 50), (152, 250),
+				self.panel,
+				-1,
+				'',
+				5,
+				(50, 50),
+				(152, 250),
 				style=wx.adv.EL_DEFAULT_STYLE |
-					  # wx.adv.EL_NO_REORDER |
-					  wx.adv.EL_ALLOW_NEW |
-					  wx.adv.EL_ALLOW_EDIT |
-					  wx.adv.EL_ALLOW_DELETE)
-		
-		self.elb.SetValues([12.34,
-							56.78,
-							90.12,
-							0.12,
-							"5.67"
-							])
+				# wx.adv.EL_NO_REORDER |
+				wx.adv.EL_ALLOW_NEW | wx.adv.EL_ALLOW_EDIT | wx.adv.EL_ALLOW_DELETE
+				)
+
+		self.elb.SetValues([12.34, 56.78, 90.12, 0.12, "5.67"])
 		self.SetFocus()
-	
-	def OnClose(self, event):
+
+	def OnClose(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
 		print(self.elb.GetValues())
 		event.Skip()
 
 
 class DemoApp(wx.App):
+
 	def OnInit(self):
 		self.frame = DemoFrame()
 		self.frame.Show(True)
-		
+
 		return True
 
 
