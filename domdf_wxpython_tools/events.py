@@ -1,5 +1,5 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+
 #
 #  events.py
 """
@@ -55,12 +55,19 @@ from collections import OrderedDict
 # 3rd party
 import wx  # type: ignore
 
+__all__ = ["PayloadEvent", "SimpleEvent"]
+
 
 class PayloadEvent(wx.PyCommandEvent):
-	"""Event containing a message payload"""
+	"""
+	Event containing a message payload.
+	"""
 
 	def __init__(self, etype, eid, value):
-		"""Creates the event object"""
+		"""
+		Creates the event object.
+		"""
+
 		wx.PyCommandEvent.__init__(self, etype, eid)
 		self.value = value
 
@@ -72,20 +79,17 @@ class PayloadEvent(wx.PyCommandEvent):
 		return self.value
 
 
-class SimpleEvent(object):
+class SimpleEvent:
 	"""
 	SimpleEvent(receiver, name, event, binder)
+
+	:param receiver:
+	:param name:
 	"""
 
 	_fields = ("receiver", "name", "event", "binder")
 
 	def __init__(self, receiver=None, name="Event"):
-		"""
-
-		:param receiver:
-		:param name:
-		"""
-
 		self.receiver = receiver
 		self.name = name
 		self.event = wx.NewEventType()

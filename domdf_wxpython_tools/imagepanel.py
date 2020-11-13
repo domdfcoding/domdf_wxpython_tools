@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  imagepanel.py
 """
@@ -25,10 +24,14 @@ using PIL and matplotlib, with a right click menu with some basic options
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import Optional, Union
+
 # 3rd party
 import matplotlib  # type: ignore
 import PIL  # type: ignore
 import wx  # type: ignore
+from domdf_python_tools.typing import PathLike
 from matplotlib.figure import Figure  # type: ignore
 from PIL import Image  # type: ignore
 
@@ -36,6 +39,8 @@ from PIL import Image  # type: ignore
 from domdf_wxpython_tools.chartpanel import ChartPanelBase
 from domdf_wxpython_tools.dialogs import Wildcards, file_dialog_wildcard
 from domdf_wxpython_tools.projections import NoZoom
+
+__all__ = ["EvtImgPanelChanged", "ImagePanel"]
 
 # Prevent zooming of axis with mouse click
 matplotlib.projections.register_projection(NoZoom)
@@ -65,18 +70,15 @@ EVT_IMAGE_PANEL_CHANGED = wx.PyEventBinder(ImgPanelChangedEvent, 0)
 
 class EvtImgPanelChanged(wx.PyCommandEvent):
 	"""
-	Custom Event for an image in the ImagePanel being changed
+	Custom Event for an image in the ImagePanel being changed.
+
+	:param windowID:
+	:param obj:
 	"""
+
 	eventType = ImgPanelChangedEvent
 
 	def __init__(self, windowID: int, obj):
-		"""
-
-		:param windowID:
-		:type windowID: int
-		:param obj:
-		:type obj:
-		"""
 
 		wx.PyCommandEvent.__init__(self, self.eventType, windowID)
 		self.SetEventObject(obj)
@@ -88,6 +90,16 @@ class ImagePanel(ChartPanelBase):
 	The image can be right clicked to bring up a context menu allowing copying, pasting and saving of the image.
 	The image can be panned by holding the left mouse button and moving the mouse,
 	and zoomed in and out using the scrollwheel on the mouse.
+
+	:param parent: The parent window.
+	:param image:
+	:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
+	:param pos: The panel position. The value ::wxDefaultPosition indicates a default position,
+		chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The panel size. The value ::wxDefaultSize indicates a default size, chosen by
+		either the windowing system or wxWidgets, depending on platform.
+	:param style: The window style. See wxPanel.
+	:param name: Window name.
 	"""
 
 	default_image = ("RGB", (640, 480), (240, 240, 240))
@@ -102,24 +114,6 @@ class ImagePanel(ChartPanelBase):
 			style: int = 0,
 			name: str = wx.PanelNameStr
 			):
-		"""
-		:param parent: The parent window.
-		:type parent: wx.Window
-		:param image:
-		:type image:
-		:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
-		:type id: wx.WindowID, optional
-		:param pos: The panel position. The value ::wxDefaultPosition indicates a default position,
-		:type pos: wx.Point, optional
-			chosen by either the windowing system or wxWidgets, depending on platform.
-		:param size: The panel size. The value ::wxDefaultSize indicates a default size, chosen by
-		:type size: wx.Size, optional
-			either the windowing system or wxWidgets, depending on platform.
-		:param style: The window style. See wxPanel.
-		:type style: int, optional
-		:param name: Window name.
-		:type name: str, optional
-		"""
 
 		fig = Figure()
 		ax = fig.add_subplot(111, frameon=False, projection="NoZoom")  # 1x1 grid, first subplot
@@ -167,19 +161,19 @@ class ImagePanel(ChartPanelBase):
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 
-	def load_image(self, new_image=None, suppress_event: bool = False):
+	def load_image(self, new_image: Union[Image.Image, None, PathLike] = None, suppress_event: bool = False):
 		"""
-		Load the 'new_image' into the contol
+		Load the 'new_image' into the control.
 
 		:param new_image: The image to load, or a string pointing to the image
-			on a filesystem
-		:type new_image: :class:`PIL.Image.Image` or str or pathlib.Path, optional
+			on a filesystem.
 		:param suppress_event: Whether the event that the image has changed should
-			be suppressed, default False
-		:type suppress_event: bool, optional
+			be suppressed.
 
-		TODO: Do we even need to be triggering an event here, since "load_image"
-		is only ever going to be called by the programmer
+		.. TODO::
+
+			Do we even need to be triggering an event here, since "load_image"
+			is only ever going to be called by the programmer
 		"""
 
 		self.ax.clear()
@@ -208,7 +202,7 @@ class ImagePanel(ChartPanelBase):
 		"""
 
 		self.ax.clear()
-		self.ax.imshow(self._image, aspect='equal')
+		self.ax.imshow(self._image, aspect="equal")
 
 		self.ax.axes.get_xaxis().set_visible(False)
 		self.ax.axes.get_yaxis().set_visible(False)
@@ -220,7 +214,7 @@ class ImagePanel(ChartPanelBase):
 		self.pan(True)
 		self.ax.autoscale(tight=True)
 		self.setup_scrollwheel_zooming()
-		self.canvas.mpl_connect('button_press_event', self.on_context_menu)
+		self.canvas.mpl_connect("button_press_event", self.on_context_menu)
 
 	def on_context_menu(self, event):
 		"""
@@ -229,11 +223,11 @@ class ImagePanel(ChartPanelBase):
 
 		if event.button == matplotlib.backend_bases.MouseButton.RIGHT:
 			event.guiEvent.GetEventObject().ReleaseMouse()
-			print('in context_menu callback: clicked at (%g, %g)' % (event.x, event.y))
+			print(f'in context_menu callback: clicked at ({event.x:g}, {event.y:g})')
 			self.PopupMenu(self.context_menu)
 			# UIActionSimulator().MouseClick(wx.MOUSE_BTN_RIGHT)
 
-	def copy(self, event=None):
+	def copy(self, _=None):
 		"""
 		Copy the image to the clipboard
 		"""
