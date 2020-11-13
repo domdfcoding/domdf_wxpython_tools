@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #  icons.py
 #
-#  Copyright 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  GetStockBitmap and GetStockToolbarBitmap from
 #  		https://sourceforge.net/p/wxglade/mailman/message/6475744/
@@ -27,6 +26,8 @@
 
 # 3rd party
 import wx  # type: ignore
+
+__all__ = ["get_toolbar_icon", "get_button_icon", "GetStockBitmap", "GetStockToolbarBitmap"]
 
 
 def get_toolbar_icon(icon_name, size=24):

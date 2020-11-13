@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 #
 #  keyboard.py
 #
@@ -23,6 +23,8 @@
 
 # 3rd party
 import wx  # type: ignore
+
+__all__ = ["gen_keymap"]
 
 
 def gen_keymap():
