@@ -1,13 +1,10 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  timer_thread.py
 """
 Background thread that sends an event after the specified interval.
+
 Useful for timeouts or updating timers, clocks etc.
-
-
-Includes code from https://gist.github.com/samarthbhargav/5a515a399f7113137331
 """
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -27,39 +24,46 @@ Includes code from https://gist.github.com/samarthbhargav/5a515a399f7113137331
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+#  Includes code from https://gist.github.com/samarthbhargav/5a515a399f7113137331
+#
 
 # stdlib
 import time
 from threading import Event, Thread
 
+# 3rd party
+import wx
+
 # this package
 from domdf_wxpython_tools.events import SimpleEvent
 
-timer_event = SimpleEvent("Timer")
+__all__ = ["Timer", "timer_event"]
+
+timer_event = SimpleEvent(name="Timer")
+"""
+An instance of :class:`domdf_python_tools.events.SimpleEvent` called **Timer**.
+
+This event is triggered when the timer has expired.
+"""
 
 
 class Timer(Thread):
 	"""
-	Background Timer Class
+	Background Timer Class.
+
+	:param parent: Class to send event updates to.
+	:param interval: Interval to trigger events at, in seconds.
 	"""
 
-	def __init__(self, parent, interval: float = 1.0):
-		"""
-		Init Timer Thread Class
-
-		:param parent: Class to send event updates to
-		:param interval: Interval to trigger events at, in seconds. Default 1.0
-		:type interval: float
-		"""
-
+	def __init__(self, parent: wx.Window, interval: float = 1.0):
 		self._stopevent = Event()
 		Thread.__init__(self, name="TimerThread")
 		self._parent = parent
 		self._interval = interval
 
-	def run(self):
+	def run(self) -> None:
 		"""
-		Run Timer Thread
+		Run the timer thread.
 		"""
 
 		wait_time = 0 + self._interval
@@ -70,12 +74,11 @@ class Timer(Thread):
 				timer_event.trigger()
 				wait_time = 0 + self._interval
 
-	def join(self, timeout=None):
+	def join(self, timeout=None) -> None:
 		"""
-		Stop the thread and wait for it to end
+		Stop the thread and wait for it to end.
 
 		:param timeout:
-		:type:
 		"""
 
 		self._stopevent.set()

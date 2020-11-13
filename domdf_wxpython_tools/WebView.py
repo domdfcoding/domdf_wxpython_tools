@@ -1,22 +1,24 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 #
 #  mxMSW_WebView.py
 #
 """
-Set the emulation level for wxWidgets WebView purely in Python
+Set the emulation level for wxWidgets WebView purely in Python.
 
-Note that the highest emulation level may be used even when the
-corresponding browser version is not installed.
+Notes:
 
-Using FORCE options is not recommended, DEFAULT can be used to reset level
-to the system default.
+* The highest emulation level may be used even when the corresponding browser version is not installed.
+* Using the ``*_FORCE`` options is not recommended.
+* The :py:data:`~.wxWEBVIEWIE_EMU_DEFAULT` can be used to reset the emulation level to the system default.
 
 The values of the constants were taken from
 
 	https://msdn.microsoft.com/library/ee330730.aspx#browser_emulation
 
 and must not be changed.
+
+---------
 
 """
 
@@ -34,35 +36,71 @@ and must not be changed.
 import pathlib
 import sys
 import warnings
-import winreg  # type: ignore
 from typing import Union
-"""
 
-"""
-wxWEBVIEWIE_EMU_DEFAULT = 0,
-wxWEBVIEWIE_EMU_IE7 = 7000,
-wxWEBVIEWIE_EMU_IE8 = 8000,
-wxWEBVIEWIE_EMU_IE8_FORCE = 8888,
-wxWEBVIEWIE_EMU_IE9 = 9000,
-wxWEBVIEWIE_EMU_IE9_FORCE = 9999,
-wxWEBVIEWIE_EMU_IE10 = 10000,
-wxWEBVIEWIE_EMU_IE10_FORCE = 10001,
-wxWEBVIEWIE_EMU_IE11 = 11000,
+# 3rd party
+from domdf_python_tools.typing import PathLike
+
+try:
+	# stdlib
+	import winreg  # type: ignore
+except ImportError:
+	pass
+
+__all__ = [
+		"MSWSetEmulationLevel",
+		"wxWEBVIEWIE_EMU_DEFAULT",
+		"wxWEBVIEWIE_EMU_IE7",
+		"wxWEBVIEWIE_EMU_IE8",
+		"wxWEBVIEWIE_EMU_IE8_FORCE",
+		"wxWEBVIEWIE_EMU_IE9",
+		"wxWEBVIEWIE_EMU_IE9_FORCE",
+		"wxWEBVIEWIE_EMU_IE10",
+		"wxWEBVIEWIE_EMU_IE10_FORCE",
+		"wxWEBVIEWIE_EMU_IE11",
+		"wxWEBVIEWIE_EMU_IE11_FORCE",
+		]
+
+#: The system default browser emulation level.
+wxWEBVIEWIE_EMU_DEFAULT = 0
+
+#: Emulate Internet Explorer 7
+wxWEBVIEWIE_EMU_IE7 = 7000
+
+#: Emulate Internet Explorer 8
+wxWEBVIEWIE_EMU_IE8 = 8000
+
+#: Emulate Internet Explorer 8 (force)
+wxWEBVIEWIE_EMU_IE8_FORCE = 8888
+
+#: Emulate Internet Explorer 9
+wxWEBVIEWIE_EMU_IE9 = 9000
+
+#: Emulate Internet Explorer 9 (force)
+wxWEBVIEWIE_EMU_IE9_FORCE = 9999
+
+#: Emulate Internet Explorer 10
+wxWEBVIEWIE_EMU_IE10 = 10000
+
+#: Emulate Internet Explorer 10 (force)
+wxWEBVIEWIE_EMU_IE10_FORCE = 10001
+
+#: Emulate Internet Explorer 11
+wxWEBVIEWIE_EMU_IE11 = 11000
+
+#: Emulate Internet Explorer 12 (force)
 wxWEBVIEWIE_EMU_IE11_FORCE = 11001
 
 
-def MSWSetEmulationLevel(
-		level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: Union[str, pathlib.Path] = None
-		) -> bool:
+def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: PathLike = None) -> bool:
 	"""
+	Sets the emulation level for wxWidgets WebView.
 
-	:param level: The emulation level to use, one of the constants specified above
-	:type level: int
-	:param program_name: The name of the program to set the emulation level for. Defaults to the Python executable
-	:type program_name: str or pathlib.Path object
+	:param level: The emulation level to use.
+	:param program_name: The name of the program to set the emulation level for. Defaults to the Python executable.
+	:no-default program_name:
 
-	:return: Whether the operation completed successfully
-	:rtype: bool
+	:return: Whether the operation completed successfully.
 	"""
 
 	if not program_name:
