@@ -1,5 +1,5 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+
 #
 #  chartpanel.py
 """
@@ -36,15 +36,23 @@ A canvas for displaying a chart within a wxPython window
 import types
 
 # 3rd party
+from typing import Optional
+
 import matplotlib  # type: ignore
 import numpy  # type: ignore
 import wx.html2  # type: ignore
+from matplotlib.axes import Axes
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar  # type: ignore
 
 # this package
+from matplotlib.figure import Figure
+
 from domdf_wxpython_tools.border_config import border_config
 from domdf_wxpython_tools.projections import XPanAxes
+
+__all__ = ["ChartPanelBase"]
+
 
 # Constrain zoom to X axis
 matplotlib.projections.register_projection(XPanAxes)
@@ -56,39 +64,30 @@ class ChartPanelBase(wx.Panel):
 	The image can be right clicked to bring up a context menu allowing copying, pasting and saving of the image.
 	The image can be panned by holding the left mouse button and moving the mouse,
 	and zoomed in and out using the scrollwheel on the mouse.
+
+	:param parent: The parent window.
+	:param fig:
+	:param ax:
+	:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
+	:param pos: The panel position. The value ::wxDefaultPosition indicates a default position,
+		chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The panel size. The value ::wxDefaultSize indicates a default size, chosen by
+		either the windowing system or wxWidgets, depending on platform.
+	:param style: The window style. See wxPanel.
+	:param name: Window name.
 	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			fig,
-			ax,
+			fig: Figure,
+			ax: Axes,
 			id: wx.WindowID = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
-			size: wx.Sixe = wx.DefaultSize,
-			style=0,
+			size: wx.Size = wx.DefaultSize,
+			style: int = 0,
 			name: str = wx.PanelNameStr
 			):
-		"""
-		:param parent: The parent window.
-		:type parent: wx.Window
-		:param fig:
-		:type fig:
-		:param ax:
-		:type ax:
-		:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
-		:type id: wx.WindowID, optional
-		:param pos: The panel position. The value ::wxDefaultPosition indicates a default position,
-		:type pos: wx.Point, optional
-			chosen by either the windowing system or wxWidgets, depending on platform.
-		:param size: The panel size. The value ::wxDefaultSize indicates a default size, chosen by
-		:type size: wx.Size, optional
-			either the windowing system or wxWidgets, depending on platform.
-		:param style: The window style. See wxPanel.
-		:type style: int, optional
-		:param name: Window name.
-		:type name: str, optional
-		"""
 
 		wx.Panel.__init__(self, parent, id, pos, size, style | wx.TAB_TRAVERSAL, name)
 
@@ -106,12 +105,10 @@ class ChartPanelBase(wx.Panel):
 
 	def setup_ylim_refresher(self, y_data, x_data):
 		"""
-		Setup the function for updating the ylim whenever the xlim changes.s
+		Setup the function for updating the ylim whenever the xlim changes.
 
 		:param y_data:
-		:type y_data:
 		:param x_data:
-		:type x_data:
 		"""
 
 		def update_ylim(*args):
@@ -135,7 +132,7 @@ class ChartPanelBase(wx.Panel):
 		self.ax.callbacks.connect('xlim_changed', update_ylim)
 		self.fig.canvas.callbacks.connect("button_release_event", update_ylim)
 
-	def _do_layout(self):
+	def _do_layout(self) -> None:
 		# begin wxGlade: ChromatogramPanel.__do_layout
 		sizer = wx.FlexGridSizer(1, 2, 0, 0)
 		sizer.Add(self.canvas, 1, wx.EXPAND, 0)
@@ -143,7 +140,7 @@ class ChartPanelBase(wx.Panel):
 		sizer.Fit(self)
 		self.Layout()
 
-	def reset_view(self, *_):
+	def reset_view(self, *_) -> None:
 		"""
 		Reset the view of the chart
 		"""
@@ -151,14 +148,14 @@ class ChartPanelBase(wx.Panel):
 		self.canvas.toolbar.home()
 		self.canvas.draw_idle()
 
-	def previous_view(self, *_):
+	def previous_view(self, *_) -> None:
 		"""
 		Go to the previous view of the chart
 		"""
 
 		self.canvas.toolbar.back()
 
-	def zoom(self, enable: bool = True):
+	def zoom(self, enable: bool = True) -> None:
 		"""
 		Enable the Zoom tool
 		"""
@@ -167,7 +164,7 @@ class ChartPanelBase(wx.Panel):
 			self.canvas.toolbar.zoom()
 		self.canvas.Refresh()
 
-	def pan(self, enable: bool = True):
+	def pan(self, enable: bool = True) -> None:
 		"""
 		Enable the Pan tool
 		"""
@@ -176,9 +173,9 @@ class ChartPanelBase(wx.Panel):
 			self.canvas.toolbar.pan()
 		self.canvas.Refresh()
 
-	def configure_borders(self, event=None):
+	def configure_borders(self, event: Optional[wx.Event] = None):
 		"""
-		Open the 'Configure Borders' dialog
+		Open the ``Configure Borders`` dialog.
 		"""
 
 		self.border_config = border_config(self, self.fig)
@@ -187,14 +184,11 @@ class ChartPanelBase(wx.Panel):
 		if event:
 			event.Skip()
 
-	def constrain_zoom(self, key="x"):
+	def constrain_zoom(self, key: str = "x") -> None:
 		"""
-		Constrain zoom to the x axis only
+		Constrain zoom to the x axis only.
 
 		:param key:
-		:type key:
-		:return:
-		:rtype:
 		"""
 
 		def press_zoom(self, event):
@@ -219,9 +213,9 @@ class ChartPanelBase(wx.Panel):
 	# print(axes.get_ylim())
 	# end of class ChromatogramPanel
 
-	def size_change(self):
+	def size_change(self) -> None:
 		"""
-		Internal function that runs whenever the window is resized
+		Internal function that runs whenever the window is resized.
 		"""
 
 		# self.canvas.SetMinSize(self.GetSize())
@@ -233,7 +227,7 @@ class ChartPanelBase(wx.Panel):
 		# if event.ClassName == "wxSizeEvent":
 		# 	event.Skip()
 
-	def on_size_change(self, event):
+	def on_size_change(self, _) -> None:
 		"""
 		Event handler for size change events
 		"""
@@ -241,12 +235,11 @@ class ChartPanelBase(wx.Panel):
 		self.size_change()
 		# event.Skip()
 
-	def setup_scrollwheel_zooming(self, scale: float = 1.1):
+	def setup_scrollwheel_zooming(self, scale: float = 1.1) -> None:
 		"""
-		Allow zooming of the chart with the scrollwheel
+		Allow zooming of the chart with the scrollwheel.
 
 		:param scale:
-		:type scale:
 		"""
 
 		def zoom_factory(ax, base_scale: float = 1.1):

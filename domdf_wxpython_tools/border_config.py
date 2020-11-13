@@ -1,5 +1,5 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+
 #
 #  border_config.py
 """
@@ -30,6 +30,8 @@ Dialog for configuring borders for charts
 # 3rd party
 import wx  # type: ignore
 
+__all__ = ["border_config"]
+
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -39,7 +41,7 @@ import wx  # type: ignore
 
 class border_config(wx.Dialog):
 
-	def __init__(self, parent, chromatogram_figure, *args, **kwds):
+	def __init__(self, parent: wx.Window, chromatogram_figure, *args, **kwds):
 		self.chromatogram_figure = chromatogram_figure
 		args = (parent, ) + args
 		# begin wxGlade: border_config.__init__
@@ -76,7 +78,7 @@ class border_config(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.close_dialog, self.close_btn)
 		# end wxGlade
 
-	def __set_properties(self):
+	def __set_properties(self) -> None:
 		# begin wxGlade: border_config.__set_properties
 		self.SetTitle("Configure Borders")
 		self.top_border_value.SetMinSize((120, -1))
@@ -90,13 +92,13 @@ class border_config(wx.Dialog):
 		self.tight_layout_button.SetMinSize((120, -1))
 		# end wxGlade
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: border_config.__do_layout
 		parent_sizer = wx.BoxSizer(wx.VERTICAL)
 		main_sizer = wx.BoxSizer(wx.VERTICAL)
 		spinner_grid = wx.FlexGridSizer(4, 2, 4, 7)
 		borders_label = wx.StaticText(self.main_panel, wx.ID_ANY, "Configure Borders")
-		borders_label.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, 0, ""))
+		borders_label.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, 0, ''))
 		main_sizer.Add(borders_label, 0, wx.BOTTOM, 7)
 		top_border_label = wx.StaticText(self.main_panel, wx.ID_ANY, "Top: ")
 		spinner_grid.Add(top_border_label, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -122,7 +124,7 @@ class border_config(wx.Dialog):
 		self.Layout()
 		# end wxGlade
 
-	def update_borders(self, event):  # wxGlade: border_config.<event_handler>
+	def update_borders(self, _) -> None:  # wxGlade: border_config.<event_handler>
 		self.chromatogram_figure.subplots_adjust(
 				self.left_border_value.GetValue(),
 				self.bottom_border_value.GetValue(),
@@ -131,7 +133,7 @@ class border_config(wx.Dialog):
 				)
 		self.chromatogram_figure.canvas.draw_idle()
 
-	def apply_tight_layout(self, event):  # wxGlade: border_config.<event_handler>
+	def apply_tight_layout(self, _) -> None:  # wxGlade: border_config.<event_handler>
 		self.chromatogram_figure.tight_layout()
 		self.chromatogram_figure.canvas.draw_idle()
 
@@ -141,7 +143,7 @@ class border_config(wx.Dialog):
 		self.bottom_border_value.SetValue(self.chromatogram_figure.subplotpars.bottom)
 		self.top_border_value.SetValue(self.chromatogram_figure.subplotpars.top)
 
-	def close_dialog(self, event):  # wxGlade: border_config.<event_handler>
+	def close_dialog(self, _) -> None:  # wxGlade: border_config.<event_handler>
 		self.Destroy()
 
 

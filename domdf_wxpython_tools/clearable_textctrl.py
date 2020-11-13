@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  ClearableTextCtrl.py
 """
@@ -8,7 +7,8 @@ A TextCtrl with a button to clear its contents
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  Adapted from src/generic/srchctlg.cpp (part of wxWidgets, https://github.com/wxWidgets/wxWidgets)
+#  Adapted from src/generic/srchctlg.cpp
+#  Part of wxWidgets, https://github.com/wxWidgets/wxWidgets
 #  Copyright (c) 2006 Vince Harron.
 #  Licenced under the wxWindows licence
 #
@@ -29,10 +29,15 @@ A TextCtrl with a button to clear its contents
 #
 
 # stdlib
-from typing import Tuple
+from typing import List, Tuple
 
 # 3rd party
 import wx  # type: ignore
+
+# this package
+from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
+
+__all__ = ["CTCWidget", "ClearButton", "ClearableTextCtrl", "clear_btn"]
 
 # the margin between the text control and the clear button
 MARGIN = 3
@@ -46,19 +51,15 @@ ClearableTextCtrlNameStr = "ClearableTextCtrl"
 
 class CTCWidget(wx.TextCtrl):
 	"""
-	CTCWidget: text control used by ClearableTextCtrl
+	Text control used by :class:`~.ClearableTextCtrl`.
+
+	:param parent: The parent window.
+	:param value: The initial value of the text control
+	:param style: The style of the text control
+	:param validator:
 	"""
 
 	def __init__(self, parent: "ClearableTextCtrl", value: str, style: int, validator):
-		"""
-		:param parent: The parent window.
-		:type parent: ClearableTextCtrl
-		:param value: The initial value of the text control
-		:type value: str
-		:param style: The style of the text control
-		:type style: int
-		"""
-
 		wx.TextCtrl.__init__(self, parent, value=value, style=style, validator=validator)
 		self.parent = parent
 
@@ -69,12 +70,18 @@ class CTCWidget(wx.TextCtrl):
 		self.Bind(wx.EVT_TEXT_ENTER, self.OnTextEnter, id=wx.ID_ANY)
 		self.Bind(wx.EVT_TEXT_MAXLEN, self.OnText, id=wx.ID_ANY)
 
-	def GetMainWindowOfCompositeControl(self):
+	def GetMainWindowOfCompositeControl(self) -> "ClearableTextCtrl":
+		"""
+		Returns the parent object.
+		"""
+
 		return self.parent
 
-	def OnText(self, event):
+	def OnText(self, event) -> None:
 		"""
-		Event handler for text being entered in the control
+		Event handler for text being entered in the control.
+
+		:param event: The wxPython event.
 		"""
 
 		event = wx.CommandEvent(event)
@@ -83,9 +90,11 @@ class CTCWidget(wx.TextCtrl):
 
 		self.parent.GetEventHandler().ProcessEvent(event)
 
-	def OnTextEnter(self, event):
+	def OnTextEnter(self, _) -> None:
 		"""
-		Event handler for the enter/return key being pressed
+		Event handler for the :kbd:`enter` / :kbd:`return ⏎` key being pressed
+
+		:param event: The wxPython event.
 		"""
 
 		if not self.IsEmpty():
@@ -133,7 +142,8 @@ class CTCWidget(wx.TextCtrl):
 #endif # __WXMSW__"""
 
 
-clear_btn = [
+#: XPM button icon for clearing the text control.
+clear_btn: List[bytes] = [
 		b"25 19 2 1",
 		b"   c None",
 		b"+  c #000000",
@@ -162,18 +172,14 @@ clear_btn = [
 
 class ClearButton(wx.Control):
 	"""
-	Clear button for the ClearableTextCtrl
+	Clear button for the :class:`~.ClearableTextCtrl`.
+
+	:param parent: The parent window.
+	:param eventType:
+	:param bmp:
 	"""
 
-	def __init__(self, parent: ClearableTextCtrl, eventType: wx.PyEventBinder, bmp: wx.Bitmap):
-		"""
-		:param parent: The parent window.
-		:type parent: ClearableTextCtrl
-		:param eventType:
-		:type eventType:wx.PyEventBinder
-		:param bmp:
-		:type bmp: wx.Bitmap
-		"""
+	def __init__(self, parent: "ClearableTextCtrl", eventType: wx.PyEventBinder, bmp: wx.Bitmap):
 
 		wx.Control.__init__(self, parent, id=wx.ID_ANY, style=wx.NO_BORDER)
 		self.parent = parent
@@ -185,12 +191,11 @@ class ClearButton(wx.Control):
 		self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
 		self.Bind(wx.EVT_PAINT, self.OnPaint)
 
-	def SetBitmapLabel(self, label: wx.Bitmap):
+	def SetBitmapLabel(self, label: wx.Bitmap) -> None:
 		"""
-		Set bitmap for the button
+		Set bitmap for the button.
 
-		:param label: Bitmap to set for the button
-		:type label: wx.Bitmap
+		:param label: Bitmap to set for the button.
 		"""
 
 		self.m_bmp = label
@@ -200,18 +205,30 @@ class ClearButton(wx.Control):
 	# this would interfere with the usual TAB processing: the user expects
 	# that pressing TAB in the search control should switch focus to the next
 	# control and not give it to the button inside the same control.
-	def AcceptsFocusFromKeyboard(self):
+	def AcceptsFocusFromKeyboard(self) -> bool:
+		"""
+		Always returns :py:obj:`False`.
+		"""
+
 		return False
 
-	def GetMainWindowOfCompositeControl(self):
+	def GetMainWindowOfCompositeControl(self) -> "ClearableTextCtrl":
+		"""
+		Returns the parent object.
+		"""
+
 		return self.parent
 
-	def GetBestSize(self):
+	def GetBestSize(self) -> wx.Size:
+		"""
+		Returns the best size for the control.
+		"""
+
 		return wx.Size(self.m_bmp.GetWidth(), self.m_bmp.GetHeight())
 
-	def OnLeftUp(self, event):
+	def OnLeftUp(self, _) -> None:
 		"""
-		Event Handler for left mouse button being released
+		Event Handler for left mouse button being released.
 		"""
 
 		event = wx.CommandEvent(self.m_eventType, self.parent.GetId())
@@ -227,9 +244,9 @@ class ClearButton(wx.Control):
 
 		self.parent.SetFocus()
 
-	def OnPaint(self, event):
+	def OnPaint(self, _) -> None:
 		"""
-		Event Handler for widget being painted
+		Event Handler for widget being painted.
 		"""
 
 		dc = wx.PaintDC(self)
@@ -245,45 +262,37 @@ class ClearButton(wx.Control):
 
 class ClearableTextCtrl(wx.Panel):
 	"""
-	TextCtrl with button to clear its contents
+	TextCtrl with a button to clear its contents.
+
+	:param parent: The parent window.
+	:param id: An identifier for the control. :py:obj:`wx.ID_ANY` is taken to mean a default.
+	:param value: Default text value.
+	:param pos: The control position. The value :py:obj:`wx.DefaultPosition` indicates a default position,
+		chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The control size. The value wx.DefaultSize indicates a default size,
+		chosen by either the windowing system or wxWidgets, depending on platform.
+	:param style: The window style. See :class:`wx.TextCtrl`.
+	:param validator: Window validator.
+	:param name: Window name.
 	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
 			id: wx.WindowID = wx.ID_ANY,
-			value: str = "",
+			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
 			validator: wx.Validator = wx.DefaultValidator,
 			name: str = ClearableTextCtrlNameStr
 			):
-		"""
-		:param parent: The parent window.
-		:type parent: wx.Window
-		:param id: An identifier for the control. wx.ID_ANY is taken to mean a default.
-		:type id: wx.WindowID, optional
-		:param value: Default text value
-		:type value: str
-		:param pos: The control position. The value wx.DefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
-		:type pos: wx.Point, optional
-		:param size: The control size. The value wx.DefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
-		:type size: wx.Size, optional
-		:param style: The window style. See wx.TextCtrl.
-		:type style: int, optional
-		:param validator: Window validator
-		:type validator: wx.Validator, optional
-		:param name: Window name.
-		:type name: str, optional
-		"""
 
 		wx.Panel.__init__(self, parent, id, pos, size, style | wx.BORDER_SUNKEN, name)
 
 		textctrl_style = style | wx.TAB_TRAVERSAL | wx.BORDER_NONE | wx.TE_RICH2
 
 		if wx.Platform == "__WXGTK__":
-			print(122)
 			# wx.BORDER_NONE doesn't work unless its a multiline textctrl
 			textctrl_style |= wx.TE_MULTILINE | wx.TE_DONTWRAP
 
@@ -311,23 +320,21 @@ class ClearableTextCtrl(wx.Panel):
 	@property
 	def default_clear_bitmap(self) -> wx.Bitmap:
 		"""
-		Returns the default clear button bitmap for the control
-
-		:rtype: wx.Bitmap
+		Returns the default clear button bitmap for the control.
 		"""
 
 		# return Clear_Button_16.GetBitmap()
 		return wx.Bitmap(clear_btn)
 
-	def SetFont(self, font):
+	def SetFont(self, font: wx.Font) -> bool:
 		"""
-		Sets the font for the control
+		Sets the font for the control.
 
-		:param font: Font to associate with this control, pass wx.NullFont to reset to the default font.
-		:type font: wx.Font
+		:param font: Font to associate with this control.
+			Pass ``wx.NullFont`` to reset to the default font.
 
-		:return: True if the operation completes successfully, False otherwise
-		:rtype: bool
+		:return: :py:obj:`True` if the operation completes successfully,
+			:py:obj:`False` otherwise.
 		"""
 
 		if not self.m_text.SetFont(font):
@@ -341,16 +348,16 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Sets the background colour of the control
 
-		:param colour: The colour to be used as the background colour; pass wx.NullColour to reset to the default colour.
-		:type colour: wx.Colour
+		:param colour: The colour to be used as the background colour; pass :py:obj:`wx.NullColour`.
+			to reset to the default colour.
 
 		.. note::
 
-			You may want to use wx.SystemSettings.GetColour to retrieve a
+			You may want to use ``wx.SystemSettings.GetColour`` to retrieve a
 			suitable colour to use rather than setting an hard-coded one.
 
-		:return: True if the operation completes successfully, False otherwise
-		:rtype: bool
+		:return: :py:obj:`True` if the operation completes successfully,
+			:py:obj:`False` otherwise.
 		"""
 
 		if not all([self.m_text.SetBackgroundColour(colour), wx.Window.SetBackgroundColour(self, colour)]):
@@ -380,13 +387,17 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Enable auto-completion using the provided completer object.
 
-		The specified completer object will be used to retrieve the list of possible completions for the already entered text and will be deleted by wx.TextEntry itself when it’s not needed any longer.
+		The specified completer object will be used to retrieve the list of possible
+		completions for the already entered text and will be deleted by :class:`wx.TextEntry`
+		itself when it's not needed any longer.
 
-		:param completer: The object to be used for generating completions if not None. If it is None, auto-completion is disabled. The wx.TextEntry object takes ownership of this pointer and will delete it in any case (i.e. even if this method return False).
-		:type completer: wx.TextCompleter
+		:param completer: The object to be used for generating completions if not :py:obj:`None`.
+			If it is :py:obj:`None`, auto-completion is disabled. The :class:`wx.TextEntry` object
+			takes ownership of this pointer and will delete it in any case
+			(i.e. even if this method return :py:obj:`False`).
 
-		:return: True if the auto-completion was enabled or False if the operation failed, typically because auto-completion is not supported by the current platform.
-		:rtype: bool
+		:return: :py:obj:`True` if the auto-completion was enabled or :py:obj:`False`
+			if the operation failed, typically because auto-completion is not supported by the current platform.
 		"""
 
 		return self.m_text.AutoComplete(completer)
@@ -395,24 +406,26 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Call this function to enable auto-completion of the text using the file system directories.
 
-		Unlike AutoCompleteFileNames which completes both file names and directories, this function only completes the directory names.
+		Unlike :meth:`~.ClearableTextCtrl.AutoCompleteFileNames`, which completes both file names and directories,
+		this function only completes the directory names.
 
-		Notice that currently this function is only implemented in wxMSW port and does nothing under the other platforms.
+		.. note:: This function is only implemented in wxMSW port and does nothing under the other platforms.
 
-		:return: True if the auto-completion was enabled or False if the operation failed, typically because auto-completion is not supported by the current platform.
-		:rtype: bool
+		:return: :py:obj:`True` if the auto-completion was enabled or :py:obj:`False` if the
+			operation failed, typically because auto-completion is not supported by the current platform.
 		"""
 
 		return self.m_text.AutoCompleteDirectories()
 
 	def AutoCompleteFileNames(self) -> bool:
 		"""
-		Call this function to enable auto-completion of the text typed in a single-line text control using all valid file system paths.
+		Call this function to enable auto-completion of the text typed in a single-line text control
+		using all valid file system paths.
 
-		Notice that currently this function is only implemented in wxMSW port and does nothing under the other platforms.
+		.. note:: This function is only implemented in wxMSW port and does nothing under the other platforms.
 
-		:return: True if the auto-completion was enabled or False if the operation failed, typically because auto-completion is not supported by the current platform.
-		:rtype: bool
+		:return: :py:obj:`True` if the auto-completion was enabled or :py:obj:`False`
+			if the operation failed, typically because auto-completion is not supported by the current platform.
 		"""
 
 		return self.m_text.AutoCompleteFileNames()
@@ -463,64 +476,56 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Sets the new text control value.
 
-		It also marks the control as not-modified which means that IsModified() would return False immediately after the call to ChangeValue .
+		It also marks the control as not-modified which means that :meth:`~.ClearableTextCtrl.IsModified`
+		would return :py:obj:`False` immediately after the call to :meth:`~.ClearableTextCtrl.ChangeValue`.
 
 		The insertion point is set to the start of the control (i.e. position 0) by this function.
 
-		This functions does not generate the wxEVT_TEXT event but otherwise is identical to SetValue .
+		This functions does not generate the :py:obj:`wx.wxEVT_TEXT` event but otherwise is identical to
+		:meth:`~.ClearableTextCtrl.SetValue`.
 
-		See User Generated Events vs Programmatically Generated Events for more information.
-
-		:param value: The new value to set. It may contain newline characters if the text control is multi-line
-		:type value: str
+		:param value: The new value to set. It may contain newline characters if the text control is multiline.
 		"""
 
 		self.m_text.ChangeValue(value)
 
-	def Clear(self):
+	def Clear(self) -> None:
 		"""
 		Clears the text in the control.
 
-		Note that this function will generate a wxEVT_TEXT event, i.e. its effect is identical to calling SetValue (“”).
+		Note that this function will generate a :py:obj:`wx.wxEVT_TEXT` event,
+		i.e. its effect is identical to calling :meth:`SetValue('') <.ClearableTextCtrl.SetValue>`.
 		"""
 
 		self.m_text.Clear()
 
-	def Copy(self):
-		"""Copies the selected text to the clipboard."""
-
-		self.m_text.Copy()
-
-	def Cut(self):
-		"""Copies the selected text to the clipboard and removes it from the control."""
-
-		self.m_text.Cut()
-
-	def DiscardEdits(self):
-		"""Resets the internal modified flag as if the current changes had been saved."""
+	def DiscardEdits(self) -> None:
+		"""
+		Resets the internal modified flag as if the current changes had been saved.
+		"""
 
 		self.m_text.DiscardEdits()
 
-	def EmulateKeyPress(self, event):
+	def EmulateKeyPress(self, event: wx.KeyEvent) -> bool:
 		"""
-		This function inserts into the control the character which would have been inserted if the given key event had occurred in the text control.
+		Inserts into the control the character which would have been inserted if the given
+		key event had occurred in the text control.
 
-		The event object should be the same as the one passed to EVT_KEY_DOWN handler previously by wxWidgets. Please note that this function doesn’t currently work correctly for all keys under any platform but MSW.
+		The event object should be the same as the one passed to :py:obj:`wx.EVT_KEY_DOWN` handler
+		previously by wxWidgets.
+
+		.. note:: This function doesn't currently work correctly for all keys under any platform but MSW.
 
 		:param event:
-		:type event: wx.KeyEvent
 
-		:return: True if the event resulted in a change to the control, False otherwise.
-		:rtype: bool
+		:return: :py:obj:`True` if the event resulted in a change to the control, :py:obj:`False` otherwise.
 		"""
 
 		return self.m_text.EmulateKeyPress(event)
 
 	def GetBestClientSize(self) -> wx.Size:
 		"""
-
-		:return:
-		:rtype:	wx.Size
+		Returns the best size for the control.
 		"""
 
 		size = self.m_text.GetBestSize()
@@ -534,19 +539,16 @@ class ClearableTextCtrl(wx.Panel):
 
 		return size
 
-	def GetCompositeWindowParts(self) -> wx.WindowList:
+	def GetCompositeWindowParts(self) -> List[wx.Window]:
 		"""
-
-		:return:
-		:rtype:	wxWindowList
+		Returns a list of :class:`wx.Window` objects that make up this control.
 		"""
 
 		return [self.m_text, self.m_clearButton]
 
 	def GetDefaultStyle(self) -> wx.TextAttr:
 		"""
-		:return: The style currently used for the new text.
-		:rtype: wx.TextAttr
+		Returns the style currently used for new text.
 		"""
 
 		return self.m_text.GetDefaultStyle()
@@ -555,45 +557,30 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Returns the insertion point, or cursor, position.
 
-		This is defined as the zero based index of the character position to the right of the insertion point. For example, if the insertion point is at the end of the single-line text control, it is equal to GetLastPosition .
-
-		:return:
-		:rtype:	int
+		This is defined as the zero based index of the character position
+		to the right of the insertion point.
+		For example, if the insertion point is at the end of the single-line text control,
+		it is equal to :meth:`~.ClearableTextCtrl.GetLastPosition`.
 		"""
 
 		return self.m_text.GetInsertionPoint()
-
-	def GetLastPosition(self) -> wx.TextPos:
-		"""
-		Returns the zero based index of the last position in the text control, which is equal to the number of characters in the control.
-
-		:return:
-		:rtype: wx.TextPos
-		"""
-		return self.m_text.GetLastPosition()
 
 	def GetLineLength(self, lineNo: int) -> int:
 		"""
 		Gets the length of the specified line, not including any trailing newline character(s).
 
 		:param lineNo: Line number (starting from zero).
-		:type lineNo: int
 
 		:return: The length of the line, or -1 if lineNo was invalid.
-		:rtype:	int
 		"""
 
 		return self.m_text.GetLineLength(lineNo)
 
-	def GetLineText(self, lineNo: int) -> int:
+	def GetLineText(self, lineNo: int) -> str:
 		"""
 		Returns the contents of a given line in the text control, not including any trailing newline character(s).
 
 		:param lineNo: Line number (starting from zero).
-		:type lineNo: int
-
-		:return: The contents of the line.
-		:rtype:	str
 		"""
 
 		return self.m_text.GetLineText(lineNo)
@@ -619,26 +606,25 @@ class ClearableTextCtrl(wx.Panel):
 	def GetNumberOfLines(self) -> int:
 		"""
 		Returns the number of lines in the text control buffer.
-
-		:return:
-		:rtype:	int
 		"""
 
 		return 1
 
 	def GetRange(self, from_: int, to_: int) -> str:
-		"""
+		r"""
 		Returns the string containing the text starting in the positions from and up to to in the control.
 
-		The positions must have been returned by another wx.TextCtrl method. Please note that the positions in a multiline wx.TextCtrl do not correspond to the indices in the string returned by GetValue because of the different new line representations ( CR or CR LF) and so this method should be used to obtain the correct results instead of extracting parts of the entire value. It may also be more efficient, especially if the control contains a lot of data.
+		The positions must have been returned by another :class:`wx.TextCtrl` method.
 
-		:param from_:
-		:type from_: int
-		:param to_:
-		:type to_: int
+		.. note::
 
-		:return:
-		:rtype: str
+			The positions in a multiline :class:`wx.TextCtrl` do not correspond to the indices in the string
+			returned by GetValue because of the different new line representations ( ``CR`` or ``CR LF`` )
+			and so this method should be used to obtain the correct results instead of extracting parts
+			of the entire value. It may also be more efficient, especially if the control contains a lot of data.
+
+		:param from\_:
+		:param to\_:
 		"""
 
 		return self.m_text.GetRange(from_, to_)
@@ -674,12 +660,9 @@ class ClearableTextCtrl(wx.Panel):
 		Not all platforms support this function.
 
 		:param position:
-		:type position: int
 		:param style:
-		:type style: wx.TextAttr
 
-		:return: True on success, False if an error occurred (this may also mean that the styles are not supported under this platform).
-		:rtype: bool
+		:return: :py:obj:`True` on success, :py:obj:`False` if an error occurred (this may also mean that the styles are not supported under this platform).
 		"""
 
 		return self.m_text.GetStyle(position, style)
@@ -700,14 +683,16 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Finds the position of the character at the specified point.
 
-		If the return code is not TE_HT_UNKNOWN the position of the character closest to this position is returned, otherwise the output parameter is not modified.
+		If the return code is not :py:obj:`wx.TE_HT_UNKNOWN` the position of the character
+		closest to this position is returned, otherwise the output parameter is not modified.
 
-		Please note that this function is currently only implemented in Univ, wxMSW and wxGTK ports and always returns TE_HT_UNKNOWN in the other ports.
+		.. note::
+
+			This function is currently only implemented in Univ, wxMSW and
+			wxGTK ports and always returns :py:obj:`wx.TE_HT_UNKNOWN` in the other ports.
 
 		:param pt:
-		:type pt:
 
-		:return:
 		:rtype:	wxTextCtrlHitTestResult
 		"""
 
@@ -717,23 +702,27 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Finds the row and column of the character at the specified point.
 
-		If the return code is not TE_HT_UNKNOWN the row and column of the character closest to this position are returned, otherwise the output parameters are not modified.
+		If the return code is not :py:obj:`wx.TE_HT_UNKNOWN` the row and column
+		of the character closest to this position are returned, otherwise the
+		output parameters are not modified.
 
-		Please note that this function is currently only implemented in Univ, wxMSW and wxGTK ports and always returns TE_HT_UNKNOWN in the other ports.
+		.. note::
 
-		NB: pt is in device coords (not adjusted for the client area origin nor scrolling)
+			This function is currently only implemented in Univ, wxMSW and
+			wxGTK ports and always returns :py:obj:`wx.TE_HT_UNKNOWN` in the other ports.
+
+		NB: pt is in device coords (not adjusted for the client area origin nor scrolling).
 
 		:param pt:
-		:type pt:
-
-		:return:
-		:rtype:	wxTextCtrlHitTestResult
 		"""
 
 		return self.m_text.HitTest(pt)
 
-	def IsClearButtonVisible(self):
-		"""Returns the clear button’s visibility state"""
+	def IsClearButtonVisible(self) -> bool:
+		"""
+		Returns the clear button's visibility state.
+		"""
+
 		return self.m_clearButton and self.m_clearButton.IsShown()
 
 	def IsEditable(self) -> bool:
@@ -762,37 +751,32 @@ class ClearableTextCtrl(wx.Panel):
 
 	def IsModified(self) -> bool:
 		"""
-		Returns True if the text has been modified by user.
+		Returns whether the text has been modified by user.
 
-		Note that calling SetValue doesn’t make the control modified.
-
-		:return:
-		:rtype:	bool
+		.. note:: Calling :meth:`~.ClearableTextCtrl.SetValue` doesn't make the control modified.
 		"""
 
 		return self.m_text.IsModified()
 
 	def IsMultiLine(self) -> bool:
 		"""
-		Returns True if this is a multi line edit control and False otherwise.
-
-		:return:
-		:rtype:	bool
+		Returns whether this is a multi line control.
 		"""
 
 		return self.m_text.IsMultiLine()
 
 	def IsSingleLine(self) -> bool:
 		"""
-		Returns True if this is a single line edit control and False otherwise.
-
-		:return:
-		:rtype:	bool
+		Returns whether this is a single line control.
 		"""
 
 		return self.m_text.IsSingleLine()
 
-	def LayoutControls(self):
+	def LayoutControls(self) -> None:
+		"""
+		Lays out the child controls.
+		"""
+
 		if not self.m_text:
 			return
 
@@ -840,28 +824,28 @@ class ClearableTextCtrl(wx.Panel):
 		clear_pos = self.m_clearButton.GetPosition()
 		self.m_clearButton.SetPosition((clear_pos.x, clear_pos.y))
 
-	def MarkDirty(self):
-		"""Mark text as modified (dirty)."""
+	def MarkDirty(self) -> None:
+		"""
+		Mark the control as modified (dirty).
+		"""
 
 		self.m_text.MarkDirty()
 
-	def OnClearButton(self, event):
+	def OnClearButton(self, event: wx.CommandEvent) -> None:
 		"""
 		Event handler for clear button being pressed
 
 		:param event:
-		:type event: wx.CommandEvent
 		"""
 
 		self.m_text.Clear()
 		event.Skip()
 
-	def OnSize(self, event: wx.SizeEvent):
+	def OnSize(self, event: wx.SizeEvent) -> None:
 		"""
-		Event handler for the size of the control being changed
+		Event handler for the size of the control being changed.
 
 		:param event:
-		:type event: wx.SizeEvent
 		"""
 
 		# pass
@@ -875,10 +859,6 @@ class ClearableTextCtrl(wx.Panel):
 		Converts given position to a zero-based column, line number pair.
 
 		:param pos: Position
-		:type pos: int
-
-		:return:
-		:rtype: tuple
 		"""
 
 		return self.m_text.PositionToXY(pos)
@@ -910,9 +890,7 @@ class ClearableTextCtrl(wx.Panel):
 	# 	"""
 	#
 	# 	:param x:
-	# 	:type x:	int
 	# 	:param y:
-	# 	:type y: 	int
 	# 	:param renderDrop:
 	# 	:type renderDrop:	bool
 	# 	"""
@@ -995,18 +973,16 @@ class ClearableTextCtrl(wx.Panel):
 	#
 	# 	return bitmap
 
-	def Replace(self, from_: int, to_: int, value: str):
-		"""
-		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
+	def Replace(self, from_: int, to_: int, value: str) -> None:
+		r"""
+		Replaces the text starting at the first position up to (but not including)
+		the character at the last position with the given text.
 
 		This function puts the current insertion point position at to as a side effect.
 
-		:param from_: The first position
-		:type from_:	int
-		:param to_: The last position
-		:type to_:	int
+		:param from\_: The first position
+		:param to\_: The last position
 		:param value: The value to replace the existing text with.
-		:type value: str
 		"""
 
 		self.m_text.Replace(from_, to_, value)
@@ -1052,9 +1028,9 @@ class ClearableTextCtrl(wx.Panel):
 
 	def SetClearBitmap(self, bitmap) -> wx.Bitmap:
 		"""
+		Sets the bitmap for the clear button.
 
 		:param bitmap:
-		:type bitmap:	 wxBitmap
 		"""
 
 		if bitmap.IsOk:
@@ -1066,27 +1042,32 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Changes the default style to use for the new text which is going to be added to the control.
 
-		This applies both to the text added programmatically using WriteText or AppendText and to the text entered by the user interactively.
+		This applies both to the text added programmatically using :meth:`~.ClearableTextCtrl.WriteText` or
+		:meth:`~.ClearableTextCtrl.AppendText` and to the text entered by the user interactively.
 
-		If either of the font, foreground, or background colour is not set in style, the values of the previous default style are used for them. If the previous default style didn’t set them neither, the global font or colours of the text control itself are used as fall back.
+		If either of the font, foreground, or background colour is not set in style,
+		the values of the previous default style are used for them.
+		If the previous default style didn't set them either then the global font or colours
+		of the text control itself are used as fall back.
 
-		However if the style parameter is the default wx.TextAttr, then the default style is just reset (instead of being combined with the new style which wouldn’t change it at all).
+		However, if the style parameter is the default :class:`wx.TextAttr`,
+		then the default style is just reset (instead of being combined with
+		the new style which wouldn't change it at all).
 
 		:param style: The style for the new text
-		:type style: wx.TextAttr
 
-		:return: True on success, False if an error occurred (this may also mean that the styles are not supported under this platform).
-		:rtype: bool
+		:return: :py:obj:`True` on success, :py:obj:`False` if an error occurred
+			(this may also mean that the styles are not supported under this platform).
 		"""
 
 		return self.m_text.SetDefaultStyle(style)
 
 	def SetEditable(self, editable: bool):
 		"""
-		Makes the text item editable or read-only, overriding the wx.TE_READONLY flag.
+		Makes the text item editable or read-only, overriding the :py:obj:`wx.TE_READONLY` flag.
 
-		:param editable: If True, the control is editable. If False, the control is read-only.
-		:type editable:	bool
+		:param editable: If :py:obj:`True`, the control should be editable.
+			If :py:obj:`False`, the control should be read-only.
 		"""
 
 		self.m_text.SetEditable(editable)
@@ -1095,8 +1076,7 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Sets the insertion point at the given position.
 
-		:param pos: Position to set, in the range from 0 to GetLastPosition inclusive.
-		:type pos: int
+		:param pos: Position to set, in the range from 0 to :meth:`~.ClearableTextCtrl.GetLastPosition` inclusive.
 		"""
 
 		self.m_text.SetInsertionPoint(pos)
@@ -1105,7 +1085,8 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		Sets the insertion point at the end of the text control.
 
-		This is equivalent to calling wx.TextCtrl.SetInsertionPoint with wx.TextCtrl.GetLastPosition argument.
+		This is equivalent to calling :meth:`~.ClearableTextCtrl.SetInsertionPoint`
+		with :meth:`~.ClearableTextCtrl.GetLastPosition` as the argument.
 		"""
 
 		self.m_text.SetInsertionPointEnd()
@@ -1116,14 +1097,19 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 		This function sets the maximum number of characters the user can enter into the control.
 
-		In other words, it allows limiting the text value length to len not counting the terminating NUL character.
+		In other words, it allows limiting the text value length to len not counting the terminating ``NUL`` character.
 
-		If len is 0, the previously set max length limit, if any, is discarded and the user may enter as much text as the underlying native text control widget supports (typically at least 32Kb). If the user tries to enter more characters into the text control when it already is filled up to the maximal length, a wxEVT_TEXT_MAXLEN event is sent to notify the program about it (giving it the possibility to show an explanatory message, for example) and the extra input is discarded.
+		If len is 0, the previously set max length limit, if any, is discarded,
+		and the user may enter as much text as the underlying native text control widget supports
+		(typically at least 32Kb).
+		If the user tries to enter more characters into the text control when it is already
+		 filled up to the maximal length, a :py:obj:`wx.wxEVT_TEXT_MAXLEN` event is sent to
+		 notify the program about it (giving it the possibility to show an explanatory message, for example)
+		 and the extra input is discarded.
 
 		Note that in wxGTK this function may only be used with single line text controls.
 
 		:param length:
-		:type length: long
 		"""
 
 		self.m_text.SetMaxLength(length)
@@ -1133,7 +1119,6 @@ class ClearableTextCtrl(wx.Panel):
 		Marks the control as being modified by the user or not.
 
 		:param modified:
-		:type modified: bool
 		"""
 
 		self.m_text.SetModified(modified)
@@ -1161,14 +1146,11 @@ class ClearableTextCtrl(wx.Panel):
 		If any attribute within style is not set, the corresponding attribute from GetDefaultStyle is used.
 
 		:param start: The start of the range to change.
-		:type start: int
 		:param end: The end of the range to change.
-		:type end: int
 		:param style: The new style for the range.
-		:type style: wx.TextAttr
 
-		:return: True on success, False if an error occurred (this may also mean that the styles are not supported under this platform).
-		:rtype: bool
+		:return: :py:obj:`True` on success, :py:obj:`False` if an error occurred
+			(this may also mean the styles are not supported under this platform).
 		"""
 
 		return self.m_text.SetStyle(start, end, style)
@@ -1194,16 +1176,12 @@ class ClearableTextCtrl(wx.Panel):
 		Makes the line containing the given position visible.
 
 		:param pos: The position that should be visible.
-		:type pos: int
 		"""
 
 		self.m_text.ShowPosition(pos)
 
 	def ShouldInheritColours(self) -> bool:
 		"""
-
-		:return:
-		:rtype: bool
 		"""
 
 		return True
@@ -1229,14 +1207,10 @@ class ClearableTextCtrl(wx.Panel):
 
 	def XYToPosition(self, x: int, y: int) -> int:
 		"""
-		Converts the given zero based column and line number to a position.
+		Converts the given zero-based column and line number to a position.
 
 		:param x: The column number
-		:type x: int
 		:param y: The line number
-		:type y: int
-
-		:rtype: int
 		"""
 
 		return self.m_text.XYToPosition(x, y)
