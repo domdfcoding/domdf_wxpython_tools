@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #  projections.py
 #
@@ -29,9 +28,13 @@
 import matplotlib  # type: ignore
 from matplotlib import axes  # type: ignore
 
+__all__ = ["XPanAxes", "XPanAxes_NoZoom", "NoZoom"]
+
 
 class XPanAxes(matplotlib.axes.Axes):
-	"""Constrain pan to x-axis"""
+	"""
+	Constrain pan to x-axis.
+	"""
 
 	name = "XPanAxes"
 
@@ -41,7 +44,9 @@ class XPanAxes(matplotlib.axes.Axes):
 
 
 class XPanAxes_NoZoom(matplotlib.axes.Axes):
-	"""Constrain pan to x-axis and prevent zooming"""
+	"""
+	Constrain pan to x-axis and prevent zooming.
+	"""
 
 	name = "XPanAxes_NoZoom"
 
@@ -53,7 +58,9 @@ class XPanAxes_NoZoom(matplotlib.axes.Axes):
 
 
 class NoZoom(matplotlib.axes.Axes):
-	"""Prevent zooming in pan mode"""
+	"""
+	Prevent zooming in pan mode.
+	"""
 
 	name = "NoZoom"
 
