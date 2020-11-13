@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #  constants.py
 """
@@ -24,7 +23,7 @@ Constants for panel_listctrl
 #  MA 02110-1301, USA.
 
 # 3rd party
-import webcolors # type: ignore
+import webcolors  # type: ignore
 import wx  # type: ignore
 
 # Default text settings
