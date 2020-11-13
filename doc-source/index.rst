@@ -7,70 +7,93 @@ domdf_wxpython_tools
 **Tools and widgets for wxPython.**
 
 .. end short_desc
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
 	:widths: 10 90
 
 	* - Docs
-	  - |docs|
+	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |requires| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
+	* - Activity
+	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |commits-since| |commits-latest| |maintained| 
+	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://readthedocs.org/projects/domdf_wxpython_tools/badge/?version=latest
-	:target: https://domdf_wxpython_tools.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+.. |docs| rtfd-shield::
+	:project: domdf_wxpython_tools
+	:alt: Documentation Build Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/domdf_wxpython_tools/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/domdf_wxpython_tools
+.. |docs_check| actions-shield::
+	:workflow: Docs Check
+	:alt: Docs Check Status
+
+.. |travis| travis-shield::
+	:travis-site: com
 	:alt: Travis Build Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements/?branch=master
+.. |actions_windows| actions-shield::
+	:workflow: Windows Tests
+	:alt: Windows Tests Status
+
+.. |actions_macos| actions-shield::
+	:workflow: macOS Tests
+	:alt: macOS Tests Status
+
+.. |requires| requires-io-shield::
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/domdf_wxpython_tools
-	:target: https://www.codefactor.io/repository/github/domdfcoding/domdf_wxpython_tools
+.. |codefactor| codefactor-shield::
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/domdf_wxpython_tools.svg
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |pypi-version| pypi-shield::
+	:project: domdf_wxpython_tools
+	:version:
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/domdf_wxpython_tools.svg
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |supported-versions| pypi-shield::
+	:project: domdf_wxpython_tools
+	:py-versions:
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |supported-implementations| pypi-shield::
+	:project: domdf_wxpython_tools
+	:implementations:
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |wheel| pypi-shield::
+	:project: domdf_wxpython_tools
+	:wheel:
 	:alt: PyPI - Wheel
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/domdf_wxpython_tools
+.. |license| github-shield::
+	:license:
 	:alt: License
-	:target: https://github.com/domdfcoding/domdf_wxpython_tools/blob/master/LICENSE
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/domdf_wxpython_tools
+.. |language| github-shield::
+	:top-language:
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/domdf_wxpython_tools/v0.2.5
-	:target: https://github.com/domdfcoding/domdf_wxpython_tools/pulse
+.. |commits-since| github-shield::
+	:commits-since: v0.2.5
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/domdf_wxpython_tools
-	:target: https://github.com/domdfcoding/domdf_wxpython_tools/commit/master
+.. |commits-latest| github-shield::
+	:last-commit:
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2020
+.. |maintained| maintained-shield:: 2020
 	:alt: Maintenance
+
+.. |pre_commit| pre-commit-shield::
+	:alt: pre-commit
+
+.. |pre_commit_ci| pre-commit-ci-shield::
+	:alt: pre-commit.ci status
 
 .. end shields
 
@@ -79,31 +102,29 @@ Installation
 
 .. start installation
 
-.. tabs::
-
-	.. tab:: from PyPI
-
-		.. prompt:: bash
-
-			pip install domdf_wxpython_tools
-
-
-	.. tab:: from GitHub
-
-		.. prompt:: bash
-
-			pip install git+https://github.com//domdf_wxpython_tools@master
+.. installation:: domdf_wxpython_tools
+	:pypi:
+	:github:
 
 .. end installation
 
 
 .. toctree::
-    :maxdepth: 3
-    :caption: Documentation
+	:maxdepth: 3
+	:caption: API Reference
+	:glob:
 
-    docs
-    Source
-    Building
+	api/*
+	api/*/index
+
+
+.. toctree::
+	:maxdepth: 3
+	:caption: Contributing
+
+	contributing
+	Source
+
 
 .. start links
 

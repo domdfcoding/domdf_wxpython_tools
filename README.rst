@@ -7,42 +7,56 @@ domdf_wxpython_tools
 **Tools and widgets for wxPython.**
 
 .. end short_desc
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
 	:widths: 10 90
 
 	* - Docs
-	  - |docs|
+	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |requires| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
+	* - Activity
+	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |commits-since| |commits-latest| |maintained| 
+	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://readthedocs.org/projects/domdf_wxpython_tools/badge/?version=latest
+.. |docs| image:: https://img.shields.io/readthedocs/domdf_wxpython_tools/latest?logo=read-the-docs
 	:target: https://domdf_wxpython_tools.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+	:alt: Documentation Build Status
+
+.. |docs_check| image:: https://github.com/domdfcoding/domdf_wxpython_tools/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/domdf_wxpython_tools/actions?query=workflow%3A%22Docs+Check%22
+	:alt: Docs Check Status
 
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/domdf_wxpython_tools/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/domdf_wxpython_tools
 	:alt: Travis Build Status
 
+.. |actions_windows| image:: https://github.com/domdfcoding/domdf_wxpython_tools/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/domdf_wxpython_tools/actions?query=workflow%3A%22Windows+Tests%22
+	:alt: Windows Tests Status
+
+.. |actions_macos| image:: https://github.com/domdfcoding/domdf_wxpython_tools/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/domdf_wxpython_tools/actions?query=workflow%3A%22macOS+Tests%22
+	:alt: macOS Tests Status
+
 .. |requires| image:: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/domdf_wxpython_tools/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/domdf_wxpython_tools
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/domdf_wxpython_tools?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/domdf_wxpython_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/domdf_wxpython_tools.svg
+.. |pypi-version| image:: https://img.shields.io/pypi/v/domdf_wxpython_tools
 	:target: https://pypi.org/project/domdf_wxpython_tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/domdf_wxpython_tools.svg
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/domdf_wxpython_tools?logo=python&logoColor=white
 	:target: https://pypi.org/project/domdf_wxpython_tools/
 	:alt: PyPI - Supported Python Versions
 
@@ -55,8 +69,8 @@ domdf_wxpython_tools
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/domdf_wxpython_tools
-	:alt: License
 	:target: https://github.com/domdfcoding/domdf_wxpython_tools/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/domdf_wxpython_tools
 	:alt: GitHub top language
@@ -71,6 +85,14 @@ domdf_wxpython_tools
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
 	:alt: Maintenance
+
+.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+	:target: https://github.com/pre-commit/pre-commit
+	:alt: pre-commit
+
+.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/domdf_wxpython_tools/master.svg
+	:target: https://results.pre-commit.ci/latest/github/domdfcoding/domdf_wxpython_tools/master
+	:alt: pre-commit.ci status
 
 .. end shields
 
@@ -88,4 +110,3 @@ To install with ``pip``:
 	$ python -m pip install domdf_wxpython_tools
 
 .. end installation
-

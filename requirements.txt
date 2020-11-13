@@ -1,7 +1,8 @@
-tinycss>=0.4
+cawdrey>=0.1.5
+domdf_python_tools>=0.9.0
+mathematical>=0.1.7
 matplotlib>=3.0.0
-cawdrey >=0.1.5
-webcolors>=1.10
 numpy>=1.13.3
 Pillow>=6.0.0
-mathematical>=0.1.7
+tinycss>=0.4
+webcolors>=1.10
