@@ -37,7 +37,12 @@ class DemoFrame(wx.Frame):
 
 	def __init__(self, ):
 		wx.Frame.__init__(
-				self, None, -1, "Numerical EditableListBox", size=(350, 350), style=wx.DEFAULT_FRAME_STYLE,
+				self,
+				None,
+				-1,
+				"Numerical EditableListBox",
+				size=(350, 350),
+				style=wx.DEFAULT_FRAME_STYLE,
 				)
 
 		self.Bind(wx.EVT_CLOSE, self.OnClose)

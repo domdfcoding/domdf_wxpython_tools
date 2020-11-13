@@ -36,7 +36,14 @@ from domdf_wxpython_tools import EditableListBox
 class DemoFrame(wx.Frame):
 
 	def __init__(self, ):
-		wx.Frame.__init__(self, None, -1, "Vanilla EditableListBox", size=(350, 350), style=wx.DEFAULT_FRAME_STYLE,)
+		wx.Frame.__init__(
+				self,
+				None,
+				-1,
+				"Vanilla EditableListBox",
+				size=(350, 350),
+				style=wx.DEFAULT_FRAME_STYLE,
+				)
 
 		self.Bind(wx.EVT_CLOSE, self.OnClose)
 		self.panel = wx.Panel(self, -1)
