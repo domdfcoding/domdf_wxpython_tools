@@ -41,6 +41,8 @@ if wx.Platform == "__WXMSW__":
 	text_defaults["font-size"] = "9pt"
 elif wx.Platform == "__WXGTK__":
 	text_defaults["font-size"] = "11pt"
+
+	# 3rd party
 	import lsb_release  # type: ignore
 
 	if "Ubuntu" in lsb_release.get_distro_information().values():

@@ -23,30 +23,30 @@
 #
 
 # stdlib
-import pathlib
-from typing import Dict, Union
+from typing import Dict
 
 # 3rd party
 import tinycss  # type: ignore
-import webcolors # type: ignore
+import webcolors  # type: ignore
 import wx  # type: ignore
+from domdf_python_tools.typing import PathLike
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.constants import sys_colour_lookup, text_defaults
+
+__all__ = ["parse_css_file", "parse_css"]
 
 # Setup tinycss
 parser = tinycss.make_parser("page3")
 
 
-def parse_css_file(filename: Union[str, pathlib.Path]) -> dict:
+def parse_css_file(filename: PathLike) -> Dict:
 	"""
 	Parse the stylesheet in the given file
 
 	:param filename: The filename of the stylesheet to parse
-	:type filename: str or pathlib.Path
 
 	:return: Parsed CSS stylesheet
-	:rtype: dict
 	"""
 
 	stylesheet = parser.parse_stylesheet_file(css_file=str(filename))
@@ -59,10 +59,8 @@ def parse_css(css_data: str) -> Dict:
 	Parse the stylesheet from the given string
 
 	:param css_data: A string representing a CSS stylesheel
-	:type css_data: str
 
 	:return: Parsed CSS stylesheet
-	:rtype: dict
 	"""
 
 	stylesheet = parser.parse_stylesheet(css_unicode=css_data)
@@ -75,15 +73,13 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 	Internal function for actual parsing of css
 
 	:param stylesheet: A tinycss parsed stylesheel
-	:type stylesheet: :class:`tinycss.css21.Stylesheet`
 	:return: Parsed CSS stylesheet
-	:rtype: dict
 	"""
 
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
 
-	styles = {} # type: ignore
+	styles = {}  # type: ignore
 
 	# Remove declarations for other platforms and make
 
@@ -107,13 +103,13 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values"""
 								)
 
-				elif value.startswith("#"):
+				elif value.startswith('#'):
 					# Hex value, pass to wx.Colour directly
 					pass
 
 				elif value.startswith("rgb("):
 					# RGB value, convert to hex
-					rgb_triplet = (int(x) for x in value.lstrip("rgb(").rstrip(")").split(","))
+					rgb_triplet = (int(x) for x in value.lstrip("rgb(").rstrip(')').split(','))
 					value = webcolors.rgb_to_hex(rgb_triplet)
 
 				else:
@@ -173,7 +169,7 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 
 	# For each li p class, add undefined values from p
 	for style in styles:
-		if style.split(".")[0] == "li p":
+		if style.split('.')[0] == "li p":
 			if style == "li p":
 				continue
 			if "::selection" in style:
@@ -182,7 +178,7 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 
 	# For each p::selection class, add undefined values from p::selection
 	for style in styles:
-		if style.split(".")[0] == "li p":
+		if style.split('.')[0] == "li p":
 			if style == "li p::selection":
 				continue
 			if "::selection" not in style:

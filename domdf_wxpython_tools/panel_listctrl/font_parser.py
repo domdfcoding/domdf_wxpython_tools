@@ -35,6 +35,8 @@ from typing import Callable, Dict, Tuple
 # 3rd party
 from cawdrey import frozendict
 
+__all__ = ["freezeargs", "parse_font"]
+
 
 def freezeargs(func: Callable) -> Callable:
 	"""
@@ -54,35 +56,33 @@ def freezeargs(func: Callable) -> Callable:
 
 @freezeargs
 @lru_cache(5)
-def parse_font(style_dict: Dict) -> Tuple[str, dict]:
+def parse_font(style_dict: Dict) -> Tuple[str, Dict]:
 	"""
 	Parse the font from the style_dict
 
 	:param style_dict: Dictionary containing styling information for the font
-	:type style_dict: dict
 
 	:return: Tuple containing the colour of the font, and the font properties
-	:rtype: (str, dict)
 
 	The font properties dictionary returned will contain the following keys:
 
-		family (wx.FontFamily) – The font family: a generic portable way of referring to fonts without specifying a facename. This parameter must be one of the wx.FontFamily enumeration values. If the faceName argument is provided, then it overrides the font family.
+	* family (wx.FontFamily) – The font family: a generic portable way of referring to fonts without specifying a facename. This parameter must be one of the wx.FontFamily enumeration values. If the faceName argument is provided, then it overrides the font family.
 
-		style (wx.FontStyle) – One of wx.FONTSTYLE_NORMAL, wx.FONTSTYLE_SLANT and wx.FONTSTYLE_ITALIC.
+	* style (wx.FontStyle) – One of wx.FONTSTYLE_NORMAL, wx.FONTSTYLE_SLANT and wx.FONTSTYLE_ITALIC.
 
-		weight (wx.FontWeight) – Font weight, sometimes also referred to as font boldness. One of the wx.FontWeight enumeration values.
+	* weight (wx.FontWeight) – Font weight, sometimes also referred to as font boldness. One of the wx.FontWeight enumeration values.
 
-		underline (wx.bool) – The value can be True or False. At present this has an effect on Windows and Motif 2.x only.
+	* underline (wx.bool) – The value can be :py:obj:`True` or :py:obj:`False`. At present this has an effect on Windows and Motif 2.x only.
 
-		faceName (wx.string) – An optional string specifying the face name to be used. If it is an empty string, a default face name will be chosen based on the family.
+	* faceName (wx.string) – An optional string specifying the face name to be used. If it is an empty string, a default face name will be chosen based on the family.
 
-		encoding (wx.FontEncoding) – An encoding which may be one of the enumeration values of wx.FontEncoding. If the specified encoding isn’t available, no font is created (see also Font Encodings).
+	* encoding (wx.FontEncoding) – An encoding which may be one of the enumeration values of wx.FontEncoding. If the specified encoding isn't available, no font is created (see also Font Encodings).
 
 	and one of:
 
-		pointSize (int) – Size in points. See SetPointSize for more info. Notice that, for historical reasons, the value 70 here is interpreted at DEFAULT and results in creation of the font with the default size and not of a font with the size of 70pt. If you really need the latter, please use SetPointSize(70). Note that this constructor and the matching Create() method overload are the only places in wx.Font API handling DEFAULT specially: neither SetPointSize nor the constructor taking wx.FontInfo handle this value in this way.
+	* pointSize (int) – Size in points. See SetPointSize for more info. Notice that, for historical reasons, the value 70 here is interpreted at DEFAULT and results in creation of the font with the default size and not of a font with the size of 70pt. If you really need the latter, please use SetPointSize(70). Note that this constructor and the matching Create() method overload are the only places in wx.Font API handling DEFAULT specially: neither SetPointSize nor the constructor taking wx.FontInfo handle this value in this way.
 
-		pixelSize (wx.Size) – Size in pixels. See SetPixelSize for more info.
+	* pixelSize (wx.Size) – Size in pixels. See SetPixelSize for more info.
 
 	depending on the font size specified in 'style_dict'
 	"""

@@ -38,6 +38,8 @@ import wx  # type: ignore
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
 from domdf_wxpython_tools.panel_listctrl.font_parser import parse_font
 
+__all__ = ["PanelListCtrl", "PanelListItem"]
+
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -49,7 +51,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			id=wx.ID_ANY,
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
@@ -125,7 +127,6 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Set the current selection to the item at the given index
 
 		:param idx: index of the item to select
-		:type idx: int
 		"""
 
 		item_to_select = self.GetItem(idx)
@@ -160,18 +161,15 @@ class PanelListCtrl(wx.ScrolledWindow):
 		self.sizer_1.Fit(self)
 		self.Layout()
 
-	def AppendNewItem(self, text_dict, style_data):
+	def AppendNewItem(self, text_dict: Dict, style_data) -> "PanelListItem":
 		"""
 		Append a new 'PanelListItem' object to the control, passing the 'text_dict' and 'style_data'
 		parameters to the new object.
 
 		:param text_dict:
-		:type text_dict:
 		:param style_data:
-		:type style_data:
 
 		:return: The new PanelListItem object that was added to the control
-		:rtype:
 		"""
 
 		item = PanelListItem(self, text_dict, style_data, left_padding=self.left_padding)
@@ -203,10 +201,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Deletes the specified item from the control.
 
 		:param item:
-		:type item:
 
-		:return: True if the item was removed, False otherwise (usually because the item wasn't in the control)
-		:rtype: bool
+		:return: :py:obj:`True` if the item was removed, :py:obj:`False` otherwise
+			(usually because the item wasn't in the control)
 		"""
 
 		for index, widget in enumerate(self._items):
@@ -227,7 +224,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		return False
 
 	def Focus(self, idx):
-		""" Set Focus to the the given item. """
+		" Set Focus to the the given item. "
 		for index, item in enumerate(self._items):
 			if index == idx:
 				item.SelectItem()
@@ -253,15 +250,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		return 0
 #
 
-	def GetFirstSelected(self, *args):
+	def GetFirstSelected(self, *_) -> int:
 		"""
 		Returns the first selected item, or -1 when none is selected.
-
-		:param args:
-		:type args:
-
-		:return:
-		:rtype:
 		"""
 
 		for item in self._items:
@@ -284,19 +275,11 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return -1
 
-	def GetItem(self, itemIdx, *args):
-		"""
-		GetItem(itemIdx, col=0) -> ListItem
-
+	def GetItem(self, itemIdx, *_):
+		r"""
 		Gets information about the item. See SetItem() for more information.
 
 		:param itemIdx:
-		:type itemIdx:
-		:param args:
-		:type args:
-
-		:return:
-		:rtype:
 		"""
 
 		return self._items[itemIdx]
@@ -336,10 +319,6 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Returns subsequent selected items, or -1 when no more are selected.
 
 		:param item:
-		:type item:
-
-		:return:
-		:rtype:
 		"""
 
 		index_of_item = self.GetItemPosition(item)
@@ -401,13 +380,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def IsSelected(self, idx):
 		"""
-		Returns ``True`` if the item is selected.
+		Returns ``:py:obj:`True``` if the item is selected.
 
 		:param idx:
-		:type idx:
-
-		:return:
-		:rtype:
 		"""
 
 		return self._items[idx].IsSelected()
@@ -417,10 +392,6 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Redraws the given item.
 
 		:param item:
-		:type item:
-
-		:return:
-		:rtype:
 		"""
 
 		item.Layout()
@@ -431,12 +402,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Redraws the items between itemFrom and itemTo.
 
 		:param itemFrom:
-		:type itemFrom:
 		:param itemTo:
-		:type itemTo:
-
-		:return:
-		:rtype:
 		"""
 
 		for index in range(itemFrom, itemTo + 1):
@@ -455,12 +421,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		Selects/deselects an item.
 
 		:param idx:
-		:type idx:
 		:param on:
-		:type on:
-
-		:return:
-		:rtype:
 		"""
 
 		self._items[idx].SelectItem(on)
@@ -517,34 +478,27 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 
 class PanelListItem(wx.Panel):
+	"""
+
+	:param parent: The PanelListCtrl the item is to go into
+	:param text_dict:
+	:param style_data:
+	:param id: An identifier for the panel. ID_ANY is taken to mean a default.
+	:param style: The window style. See wx.Panel.
+	:param name: Window name
+	:param left_padding: the spacing to the left of the text in the control
+	"""
 
 	def __init__(
 			self,
 			parent: PanelListCtrl,
-			text_dict,
+			text_dict: Dict,
 			style_data,
 			id: wx.WindowID = wx.ID_ANY,
 			style: int = 0,
 			name: str = wx.PanelNameStr,
 			left_padding: int = 32,
 			):
-		"""
-
-		:param parent: The PanelListCtrl the item is to go into
-		:type parent: PanelListCtrl
-		:param text_dict:
-		:type text_dict:
-		:param style_data:
-		:type style_data:
-		:param id: An identifier for the panel. ID_ANY is taken to mean a default.
-		:type id: wx.WindowID
-		:param style: The window style. See wx.Panel.
-		:type style: int
-		:param name: Window name
-		:type name: str
-		:param left_padding: the spacing to the left of the text in the control
-		:type left_padding: int
-		"""
 
 		self.parent = parent
 
@@ -648,27 +602,32 @@ class PanelListItem(wx.Panel):
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnRightClick(self, event):
+	def OnRightClick(self, _) -> None:
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_RIGHT_CLICK)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnMiddleClick(self, event):
+	def OnMiddleClick(self, _) -> None:
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_RIGHT_CLICK)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnClick(self, event):
+	def OnClick(self, _) -> None:
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_SELECTED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnDoubleClick(self, event):
+	def OnDoubleClick(self, _) -> None:
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_ACTIVATED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnKeyDown(self, event):
+	def OnKeyDown(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
+
 		key_event = event
 		event = wx.ListEvent(wx.wxEVT_LIST_KEY_DOWN)
 		event.SetEventObject(self)
