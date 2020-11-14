@@ -1,6 +1,7 @@
 autodocsumm>=0.2.0
 default-values>=0.2.0
 domdf-sphinx-theme>=0.1.0
+dummy-wx>=0.3.0
 extras-require>=0.2.0
 seed-intersphinx-mapping>=0.1.1
 sphinx>=3.0.3
@@ -13,4 +14,3 @@ sphinxcontrib-httpdomain>=1.7.0
 sphinxemoji>=0.1.6
 toctree-plus>=0.0.4
 wget>=3.2
-dummy_wx>=0.3.0

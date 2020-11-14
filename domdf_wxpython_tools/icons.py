@@ -25,7 +25,7 @@
 #
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["get_toolbar_icon", "get_button_icon", "GetStockBitmap", "GetStockToolbarBitmap"]
 

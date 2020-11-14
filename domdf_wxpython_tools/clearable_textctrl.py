@@ -32,7 +32,7 @@ A TextCtrl with a button to clear its contents
 from typing import List, Tuple
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper

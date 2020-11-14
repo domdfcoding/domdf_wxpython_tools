@@ -32,7 +32,7 @@ import time
 from threading import Event, Thread
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.events import SimpleEvent

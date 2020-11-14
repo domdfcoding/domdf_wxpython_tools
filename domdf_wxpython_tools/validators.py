@@ -33,7 +33,7 @@ Various validator classes
 import string
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["ValidatorBase", "CharValidator", "FloatValidator"]
 

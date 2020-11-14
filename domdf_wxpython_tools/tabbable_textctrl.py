@@ -28,7 +28,7 @@ Multiline wx.TextCtrl that allows tabbing to the next or previous control.
 from typing import AnyStr
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["TabbableTextCtrl"]
 

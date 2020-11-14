@@ -27,7 +27,7 @@
 from typing import List
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["list_dialog"]
 

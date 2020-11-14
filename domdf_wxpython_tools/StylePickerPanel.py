@@ -25,7 +25,7 @@
 # 3rd party
 from typing import List
 
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
 

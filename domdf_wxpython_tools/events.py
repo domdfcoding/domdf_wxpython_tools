@@ -53,7 +53,7 @@ Usage:
 from collections import OrderedDict
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["PayloadEvent", "SimpleEvent"]
 

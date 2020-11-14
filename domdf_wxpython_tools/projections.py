@@ -24,9 +24,10 @@
 #  MA 02110-1301, USA.
 #
 
-# 3rd party
+# stdlib
 from typing import Optional
 
+# 3rd party
 import matplotlib  # type: ignore
 from matplotlib import axes
 

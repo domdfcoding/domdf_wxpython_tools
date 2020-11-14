@@ -24,7 +24,7 @@ Constants for panel_listctrl
 
 # 3rd party
 import webcolors
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 # Default text settings
 text_defaults = {

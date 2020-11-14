@@ -28,7 +28,7 @@ import os
 from typing import List, Optional, Sequence
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.validators import CharValidator

@@ -28,7 +28,7 @@ Dialog for configuring borders for charts
 #
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 __all__ = ["border_config"]
 

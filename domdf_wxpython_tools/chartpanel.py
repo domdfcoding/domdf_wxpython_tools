@@ -40,7 +40,7 @@ from typing import Optional
 
 import matplotlib  # type: ignore
 import numpy  # type: ignore
-import wx.html2  # type: ignore  # nodep
+import wx.html2  # type: ignore
 from matplotlib.axes import Axes  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar

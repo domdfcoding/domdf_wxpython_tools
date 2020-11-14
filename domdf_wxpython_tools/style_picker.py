@@ -29,7 +29,7 @@ Dialogs for choosing Matplotlib colours and styles.
 from typing import List, Optional
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.ColourPickerPanel import ColourPickerPanel

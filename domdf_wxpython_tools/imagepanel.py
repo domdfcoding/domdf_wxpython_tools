@@ -30,7 +30,7 @@ from typing import Optional, Union
 # 3rd party
 import matplotlib  # type: ignore
 import PIL  # type: ignore
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
 from matplotlib.figure import Figure  # type: ignore
 from PIL import Image

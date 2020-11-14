@@ -28,7 +28,7 @@
 import pathlib
 
 # 3rd party
-import wx  # type: ignore  # nodep
+import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
 
 # this package
