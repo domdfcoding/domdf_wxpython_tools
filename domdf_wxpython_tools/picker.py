@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 #
 #  picker.py
 #
@@ -37,6 +37,8 @@ from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
 # this package
 from . import icons
 
+__all__ = ["dir_picker", "file_picker", "file_folder_picker"]
+
 # begin wxGlade: dependencies
 # end wxGlade
 
@@ -47,41 +49,31 @@ from . import icons
 class dir_picker(TextCtrlWrapper, wx.Panel):
 	"""
 
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param value:
+	:param pos:
+	:param size:
+	:param style:
+	:param name:
 	"""
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			id=wx.ID_ANY,
-			value="",
+			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL,
 			name=b"dir_picker",
 			):
-		"""
-
-		:param parent:
-		:type parent:
-		:param id:
-		:type id:
-		:param value:
-		:type value:
-		:param pos:
-		:type pos:
-		:param size:
-		:type size:
-		:param style:
-		:type style:
-		:param name:
-		:type name:
-		"""
 
 		self._parent = parent
 		self.initial_value = value
 
 		wx.Panel.__init__(self, self._parent, id=id, pos=pos, size=size, style=style, name=name)
-		self.textctrl = self.dir_value = wx.TextCtrl(self, wx.ID_ANY, "")
+		self.textctrl = self.dir_value = wx.TextCtrl(self, wx.ID_ANY, '')
 		self.clear_btn = wx.BitmapButton(self, wx.ID_ANY, icons.get_button_icon("ART_GO_BACK", 16))
 		self.browse_btn = wx.BitmapButton(self, wx.ID_ANY, icons.get_button_icon("ART_FOLDER_OPEN", 16))
 
@@ -145,7 +137,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 				)
 
 		if dlg.ShowModal() == wx.ID_OK:
-			self.dir_value.SetValue((dlg.GetPath()))
+			self.dir_value.SetValue(dlg.GetPath())
 		dlg.Destroy()
 		self.dir_value.SetFocus()
 
@@ -170,38 +162,37 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 
 	def ResetValue(self):
 		"""
-		Resets the text ctrl to the initial value, either specified in __init__ or set with SetInitialValue
+		Resets the text ctrl to the initial value, either specified in __init__ or set with ``SetInitialValue``.
 		"""
 		return self.dir_value.SetValue(self.initial_value)
 
-	def SetHeight(self, height: float, int):
+	def SetHeight(self, height: float):
 		"""
 		Set the height of the widgets
 
 		:param height: Height of the widgets
-		:type height: float or int
 		"""
+
 		self.height = height
 		self.__set_properties()
 		self.Layout()
 
 	def SetInitialValue(self, value: str):
 		"""
-		Sets the initial value for the text ctrl
+		Sets the initial value for the text ctrl.
 
-		:param value: Initial value for the text ctrl
-		:type value: string
+		:param value: Initial value for the text ctrl.
 		"""
+
 		self.initial_value = value
 
 	def SetInsertionPoint(self, pos: int):
 		"""
 		Sets the insertion point at the given position.
 
-		:param pos: Position to set, in the range from 0 to GetLastPosition inclusive.
-		:type pos: long
-		:return:
+		:param pos: Position to set, in the range from ``0`` to :meth:`~.GetLastPosition` inclusive.
 		"""
+
 		return self.dir_value.SetInsertionPoint(pos)
 
 	def SetInsertionPointEnd(self):
@@ -212,12 +203,11 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		return self.dir_value.SetInsertionPointEnd()
 
-	def SetTextWidth(self, width: float, int):
+	def SetTextWidth(self, width: float):
 		"""
-		Sets the width of the TextCtrl
+		Sets the width of the TextCtrl.
 
-		:param width: The width of the TextCtrl
-		:type width: float or int
+		:param width: The width of the TextCtrl.
 		"""
 
 		self.textctrl_width = width
@@ -229,46 +219,35 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 
 
 class file_picker(dir_picker):
+	"""
+
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param value:
+	:param pos:
+	:param size:
+	:param style:
+	:param name:
+	:param extension:
+	:param title:
+	:param filetypestring:
+	:param kwargs:
+	"""
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			id=wx.ID_ANY,
-			value="",
+			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 			name=b"file_picker",
-			extension="*",
+			extension='*',
 			title="File Picker",
 			filetypestring="All Files",
 			**kwargs
 			):
-		"""
-
-		:param parent:
-		:type parent:
-		:param id:
-		:type id:
-		:param value:
-		:type value:
-		:param pos:
-		:type pos:
-		:param size:
-		:type size:
-		:param style:
-		:type style:
-		:param name:
-		:type name:
-		:param extension:
-		:type extension:
-		:param title:
-		:type title:
-		:param filetypestring:
-		:type filetypestring:
-		:param kwargs:
-		:type kwargs:
-		"""
 
 		self._parent = parent
 		self.initial_value = value
@@ -307,47 +286,36 @@ class file_picker(dir_picker):
 
 
 class file_folder_picker(dir_picker):
+	"""
+
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param value:
+	:param pos:
+	:param size:
+	:param style:
+	:param name:
+	:param extension:
+	:param title:
+	:param filetypestring:
+	:param kwargs:
+	"""
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			id=wx.ID_ANY,
-			value="",
+			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 			name=b"file_picker",
-			extension="*",
+			extension='*',
 			title="File Picker",
 			filetypestring="All Files",
 			start_as_files=True,
 			**kwargs
 			):
-		"""
-
-		:param parent:
-		:type parent:
-		:param id:
-		:type id:
-		:param value:
-		:type value:
-		:param pos:
-		:type pos:
-		:param size:
-		:type size:
-		:param style:
-		:type style:
-		:param name:
-		:type name:
-		:param extension:
-		:type extension:
-		:param title:
-		:type title:
-		:param filetypestring:
-		:type filetypestring:
-		:param kwargs:
-		:type kwargs:
-		"""
 
 		self._parent = parent
 		self.initial_value = value
@@ -408,6 +376,6 @@ class file_folder_picker(dir_picker):
 					)
 
 			if dlg.ShowModal() == wx.ID_OK:
-				self.dir_value.SetValue((dlg.GetPath()))
+				self.dir_value.SetValue(dlg.GetPath())
 			dlg.Destroy()
 			self.dir_value.SetFocus()

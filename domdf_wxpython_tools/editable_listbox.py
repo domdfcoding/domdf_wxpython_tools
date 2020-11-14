@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  editable_listbox.py
 """
@@ -47,6 +46,8 @@ from mathematical.utils import rounders  # type: ignore  # TODO
 
 # this package
 from domdf_wxpython_tools.validators import FloatValidator
+
+__all__ = ["CleverListCtrl", "EditableListBox", "EditableNumericalListBox"]
 
 # IDs
 ID_ELB_DELETE = wx.NewIdRef()
@@ -200,6 +201,14 @@ up_btn_xpm = [
 class CleverListCtrl(wx.ListCtrl):
 	"""
 	list control with auto-resizable column:
+
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param pos:
+	:param size:
+	:param style:
+	:param validator:
+	:param name:
 	"""
 
 	def __init__(
@@ -212,22 +221,6 @@ class CleverListCtrl(wx.ListCtrl):
 			validator: wx.Validator = wx.DefaultValidator,
 			name: str = wx.ListCtrlNameStr
 			):
-		"""
-		:param parent:
-		:type parent: wx.Window
-		:param id:
-		:type id: wx.WindowID
-		:param pos:
-		:type pos: wx.Point
-		:param size:
-		:type size: wx.Size
-		:param style:
-		:type style: int
-		:param validator:
-		:type validator: wx.Validator
-		:param name:
-		:type name: str
-		"""
 
 		wx.ListCtrl.__init__(self, parent, id, pos, size, style, validator, name)
 
@@ -252,47 +245,46 @@ class CleverListCtrl(wx.ListCtrl):
 		self.SetColumnWidth(0, w)
 
 	# private
-	def OnSize(self, event):
+	def OnSize(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
+
 		self.SizeColumns()
 		event.Skip()
 
 
 class EditableListBox(wx.Panel):
+	"""
+	This class provides a composite control that lets the user easily enter
+	and edit a list of strings.
+
+	Styles supported:
+
+	* wx.adv.EL_ALLOW_NEW - Allow user to create new items.
+	* wx.adv.EL_ALLOW_EDIT - Allow user to edit text in the control.
+	* wx.adv.EL_ALLOW_DELETE - Allow user to delete text from the control.
+
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param label:
+	:param pos:
+	:param size:
+	:param style:
+	:param name:
+	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
 			id: wx.WindowID = wx.ID_ANY,
-			label: wx.String = "",
+			label: wx.String = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.adv.EL_DEFAULT_STYLE,
 			name: str = wx.adv.EditableListBoxNameStr
 			):
-		"""
-		This class provides a composite control that lets the user easily enter
-		and edit a list of strings.
-
-		Styles supported:
-			> wx.adv.EL_ALLOW_NEW - Allow user to create new items.
-			> wx.adv.EL_ALLOW_EDIT - Allow user to edit text in the control.
-			> wx.adv.EL_ALLOW_DELETE - Allow user to delete text from the control.
-
-		:param parent:
-		:type parent: wx.Window
-		:param id:
-		:type id: wx.WindowID
-		:param label:
-		:type label: wx.String
-		:param pos:
-		:type pos: wx.Point
-		:param size:
-		:type size:  wx.Size
-		:param style:
-		:type style: int
-		:param name:
-		:type name: str
-		"""
 
 		wx.Panel.__init__(self, parent, id, pos, size, style, name)
 
@@ -372,8 +364,7 @@ class EditableListBox(wx.Panel):
 		"""
 		Replaces current contents with given strings.
 
-		:param strings: list of strings
-		:type strings: list of str
+		:param strings: list of strings.
 		"""
 
 		self.m_listCtrl.DeleteAllItems()
@@ -411,14 +402,24 @@ class EditableListBox(wx.Panel):
 			if self.m_style & wx.adv.EL_ALLOW_DELETE:
 				self.m_bDel.Enable(self.m_selection < self.m_listCtrl.GetItemCount() - 1)
 
-	def OnNewItem(self, event):
+	def OnNewItem(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
+
 		self.m_listCtrl.SetItemState(
 				self.m_listCtrl.GetItemCount() - 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
 				)
 
 		self.m_listCtrl.EditLabel(self.m_selection)
 
-	def OnBeginLabelEdit(self, event):
+	def OnBeginLabelEdit(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
+
 		event.Skip()
 
 		# To ensure it happens after editing starts
@@ -436,7 +437,11 @@ class EditableListBox(wx.Panel):
 	def on_value_changed(self, event):  # wxGlade: CalibreMeasurementPanel.<event_handler>
 		event.Skip()
 
-	def OnEndLabelEdit(self, event):
+	def OnEndLabelEdit(self, event) -> None:
+		"""
+
+		:param event: The wxPython event.
+		"""
 		# return
 		if event.GetIndex() == self.m_listCtrl.GetItemCount() - 1 and event.GetText():
 			# The user edited last (empty) line, i.e. added new entry. We have to
@@ -450,22 +455,18 @@ class EditableListBox(wx.Panel):
 			selectionEvent.SetIndex(event.GetIndex())
 			self.m_listCtrl.GetEventHandler().ProcessEvent(selectionEvent)
 
-	def OnDelItem(self, event):
-
+	def OnDelItem(self, _) -> None:
 		self.m_listCtrl.DeleteItem(self.m_selection)
 		self.m_listCtrl.SetItemState(self.m_selection, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
-	def OnEditItem(self, event):
-
+	def OnEditItem(self, _) -> None:
 		self.m_listCtrl.EditLabel(self.m_selection)
 
 	def SwapItems(self, i1: int, i2: int):
 		"""
 
 		:param i1:
-		:type i1: int
 		:param i2:
-		:type i2: int
 		"""
 
 		# swap the text
@@ -480,13 +481,11 @@ class EditableListBox(wx.Panel):
 		self.m_listCtrl.SetItemData(i1, d2)
 		self.m_listCtrl.SetItemData(i2, d1)
 
-	def OnUpItem(self, event):
-
+	def OnUpItem(self, _) -> None:
 		self.SwapItems(self.m_selection - 1, self.m_selection)
 		self.m_listCtrl.SetItemState(self.m_selection - 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
-	def OnDownItem(self, event):
-
+	def OnDownItem(self, _) -> None:
 		self.SwapItems(self.m_selection + 1, self.m_selection)
 		self.m_listCtrl.SetItemState(self.m_selection + 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
@@ -537,35 +536,28 @@ class EditableListBox(wx.Panel):
 
 
 class EditableNumericalListBox(EditableListBox):
+	"""
+
+	:param parent: Parent window. Should not be :py:obj:`None`.
+	:param id:
+	:param label:
+	:param pos:
+	:param size:
+	:param style:
+	:param name:
+	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
 			id: wx.WindowID = wx.ID_ANY,
-			label: wx.String = "",
+			label: wx.String = '',
 			decimal_places=-1,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.adv.EL_DEFAULT_STYLE,
 			name: str = wx.adv.EditableListBoxNameStr
 			):
-		"""
-
-		:param parent:
-		:type parent: wx.Window
-		:param id:
-		:type id: wx.WindowID
-		:param label:
-		:type label: wx.String
-		:param pos:
-		:type pos: wx.Point
-		:param size:
-		:type size:  wx.Size
-		:param style:
-		:type style: int
-		:param name:
-		:type name: str
-		"""
 
 		EditableListBox.__init__(self, parent, id, label, pos, size, style, name)
 
@@ -579,7 +571,7 @@ class EditableNumericalListBox(EditableListBox):
 		self._decimal_places = _decimal_places
 
 		if self._decimal_places == 0:
-			self._rounders_string = "0"
+			self._rounders_string = '0'
 		elif self._decimal_places == -1:
 			self._rounders_string = ''
 		else:
@@ -599,15 +591,11 @@ class EditableNumericalListBox(EditableListBox):
 	def SetStrings(self, strings):
 		self.SetValues(strings)
 
-	def SetValues(self, values: Sequence[Union[float, Decimal]]):
+	def SetValues(self, values: Sequence[Union[float, Decimal]]) -> None:
 		"""
 		Replaces current contents with given values.
 
 		:param values: list of values
-		:type values: list of int or list of float or list of decimal.Decimal
-
-		:return:
-		:rtype:
 		"""
 
 		self.m_listCtrl.DeleteAllItems()
@@ -653,7 +641,7 @@ class EditableNumericalListBox(EditableListBox):
 	def on_value_changed(self, event):  # wxGlade: CalibreMeasurementPanel.<event_handler>
 		value = event.GetEventObject().GetValue()
 
-		if value == ".":
+		if value == '.':
 			event.GetEventObject().ChangeValue("0.")
 			wx.CallAfter(event.GetEventObject().SetInsertionPointEnd)
 
