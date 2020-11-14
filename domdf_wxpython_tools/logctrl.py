@@ -80,7 +80,7 @@ class LogCtrl(stc.StyledTextCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,

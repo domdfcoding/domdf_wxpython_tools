@@ -108,7 +108,7 @@ class ImagePanel(ChartPanelBase):
 			self,
 			parent: wx.Window,
 			image=None,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,

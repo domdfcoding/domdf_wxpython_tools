@@ -13,3 +13,4 @@ sphinxcontrib-httpdomain>=1.7.0
 sphinxemoji>=0.1.6
 toctree-plus>=0.0.4
 wget>=3.2
+dummy_wx>=0.3.0

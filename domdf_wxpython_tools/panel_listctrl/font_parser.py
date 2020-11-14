@@ -74,7 +74,7 @@ def parse_font(style_dict: Dict) -> Tuple[str, Dict]:
 
 	* underline (wx.bool) – The value can be :py:obj:`True` or :py:obj:`False`. At present this has an effect on Windows and Motif 2.x only.
 
-	* faceName (wx.string) – An optional string specifying the face name to be used. If it is an empty string, a default face name will be chosen based on the family.
+	* faceName (str) – An optional string specifying the face name to be used. If it is an empty string, a default face name will be chosen based on the family.
 
 	* encoding (wx.FontEncoding) – An encoding which may be one of the enumeration values of wx.FontEncoding. If the specified encoding isn't available, no font is created (see also Font Encodings).
 

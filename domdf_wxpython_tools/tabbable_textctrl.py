@@ -51,7 +51,7 @@ class TabbableTextCtrl(wx.TextCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,

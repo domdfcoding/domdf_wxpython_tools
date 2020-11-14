@@ -42,3 +42,6 @@ classifiers:
 #travis_extra_install_pre:
 #- pip install -U coveralls pytest matplotlib
 #- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython
+
+intersphinx_mapping:
+ - "'wxpython': ('https://docs.wxpython.org/', None)"

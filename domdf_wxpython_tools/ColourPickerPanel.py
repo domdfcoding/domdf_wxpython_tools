@@ -73,23 +73,23 @@ default_picker_choices = [
 
 class ColourPickerPanel(StylePickerPanel):
 	"""
-	Based on StylePickerPanel, a Panel for selecting a list of colours, and their order
+	Based on StylePickerPanel, a Panel for selecting a list of colours, and their order.
 
 	:param parent: The parent window.
 	:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
-	:param pos: The panel position. The value ::wxDefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
-	:param size: The panel size. The value ::wxDefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param pos: The panel position. The value ``wx.DefaultPosition`` indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The panel size. The value ``wx.DefaultSize`` indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
 	:param style: The window style. See wxPanel.
-	:param name: Window name.
+	:param name: The window name.
 	:param label: Label for the panel
-	:param picker_choices: A list of hex value choices to populate the 'picker' size of the panel with
-	:param selection_choices: A list of hex value choices to populate the 'selection' size of the panel with
+	:param picker_choices: A list of hex value choices to populate the 'picker' side of the panel with
+	:param selection_choices: A list of hex value choices to populate the 'selection' side of the panel with
 	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.TAB_TRAVERSAL,

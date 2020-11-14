@@ -117,7 +117,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Cut()
 
-	def GetLastPosition(self) -> wx.TextPos:
+	def GetLastPosition(self):
 		"""
 		Returns the zero based index of the last position in the text control,
 		which is equal to the number of characters in the control.

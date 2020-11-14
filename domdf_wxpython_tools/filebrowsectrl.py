@@ -93,7 +93,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,

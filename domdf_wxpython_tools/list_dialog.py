@@ -59,7 +59,7 @@ class list_dialog(wx.Dialog):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			title: str = "Choose",
 			label: str = "Choose: ",
 			choices: List[str] = None,

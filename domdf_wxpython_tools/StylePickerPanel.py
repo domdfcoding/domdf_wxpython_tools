@@ -23,6 +23,8 @@
 #
 
 # 3rd party
+from typing import List
+
 import wx  # type: ignore  # nodep
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.figure import Figure  # type: ignore
@@ -40,6 +42,18 @@ default_styles = ["o", "v", "^", "<", ">", "s", "h", "X", "D", "d"]
 
 
 class StylePickerPanel(wx.Panel):
+	"""
+	Based on StylePickerPanel, a Panel for selecting a list of colours, and their order.
+
+	:param parent: The parent window.
+	:param id: An identifier for the panel. wx.ID_ANY is taken to mean a default.
+	:param pos: The panel position. The value ``wx.DefaultPosition`` indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The panel size. The value ``wx.DefaultSize`` indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param style: The window style. See wxPanel.
+	:param name: The window name.
+	:param label: Label for the panel
+	:param selection_choices: A list of hex value choices to populate the 'selection' side of the panel with
+	"""
 
 	def __init__(
 			self,
@@ -50,7 +64,7 @@ class StylePickerPanel(wx.Panel):
 			style=wx.TAB_TRAVERSAL,
 			name=wx.PanelNameStr,
 			label="Choose Styles: ",
-			selection_choices=None,
+			selection_choices: List[str] = None,
 			):
 		if selection_choices is None:
 			selection_choices = default_styles[:]
@@ -118,10 +132,10 @@ class StylePickerPanel(wx.Panel):
 				"x (filled)": "X",
 				"diamond": "D",
 				"thin_diamond": "d",
-				"caretleft": 4,  # (CARETLEFT),
-				"caretright": 5,  # (CARETRIGHT),
-				"caretup": 6,  # (CARETUP),
-				"caretdown": 7,  # (CARETDOWN),
+				"caretleft": 4,
+				"caretright": 5,
+				"caretup": 6,
+				"caretdown": 7,
 				}
 
 		for marker in self.selection_choices:

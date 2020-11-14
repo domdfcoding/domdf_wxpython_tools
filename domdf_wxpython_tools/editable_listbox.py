@@ -214,7 +214,7 @@ class CleverListCtrl(wx.ListCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.LC_ICON,
@@ -278,8 +278,8 @@ class EditableListBox(wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
-			label: wx.String = '',
+			id: int = wx.ID_ANY,
+			label: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.adv.EL_DEFAULT_STYLE,
@@ -550,8 +550,8 @@ class EditableNumericalListBox(EditableListBox):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
-			label: wx.String = '',
+			id: int = wx.ID_ANY,
+			label: str = '',
 			decimal_places=-1,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,

@@ -13,9 +13,7 @@ Notes:
 * The :py:data:`~.wxWEBVIEWIE_EMU_DEFAULT` can be used to reset the emulation level to the system default.
 
 The values of the constants were taken from
-
-	https://msdn.microsoft.com/library/ee330730.aspx#browser_emulation
-
+https://msdn.microsoft.com/library/ee330730.aspx#browser_emulation
 and must not be changed.
 
 ---------

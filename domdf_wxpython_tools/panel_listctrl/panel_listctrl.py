@@ -494,7 +494,7 @@ class PanelListItem(wx.Panel):
 			parent: PanelListCtrl,
 			text_dict: Dict,
 			style_data,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			style: int = 0,
 			name: str = wx.PanelNameStr,
 			left_padding: int = 32,

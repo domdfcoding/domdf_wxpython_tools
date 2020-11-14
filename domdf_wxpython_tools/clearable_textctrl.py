@@ -279,7 +279,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: wx.WindowID = wx.ID_ANY,
+			id: int = wx.ID_ANY,
 			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
@@ -923,10 +923,11 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 		If len is 0, the previously set max length limit, if any, is discarded,
 		and the user may enter as much text as the underlying native text control widget supports
 		(typically at least 32Kb).
+
 		If the user tries to enter more characters into the text control when it is already
-		 filled up to the maximal length, a :py:obj:`wx.wxEVT_TEXT_MAXLEN` event is sent to
-		 notify the program about it (giving it the possibility to show an explanatory message, for example)
-		 and the extra input is discarded.
+		filled up to the maximal length, a :py:obj:`wx.wxEVT_TEXT_MAXLEN` event is sent to
+		notify the program about it (giving it the possibility to show an explanatory message, for example)
+		and the extra input is discarded.
 
 		Note that in wxGTK this function may only be used with single line text controls.
 

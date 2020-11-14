@@ -7,6 +7,7 @@ domdf_wxpython_tools
 **Tools and widgets for wxPython.**
 
 .. end short_desc
+
 .. start shields
 
 .. list-table::
@@ -107,6 +108,12 @@ Installation
 	:github:
 
 .. end installation
+
+
+.. toctree::
+	:hidden:
+
+	Home<self>
 
 
 .. toctree::

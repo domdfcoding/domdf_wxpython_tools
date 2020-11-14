@@ -25,6 +25,8 @@
 #
 
 # 3rd party
+from typing import Optional
+
 import matplotlib  # type: ignore
 from matplotlib import axes
 
@@ -38,7 +40,15 @@ class XPanAxes(matplotlib.axes.Axes):
 
 	name = "XPanAxes"
 
-	def drag_pan(self, button, key, x, y):
+	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+		"""
+
+		:param button: The pressed mouse button.
+		:param key: The pressed key, if any.
+		:param x: The mouse coordinates in display coords.
+		:param y: The mouse coordinates in display coords.
+		"""
+
 		# pretend key=='x'
 		matplotlib.axes.Axes.drag_pan(self, button, 'x', x, y)
 
@@ -50,7 +60,15 @@ class XPanAxes_NoZoom(matplotlib.axes.Axes):
 
 	name = "XPanAxes_NoZoom"
 
-	def drag_pan(self, button, key, x, y):
+	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+		"""
+
+		:param button: The pressed mouse button.
+		:param key: The pressed key, if any.
+		:param x: The mouse coordinates in display coords.
+		:param y: The mouse coordinates in display coords.
+		"""
+
 		# pretend key=='x'
 		if button != 1:
 			return
@@ -64,7 +82,15 @@ class NoZoom(matplotlib.axes.Axes):
 
 	name = "NoZoom"
 
-	def drag_pan(self, button, key, x, y):
+	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+		"""
+
+		:param button: The pressed mouse button.
+		:param key: The pressed key, if any.
+		:param x: The mouse coordinates in display coords.
+		:param y: The mouse coordinates in display coords.
+		"""
+
 		# pretend key=='x'
 		if button != 1:
 			return

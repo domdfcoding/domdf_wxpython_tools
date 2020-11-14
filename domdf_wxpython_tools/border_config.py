@@ -40,6 +40,13 @@ __all__ = ["border_config"]
 
 
 class border_config(wx.Dialog):
+	r"""
+
+	:param parent:
+	:param chromatogram_figure:
+	:param \*args:
+	:param \*\*kwds:
+	"""
 
 	def __init__(self, parent: wx.Window, chromatogram_figure, *args, **kwds):
 		self.chromatogram_figure = chromatogram_figure
