@@ -48,7 +48,7 @@ class list_dialog(wx.Dialog):
 	:param title: The title of the dialog
 	:param label: The label for the wx.ListBox
 	:param choices: A list of choices for the wx.ListBox
-	:param pos: The dialog position. The value ::wxDefaultPosition indicates a default position,
+	:param pos: The dialog position. The value ``wx.DefaultPosition`` indicates a default position,
 		chosen by either the windowing system or wxWidgets, depending on platform.
 	:param size: The dialog size. The value ::wxDefaultSize indicates a default size,
 		chosen by either the windowing system or wxWidgets, depending on platform.

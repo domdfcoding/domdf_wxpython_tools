@@ -69,7 +69,7 @@ class LogCtrl(stc.StyledTextCtrl):
 
 	:param parent: The parent window.
 	:param id: An identifier for the Log window. wx.ID_ANY is taken to mean a default.
-	:param pos: The Log window position. The value ::wxDefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param pos: The Log window position. The value ``wx.DefaultPosition`` indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
 	:param size: The Log window size. The value ::wxDefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
 	:param style: The window style. See wxPanel.
 	:param name: Window name.
