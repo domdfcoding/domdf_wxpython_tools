@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  FileBrowseCtrl.py
 #
@@ -53,6 +52,8 @@ from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
 from domdf_wxpython_tools.dialogs import file_dialog_wildcard
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
 
+__all__ = ["FileBrowseCtrl", "FileBrowseCtrlWithHistory", "DirBrowseCtrl"]
+
 # ----------------------------------------------------------------------
 
 # TODO: validate filetypes
@@ -69,6 +70,23 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	Based on and subclassed from wx.lib.filebrowsebutton.FileBrowseButton but
 	with a wx.SearchCtrl in place of the wx.TextCtrl to provide the cancel/clear
 	button and with an icon on the browse button.
+
+	:param parent:			Parent window. Should not be :py:obj:`None`.
+	:param id:				Control identifier. A value of -1 denotes a default value.
+	:param pos:				Control position
+	:param size:			Control size
+	:param style:			Window style. See wx.Window and ClearableTextCtrl for supported styles
+	:param labelText:		Text for label to left of text field
+	:param buttonText:		Text for button which launches the file dialog
+	:param toolTip:			Help text
+	:param dialogTitle:		Title used in file dialog
+	:param initialValue:	The initial value of the TextCtrl
+	:param changeCallback:	Optional callback called for all changes in value of the control
+	:param labelWidth:		Width of the label
+	:param name:
+	:param show_cancel_btn:	Whether to show or hide the cancel button.
+	:param dialog_title:	The title of the FileDialog
+	:param fileMask:		File mask (glob pattern, such as *.*) to use in file dialog. See wx.FileDialog for more information
 	"""
 
 	def __init__(
@@ -77,56 +95,22 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 			id: wx.WindowID = wx.ID_ANY,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
-			style: wx.Style = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
+			style: int = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
 			labelText: str = "File Entry:",
 			buttonText: str = "Browse",
 			toolTip: str = "Type a filename or click the browse button to choose a file",
 			# following are the values for a file dialog box
 			dialogTitle: str = "Choose a file",
-			initialValue: str = "",
+			initialValue: str = '',
 			# callback for when value changes (optional)
 			changeCallback=lambda x: x,
 			labelWidth=0,
-			name='fileBrowseButton',
+			name="fileBrowseButton",
 			show_cancel_btn: bool = True,
 			fileMask: str = "All files (*.*)|*.*",
 			dialog_title: str = "File Picker",
 			**kwargs
 			):
-		"""
-		:param parent:			Parent window. Should not be None.
-		:type parent:			wx.Window
-		:param id:				Control identifier. A value of -1 denotes a default value.
-		:type id:				wx.WindowID
-		:param pos:				Control position
-		:type pos:				wx.Point
-		:param size:			Control size
-		:type size:				wx.Size
-		:param style:			Window style. See wx.Window and ClearableTextCtrl for supported styles
-		:type style:			int
-		:param labelText:		Text for label to left of text field
-		:type labelText:		str
-		:param buttonText:		Text for button which launches the file dialog
-		:type buttonText:		str
-		:param toolTip:			Help text
-		:type toolTip:			str
-		:param dialogTitle:		Title used in file dialog
-		:type dialogTitle:		str
-		:param initialValue:	The initial value of the TextCtrl
-		:type initialValue:		str
-		:param changeCallback:	Optional callback called for all changes in value of the control
-		:type changeCallback:
-		:param labelWidth:		Width of the label
-		:type labelWidth:
-		:param name:
-		:type name:
-		:param show_cancel_btn:	Whether to show or hide the cancel button.
-		:type show_cancel_btn:	Bool
-		:param dialog_title:	The title of the FileDialog
-		:type dialog_title:		str
-		:param fileMask:		File mask (glob pattern, such as *.*) to use in file dialog. See wx.FileDialog for more information
-		:type fileMask:			str
-		"""
 
 		# Store Variables
 		self._parent = parent
@@ -160,7 +144,10 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	# self.SetSize(size)
 
 	def createTextControl(self):
-		"""Create the text control"""
+		"""
+		Create the text control.
+		"""
+
 		# textControl = wx.TextCtrl(self, -1)
 		# textControl = SearchCtrl(self, -1, style=wx.BORDER_NONE)# TODO: make this work, style=self.style)
 		textControl = ClearableTextCtrl(self, -1)
@@ -179,7 +166,10 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		return textControl
 
 	def createBrowseButton(self):
-		"""Create the browse-button control"""
+		"""
+		Create the browse-button control.
+		"""
+
 		# button = wx.Button(self, -1, self.buttonText)
 		button = wx.BitmapButton(
 				self, -1, bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16))
@@ -192,7 +182,9 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		return button
 
 	def OnBrowse(self, event=None):
-		"""Going to browse for file..."""
+		"""
+		Going to browse for file...
+		"""
 
 		if self.GetValue() == '':
 			default_path = pathlib.Path(self.initialValue).parent
@@ -222,9 +214,9 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		"""
 		Sets the new text control value.
 
-		It also marks the control as not-modified which means that IsModified() would return False immediately after the call to SetValue .
+		It also marks the control as not-modified which means that IsModified() would return :py:obj:`False` immediately after the call to SetValue .
 
-		The insertion point is set to the start of the control (i.e. position 0) by this function unless the control value doesn’t change at all, in which case the insertion point is left at its original position.
+		The insertion point is set to the start of the control (i.e. position 0) by this function unless the control value doesn't change at all, in which case the insertion point is left at its original position.
 
 		Note that, unlike most other functions changing the controls values, this function generates a wxEVT_TEXT event. To avoid this you can use ChangeValue instead.
 
@@ -238,11 +230,17 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		self.callCallback = save
 
 	def GetLabel(self):
-		""" Retrieve the label's current text """
+		"""
+		Retrieve the label's current text.
+		"""
+
 		return self.label.GetLabel()
 
 	def SetLabel(self, value):
-		""" Set the label's current text """
+		"""
+		Set the label's current text.
+		"""
+
 		rvalue = self.label.SetLabel(value)
 		self.Refresh(True)
 		return rvalue
@@ -252,10 +250,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Gets the length of the specified line, not including any trailing newline character(s).
 
 		:param lineNo: Line number (starting from zero).
-		:type lineNo: int
 
-		:return: The length of the line, or -1 if lineNo was invalid.
-		:rtype: int
+		:return: The length of the line, or ``-1`` if ``lineNo`` was invalid.
 		"""
 
 		return self.textControl.GetLineLength(lineNo)
@@ -265,10 +261,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Returns the contents of a given line in the text control, not including any trailing newline character(s).
 
 		:param lineNo: Line number (starting from zero).
-		:type lineNo: int
 
 		:return: The contents of the line.
-		:rtype: string
 		"""
 
 		return self.textControl.GetLineText(lineNo)
@@ -285,9 +279,9 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 	def IsModified(self) -> bool:
 		"""
-		Returns True if the text has been modified by user.
+		Returns :py:obj:`True` if the text has been modified by user.
 
-		Note that calling SetValue doesn’t make the control modified.
+		Note that calling SetValue doesn't make the control modified.
 
 		:return:
 		:rtype: bool
@@ -297,7 +291,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 	def IsMultiLine(self) -> bool:
 		"""
-		Returns True if this is a multi line edit control and False otherwise.
+		Returns :py:obj:`True` if this is a multi line edit control and :py:obj:`False` otherwise.
 
 		:return:
 		:rtype: bool
@@ -307,7 +301,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 	def IsSingleLine(self) -> bool:
 		"""
-		Returns True if this is a single line edit control and False otherwise.
+		Returns :py:obj:`True` if this is a single line edit control and :py:obj:`False` otherwise.
 
 		:return:
 		:rtype: bool
@@ -330,10 +324,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Marks the control as being modified by the user or not.
 
 		:param modified:
-		:type modified: bool
-
-		:return:
-		:rtype:
 		"""
 
 		return self.textControl.SetModified(modified)
@@ -350,7 +340,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	# 	Notice that currently this function is only implemented in wxMSW port
 	# 	and does nothing under the other platforms.
 	#
-	# 	:return: True if the auto-completion was enabled or False if the
+	# 	:return: :py:obj:`True` if the auto-completion was enabled or :py:obj:`False` if the
 	# 	operation failed, typically because auto-completion is not supported
 	# 	by the current platform.
 	# 	:rtype: bool
@@ -366,7 +356,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	# 	Notice that currently this function is only implemented in wxMSW port
 	# 	and does nothing under the other platforms.
 	#
-	# 	:return: True if the auto-completion was enabled or False if the
+	# 	:return: :py:obj:`True` if the auto-completion was enabled or :py:obj:`False` if the
 	# 	operation failed, typically because auto-completion is not supported
 	# 	by the current platform.
 	# 	:rtype: bool
@@ -381,44 +371,35 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Sets the new text control value.
 
 		It also marks the control as not-modified which means that IsModified()
-		would return False immediately after the call to ChangeValue .
+		would return :py:obj:`False` immediately after the call to ChangeValue .
 
 		The insertion point is set to the start of the control (i.e. position 0) by this function.
 
 		This functions does not generate the wxEVT_TEXT event but otherwise is identical to SetValue .
 
 		:param value: The new value to set. It may contain newline characters if the text control is multi-line.
-		:type value: str
-
-		:return:
-		:rtype:
 		"""
 
 		return self.textControl.ChangeValue(value)
 
 	def GetRange(self, from_: int, to_: int) -> str:
-		"""
+		r"""
 		Returns the string containing the text starting in the positions
-		from and up to to in the control.
+		from and up to in the control.
 
 		The positions must have been returned by another wx.TextCtrl method.
 
-		:param from_:
-		:type from_: int
-		:param to_:
-		:type to_: int
-
-		:return:
-		:rtype: str
+		:param from\_:
+		:param to\_:
 		"""
 
 		return self.textControl.GetRange(from_, to_)
 
 	def IsEditable(self) -> bool:
 		"""
-		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
+		Returns :py:obj:`True` if the controls contents may be edited by user (note that it always can be changed by the program).
 
-		In other words, this functions returns True if the control hasn’t been put in read-only mode by a previous call to SetEditable .
+		In other words, this functions returns :py:obj:`True` if the control hasn't been put in read-only mode by a previous call to SetEditable .
 
 		:rtype:	bool
 		"""
@@ -453,7 +434,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 			Return current history list
 
 		SetHistory( value=(), selectionIndex = None )
-			Set current history list, if selectionIndex is not None, select that index
+			Set current history list, if selectionIndex is not :py:obj:`None`, select that index
 
 		"""
 
@@ -466,12 +447,15 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		if callable(self.history):
 			self.historyCallBack = self.history
 			self.history = None
-		name = namedarguments.get('name', 'fileBrowseButtonWithHistory')
-		namedarguments['name'] = name
+		name = namedarguments.get("name", "fileBrowseButtonWithHistory")
+		namedarguments["name"] = name
 		FileBrowseCtrl.__init__(self, *arguments, **namedarguments)
 
 	def createTextControl(self):
-		"""Create the text control"""
+		"""
+		Create the text control.
+		"""
+
 		textControl = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN)
 		textControl.SetToolTip(self.toolTip)
 		textControl.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
@@ -572,18 +556,18 @@ class DirBrowseCtrl(FileBrowseCtrl):
 
 	def __init__(
 			self,
-			parent,
+			parent: wx.Window,
 			id=-1,
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-			labelText='Select a directory:',
-			buttonText='Browse',
-			toolTip='Type directory name or browse to select',
+			labelText="Select a directory:",
+			buttonText="Browse",
+			toolTip="Type directory name or browse to select",
 			dialogTitle='',
 			initialValue=None,
 			changeCallback=None,
-			name='DirBrowseCtrl'
+			name="DirBrowseCtrl"
 			):
 
 		if initialValue is None:

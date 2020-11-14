@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  logctrl.py
 """
@@ -30,6 +29,7 @@ Log Control, supporting text copying and zoom.
 # stdlib
 import keyword
 import os
+import time
 
 # 3rd party
 import wx  # type: ignore
@@ -38,6 +38,8 @@ from wx import stc
 # this package
 from domdf_wxpython_tools.keyboard import gen_keymap
 from domdf_wxpython_tools.utils import generate_faces
+
+__all__ = ["LogCtrl"]
 
 # IDs
 ID_WRAP = wx.NewIdRef()
@@ -63,6 +65,13 @@ ID_ZOOM_SET = wx.NewIdRef()
 class LogCtrl(stc.StyledTextCtrl):
 	"""
 	Log Window based on StyledTextCtrl.
+
+	:param parent: The parent window.
+	:param id: An identifier for the Log window. wx.ID_ANY is taken to mean a default.
+	:param pos: The Log window position. The value ::wxDefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param size: The Log window size. The value ::wxDefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
+	:param style: The window style. See wxPanel.
+	:param name: Window name.
 	"""
 
 	def __init__(
@@ -74,20 +83,6 @@ class LogCtrl(stc.StyledTextCtrl):
 			style: int = wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
 			name: str = "Log"
 			):
-		"""
-		:param parent: The parent window.
-		:type parent: wx.Window
-		:param id: An identifier for the Log window. wx.ID_ANY is taken to mean a default.
-		:type id: wx.WindowID, optional
-		:param pos: The Log window position. The value ::wxDefaultPosition indicates a default position, chosen by either the windowing system or wxWidgets, depending on platform.
-		:type pos: wx.Point, optional
-		:param size: The Log window size. The value ::wxDefaultSize indicates a default size, chosen by either the windowing system or wxWidgets, depending on platform.
-		:type size: wx.Size, optional
-		:param style: The window style. See wxPanel.
-		:type style: int, optional
-		:param name: Window name.
-		:type name: str, optional
-		"""
 
 		stc.StyledTextCtrl.__init__(self, parent, id, pos, size, style, name)
 
@@ -154,12 +149,12 @@ Right click for options
 
 		keycode = event.GetKeyCode()
 		keyname = self._keyMap.get(keycode, None)
-		modifiers = ""
+		modifiers = ''
 		for mod, ch in (
-			(event.ControlDown(), 'Ctrl+'),
-			(event.AltDown(), 'Alt+'),
-			(event.ShiftDown(), 'Shift+'),
-			(event.MetaDown(), 'Meta+'),
+			(event.ControlDown(), "Ctrl+"),
+			(event.AltDown(), "Alt+"),
+			(event.ShiftDown(), "Shift+"),
+			(event.MetaDown(), "Meta+"),
 			):
 			if mod:
 				modifiers += ch
@@ -214,10 +209,6 @@ Right click for options
 		Return text with line endings replaced by OS-specific endings.
 
 		:param text:
-		:type text:
-
-		:return:
-		:rtype:
 		"""
 
 		lines = text.split('\r\n')
@@ -234,10 +225,6 @@ Right click for options
 		Configure font size, typeface and color for lexer.
 
 		:param faces:
-		:type faces:
-
-		:return:
-		:rtype:
 		"""
 
 		# Default style
@@ -255,7 +242,7 @@ Right click for options
 			# Python styles
 			(stc.STC_P_DEFAULT, f"face:{faces}(mono)s"),
 			(stc.STC_P_COMMENTLINE, f"fore:#007F00,face:{faces}(mono)s"),
-			(stc.STC_P_NUMBER, ""),
+			(stc.STC_P_NUMBER, ''),
 			(stc.STC_P_STRING, f"fore:#7F007F,face:{faces}(mono)s"),
 			(stc.STC_P_CHARACTER, f"fore:#7F007F,face:{faces}(mono)s"),
 			# (stc.STC_P_WORD, "fore:#00007F,bold"),
@@ -263,8 +250,8 @@ Right click for options
 			(stc.STC_P_TRIPLEDOUBLE, "fore:#000033,back:#FFFFE8"),
 			# (stc.STC_P_CLASSNAME, "fore:#0000FF,bold"),
 			# (stc.STC_P_DEFNAME, "fore:#007F7F,bold"),
-			(stc.STC_P_OPERATOR, ""),
-			(stc.STC_P_IDENTIFIER, ""),
+			(stc.STC_P_OPERATOR, ''),
+			(stc.STC_P_IDENTIFIER, ''),
 			(stc.STC_P_COMMENTBLOCK, "fore:#7F7F7F"),
 			(stc.STC_P_STRINGEOL, f"fore:#000000,face:{faces}(mono)s,back:#E0C0E0,eolfilled"),
 			]
@@ -272,7 +259,7 @@ Right click for options
 		for style in styles:
 			self.StyleSetSpec(*style)
 
-	def getStyle(self, c='black'):
+	def getStyle(self, c: str = "black"):
 		"""
 		Returns a style for a given colour if one exists.  If no style
 		exists for the colour, make a new style.
@@ -285,7 +272,7 @@ Right click for options
 		if c and isinstance(c, str):
 			c = c.lower()
 		else:
-			c = 'black'
+			c = "black"
 
 		try:
 			style = self._styles.index(c)
@@ -344,7 +331,7 @@ Right click for options
 
 	def CanCopy(self) -> bool:
 		"""
-		Returns True if text is selected and can be copied, False otherwise.
+		Returns :py:obj:`True` if text is selected and can be copied, :py:obj:`False` otherwise.
 
 		:rtype: bool
 		"""
@@ -372,18 +359,17 @@ Right click for options
 			wx.TheClipboard.Flush()
 			wx.TheClipboard.Close()
 
-	def wrap(self, wrap=True) -> bool:
+	def wrap(self, wrap: bool = True) -> bool:
 		"""
 		Set whether text is word wrapped.
 
 		:param wrap: Whether the text should be word wrapped
-		:type wrap: bool
 		"""
 
 		try:
 			self.SetWrapMode(wrap)
 		except AttributeError:
-			return 'Wrapping is not available in this version.'
+			return "Wrapping is not available in this version."
 
 	#
 	# def OnWrap(self, event):
@@ -407,14 +393,14 @@ Right click for options
 		menu.Append(wx.ID_COPY, "&Copy")
 		menu.Append(wx.ID_SELECTALL, "Select &All \tCtrl+A")
 		menu.AppendSeparator()
-		menu.Append(wx.ID_FIND, '&Find \tCtrl+F', 'Search for text in the log')
-		menu.Append(ID_WRAP, '&Wrap Lines\tCtrl+W', 'Wrap lines at right edge', wx.ITEM_CHECK)
-		menu.Append(ID_SHOW_LINENUMBERS, '&Show Line Numbers\tCtrl+L', 'Show Line Numbers', wx.ITEM_CHECK)
+		menu.Append(wx.ID_FIND, "&Find \tCtrl+F", "Search for text in the log")
+		menu.Append(ID_WRAP, "&Wrap Lines\tCtrl+W", "Wrap lines at right edge", wx.ITEM_CHECK)
+		menu.Append(ID_SHOW_LINENUMBERS, "&Show Line Numbers\tCtrl+L", "Show Line Numbers", wx.ITEM_CHECK)
 		menu.AppendSeparator()
-		menu.Append(ID_ZOOM_IN, 'Zoom &In\tCtrl+]', 'Zoom In')
-		menu.Append(ID_ZOOM_OUT, 'Zoom &Out\tCtrl+[', 'Zoom Out')
-		menu.Append(ID_ZOOM_DEFAULT, '&Reset Zoom\tCtrl+=', 'Zoom Out')
-		menu.Append(ID_ZOOM_SET, 'Set &Zoom', 'Zoom Out')
+		menu.Append(ID_ZOOM_IN, "Zoom &In\tCtrl+]", "Zoom In")
+		menu.Append(ID_ZOOM_OUT, "Zoom &Out\tCtrl+[", "Zoom Out")
+		menu.Append(ID_ZOOM_DEFAULT, "&Reset Zoom\tCtrl+=", "Zoom Out")
+		menu.Append(ID_ZOOM_SET, "Set &Zoom", "Zoom Out")
 
 		menu.Check(ID_WRAP, self.GetWrapMode())
 		menu.Check(ID_SHOW_LINENUMBERS, self.lineNumbers)
@@ -450,8 +436,8 @@ Right click for options
 		matchcase = (findData.GetFlags() & wx.FR_MATCHCASE) != 0
 		end = self.GetLength()
 		# Changed to reflect the fact that StyledTextControl is in UTF-8 encoding
-		textstring = self.GetTextRange(0, end).encode('utf-8')
-		findstring = findData.GetFindString().encode('utf-8')
+		textstring = self.GetTextRange(0, end).encode("utf-8")
+		findstring = findData.GetFindString().encode("utf-8")
 		if not matchcase:
 			textstring = textstring.lower()
 			findstring = findstring.lower()
@@ -474,7 +460,7 @@ Right click for options
 		# was it still not found?
 		if loc == -1:
 			dlg = wx.MessageDialog(
-					self, 'Unable to find the search text.', 'Not found!', wx.OK | wx.ICON_INFORMATION
+					self, "Unable to find the search text.", "Not found!", wx.OK | wx.ICON_INFORMATION,
 					)
 			dlg.ShowModal()
 			dlg.Destroy()
@@ -507,7 +493,7 @@ Right click for options
 		return True
 
 	def bufferSave(self):
-		import time
+
 		appname = wx.GetApp().GetAppName()
 		default = appname + '-' + time.strftime("%Y%m%d-%H%M.py")
 		filename = wx.FileSelector(
@@ -525,11 +511,11 @@ Right click for options
 		text = self.GetText()
 
 		try:
-			f = open(filename, "w")
+			f = open(filename, 'w')
 			f.write(text)
 			f.close()
 		except:  # TODO: Find error type
-			d = wx.MessageDialog(self, u'Error saving session', u'Error', wx.OK | wx.ICON_ERROR)
+			d = wx.MessageDialog(self, "Error saving session", "Error", wx.OK | wx.ICON_ERROR)
 
 			d.ShowModal()
 			d.Destroy()
@@ -541,7 +527,6 @@ Right click for options
 		Replace line endings with OS-specific endings.
 
 		:param text:
-		:type text:
 		"""
 
 		text = self.fixLineEndings(text)
@@ -554,13 +539,11 @@ Right click for options
 		should be suitable for feeding directly to wx.NamedColour.
 
 		:param text: ... Should be a unicode string or contain only ascii data.
-		:type text:
 		:param c:
-		:type c:
 		"""
 
 		style = self.getStyle(c)
-		lenText = len(text.encode('utf8'))
+		lenText = len(text.encode("utf8"))
 		end = self.GetLength()
 		self.AppendText(text)
 		self.StartStyling(end, 31)
@@ -572,7 +555,6 @@ Right click for options
 		Add the stderr text to the end of the control using colour "red"
 
 		:param text: ... Should be a unicode string or contain only ascii data.
-		:type text:
 		"""
 
 		self.Append(text, "red")

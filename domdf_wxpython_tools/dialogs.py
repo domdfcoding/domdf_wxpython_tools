@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #  dialogs.py
 """
@@ -26,14 +25,22 @@ Several dialog classes and helper functions for file/folder dialogs
 
 # stdlib
 import os
-from typing import List, Sequence, Optional
+from typing import List, Optional, Sequence
 
 # 3rd party
 import wx  # type: ignore
 
 # this package
-from domdf_wxpython_tools.list_dialog import list_dialog
 from domdf_wxpython_tools.validators import CharValidator
+
+__all__ = [
+		"file_dialog_wildcard",
+		"file_dialog_multiple",
+		"file_dialog",
+		"FloatEntryDialog",
+		"IntEntryDialog",
+		"Wildcards"
+		]
 
 # style enumeration
 style_uppercase = 4
@@ -50,24 +57,21 @@ common_filetypes = {
 		}
 
 
-def file_dialog_wildcard(parent,
-							title,
-							wildcard,
-							style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
-							**kwargs) -> Optional[List[str]]:
+def file_dialog_wildcard(
+		parent: wx.Window,
+		title: str,
+		wildcard: str,
+		style: int = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+		**kwargs,
+		) -> Optional[List[str]]:
 	"""
 	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
 
-	:param parent:
-	:type parent:
+	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param wildcard:
-	:type wildcard:
 	:param title:
-	:type title:
 	:param style:
-	:type style:
 	:param kwargs:
-	:type kwargs:
 
 	:return: List of filenames for the selected files. If wx.FD_MULTIPLE is not in the style, the list will contain only one element
 	:rtype: list of str
@@ -83,12 +87,12 @@ def file_dialog_wildcard(parent,
 		except:
 			pathnames = [fileDialog.GetPath()]
 
-		filter_extension_list = wildcard.split("|")[1::2]
-		valid_extensions = [os.path.splitext(ext)[1] for ext in ";".join(filter_extension_list).split(";")]
+		filter_extension_list = wildcard.split('|')[1::2]
+		valid_extensions = [os.path.splitext(ext)[1] for ext in ';'.join(filter_extension_list).split(';')]
 		selected_filter_index = fileDialog.GetFilterIndex()
 
 		selected_filter_extensions = filter_extension_list[selected_filter_index]
-		selected_filter_extensions = selected_filter_extensions.replace("*.", ".").split(";")
+		selected_filter_extensions = selected_filter_extensions.replace("*.", '.').split(';')
 
 		for index, pathname in enumerate(pathnames):
 			if selected_filter_extensions[0] != ".*":
@@ -99,31 +103,26 @@ def file_dialog_wildcard(parent,
 
 
 def file_dialog_multiple(
-		parent,
-		extension,
-		title,
-		filetypestring,
+		parent: wx.Window,
+		extension: str,
+		title: str,
+		filetypestring: str,
 		style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 		**kwargs
 		) -> List[str]:
-	"""
-	Create a wx.FileDialog with for the extension and filetypestring given, and return a list of the files selected.
+	r"""
+	Create a wx.FileDialog with for the extension and filetypestring given,
+	and return a list of the files selected.
 
-	:param parent:
-	:type parent:
+	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param extension:
-	:type extension:
 	:param title:
-	:type title:
 	:param filetypestring:
-	:type filetypestring:
 	:param style:
-	:type style:
-	:param kwargs:
-	:type kwargs:
+	:param \*\*kwargs:
 
-	:return: List of filenames for the selected files. If wx.FD_MULTIPLE is not in the style, the list will contain only one element
-	:rtype: list of str
+	:return: List of filenames for the selected files.
+		If ``wx.FD_MULTIPLE`` is not in the style, the list will contain only one element.
 	"""
 
 	with wx.FileDialog(
@@ -143,7 +142,7 @@ def file_dialog_multiple(
 			pathnames = [fileDialog.GetPath()]
 
 		for index, pathname in enumerate(pathnames):
-			if extension != "*":
+			if extension != '*':
 				if os.path.splitext(pathname)[-1].lower() != f".{extension}":
 					pathnames[index] = pathname + f".{extension}"
 		# else:
@@ -153,24 +152,19 @@ def file_dialog_multiple(
 
 
 def file_dialog(*args, **kwargs) -> str:
-	"""
-	Create a wx.FileDialog with for the extension and filetypestring given, and return the filename selected.
+	r"""
+	Create a wx.FileDialog with for the extension and filetypestring given,
+	and return the filename selected.
 
 	:param parent:
-	:type parent:
 	:param extension:
-	:type extension:
 	:param title:
-	:type title:
 	:param filetypestring:
-	:type filetypestring:
 	:param style:
-	:type style:
-	:param kwargs:
-	:type kwargs:
+	:param \*\*kwargs:
 
-	:return: The filename selected in the dialog. If wx.FD_MULTIPLE is in the style, this will be the first filename selected.
-	:rtype: str
+	:return: The filename selected in the dialog.
+		If ``wx.FD_MULTIPLE`` is in the style, this will be the first filename selected.
 	"""
 
 	paths = file_dialog_multiple(*args, **kwargs)
@@ -240,13 +234,9 @@ class Wildcards:
 		Add a filetype to the wildcards
 
 		:param description: Description of the filetype
-		:type description: str
 		:param extensions: A list of valid file extensions for the filetype
-		:type extensions: list of str
 		:param hint_format: How the hints should be formatted.
-		:type hint_format: int
 		:param value_format: How the values should be formatted.
-		:type value_format:	int
 
 		Valid values for `hint_format` and `value_format` are `style_uppercase`,
 		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
@@ -292,7 +282,7 @@ class Wildcards:
 		:rtype: str
 		"""
 
-		return "|".join(self._wildcards)
+		return '|'.join(self._wildcards)
 
 	def add_common_filetype(
 			self,
@@ -304,11 +294,8 @@ class Wildcards:
 		Add a common filetype.
 
 		:param filetype: The name of the filetype, Possible values are in common_filetypes
-		:type filetype: str
 		:param hint_format: How the hints should be formatted.
-		:type hint_format: int
 		:param value_format: How the values should be formatted.
-		:type value_format:	int
 
 		Valid values for `hint_format` and `value_format` are `style_uppercase`,
 		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
@@ -321,7 +308,6 @@ class Wildcards:
 		Add a wildcard for all image filetypes.
 
 		:param value_format: How the values should be formatted.
-		:type value_format:	int
 
 		Valid values for `value_format` are `style_uppercase`,
 		`style_lowercase` and `style_hidden`, which can be combined using the `|` operator.
@@ -340,8 +326,7 @@ class Wildcards:
 		"""
 		Add a wildcard for 'All Files'.
 
-		:param hint_format: How the hints should be formatted. Valid values are None and `style_hidden`.
-		:type hint_format: int
+		:param hint_format: How the hints should be formatted. Valid values are :py:obj:`None` and `style_hidden`.
 		"""
 
 		if hint_format & style_hidden:
