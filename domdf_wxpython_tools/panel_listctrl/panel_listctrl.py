@@ -29,7 +29,7 @@ can be used as the basis for custom list items
 
 # stdlib
 import pathlib
-from typing import Dict
+from typing import Dict, List
 
 # 3rd party
 import wx  # type: ignore
@@ -62,7 +62,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		wx.ScrolledWindow.__init__(self, parent, id, pos=pos, size=size, style=style | wx.TAB_TRAVERSAL, name=name)
 
-		self._items = []
+		self._items: List[PanelListItem] = []
 		self.parent = parent
 		self.left_padding = left_padding
 
@@ -151,7 +151,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def AcceptsFocusFromKeyboard(self):
 		return False
 
-	def Append(self, panel_list_item):
+	def Append(self, panel_list_item: "PanelListItem"):
 		"""
 		Append a 'PanelListItem' object, or an instance of a custom subclass, to the control.
 		"""

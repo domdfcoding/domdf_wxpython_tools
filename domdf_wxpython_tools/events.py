@@ -104,15 +104,13 @@ class SimpleEvent:
 
 		return f'SimpleEvent(name={self.name})'
 
-	def __dict__(self) -> OrderedDict:
+	@property
+	def __dict__(self):
 		"""
 		Return a new OrderedDict which maps field names to their values
-
-		:return:
-		:rtype: OrderedDict
 		"""
 
-		return OrderedDict(zip(self._fields, self))
+		return OrderedDict(zip(self._fields, self))  # type: ignore
 
 	def set_receiver(self, receiver):
 		"""

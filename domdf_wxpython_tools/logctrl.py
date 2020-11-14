@@ -30,6 +30,7 @@ Log Control, supporting text copying and zoom.
 import keyword
 import os
 import time
+from typing import List, Optional
 
 # 3rd party
 import wx  # type: ignore
@@ -74,6 +75,8 @@ class LogCtrl(stc.StyledTextCtrl):
 	:param name: Window name.
 	"""
 
+	findDlg: Optional[wx.FindReplaceDialog]
+
 	def __init__(
 			self,
 			parent: wx.Window,
@@ -90,7 +93,7 @@ class LogCtrl(stc.StyledTextCtrl):
 		self._keyMap = gen_keymap()
 		self._config()
 		self.default_zoom = self.GetZoom()
-		self._styles = [None] * 32
+		self._styles: List[Optional[str]] = [None] * 32
 		self._free = 1
 
 		# dispatcher.connect(receiver=self._fontsizer, signal='FontIncrease')
@@ -359,7 +362,7 @@ Right click for options
 			wx.TheClipboard.Flush()
 			wx.TheClipboard.Close()
 
-	def wrap(self, wrap: bool = True) -> bool:
+	def wrap(self, wrap: bool = True):
 		"""
 		Set whether text is word wrapped.
 
@@ -460,7 +463,10 @@ Right click for options
 		# was it still not found?
 		if loc == -1:
 			dlg = wx.MessageDialog(
-					self, "Unable to find the search text.", "Not found!", wx.OK | wx.ICON_INFORMATION,
+					self,
+					"Unable to find the search text.",
+					"Not found!",
+					wx.OK | wx.ICON_INFORMATION,
 					)
 			dlg.ShowModal()
 			dlg.Destroy()
@@ -483,8 +489,9 @@ Right click for options
 		self.findDlg.Show()
 
 	def OnFindClose(self, _):
-		self.findDlg.Destroy()
-		self.findDlg = None
+		if self.findDlg is not None:
+			self.findDlg.Destroy()
+			self.findDlg = None
 
 	# Save Methods
 

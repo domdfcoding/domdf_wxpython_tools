@@ -29,6 +29,7 @@ import pathlib
 
 # 3rd party
 import wx  # type: ignore
+from domdf_python_tools.typing import PathLike
 
 # this package
 from domdf_wxpython_tools.dialogs import file_dialog
@@ -166,7 +167,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		return self.dir_value.SetValue(self.initial_value)
 
-	def SetHeight(self, height: float):
+	def SetHeight(self, height: int):
 		"""
 		Set the height of the widgets
 
@@ -203,7 +204,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		"""
 		return self.dir_value.SetInsertionPointEnd()
 
-	def SetTextWidth(self, width: float):
+	def SetTextWidth(self, width: int):
 		"""
 		Sets the width of the TextCtrl.
 
@@ -260,6 +261,8 @@ class file_picker(dir_picker):
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
 
 	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
+		default_path: PathLike
+
 		if self.get_value() == '':
 			default_path = str(pathlib.Path(self.initial_value).parent)
 		else:
@@ -340,6 +343,7 @@ class file_folder_picker(dir_picker):
 	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
 
 		if self.files_mode:
+			default_path: PathLike
 
 			if self.get_value() == '':
 				default_path = str(pathlib.Path(self.initial_value).parent)

@@ -42,7 +42,7 @@ from typing import List, Sequence, Union
 # 3rd party
 import wx  # type: ignore
 import wx.adv  # type: ignore
-from mathematical.utils import rounders  # type: ignore  # TODO
+from mathematical.utils import rounders
 
 # this package
 from domdf_wxpython_tools.validators import FloatValidator

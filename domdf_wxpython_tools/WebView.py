@@ -43,7 +43,7 @@ from domdf_python_tools.typing import PathLike
 
 try:
 	# stdlib
-	import winreg  # type: ignore
+	import winreg
 except ImportError:
 	pass
 
@@ -120,18 +120,14 @@ def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: Pat
 
 	if level != wxWEBVIEWIE_EMU_DEFAULT:
 
-		winreg.SetValueEx(key, program_name, 0, 4, level)
-		winreg.SetValueEx(key, str(program_name.name), 0, 4, level)
+		for name in (program_name, program_name.name):
+			winreg.SetValueEx(key, str(name), 0, 4, level)  # type: ignore
 
 	else:
-		try:
-			winreg.DeleteValue(key, program_name)
-		except OSError:
-			pass
-
-		try:
-			winreg.DeleteValue(key, str(program_name.name))
-		except OSError:
-			pass
+		for name in (program_name, program_name.name):
+			try:
+				winreg.DeleteValue(key, str(name))
+			except OSError:
+				pass
 
 	return True

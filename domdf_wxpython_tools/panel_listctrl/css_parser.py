@@ -27,7 +27,7 @@ from typing import Dict
 
 # 3rd party
 import tinycss  # type: ignore
-import webcolors  # type: ignore
+import webcolors
 import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
 
@@ -109,8 +109,8 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 
 				elif value.startswith("rgb("):
 					# RGB value, convert to hex
-					rgb_triplet = (int(x) for x in value.lstrip("rgb(").rstrip(')').split(','))
-					value = webcolors.rgb_to_hex(rgb_triplet)
+					rgb_triplet = tuple(int(x) for x in value.lstrip("rgb(").rstrip(')').split(','))
+					value = webcolors.rgb_to_hex(rgb_triplet)  # type: ignore
 
 				else:
 					# Named colour, convert to hex

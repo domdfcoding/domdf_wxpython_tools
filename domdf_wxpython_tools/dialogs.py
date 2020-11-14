@@ -109,7 +109,7 @@ def file_dialog_multiple(
 		filetypestring: str,
 		style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 		**kwargs
-		) -> List[str]:
+		) -> Optional[List[str]]:
 	r"""
 	Create a wx.FileDialog with for the extension and filetypestring given,
 	and return a list of the files selected.
@@ -151,7 +151,7 @@ def file_dialog_multiple(
 		return pathnames
 
 
-def file_dialog(*args, **kwargs) -> str:
+def file_dialog(*args, **kwargs) -> Optional[str]:
 	r"""
 	Create a wx.FileDialog with for the extension and filetypestring given,
 	and return the filename selected.
@@ -171,6 +171,8 @@ def file_dialog(*args, **kwargs) -> str:
 
 	if paths is not None:
 		return paths[0]
+
+	return None
 
 
 class FloatEntryDialog(wx.TextEntryDialog):

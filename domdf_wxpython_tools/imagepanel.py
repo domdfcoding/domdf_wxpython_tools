@@ -33,7 +33,7 @@ import PIL  # type: ignore
 import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
 from matplotlib.figure import Figure  # type: ignore
-from PIL import Image  # type: ignore
+from PIL import Image
 
 # this package
 from domdf_wxpython_tools.chartpanel import ChartPanelBase

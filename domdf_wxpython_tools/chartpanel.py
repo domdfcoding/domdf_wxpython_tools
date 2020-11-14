@@ -41,12 +41,12 @@ from typing import Optional
 import matplotlib  # type: ignore
 import numpy  # type: ignore
 import wx.html2  # type: ignore
-from matplotlib.axes import Axes
+from matplotlib.axes import Axes  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
-from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar  # type: ignore
+from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
 
 # this package
-from matplotlib.figure import Figure
+from matplotlib.figure import Figure  # type: ignore
 
 from domdf_wxpython_tools.border_config import border_config
 from domdf_wxpython_tools.projections import XPanAxes

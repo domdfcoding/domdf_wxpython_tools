@@ -32,7 +32,7 @@ import time
 from threading import Event, Thread
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from domdf_wxpython_tools.events import SimpleEvent
@@ -67,7 +67,7 @@ class Timer(Thread):
 		"""
 
 		wait_time = 0 + self._interval
-		while not self._stopevent.isSet():
+		while not self._stopevent.isSet():  # type: ignore
 			time.sleep(0.1)
 			wait_time -= 0.1
 			if wait_time < 0.0:

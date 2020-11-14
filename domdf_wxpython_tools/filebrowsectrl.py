@@ -45,6 +45,7 @@ import pathlib
 
 # 3rd party
 import wx  # type: ignore
+from domdf_python_tools.typing import PathLike
 from wx.lib.filebrowsebutton import FileBrowseButton  # type: ignore
 
 # this package
@@ -185,6 +186,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		"""
 		Going to browse for file...
 		"""
+
+		default_path: PathLike
 
 		if self.GetValue() == '':
 			default_path = pathlib.Path(self.initialValue).parent
@@ -591,6 +594,8 @@ class DirBrowseCtrl(FileBrowseCtrl):
 				)
 
 	def OnBrowse(self, ev=None):
+
+		default_path: PathLike
 
 		if self.GetValue() == '':
 			default_path = pathlib.Path(self.initialValue)
