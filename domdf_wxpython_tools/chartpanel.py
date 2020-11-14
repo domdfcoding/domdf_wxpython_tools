@@ -34,25 +34,22 @@ A canvas for displaying a chart within a wxPython window
 
 # stdlib
 import types
-
-# 3rd party
 from typing import Optional
 
+# 3rd party
 import matplotlib  # type: ignore
 import numpy  # type: ignore
 import wx.html2  # type: ignore
 from matplotlib.axes import Axes  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
-
-# this package
 from matplotlib.figure import Figure  # type: ignore
 
+# this package
 from domdf_wxpython_tools.border_config import border_config
 from domdf_wxpython_tools.projections import XPanAxes
 
 __all__ = ["ChartPanelBase"]
-
 
 # Constrain zoom to X axis
 matplotlib.projections.register_projection(XPanAxes)
@@ -129,7 +126,7 @@ class ChartPanelBase(wx.Panel):
 				# print("x-val: {}, y-val:{}
 				self.size_change()
 
-		self.ax.callbacks.connect('xlim_changed', update_ylim)
+		self.ax.callbacks.connect("xlim_changed", update_ylim)
 		self.fig.canvas.callbacks.connect("button_release_event", update_ylim)
 
 	def _do_layout(self) -> None:
@@ -184,7 +181,7 @@ class ChartPanelBase(wx.Panel):
 		if event:
 			event.Skip()
 
-	def constrain_zoom(self, key: str = "x") -> None:
+	def constrain_zoom(self, key: str = 'x') -> None:
 		"""
 		Constrain zoom to the x axis only.
 
@@ -252,10 +249,10 @@ class ChartPanelBase(wx.Panel):
 				cur_yrange = (cur_ylim[1] - cur_ylim[0]) * .5
 				xdata = event.xdata  # get event x location
 				ydata = event.ydata  # get event y location
-				if event.button == 'up':
+				if event.button == "up":
 					# deal with zoom in
 					scale_factor = 1 / base_scale
-				elif event.button == 'down':
+				elif event.button == "down":
 					# deal with zoom out
 					scale_factor = base_scale
 				else:
@@ -269,7 +266,7 @@ class ChartPanelBase(wx.Panel):
 
 			fig = ax.get_figure()  # get the figure of interest
 			# attach the call back
-			fig.canvas.mpl_connect('scroll_event', zoom_fun)
+			fig.canvas.mpl_connect("scroll_event", zoom_fun)
 
 			# return the function
 			return zoom_fun
