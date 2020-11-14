@@ -260,7 +260,7 @@ class ClearButton(wx.Control):
 		dc.DrawBitmap(self.m_bmp, 0, 0, True)
 
 
-class ClearableTextCtrl(wx.Panel):
+class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	"""
 	TextCtrl with a button to clear its contents.
 
@@ -296,7 +296,7 @@ class ClearableTextCtrl(wx.Panel):
 			# wx.BORDER_NONE doesn't work unless its a multiline textctrl
 			textctrl_style |= wx.TE_MULTILINE | wx.TE_DONTWRAP
 
-		self.m_text = CTCWidget(self, value, textctrl_style, validator=validator)
+		self.textctrl = self.m_text = CTCWidget(self, value, textctrl_style, validator=validator)
 		self.m_clearBitmap = self.default_clear_bitmap
 		self.m_clearButton = ClearButton(self, wx.EVT_SEARCHCTRL_CANCEL_BTN, self.m_clearBitmap)
 		self.m_clearButton.SetSize((16, 16))
@@ -368,21 +368,6 @@ class ClearableTextCtrl(wx.Panel):
 
 		return True
 
-	def AppendText(self, text: str):
-		"""
-		Appends the text to the end of the text control.
-
-		.. note::
-
-			After the text is appended, the insertion point will be at the end of the text control.
-			If this behaviour is not desired, the programmer should use GetInsertionPoint and SetInsertionPoint.
-
-		:param text: Text to write to the text control.
-		:type text:	str
-		"""
-
-		self.m_text.AppendText(text)
-
 	def AutoComplete(self, completer: wx.TextCompleter) -> bool:
 		"""
 		Enable auto-completion using the provided completer object.
@@ -430,48 +415,6 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.AutoCompleteFileNames()
 
-	def CanCopy(self) -> bool:
-		"""
-		:return: True if the selection can be copied to the clipboard.
-		:rtype:	bool
-		"""
-
-		return self.m_text.CanCopy()
-
-	def CanCut(self) -> bool:
-		"""
-		:return: True if the selection can be cut to the clipboard.
-		:rtype:	bool
-		"""
-
-		return self.m_text.CanCut()
-
-	def CanPaste(self) -> bool:
-		"""
-		:return: True if the contents of the clipboard can be pasted into the text control.
-		:rtype:	bool
-
-		On some platforms (Motif, GTK) this is an approximation and returns True if the control is editable, False otherwise.
-		"""
-
-		return self.m_text.CanPaste()
-
-	def CanRedo(self) -> bool:
-		"""
-		:return: True if there is a redo facility available and the last operation can be redone.
-		:rtype: bool
-		"""
-
-		return self.m_text.CanRedo()
-
-	def CanUndo(self) -> bool:
-		"""
-		:return: True if there is an undo facility available and the last operation can be undone.
-		:rtype: bool
-		"""
-
-		return self.m_text.CanUndo()
-
 	def ChangeValue(self, value: str):
 		"""
 		Sets the new text control value.
@@ -488,16 +431,6 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 
 		self.m_text.ChangeValue(value)
-
-	def Clear(self) -> None:
-		"""
-		Clears the text in the control.
-
-		Note that this function will generate a :py:obj:`wx.wxEVT_TEXT` event,
-		i.e. its effect is identical to calling :meth:`SetValue('') <.ClearableTextCtrl.SetValue>`.
-		"""
-
-		self.m_text.Clear()
 
 	def DiscardEdits(self) -> None:
 		"""
@@ -629,30 +562,6 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetRange(from_, to_)
 
-	def GetSelection(self) -> Tuple:
-		"""
-		Gets the current selection span.
-
-		If the returned values are equal, there was no selection. Please note that the indices returned may be used with the other wx.TextCtrl methods but don’t necessarily represent the correct indices into the string returned by GetValue for multiline controls under Windows (at least,) you should use GetStringSelection to get the selected text.
-
-		:return:
-		:rtype: tuple
-		"""
-
-		return self.m_text.GetSelection()
-
-	def GetStringSelection(self) -> str:
-		"""
-		Gets the text currently selected in the control.
-
-		If there is no selection, the returned string is empty.
-
-		:return:
-		:rtype: str
-		"""
-
-		return self.m_text.GetStringSelection()
-
 	def GetStyle(self, position: int, style: wx.TextAttr) -> bool:
 		"""
 		Returns the style at this position in the text control.
@@ -667,19 +576,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.GetStyle(position, style)
 
-	def GetValue(self) -> str:
-		"""
-		Gets the contents of the control.
-
-		Notice that for a multiline text control, the lines will be separated by (Unix-style) \n characters, even under Windows where they are separated by a \r\n sequence in the native control.
-
-		:return:
-		:rtype:	str
-		"""
-
-		return self.m_text.GetValue()
-
-	def HitTestPos(self, pt) -> wx.TextCtrlHitTestResult:
+	def HitTestPos(self, pt) -> None:
 		"""
 		Finds the position of the character at the specified point.
 
@@ -724,30 +621,6 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 
 		return self.m_clearButton and self.m_clearButton.IsShown()
-
-	def IsEditable(self) -> bool:
-		"""
-		Returns True if the controls contents may be edited by user (note that it always can be changed by the program).
-
-		In other words, this functions returns True if the control hasn't been put in read-only mode by a previous call to SetEditable .
-
-		:return:
-		:rtype:	bool
-		"""
-
-		return self.m_text.IsEditable()
-
-	def IsEmpty(self) -> bool:
-		"""
-		Returns True if the control is currently empty.
-
-		This is the same as GetValue.empty() but can be much more efficient for the multiline controls containing big amounts of text.
-
-		:return:
-		:rtype:	bool
-		"""
-
-		return self.m_text.IsEmpty()
 
 	def IsModified(self) -> bool:
 		"""
@@ -851,10 +724,7 @@ class ClearableTextCtrl(wx.Panel):
 		# pass
 		self.LayoutControls()
 
-	def Paste(self):
-		self.m_text.Paste()
-
-	def PositionToXY(self, pos: int) -> Tuple:
+	def PositionToXY(self, pos: int) -> Tuple[int, int]:
 		"""
 		Converts given position to a zero-based column, line number pair.
 
@@ -863,30 +733,7 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.PositionToXY(pos)
 
-	def Redo(self):
-		"""
-		If there is a redo facility and the last operation can be redone, redoes the last operation.
-
-		Does nothing if there is no redo facility.
-		"""
-
-		self.m_text.Redo()
-
-	def Remove(self, from_: int, to_: int):
-		"""
-		Removes the text starting at the first given position up to (but not including) the character at the last position.
-
-		This function puts the current insertion point position at to as a side effect.
-
-		:param from_: The first position
-		:type from_:	int
-		:param to_: The last position
-		:type to_:	int
-		"""
-
-		self.m_text.Remove(from_, to_)
-
-	# def RenderClearBitmap(self, x, y):
+	# def RenderClearBitmap(self, x: int, y: int):
 	# 	"""
 	#
 	# 	:param x:
@@ -987,22 +834,20 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.Replace(from_, to_, value)
 
-	@staticmethod
-	def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size):
-		"""
-
-		:param bmp:
-		:type bmp: wx.Bitmap
-		:param sizeNeeded:
-		:type sizeNeeded: wx.Size
-		"""
-
-		if not sizeNeeded.IsFullySpecified():
-			raise ValueError("New size must be given")
-
-		img = bmp.ConvertToImage()
-		img.Rescale(sizeNeeded.x, sizeNeeded.y)
-		bmp = wx.Bitmap(img)
+	# @staticmethod
+	# def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size):
+	# 	"""
+	#
+	# 	:param bmp:
+	# 	:param sizeNeeded:
+	# 	"""
+	#
+	# 	if not sizeNeeded.IsFullySpecified():
+	# 		raise ValueError("New size must be given")
+	#
+	# 	img = bmp.ConvertToImage()
+	# 	img.Rescale(sizeNeeded.x, sizeNeeded.y)
+	# 	bmp = wx.Bitmap(img)
 
 	#
 	# if wx.Platform in {"__WXMSW__", "__WXOSX__"}:
@@ -1016,17 +861,7 @@ class ClearableTextCtrl(wx.Panel):
 	#
 	# bmp = newBmp
 
-	def SelectAll(self):
-		"""Selects all text in the control."""
-
-		self.m_text.SelectAll()
-
-	def SelectNone(self):
-		"""Deselects selected text in the control."""
-
-		self.m_text.SelectNone()
-
-	def SetClearBitmap(self, bitmap) -> wx.Bitmap:
+	def SetClearBitmap(self, bitmap: wx.Bitmap):
 		"""
 		Sets the bitmap for the clear button.
 
@@ -1123,22 +958,6 @@ class ClearableTextCtrl(wx.Panel):
 
 		self.m_text.SetModified(modified)
 
-	def SetSelection(self, from_: int, to_: int):
-		"""
-		Selects the text starting at the first position up to (but not including) the character at the last position.
-
-		If both parameters are equal to -1 all text in the control is selected.
-
-		Notice that the insertion point will be moved to from by this function.
-
-		:param from_: The first position
-		:type from_: int
-		:param to_: The last position
-		:type to_: int
-		"""
-
-		self.m_text.SetSelection(from_, to_)
-
 	def SetStyle(self, start: int, end: int, style: wx.TextAttr) -> bool:
 		"""
 		Changes the style of the given range.
@@ -1155,22 +974,6 @@ class ClearableTextCtrl(wx.Panel):
 
 		return self.m_text.SetStyle(start, end, style)
 
-	def SetValue(self, value: str):
-		"""
-		Sets the new text control value.
-
-		It also marks the control as not-modified which means that IsModified() would return False immediately after the call to SetValue .
-
-		The insertion point is set to the start of the control (i.e. position 0) by this function unless the control value doesn’t change at all, in which case the insertion point is left at its original position.
-
-		Note that, unlike most other functions changing the controls values, this function generates a wxEVT_TEXT event. To avoid this you can use ChangeValue instead.
-
-		:param value: The new value to set. It may contain newline characters if the text control is multi-line.
-		:type value: str
-		"""
-
-		self.m_text.SetValue(value)
-
 	def ShowPosition(self, pos: int):
 		"""
 		Makes the line containing the given position visible.
@@ -1185,25 +988,6 @@ class ClearableTextCtrl(wx.Panel):
 		"""
 
 		return True
-
-	def Undo(self):
-		"""
-		If there is an undo facility and the last operation can be undone, undoes the last operation.
-
-		Does nothing if there is no undo facility.
-		"""
-
-		self.m_text.Undo()
-
-	def WriteText(self, text: str):
-		"""
-		Writes the text into the text control at the current insertion position.
-
-		:param text: Text to write to the text control
-		:type text: str
-		"""
-
-		self.m_text.WriteText(text)
 
 	def XYToPosition(self, x: int, y: int) -> int:
 		"""
