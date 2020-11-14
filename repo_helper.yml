@@ -45,3 +45,6 @@ classifiers:
 
 intersphinx_mapping:
  - "'wxpython': ('https://docs.wxpython.org/', None)"
+
+manifest_additional:
+  - "include domdf_wxpython_tools/panel_listctrl/Default.css"

@@ -2,5 +2,6 @@ include __pkginfo__.py
 include LICENSE
 include requirements.txt
 prune **/__pycache__
+include domdf_wxpython_tools/panel_listctrl/Default.css
 recursive-include domdf_wxpython_tools *.pyi
 include domdf_wxpython_tools/py.typed
