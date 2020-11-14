@@ -26,7 +26,7 @@
 from typing import Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore  # nodep
 
 __all__ = ["TextCtrlWrapper"]
 

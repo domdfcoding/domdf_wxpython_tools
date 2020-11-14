@@ -28,7 +28,7 @@ from typing import Dict
 # 3rd party
 import tinycss  # type: ignore
 import webcolors
-import wx  # type: ignore
+import wx  # type: ignore  # nodep
 from domdf_python_tools.typing import PathLike
 
 # this package

@@ -28,7 +28,7 @@ import sys
 from typing import Any, Dict
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore  # nodep
 
 __all__ = ["toggle", "coming_soon", "collapse_label", "generate_faces"]
 

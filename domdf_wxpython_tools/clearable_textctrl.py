@@ -32,7 +32,7 @@ A TextCtrl with a button to clear its contents
 from typing import List, Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore  # nodep
 
 # this package
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
@@ -819,20 +819,6 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	# 	self.RescaleBitmap(bitmap, wx.Size(x, y))
 	#
 	# 	return bitmap
-
-	def Replace(self, from_: int, to_: int, value: str) -> None:
-		r"""
-		Replaces the text starting at the first position up to (but not including)
-		the character at the last position with the given text.
-
-		This function puts the current insertion point position at to as a side effect.
-
-		:param from\_: The first position
-		:param to\_: The last position
-		:param value: The value to replace the existing text with.
-		"""
-
-		self.m_text.Replace(from_, to_, value)
 
 	# @staticmethod
 	# def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size):

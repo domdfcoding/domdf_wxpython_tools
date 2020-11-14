@@ -40,8 +40,8 @@ from decimal import Decimal
 from typing import List, Sequence, Union
 
 # 3rd party
-import wx  # type: ignore
-import wx.adv  # type: ignore
+import wx  # type: ignore  # nodep
+import wx.adv  # type: ignore  # nodep
 from mathematical.utils import rounders
 
 # this package

@@ -22,7 +22,7 @@
 #
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore  # nodep
 
 __all__ = ["gen_keymap"]
 

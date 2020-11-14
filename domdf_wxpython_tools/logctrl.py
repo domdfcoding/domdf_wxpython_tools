@@ -33,8 +33,8 @@ import time
 from typing import List, Optional
 
 # 3rd party
-import wx  # type: ignore
-from wx import stc
+import wx  # type: ignore  # nodep
+from wx import stc  # nodep
 
 # this package
 from domdf_wxpython_tools.keyboard import gen_keymap
