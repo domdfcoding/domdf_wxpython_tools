@@ -3,7 +3,7 @@ Downloading source code
 =========================
 
 The ``domdf_wxpython_tools`` source code is available on GitHub,
-and can be accessed from the following URL: https://github.com/domdfcoding/domdf_wxpython_tools"
+and can be accessed from the following URL: https://github.com/domdfcoding/domdf_wxpython_tools
 
 If you have ``git`` installed, you can clone the repository with the following command:
 
