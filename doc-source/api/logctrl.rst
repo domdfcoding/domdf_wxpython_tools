@@ -3,4 +3,4 @@
 =====================================
 
 .. automodule:: domdf_wxpython_tools.logctrl
-	:undoc-members
+	:undoc-members:

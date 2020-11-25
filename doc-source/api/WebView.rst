@@ -3,4 +3,4 @@
 =====================================
 
 .. automodule:: domdf_wxpython_tools.WebView
-	:undoc-members
+	:undoc-members:

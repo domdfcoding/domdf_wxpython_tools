@@ -3,4 +3,4 @@
 ==========================================
 
 .. automodule:: domdf_wxpython_tools.style_picker
-	:undoc-members
+	:undoc-members:

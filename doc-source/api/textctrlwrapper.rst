@@ -3,4 +3,4 @@
 =============================================
 
 .. automodule:: domdf_wxpython_tools.textctrlwrapper
-	:undoc-members
+	:undoc-members:

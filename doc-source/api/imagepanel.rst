@@ -3,4 +3,4 @@
 ========================================
 
 .. automodule:: domdf_wxpython_tools.imagepanel
-	:undoc-members
+	:undoc-members:

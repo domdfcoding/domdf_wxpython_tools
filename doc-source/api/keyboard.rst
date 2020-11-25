@@ -3,4 +3,4 @@
 ======================================
 
 .. automodule:: domdf_wxpython_tools.keyboard
-	:undoc-members
+	:undoc-members:

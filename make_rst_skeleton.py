@@ -57,7 +57,7 @@ class Module:
 		buf += f"\n:mod:`~{dotted_name}`\n========="
 		buf += '=' * len(dotted_name)
 		buf += f"\n\n.. automodule:: {dotted_name}\n"
-		buf += "\t:undoc-members\n"
+		buf += "\t:undoc-members:\n"
 		with (directory / self.name).with_suffix(".rst").open('w', encoding="UTF-8") as fp:
 			clean_writer(buf, fp)
 
@@ -91,9 +91,9 @@ for subpackage in package.subpackages:
 		buf += '=' * len(dotted_name)
 		buf += f"\n:mod:`~{dotted_name}`\n========="
 		buf += '=' * len(dotted_name)
-		buf += f"\n\n.. extras-require:: {subpackage_dir.name}\n"
-		buf += f"	:file: {subpackage_dir.name}/requirements.txt\n"
-		buf += f"	:scope: package"
+		# buf += f"\n\n.. extras-require:: {subpackage_dir.name}\n"
+		# buf += f"	:file: {subpackage_dir.name}/requirements.txt\n"
+		# buf += f"	:scope: package"
 		buf += f"\n\n.. toctree:: {dotted_name}\n"
 		buf += "	:maxdepth: 3\n"
 		buf += "	:glob:\n\n"

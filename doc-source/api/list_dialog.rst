@@ -3,4 +3,4 @@
 =========================================
 
 .. automodule:: domdf_wxpython_tools.list_dialog
-	:undoc-members
+	:undoc-members:

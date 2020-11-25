@@ -3,4 +3,4 @@
 ================================================
 
 .. automodule:: domdf_wxpython_tools.clearable_textctrl
-	:undoc-members
+	:undoc-members:

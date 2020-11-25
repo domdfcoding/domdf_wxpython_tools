@@ -3,4 +3,4 @@
 ===========================================
 
 .. automodule:: domdf_wxpython_tools.border_config
-	:undoc-members
+	:undoc-members:

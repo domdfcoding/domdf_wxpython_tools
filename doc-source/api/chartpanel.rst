@@ -3,4 +3,4 @@
 ========================================
 
 .. automodule:: domdf_wxpython_tools.chartpanel
-	:undoc-members
+	:undoc-members:
