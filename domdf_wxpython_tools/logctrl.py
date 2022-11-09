@@ -75,7 +75,7 @@ class LogCtrl(stc.StyledTextCtrl):
 	:param name: Window name.
 	"""
 
-	findDlg: Optional[wx.FindReplaceDialog]
+	findDlg: Optional[wx]
 
 	def __init__(
 			self,
