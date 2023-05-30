@@ -279,7 +279,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,

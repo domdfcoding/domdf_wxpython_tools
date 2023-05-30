@@ -80,7 +80,7 @@ class ChartPanelBase(wx.Panel):
 			parent: wx.Window,
 			fig: Figure,
 			ax: Axes,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
@@ -140,7 +140,7 @@ class ChartPanelBase(wx.Panel):
 
 	def reset_view(self, *_) -> None:
 		"""
-		Reset the view of the chart
+		Reset the view of the chart.
 		"""
 
 		self.canvas.toolbar.home()
@@ -148,14 +148,14 @@ class ChartPanelBase(wx.Panel):
 
 	def previous_view(self, *_) -> None:
 		"""
-		Go to the previous view of the chart
+		Go to the previous view of the chart.
 		"""
 
 		self.canvas.toolbar.back()
 
 	def zoom(self, enable: bool = True) -> None:
 		"""
-		Enable the Zoom tool
+		Enable the Zoom tool.
 		"""
 
 		if enable or (not enable and self.canvas.toolbar._active == "ZOOM"):
@@ -164,7 +164,7 @@ class ChartPanelBase(wx.Panel):
 
 	def pan(self, enable: bool = True) -> None:
 		"""
-		Enable the Pan tool
+		Enable the Pan tool.
 		"""
 
 		if enable or (not enable and self.canvas.toolbar._active == "PAN"):

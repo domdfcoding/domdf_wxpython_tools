@@ -42,11 +42,11 @@ parser = tinycss.make_parser("page3")
 
 def parse_css_file(filename: PathLike) -> Dict:
 	"""
-	Parse the stylesheet in the given file
+	Parse the stylesheet in the given file.
 
-	:param filename: The filename of the stylesheet to parse
+	:param filename: The filename of the stylesheet to parse.
 
-	:return: Parsed CSS stylesheet
+	:return: Parsed CSS stylesheet.
 	"""
 
 	stylesheet = parser.parse_stylesheet_file(css_file=str(filename))
@@ -70,10 +70,11 @@ def parse_css(css_data: str) -> Dict:
 
 def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 	"""
-	Internal function for actual parsing of css
+	Internal function for actual parsing of css.
 
-	:param stylesheet: A tinycss parsed stylesheel
-	:return: Parsed CSS stylesheet
+	:param stylesheet: A tinycss parsed stylesheet.
+
+	:return: Parsed CSS stylesheet.
 	"""
 
 	if stylesheet.errors:

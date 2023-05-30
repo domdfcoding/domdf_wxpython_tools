@@ -4,7 +4,7 @@
 """
 Based on ChartPanelBase, a canvas for displaying an image within a wxPython window
 using PIL and matplotlib, with a right click menu with some basic options
-"""
+"""  # noqa: D400
 #
 #  Copyright 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -109,7 +109,7 @@ class ImagePanel(ChartPanelBase):
 			self,
 			parent: wx.Window,
 			image=None,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
@@ -230,7 +230,7 @@ class ImagePanel(ChartPanelBase):
 
 	def copy(self, _=None):
 		"""
-		Copy the image to the clipboard
+		Copy the image to the clipboard.
 		"""
 
 		width, height = self._image.size
@@ -247,7 +247,7 @@ class ImagePanel(ChartPanelBase):
 
 	def paste(self, event=None):
 		"""
-		Paste the image from the clipboard into the control
+		Paste the image from the clipboard into the control.
 		"""
 
 		# Create empty BitmapDataObject
@@ -325,7 +325,7 @@ class ImagePanel(ChartPanelBase):
 
 	def reset_view(self, *_):
 		"""
-		Reset the view of the image
+		Reset the view of the image.
 		"""
 
 		self._load_image()

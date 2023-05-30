@@ -2,7 +2,7 @@
 #
 #  constants.py
 """
-Constants for panel_listctrl
+Constants for :mod:`~.panel_listctrl`.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

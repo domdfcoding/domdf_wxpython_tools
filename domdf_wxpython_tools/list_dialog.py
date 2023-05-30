@@ -41,14 +41,14 @@ __all__ = ["list_dialog"]
 
 class list_dialog(wx.Dialog):
 	"""
-	A dialog containing a wx.ListBox
+	A dialog containing a :class:`wx.ListBox`.
 
 	:param parent: The parent window. Can be None, a frame or another dialog box
-	:param id: An identifier for the dialog. wx.ID_ANY is taken to mean a default.
+	:param id: An identifier for the dialog. :py:obj:`wx.ID_ANY` is taken to mean a default.
 	:param title: The title of the dialog
-	:param label: The label for the wx.ListBox
+	:param label: The label for the :class:`wx.ListBox`.
 	:param choices: A list of choices for the wx.ListBox
-	:param pos: The dialog position. The value ``wx.DefaultPosition`` indicates a default position,
+	:param pos: The dialog position. The value :py:obj:`wx.DefaultPosition` indicates a default position,
 		chosen by either the windowing system or wxWidgets, depending on platform.
 	:param size: The dialog size. The value ::wxDefaultSize indicates a default size,
 		chosen by either the windowing system or wxWidgets, depending on platform.
@@ -59,7 +59,7 @@ class list_dialog(wx.Dialog):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			title: str = "Choose",
 			label: str = "Choose: ",
 			choices: List[str] = None,

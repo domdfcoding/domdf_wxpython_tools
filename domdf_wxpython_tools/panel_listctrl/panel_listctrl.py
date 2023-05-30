@@ -29,10 +29,11 @@ can be used as the basis for custom list items
 
 # stdlib
 import pathlib
-from typing import Dict, List
+from typing import Dict, List, Union
 
 # 3rd party
 import wx  # type: ignore
+from typing_extensions import Literal
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
@@ -52,7 +53,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,
+			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL,
@@ -81,7 +82,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def _on_selection_changed(self, event):
 		"""
-		Handler for EVT_LIST_ITEM_SELECTED, triggered by clicking on an Item
+		Handler for EVT_LIST_ITEM_SELECTED, triggered by clicking on an Item.
 		"""
 
 		for item in self._items:
@@ -92,9 +93,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		event.Skip()
 
-	def _on_key_down(self, event):
+	def _on_key_down(self, event) -> None:
 		"""
-		Handler for EVT_LIST_KEY_DOWN, triggered by pressing key on keyboard when an item is focused
+		Handler for EVT_LIST_KEY_DOWN, triggered by pressing key on keyboard when an item is focused.
 		"""
 
 		key_code = event.GetKeyCode()
@@ -124,9 +125,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def SetSelection(self, idx: int):
 		"""
-		Set the current selection to the item at the given index
+		Set the current selection to the item at the given index.
 
-		:param idx: index of the item to select
+		:param idx: index of the item to select.
 		"""
 
 		item_to_select = self.GetItem(idx)
@@ -139,13 +140,13 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def DeselectAll(self):
 		"""
-		Deselect all items
+		Deselect all items.
 		"""
 
 		for i in range(self.GetItemCount()):
 			self.Select(i, False)
 
-	def AcceptsFocus(self):
+	def AcceptsFocus(self):  # noqa: D400
 		return True
 
 	def AcceptsFocusFromKeyboard(self):
@@ -224,7 +225,12 @@ class PanelListCtrl(wx.ScrolledWindow):
 		return False
 
 	def Focus(self, idx):
-		" Set Focus to the the given item. "
+		"""
+		Set Focus to the the given item.
+
+		:param idx:
+		"""
+
 		for index, item in enumerate(self._items):
 			if index == idx:
 				item.SelectItem()
@@ -276,39 +282,33 @@ class PanelListCtrl(wx.ScrolledWindow):
 		return -1
 
 	def GetItem(self, itemIdx, *_):
-		r"""
-		Gets information about the item. See SetItem() for more information.
+		"""
+		Returns information about the item. See :meth:`~.SetItem` for more information.
 
 		:param itemIdx:
 		"""
 
 		return self._items[itemIdx]
 
-	def GetItemBackgroundColour(self, item):
+	def GetItemBackgroundColour(self, item) -> wx.Colour:
 		"""
-		GetItemBackgroundColour(item) -> Colour
-
 		Returns the colour for this item.
 		"""
 
 		return item.GetBackgroundColour()
 
-	def GetItemCount(self):
+	def GetItemCount(self) -> int:
 		"""
 		Returns the number of items in the list control.
-
-		:return:
-		:rtype:
 		"""
 
 		return len(self._items)
 
-	def GetItemPosition(self, item) -> wx.Point:
+	def GetItemPosition(self, item) -> int:
 		"""
-		GetItemPosition(item) -> Point
+		Returns the position of the item, or ``-1`` if it is not found.
+		"""
 
-		Returns the position of the item, or -1 if it is not found
-		"""
 		if item in self._items:
 			return self._items.index(item)
 
@@ -333,10 +333,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def GetSelectedItemCount(self) -> int:
 		"""
-		GetSelectedItemCount() -> int
-
 		Returns the number of selected items in the list control.
 		"""
+
 		selected_item_count = 0
 
 		for item in self._items:
@@ -494,7 +493,7 @@ class PanelListItem(wx.Panel):
 			parent: PanelListCtrl,
 			text_dict: Dict,
 			style_data,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			style: int = 0,
 			name: str = wx.PanelNameStr,
 			left_padding: int = 32,
@@ -590,34 +589,40 @@ class PanelListItem(wx.Panel):
 		self.Refresh()
 
 	def SelectItem(self, select: bool = True):
+		"""
+		Select (or deselect) the given item.
+
+		:param select: If :py:obj:`False` the item is deselected.
+		"""
+
 		self.selected = select
 		if select:
 			self.SetFocus()
 		self.Refresh()
 
-	def DeselectItem(self):
+	def DeselectItem(self):  # noqa: D102
 		self.selected = False
 		self.Refresh()
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_DESELECTED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnRightClick(self, _) -> None:
+	def OnRightClick(self, _) -> None:  # noqa: D102
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_RIGHT_CLICK)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnMiddleClick(self, _) -> None:
+	def OnMiddleClick(self, _) -> None:  # noqa: D102
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_RIGHT_CLICK)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnClick(self, _) -> None:
+	def OnClick(self, _) -> None:  # noqa: D102
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_SELECTED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnDoubleClick(self, _) -> None:
+	def OnDoubleClick(self, _) -> None:  # noqa: D102
 		event = wx.ListEvent(wx.wxEVT_LIST_ITEM_ACTIVATED)
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
@@ -634,7 +639,11 @@ class PanelListItem(wx.Panel):
 		event.SetKeyCode(key_event.GetKeyCode())
 		wx.PostEvent(self, event)
 
-	def IsSelected(self):
+	def IsSelected(self) -> bool:
+		"""
+		Returns whether the :class:`~.PanelListItem` is selected.
+		"""
+
 		return self.selected
 
 	def _refresh_background_colour(self):
@@ -655,16 +664,32 @@ class PanelListItem(wx.Panel):
 			widget.SetForegroundColour(colour)
 			widget.SetFont(wx.Font(**font_data))
 
-	def SetBackgroundColour(self, colour):
+	def SetBackgroundColour(self, colour) -> None:
+		"""
+		Set the background colour for the item.
+
+		:param colour:
+		"""
+
 		self._default_background = colour
 
-	def SetSelectedBackgroundColour(self, colour):
+	def SetSelectedBackgroundColour(self, colour) -> None:
+		"""
+		Set the background colour for the item when it is selected.
+
+		:param colour:
+		"""
+
 		self._selected_background = colour
 
 	def GetBackgroundColour(self):
 		return self._default_background
 
 	def GetCurrentBackgroundColour(self):
+		"""
+		Returns the current background colour of the :class`wx.Panel` class.
+		"""
+
 		return wx.Panel.GetBackgroundColour(self)
 
 	def Refresh(self, **kwargs):

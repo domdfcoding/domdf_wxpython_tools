@@ -89,7 +89,7 @@ class ColourPickerPanel(StylePickerPanel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.TAB_TRAVERSAL,
@@ -263,10 +263,10 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def update_preview(self, list_obj: wx.ListBox, axes: matplotlib.axes.Axes):
 		"""
-		Update the preview from the given list
+		Update the preview from the given list.
 
-		:param list_obj: The list to update the preview for
-		:param axes: The preview axes to update
+		:param list_obj: The list to update the preview for.
+		:param axes: The preview axes to update.
 		"""
 
 		axes.clear()
@@ -279,7 +279,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def pick(self, *args):
 		"""
-		Open a wx.ColourDialog to edit the colour currently selected in the picker
+		Open a :py:class:`wx.ColourDialog` to edit the colour currently selected in the picker.
 		"""
 
 		selection = self.selection_list_box.GetSelection()

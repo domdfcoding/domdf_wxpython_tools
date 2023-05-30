@@ -111,7 +111,7 @@ def file_dialog_multiple(
 		**kwargs
 		) -> Optional[List[str]]:
 	r"""
-	Create a wx.FileDialog with for the extension and filetypestring given,
+	Create a :class:`wx.FileDialog` with the extension and filetypestring given,
 	and return a list of the files selected.
 
 	:param parent: Parent window. Should not be :py:obj:`None`.

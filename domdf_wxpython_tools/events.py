@@ -81,7 +81,6 @@ class PayloadEvent(wx.PyCommandEvent):
 
 class SimpleEvent:
 	"""
-	SimpleEvent(receiver, name, event, binder)
 
 	:param receiver:
 	:param name:
@@ -99,7 +98,7 @@ class SimpleEvent:
 
 	def __repr__(self):
 		"""
-		Return a nicely formatted representation string
+		Return a nicely formatted representation string.
 		"""
 
 		return f'SimpleEvent(name={self.name})'
@@ -107,14 +106,14 @@ class SimpleEvent:
 	@property
 	def __dict__(self):
 		"""
-		Return a new OrderedDict which maps field names to their values
+		Return a new OrderedDict which maps field names to their values.
 		"""
 
 		return OrderedDict(zip(self._fields, self))  # type: ignore
 
 	def set_receiver(self, receiver):
 		"""
-		Set the class that is to receive the event trigger
+		Set the class that is to receive the event trigger.
 
 		:param receiver:
 		"""
@@ -123,10 +122,10 @@ class SimpleEvent:
 
 	def Bind(self, handler, receiver=None, **kwargs):
 		"""
-		Bind the event to the handler
+		Bind the event to the handler.
 
-		:param handler: handler to bind the event to
-		:param kwargs: keyword arguments to pass through to receiver's Bind method
+		:param handler: handler to bind the event to.
+		:param kwargs: keyword arguments to pass through to receiver's Bind method.
 		"""
 		if receiver is None:
 			receiver = self.receiver

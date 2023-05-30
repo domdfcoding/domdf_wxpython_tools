@@ -80,7 +80,7 @@ class LogCtrl(stc.StyledTextCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
@@ -147,7 +147,7 @@ Right click for options
 
 	def onKeyPress(self, event):
 		"""
-		Event Handler for key being pressed
+		Event Handler for key being pressed.
 		"""
 
 		keycode = event.GetKeyCode()
@@ -264,13 +264,15 @@ Right click for options
 
 	def getStyle(self, c: str = "black"):
 		"""
-		Returns a style for a given colour if one exists.  If no style
-		exists for the colour, make a new style.
+		Returns a style for a given colour if one exists.
 
-		If we run out of styles, (only 32 allowed here) we go to the top
-		of the list and reuse previous styles.
+		If no style exists for the colour, make a new style.
 
+		If we run out of styles, (only 32 allowed here) we go to the top of the list and reuse previous styles.
+
+		:param c:
 		"""
+
 		free = self._free
 		if c and isinstance(c, str):
 			c = c.lower()
@@ -378,9 +380,9 @@ Right click for options
 	# def OnWrap(self, event):
 	# 	self.SetWrapMode(event.IsChecked())
 
-	def ToggleWrap(self, *_):
+	def ToggleWrap(self, *_) -> None:
 		"""
-		Toggle word wrap
+		Toggle word wrap.
 		"""
 
 		self.SetWrapMode(not self.GetWrapMode())

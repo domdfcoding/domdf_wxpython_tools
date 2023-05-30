@@ -73,7 +73,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	button and with an icon on the browse button.
 
 	:param parent:			Parent window. Should not be :py:obj:`None`.
-	:param id:				Control identifier. A value of -1 denotes a default value.
+	:param id:				Control identifier. A value of ``-1`` denotes a default value.
 	:param pos:				Control position
 	:param size:			Control size
 	:param style:			Window style. See wx.Window and ClearableTextCtrl for supported styles
@@ -87,13 +87,13 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	:param name:
 	:param show_cancel_btn:	Whether to show or hide the cancel button.
 	:param dialog_title:	The title of the FileDialog
-	:param fileMask:		File mask (glob pattern, such as *.*) to use in file dialog. See wx.FileDialog for more information
-	"""
+	:param fileMask:		File mask (glob pattern, such as `*.*`) to use in file dialog. See wx.FileDialog for more information
+	"""  # noqa: D400
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.TAB_TRAVERSAL | wx.FD_DEFAULT_STYLE,
@@ -531,8 +531,9 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 		def SetValue(self, value, callBack=1):
 			"""
-			Convenient setting of text control value,
-			works around limitation of wx.ComboBox
+			Convenient setting of text control value.
+
+			Works around limitation of :py:class:`wx.ComboBox`.
 			"""
 
 			save = self.callCallback
@@ -560,7 +561,7 @@ class DirBrowseCtrl(FileBrowseCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=-1,
+			id=-1,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,

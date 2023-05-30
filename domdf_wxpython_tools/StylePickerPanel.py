@@ -58,7 +58,7 @@ class StylePickerPanel(wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,
+			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
 			style=wx.TAB_TRAVERSAL,

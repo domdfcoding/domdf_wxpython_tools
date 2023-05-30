@@ -62,7 +62,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,
+			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
@@ -238,7 +238,7 @@ class file_picker(dir_picker):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,
+			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,
@@ -307,7 +307,7 @@ class file_folder_picker(dir_picker):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,
+			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			value='',
 			pos=wx.DefaultPosition,
 			size=wx.DefaultSize,

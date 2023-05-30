@@ -51,7 +51,7 @@ class TabbableTextCtrl(wx.TextCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			value: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
@@ -74,10 +74,9 @@ class TabbableTextCtrl(wx.TextCtrl):
 		self.Bind(wx.EVT_CHAR, self.on_char)
 
 	@staticmethod
-	def on_char(event):
+	def on_char(event) -> None:
 		"""
-		Event handler for key being pressed,
-		to allow for navigating between controls with :kbd:`TAB`.
+		Event handler for key being pressed, to allow for navigating between controls with :kbd:`TAB`.
 		"""
 
 		if event.GetKeyCode() == wx.WXK_TAB:

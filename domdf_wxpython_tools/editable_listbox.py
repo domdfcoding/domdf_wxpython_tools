@@ -214,7 +214,7 @@ class CleverListCtrl(wx.ListCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.LC_ICON,
@@ -262,9 +262,9 @@ class EditableListBox(wx.Panel):
 
 	Styles supported:
 
-	* wx.adv.EL_ALLOW_NEW - Allow user to create new items.
-	* wx.adv.EL_ALLOW_EDIT - Allow user to edit text in the control.
-	* wx.adv.EL_ALLOW_DELETE - Allow user to delete text from the control.
+	* :py:obj:`wx.adv.EL_ALLOW_NEW` - Allow user to create new items.
+	* :py:obj:`wx.adv.EL_ALLOW_EDIT` - Allow user to edit text in the control.
+	* :py:obj:`wx.adv.EL_ALLOW_DELETE` - Allow user to delete text from the control.
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param id:
@@ -273,12 +273,12 @@ class EditableListBox(wx.Panel):
 	:param size:
 	:param style:
 	:param name:
-	"""
+	"""  # noqa: D400
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			label: str = '',
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
@@ -550,7 +550,7 @@ class EditableNumericalListBox(EditableListBox):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id: int = wx.ID_ANY,
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			label: str = '',
 			decimal_places=-1,
 			pos: wx.Point = wx.DefaultPosition,

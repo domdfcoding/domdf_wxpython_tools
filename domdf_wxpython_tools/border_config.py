@@ -1,9 +1,8 @@
 #  !/usr/bin/env python
-
 #
 #  border_config.py
 """
-Dialog for configuring borders for charts
+Dialog for configuring borders for charts.
 """
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
