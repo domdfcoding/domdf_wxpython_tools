@@ -19,6 +19,9 @@ classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -54,7 +57,7 @@ base-classifiers = [
     "Programming Language :: Python :: 3.8",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-python-versions = [ "3.6", "3.7", "3.8",]
+python-versions = [ "3.6", "3.7", "3.8", "3.9", "3.10", "3.11",]
 python-implementations = [ "CPython",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
@@ -67,7 +70,7 @@ github_username = "domdfcoding"
 github_repository = "domdf_wxpython_tools"
 author = "Dominic Davis-Foster"
 project = "domdf-wxpython-tools"
-copyright = "2019-2020 Dominic Davis-Foster"
+copyright = "2019-2023 Dominic Davis-Foster"
 language = "en"
 package_root = "domdf_wxpython_tools"
 extensions = [
@@ -142,7 +145,7 @@ autodoc_exclude_members = [
 ]
 
 [tool.mypy]
-python_version = "3.6"
+python_version = "3.8"
 namespace_packages = true
 check_untyped_defs = true
 warn_unused_ignores = true

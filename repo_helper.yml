@@ -1,24 +1,7 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
 modname: domdf_wxpython_tools
-
-enable_tests: False
-enable_conda: False
-
-python_deploy_version: 3.6
-
-# Additional lines for .gitignore
-additional_ignore:
-  - "*/output"
-
-
-# Versions to run tests for
-python_versions:
-  - '3.6'
-  - '3.7'
-  - "3.8"
-
-# travis secure password for PyPI
-
-copyright_years: "2019-2020"
+copyright_years: "2019-2023"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.2.5"
@@ -26,7 +9,23 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: 'Tools and widgets for wxPython.'
 
-conda_description: "Tools and widgets for wxPython."
+# use_whey: true
+enable_tests: False
+enable_conda: False
+
+
+# Additional lines for .gitignore
+additional_ignore:
+  - "*/output"
+
+# Versions to run tests for
+python_versions:
+  - '3.6'
+  - '3.7'
+  - "3.8"
+  - "3.9"
+  - "3.10"
+  - "3.11"
 
 classifiers:
   - 'Development Status :: 4 - Beta'
