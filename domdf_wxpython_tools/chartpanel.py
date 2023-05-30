@@ -38,6 +38,7 @@ from typing import Optional
 
 # 3rd party
 import matplotlib  # type: ignore
+import matplotlib.projections
 import numpy  # type: ignore
 import wx.html2  # type: ignore
 from matplotlib.axes import Axes  # type: ignore

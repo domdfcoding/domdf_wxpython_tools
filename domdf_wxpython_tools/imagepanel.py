@@ -29,6 +29,7 @@ from typing import Optional, Union
 
 # 3rd party
 import matplotlib  # type: ignore
+import matplotlib.projections
 import PIL  # type: ignore
 import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
