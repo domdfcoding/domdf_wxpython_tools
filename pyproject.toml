@@ -64,6 +64,37 @@ license-key = "LGPL-3.0-or-later"
 additional-files = [ "include domdf_wxpython_tools/panel_listctrl/Default.css",]
 
 [tool.importcheck]
+always = [
+    "domdf_wxpython_tools",
+    "domdf_wxpython_tools.border_config",
+    "domdf_wxpython_tools.chartpanel",
+    "domdf_wxpython_tools.clearable_textctrl",
+    "domdf_wxpython_tools.ColourPickerPanel",
+    "domdf_wxpython_tools.dialogs",
+    "domdf_wxpython_tools.editable_listbox",
+    "domdf_wxpython_tools.events",
+    "domdf_wxpython_tools.filebrowsectrl",
+    "domdf_wxpython_tools.icons",
+    "domdf_wxpython_tools.imagepanel",
+    "domdf_wxpython_tools.keyboard",
+    "domdf_wxpython_tools.list_dialog",
+    "domdf_wxpython_tools.logctrl",
+    "domdf_wxpython_tools.picker",
+    "domdf_wxpython_tools.projections",
+    "domdf_wxpython_tools.style_picker",
+    "domdf_wxpython_tools.StylePickerPanel",
+    "domdf_wxpython_tools.tabbable_textctrl",
+    "domdf_wxpython_tools.textctrlwrapper",
+    "domdf_wxpython_tools.timer_thread",
+    "domdf_wxpython_tools.utils",
+    "domdf_wxpython_tools.validators",
+    "domdf_wxpython_tools.WebView",
+    "domdf_wxpython_tools.panel_listctrl",
+    "domdf_wxpython_tools.panel_listctrl.constants",
+    "domdf_wxpython_tools.panel_listctrl.css_parser",
+    "domdf_wxpython_tools.panel_listctrl.font_parser",
+    "domdf_wxpython_tools.panel_listctrl.panel_listctrl",
+]
 
 [tool.sphinx-pyproject]
 github_username = "domdfcoding"
