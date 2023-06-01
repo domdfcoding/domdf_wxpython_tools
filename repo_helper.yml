@@ -46,3 +46,6 @@ intersphinx_mapping:
 
 manifest_additional:
   - "include domdf_wxpython_tools/panel_listctrl/Default.css"
+
+tox_unmanaged:
+ - testenv
