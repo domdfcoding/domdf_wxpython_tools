@@ -17,6 +17,7 @@ enable_conda: False
 # Additional lines for .gitignore
 additional_ignore:
   - "*/output"
+  - venv-orig
 
 # Versions to run tests for
 python_versions:
@@ -49,3 +50,9 @@ manifest_additional:
 
 tox_unmanaged:
  - testenv
+
+github_ci_requirements:
+  Linux:
+    pre:
+      - "sudo apt update"
+      - "sudo apt install libgtk-3-dev libwebkit2gtk-4.0-dev libglu1-mesa-dev"

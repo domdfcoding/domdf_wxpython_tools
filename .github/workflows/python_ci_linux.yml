@@ -60,6 +60,8 @@ jobs:
       - name: Install dependencies 🔧
         if: steps.setup-python.outcome == 'success'
         run: |
+          sudo apt update
+          sudo apt install libgtk-3-dev libwebkit2gtk-4.0-dev libglu1-mesa-dev
           python -VV
           python -m site
           python -m pip install --upgrade pip setuptools wheel
