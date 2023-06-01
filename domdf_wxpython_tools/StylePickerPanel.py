@@ -23,7 +23,7 @@
 #
 
 # stdlib
-from typing import List
+from typing import List, Optional
 
 # 3rd party
 import wx  # type: ignore
@@ -64,7 +64,7 @@ class StylePickerPanel(wx.Panel):
 			style=wx.TAB_TRAVERSAL,
 			name=wx.PanelNameStr,
 			label="Choose Styles: ",
-			selection_choices: List[str] = None,
+			selection_choices: Optional[List[str]] = None,
 			):
 		if selection_choices is None:
 			selection_choices = default_styles[:]

@@ -228,7 +228,7 @@ class Wildcards:
 	def add_filetype(
 			self,
 			description: str,
-			extensions: Sequence[str] = None,
+			extensions: Optional[Sequence[str]] = None,
 			hint_format: int = style_lowercase,
 			value_format: int = style_lowercase | style_uppercase
 			):

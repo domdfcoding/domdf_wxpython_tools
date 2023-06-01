@@ -34,7 +34,7 @@ and must not be changed.
 import pathlib
 import sys
 import warnings
-from typing import Union
+from typing import Optional, Union
 
 # 3rd party
 from domdf_python_tools.typing import PathLike
@@ -90,7 +90,10 @@ wxWEBVIEWIE_EMU_IE11 = 11000
 wxWEBVIEWIE_EMU_IE11_FORCE = 11001
 
 
-def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: PathLike = None) -> bool:
+def MSWSetEmulationLevel(
+		level: int = wxWEBVIEWIE_EMU_DEFAULT,
+		program_name: Optional[PathLike] = None,
+		) -> bool:
 	"""
 	Sets the emulation level for wxWidgets WebView.
 
@@ -111,7 +114,11 @@ def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: Pat
 	IE_EMULATION_KEY = "SOFTWARE\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION"
 
 	try:
-		key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, IE_EMULATION_KEY, access=winreg.KEY_ALL_ACCESS)
+		key = winreg.OpenKey(  # type: ignore[attr-defined]
+			winreg.HKEY_CURRENT_USER,  # type: ignore[attr-defined]
+			IE_EMULATION_KEY,
+			access=winreg.KEY_ALL_ACCESS,  # type: ignore[attr-defined]
+		)
 	except OSError:
 		warnings.warn("Failed to find web view emulation level in the registry")
 		return False
@@ -124,7 +131,7 @@ def MSWSetEmulationLevel(level: int = wxWEBVIEWIE_EMU_DEFAULT, program_name: Pat
 	else:
 		for name in (program_name, program_name.name):
 			try:
-				winreg.DeleteValue(key, str(name))
+				winreg.DeleteValue(key, str(name))  # type: ignore[attr-defined]
 			except OSError:
 				pass
 

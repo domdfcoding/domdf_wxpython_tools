@@ -25,11 +25,11 @@ using PIL and matplotlib, with a right click menu with some basic options
 #
 
 # stdlib
-from typing import Optional, Union
+from typing import Union
 
 # 3rd party
 import matplotlib  # type: ignore
-import matplotlib.projections
+import matplotlib.projections  # type: ignore
 import PIL  # type: ignore
 import wx  # type: ignore
 from domdf_python_tools.typing import PathLike

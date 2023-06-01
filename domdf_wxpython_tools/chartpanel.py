@@ -38,8 +38,8 @@ from typing import Optional
 
 # 3rd party
 import matplotlib  # type: ignore
-import matplotlib.projections
-import numpy  # type: ignore
+import matplotlib.projections  # type: ignore[import]
+import numpy
 import wx.html2  # type: ignore
 from matplotlib.axes import Axes  # type: ignore
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore

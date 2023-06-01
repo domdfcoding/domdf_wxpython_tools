@@ -24,7 +24,7 @@
 #
 
 # stdlib
-from typing import List
+from typing import List, Optional
 
 # 3rd party
 import wx  # type: ignore
@@ -62,7 +62,7 @@ class list_dialog(wx.Dialog):
 			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			title: str = "Choose",
 			label: str = "Choose: ",
-			choices: List[str] = None,
+			choices: Optional[List[str]] = None,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.DEFAULT_DIALOG_STYLE,

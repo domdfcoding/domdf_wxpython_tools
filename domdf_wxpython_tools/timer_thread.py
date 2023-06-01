@@ -67,7 +67,7 @@ class Timer(Thread):
 		"""
 
 		wait_time = 0 + self._interval
-		while not self._stopevent.isSet():  # type: ignore
+		while not self._stopevent.isSet():
 			time.sleep(0.1)
 			wait_time -= 0.1
 			if wait_time < 0.0:

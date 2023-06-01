@@ -28,7 +28,7 @@ Based on StylePickerPanel, a Panel for selecting a list of colours, and their or
 #
 
 # stdlib
-from typing import List
+from typing import List, Optional
 
 # 3rd party
 import matplotlib  # type: ignore
@@ -95,8 +95,8 @@ class ColourPickerPanel(StylePickerPanel):
 			style: int = wx.TAB_TRAVERSAL,
 			name: str = wx.PanelNameStr,
 			label: str = "Choose Colours: ",
-			picker_choices: List[str] = None,
-			selection_choices: List[str] = None,
+			picker_choices: Optional[List[str]] = None,
+			selection_choices: Optional[List[str]] = None,
 			):
 
 		args = (parent, id, pos, size)
