@@ -85,7 +85,7 @@ domdf_wxpython_tools
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/domdf_wxpython_tools
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/domdf_wxpython_tools/v0.3.0
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/domdf_wxpython_tools/v0.3.0.post1
 	:target: https://github.com/domdfcoding/domdf_wxpython_tools/pulse
 	:alt: GitHub commits since tagged version
 
