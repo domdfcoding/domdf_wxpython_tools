@@ -48,4 +48,4 @@ known_third_party = [
     "wx",
     "wxpython",
 ]
-known_first_party = "domdf_wxpython_tools"
+known_first_party = [ "domdf_wxpython_tools",]
