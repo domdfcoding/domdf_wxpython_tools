@@ -144,6 +144,7 @@ Installation
 
 	contributing
 	Source
+	license
 
 
 .. sidebar-links::
