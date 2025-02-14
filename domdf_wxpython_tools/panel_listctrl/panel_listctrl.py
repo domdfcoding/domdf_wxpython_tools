@@ -146,7 +146,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		for i in range(self.GetItemCount()):
 			self.Select(i, False)
 
-	def AcceptsFocus(self):  # noqa: D400
+	def AcceptsFocus(self):
 		return True
 
 	def AcceptsFocusFromKeyboard(self):

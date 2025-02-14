@@ -113,8 +113,9 @@ class ChartPanelBase(wx.Panel):
 			# print(str(*args).startswith("MPL MouseEvent")) # Pan
 
 			# Zoom, Pan
-			if ((str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN")
-				or (str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM")):
+			x_pan = (str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN")
+			mouse_zoom = (str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM")
+			if x_pan or mouse_zoom:
 				# print("updated xlims: ", axes.get_xlim())
 				min_x_index = (numpy.abs(x_data - self.ax.get_xlim()[0])).argmin()
 				max_x_index = (numpy.abs(x_data - self.ax.get_xlim()[1])).argmin()

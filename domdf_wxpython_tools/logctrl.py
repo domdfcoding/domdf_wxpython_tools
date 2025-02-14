@@ -120,10 +120,10 @@ class LogCtrl(stc.StyledTextCtrl):
 		# TODO: Default Zoom and Set Zoom
 
 		# Display the introductory banner information.
-		self.AppendText('''Click "▶ Run Comparison" to start
+		self.AppendText("""Click "▶ Run Comparison" to start
 
 Right click for options
-''')
+""")
 		# TODO: Make this not specific to GSMatch
 
 		wx.CallAfter(self.ScrollToLine, 0)
@@ -414,7 +414,7 @@ Right click for options
 
 	def OnContextMenu(self, _):
 		"""
-		vent Handler for showing the context menu
+		Event Handler for showing the context menu
 		"""
 
 		menu = self.GetContextMenu()
@@ -520,7 +520,7 @@ Right click for options
 		text = self.GetText()
 
 		try:
-			f = open(filename, 'w')
+			f = open(filename, 'w', encoding="UTF-8")
 			f.write(text)
 			f.close()
 		except:  # TODO: Find error type
