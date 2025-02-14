@@ -25,12 +25,12 @@ using PIL and matplotlib, with a right click menu with some basic options
 #
 
 # stdlib
-from typing import Union
+from typing import Optional, Tuple, Union
 
 # 3rd party
 import matplotlib  # type: ignore
 import matplotlib.projections  # type: ignore
-import PIL  # type: ignore
+import PIL
 import wx  # type: ignore
 from domdf_python_tools.typing import PathLike
 from matplotlib.figure import Figure  # type: ignore
@@ -104,6 +104,8 @@ class ImagePanel(ChartPanelBase):
 	"""
 
 	default_image = ("RGB", (640, 480), (240, 240, 240))
+
+	_image: Optional[Image.Image]
 
 	def __init__(
 			self,
@@ -233,6 +235,7 @@ class ImagePanel(ChartPanelBase):
 		Copy the image to the clipboard.
 		"""
 
+		assert self._image is not None
 		width, height = self._image.size
 		bmp = wx.Bitmap.FromBuffer(width, height, self._image.tobytes())
 
@@ -261,7 +264,7 @@ class ImagePanel(ChartPanelBase):
 			# https://stackoverflow.com/a/46606553/3092681
 			# Get bitmap and convert to PIL Image
 			bmp = bmp_data.GetBitmap()
-			size = tuple(bmp.GetSize())
+			size: Tuple[int, int] = tuple(bmp.GetSize())  # type: ignore[assignment]
 			buf = size[0] * size[1] * 3 * b"\x00"
 			bmp.CopyToBuffer(buf)
 			self._image = Image.frombuffer("RGB", size, buf, "raw", "RGB", 0, 1)
@@ -288,6 +291,7 @@ class ImagePanel(ChartPanelBase):
 		if not save_location:
 			return
 
+		assert self._image is not None
 		self._image.save(save_location[0])
 
 	def on_load(self, event=None):
@@ -345,6 +349,8 @@ class ImagePanel(ChartPanelBase):
 
 		:rtype: PIL.Image.Image
 		"""
+
+		assert self._image is not None
 		return self._image
 
 	#
