@@ -7,7 +7,7 @@ name = "domdf_wxpython_tools"
 version = "0.3.0.post1"
 description = "Tools and widgets for wxPython."
 readme = "README.rst"
-requires-python = ">=3.6.1"
+requires-python = ">=3.7"
 keywords = []
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -56,7 +56,7 @@ base-classifiers = [
     "Programming Language :: Python :: 3.8",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-python-versions = [ "3.6", "3.7", "3.8", "3.9", "3.10", "3.11",]
+python-versions = [ "3.7", "3.8", "3.9", "3.10", "3.11",]
 python-implementations = [ "CPython",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
