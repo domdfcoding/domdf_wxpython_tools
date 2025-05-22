@@ -3,7 +3,7 @@
 #
 #  chartpanel.py
 """
-A canvas for displaying a chart within a wxPython window
+A canvas for displaying a chart within a wxPython window.
 """
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -228,7 +228,7 @@ class ChartPanelBase(wx.Panel):
 
 	def on_size_change(self, _) -> None:
 		"""
-		Event handler for size change events
+		Event handler for size change events.
 		"""
 
 		self.size_change()

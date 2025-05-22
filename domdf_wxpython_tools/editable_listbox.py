@@ -200,7 +200,7 @@ up_btn_xpm = [
 
 class CleverListCtrl(wx.ListCtrl):
 	"""
-	list control with auto-resizable column:
+	List control with auto-resizable column.
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param id:

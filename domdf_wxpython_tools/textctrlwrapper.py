@@ -119,8 +119,9 @@ class TextCtrlWrapper:
 
 	def GetLastPosition(self):
 		"""
-		Returns the zero based index of the last position in the text control,
-		which is equal to the number of characters in the control.
+		Returns the zero based index of the last position in the text control.
+
+		This is equal to the number of characters in the control.
 
 		:rtype: wx.TextPos
 		"""
@@ -167,8 +168,9 @@ class TextCtrlWrapper:
 
 	def IsEditable(self) -> bool:
 		"""
-		Returns :py:obj:`True` if the controls contents may be edited by user
-		(note that it always can be changed by the program).
+		Returns :py:obj:`True` if the controls contents may be edited by user.
+
+		Note that the control contents can always be changed by the program.
 
 		In other words, this functions returns :py:obj:`True` if the control
 		hasn't been put in read-only mode by a previous call to :meth:`~.ClearableTextCtrl.SetEditable`.

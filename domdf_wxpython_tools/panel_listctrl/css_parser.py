@@ -56,7 +56,7 @@ def parse_css_file(filename: PathLike) -> Dict:
 
 def parse_css(css_data: str) -> Dict:
 	"""
-	Parse the stylesheet from the given string
+	Parse the stylesheet from the given string.
 
 	:param css_data: A string representing a CSS stylesheel
 

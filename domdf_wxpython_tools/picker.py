@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 #
 #  picker.py
 #
@@ -169,7 +168,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 
 	def SetHeight(self, height: int):
 		"""
-		Set the height of the widgets
+		Set the height of the widgets.
 
 		:param height: Height of the widgets
 		"""

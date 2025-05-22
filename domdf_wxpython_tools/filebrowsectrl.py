@@ -387,8 +387,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 	def GetRange(self, from_: int, to_: int) -> str:
 		r"""
-		Returns the string containing the text starting in the positions
-		from and up to in the control.
+		Returns the string containing the text starting in the positions from and up to in the control.
 
 		The positions must have been returned by another wx.TextCtrl method.
 
@@ -487,7 +486,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 	def SetHistory(self, value=(), selectionIndex=None, control=None):
 		"""
-		Set the current history list
+		Set the current history list.
 		"""
 
 		if control is None:
@@ -508,7 +507,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 	def GetHistory(self):
 		"""
-		Return the current history list
+		Return the current history list.
 		"""
 
 		if self.historyCallBack is not None:
@@ -520,7 +519,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 	def OnSetFocus(self, event):
 		"""
-		When the history scroll is selected, update the history
+		When the history scroll is selected, update the history.
 		"""
 
 		if self.historyCallBack is not None:

@@ -3,7 +3,7 @@
 #
 #  events.py
 """
-Reusable code for simple events
+Reusable code for simple events.
 
 Usage:
 
@@ -137,7 +137,7 @@ class SimpleEvent:
 
 	def Unbind(self, receiver=None, **kwargs):
 		"""
-		Unbind the event from the handler
+		Unbind the event from the handler.
 
 		:param kwargs: keyword arguments to pass through to receiver's Unbind method
 		"""
@@ -152,7 +152,7 @@ class SimpleEvent:
 
 	def trigger(self, value=None):
 		"""
-		Trigger the event
+		Trigger the event.
 		"""
 
 		if value is not None:

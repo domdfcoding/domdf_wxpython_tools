@@ -296,21 +296,21 @@ Right click for options
 
 	def OnZoomIn(self, *_):
 		"""
-		Event Handler for zooming in
+		Event Handler for zooming in.
 		"""
 
 		self.ZoomIn()
 
 	def OnZoomOut(self, *_):
 		"""
-		Event Handler for zooming out
+		Event Handler for zooming out.
 		"""
 
 		self.ZoomOut()
 
 	def OnZoomDefault(self, *_):
 		"""
-		Event Handler for resetting the zoom
+		Event Handler for resetting the zoom.
 		"""
 
 		self.SetZoom(self.default_zoom)
@@ -355,7 +355,7 @@ Right click for options
 	@staticmethod
 	def _clip(data):
 		"""
-		Internal function for copying to clipboard
+		Internal function for copying to clipboard.
 		"""
 
 		if wx.TheClipboard.Open():
@@ -414,7 +414,7 @@ Right click for options
 
 	def OnContextMenu(self, _):
 		"""
-		Event Handler for showing the context menu
+		Event Handler for showing the context menu.
 		"""
 
 		menu = self.GetContextMenu()
@@ -544,11 +544,10 @@ Right click for options
 
 	def Append(self, text, c=None):
 		"""
-		Add the text to the end of the control using colour c which
-		should be suitable for feeding directly to wx.NamedColour.
+		Add the text to the end of the control using colour ``c``.
 
-		:param text: ... Should be a unicode string or contain only ascii data.
-		:param c:
+		:param text:
+		:param c: The text colour. This should be suitable for feeding directly to :class:`wx.NamedColour`.
 		"""
 
 		style = self.getStyle(c)
@@ -561,7 +560,7 @@ Right click for options
 
 	def AppendStderr(self, text):
 		"""
-		Add the stderr text to the end of the control using colour "red"
+		Add the stderr text to the end of the control using colour "red".
 
 		:param text: ... Should be a unicode string or contain only ascii data.
 		"""

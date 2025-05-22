@@ -201,7 +201,7 @@ class ImagePanel(ChartPanelBase):
 
 	def _load_image(self):
 		"""
-		Internal function for the actual loading of the image
+		Internal function for the actual loading of the image.
 		"""
 
 		self.ax.clear()
@@ -221,7 +221,7 @@ class ImagePanel(ChartPanelBase):
 
 	def on_context_menu(self, event):
 		"""
-		Event Handler for bringing up right click context menu
+		Event Handler for bringing up right click context menu.
 		"""
 
 		if event.button == matplotlib.backend_bases.MouseButton.RIGHT:
@@ -281,7 +281,7 @@ class ImagePanel(ChartPanelBase):
 
 	def on_save(self, event=None):
 		"""
-		Save the image to the location selected in the dialog
+		Save the image to the location selected in the dialog.
 		"""
 
 		save_location = file_dialog_wildcard(
@@ -296,7 +296,7 @@ class ImagePanel(ChartPanelBase):
 
 	def on_load(self, event=None):
 		"""
-		Load the image into the dialog from the file selected in the dialog
+		Load the image into the dialog from the file selected in the dialog.
 		"""
 
 		new_image = file_dialog_wildcard(
@@ -316,7 +316,7 @@ class ImagePanel(ChartPanelBase):
 
 	def clear(self, event=None):
 		"""
-		Clear the image from the control
+		Clear the image from the control.
 		"""
 
 		self.ax.clear()
@@ -345,9 +345,7 @@ class ImagePanel(ChartPanelBase):
 	@property
 	def image(self) -> PIL.Image.Image:
 		"""
-		Returns the image being displayed in the control
-
-		:rtype: PIL.Image.Image
+		Returns the image being displayed in the control.
 		"""
 
 		assert self._image is not None

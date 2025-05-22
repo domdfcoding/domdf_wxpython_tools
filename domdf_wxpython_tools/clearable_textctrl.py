@@ -2,7 +2,7 @@
 #
 #  ClearableTextCtrl.py
 """
-A TextCtrl with a button to clear its contents
+A :class:`wx.TextCtrl` with a button to clear its contents.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -92,7 +92,7 @@ class CTCWidget(wx.TextCtrl):
 
 	def OnTextEnter(self, _) -> None:
 		"""
-		Event handler for the :kbd:`enter` / :kbd:`return ⏎` key being pressed
+		Event handler for the :kbd:`enter` / :kbd:`return ⏎` key being pressed.
 
 		:param event: The wxPython event.
 		"""
@@ -346,7 +346,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	def SetBackgroundColour(self, colour: wx.Colour) -> bool:
 		"""
-		Sets the background colour of the control
+		Sets the background colour of the control.
 
 		:param colour: The colour to be used as the background colour; pass :py:obj:`wx.NullColour`.
 			to reset to the default colour.
@@ -404,8 +404,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	def AutoCompleteFileNames(self) -> bool:
 		"""
-		Call this function to enable auto-completion of the text typed in a single-line text control
-		using all valid file system paths.
+		Call this function to enable auto-completion of the text typed in a single-line text control using all valid file system paths.
 
 		.. note:: This function is only implemented in wxMSW port and does nothing under the other platforms.
 
@@ -441,8 +440,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	def EmulateKeyPress(self, event: wx.KeyEvent) -> bool:
 		"""
-		Inserts into the control the character which would have been inserted if the given
-		key event had occurred in the text control.
+		Inserts into the control the character which would have been inserted if the given key event had occurred in the text control.
 
 		The event object should be the same as the one passed to :py:obj:`wx.EVT_KEY_DOWN` handler
 		previously by wxWidgets.
@@ -706,7 +704,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	def OnClearButton(self, event: wx.CommandEvent) -> None:
 		"""
-		Event handler for clear button being pressed
+		Event handler for clear button being pressed.
 
 		:param event:
 		"""

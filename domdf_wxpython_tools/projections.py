@@ -29,7 +29,6 @@ from typing import Optional
 
 # 3rd party
 import matplotlib  # type: ignore
-from matplotlib import axes
 
 __all__ = ["XPanAxes", "XPanAxes_NoZoom", "NoZoom"]
 

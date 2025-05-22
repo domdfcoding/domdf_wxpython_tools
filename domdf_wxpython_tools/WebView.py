@@ -34,7 +34,7 @@ and must not be changed.
 import pathlib
 import sys
 import warnings
-from typing import Optional, Union, no_type_check
+from typing import Optional, no_type_check
 
 # 3rd party
 from domdf_python_tools.typing import PathLike

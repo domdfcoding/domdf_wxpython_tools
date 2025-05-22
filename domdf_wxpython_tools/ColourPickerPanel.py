@@ -3,7 +3,7 @@
 #
 #  ColourPickerPanel.py
 """
-Based on StylePickerPanel, a Panel for selecting a list of colours, and their order
+Based on StylePickerPanel, a Panel for selecting a list of colours, and their order.
 """
 #
 #  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -224,7 +224,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def add(self, event):  # wxGlade: ColourPickerPanel.<event_handler>
 		"""
-		Event handler for adding the colour currently selected in the 'picker' to the 'selection'
+		Event handler for adding the colour currently selected in the 'picker' to the 'selection'.
 		"""
 
 		selection = self.picker_list_box.GetSelection()
@@ -245,7 +245,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def remove(self, event):  # wxGlade: ColourPickerPanel.<event_handler>
 		"""
-		Event handler for removing the colour currently selected in the 'selection'
+		Event handler for removing the colour currently selected in the 'selection'.
 		"""
 
 		selection = self.selection_list_box.GetSelection()
@@ -307,7 +307,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 	def GetSelection(self) -> List[str]:
 		"""
-		Returns a list of the currently selected colours
+		Returns a list of the currently selected colours.
 		"""
 
 		return [self.selection_list_box.GetString(item) for item in range(self.selection_list_box.GetCount())]

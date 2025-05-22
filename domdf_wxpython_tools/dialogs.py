@@ -2,7 +2,7 @@
 #
 #  dialogs.py
 """
-Several dialog classes and helper functions for file/folder dialogs
+Several dialog classes and helper functions for file/folder dialogs.
 """
 #
 #  Copyright 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -111,8 +111,7 @@ def file_dialog_multiple(
 		**kwargs
 		) -> Optional[List[str]]:
 	r"""
-	Create a :class:`wx.FileDialog` with the extension and filetypestring given,
-	and return a list of the files selected.
+	Create a :class:`wx.FileDialog` with the extension and filetypestring given, and return a list of the files selected.
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param extension:
@@ -153,8 +152,7 @@ def file_dialog_multiple(
 
 def file_dialog(*args, **kwargs) -> Optional[str]:
 	r"""
-	Create a wx.FileDialog with for the extension and filetypestring given,
-	and return the filename selected.
+	Create a wx.FileDialog with for the extension and filetypestring given, and return the filename selected.
 
 	:param parent:
 	:param extension:
@@ -219,7 +217,7 @@ class IntEntryDialog(wx.TextEntryDialog):
 
 class Wildcards:
 	"""
-	Class to generate glob wildcards for wx.FileDialog
+	Class to generate glob wildcards for :class:`wx.FileDialog`.
 	"""
 
 	def __init__(self):
@@ -233,7 +231,7 @@ class Wildcards:
 			value_format: int = style_lowercase | style_uppercase
 			):
 		"""
-		Add a filetype to the wildcards
+		Add a filetype to the wildcards.
 
 		:param description: Description of the filetype
 		:param extensions: A list of valid file extensions for the filetype
@@ -279,9 +277,7 @@ class Wildcards:
 	@property
 	def wildcard(self) -> str:
 		"""
-		Returns a string representing the wildcards for use in wx.FileDialog or file_dialog_wildcards
-
-		:rtype: str
+		Returns a string representing the wildcards for use in wx.FileDialog or file_dialog_wildcards.
 		"""
 
 		return '|'.join(self._wildcards)

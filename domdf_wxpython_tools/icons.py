@@ -46,7 +46,7 @@ _art_provider = None
 
 def GetStockBitmap(art_id, art_client=None):
 	"""
-	Get a stock bitmap from its wx.ART_xxx ID
+	Get a stock bitmap from its ``wx.ART_xxx`` ID.
 	"""
 	global _art_provider
 	if _art_provider is None:

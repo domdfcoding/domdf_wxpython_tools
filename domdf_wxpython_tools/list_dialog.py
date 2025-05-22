@@ -137,14 +137,14 @@ class list_dialog(wx.Dialog):
 
 	def do_select(self, _) -> None:  # wxGlade: list_dialog.<event_handler>
 		"""
-		Event Handler for item in list being selected
+		Event handler for item in list being selected.
 		"""
 
 		self.EndModal(wx.ID_OK)
 
 	def do_cancel(self, _) -> None:  # wxGlade: list_dialog.<event_handler>
 		"""
-		Event Handler for dialog being cancelled
+		Event handler for dialog being cancelled.
 		"""
 
 		self.Destroy()

@@ -29,11 +29,10 @@ can be used as the basis for custom list items
 
 # stdlib
 import pathlib
-from typing import Dict, List, Union
+from typing import Dict, List
 
 # 3rd party
 import wx  # type: ignore
-from typing_extensions import Literal
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
@@ -164,8 +163,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def AppendNewItem(self, text_dict: Dict, style_data) -> "PanelListItem":
 		"""
-		Append a new 'PanelListItem' object to the control, passing the 'text_dict' and 'style_data'
-		parameters to the new object.
+		Append a new 'PanelListItem' object to the control, passing the 'text_dict' and 'style_data' parameters to the new object.
 
 		:param text_dict:
 		:param style_data:
@@ -179,7 +177,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 	def Clear(self):
 		"""
-		Removes all items from the control
+		Removes all items from the control.
 		"""
 
 		for item in self._items:
