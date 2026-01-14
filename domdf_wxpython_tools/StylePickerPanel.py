@@ -252,7 +252,7 @@ class StylePickerPanel(wx.Panel):
 		self.update_picker_preview()
 		event.Skip()
 
-	def remove(self, event: wx.event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
+	def remove(self, event: wx.Event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		selection = self.selection_list_box.GetSelection()
 		if selection == -1:
 			return
