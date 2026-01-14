@@ -10,17 +10,16 @@ on:
       - 'imgbot'
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   Run:
+    permissions:
+      contents: read
     name: "mypy / ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: ['ubuntu-22.04', 'windows-2019']
+        os: ['ubuntu-22.04', 'windows-2022']
       fail-fast: false
 
     steps:
@@ -40,7 +39,7 @@ jobs:
         if: steps.changes.outputs.code == 'true'
         uses: "actions/setup-python@v5"
         with:
-          python-version: "3.8"
+          python-version: "3.9"
 
       - name: Install dependencies (Linux) 🔧
         if: ${{ matrix.os == 'ubuntu-22.04' && steps.changes.outputs.code == 'true' }}
