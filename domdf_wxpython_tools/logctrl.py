@@ -30,10 +30,10 @@ Log Control, supporting text copying and zoom.
 import keyword
 import os
 import time
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 from wx import stc
 
 # this package
@@ -84,7 +84,7 @@ class LogCtrl(stc.StyledTextCtrl):
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.CLIP_CHILDREN | wx.SUNKEN_BORDER,
-			name: str = "Log"
+			name: str = "Log",
 			):
 
 		stc.StyledTextCtrl.__init__(self, parent, id, pos, size, style, name)
@@ -128,7 +128,7 @@ Right click for options
 
 		wx.CallAfter(self.ScrollToLine, 0)
 
-	def _config(self):
+	def _config(self) -> None:
 		self.wrap()
 		self.setDisplayLineNumbers(False)
 
@@ -145,7 +145,7 @@ Right click for options
 
 		self.SetMargins(5, 5)
 
-	def onKeyPress(self, event):
+	def onKeyPress(self, event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		Event Handler for key being pressed.
 		"""
@@ -153,12 +153,13 @@ Right click for options
 		keycode = event.GetKeyCode()
 		keyname = self._keyMap.get(keycode, None)
 		modifiers = ''
+
 		for mod, ch in (
 			(event.ControlDown(), "Ctrl+"),
 			(event.AltDown(), "Alt+"),
 			(event.ShiftDown(), "Shift+"),
 			(event.MetaDown(), "Meta+"),
-			):
+		):
 			if mod:
 				modifiers += ch
 
@@ -207,7 +208,7 @@ Right click for options
 
 		print(combination)
 
-	def fixLineEndings(self, text):
+	def fixLineEndings(self, text: str) -> str:
 		"""
 		Return text with line endings replaced by OS-specific endings.
 
@@ -215,15 +216,18 @@ Right click for options
 		"""
 
 		lines = text.split('\r\n')
+
 		for idx, line in enumerate(lines):
 			chunks = line.split('\r')
+
 			for idx, chunk in enumerate(chunks):
 				chunks[idx] = os.linesep.join(chunk.split('\n'))
-			lines[idx] = os.linesep.join(chunks)
-		text = os.linesep.join(lines)
-		return text
 
-	def setStyles(self, faces):
+			lines[idx] = os.linesep.join(chunks)
+
+		return os.linesep.join(lines)
+
+	def setStyles(self, faces) -> None:
 		"""
 		Configure font size, typeface and color for lexer.
 
@@ -257,7 +261,7 @@ Right click for options
 			(stc.STC_P_IDENTIFIER, ''),
 			(stc.STC_P_COMMENTBLOCK, "fore:#7F7F7F"),
 			(stc.STC_P_STRINGEOL, f"fore:#000000,face:{faces}(mono)s,back:#E0C0E0,eolfilled"),
-			]
+		]
 
 		for style in styles:
 			self.StyleSetSpec(*style)
@@ -294,28 +298,28 @@ Right click for options
 			self._free = free
 			return style
 
-	def OnZoomIn(self, *_):
+	def OnZoomIn(self, *_) -> None:  # noqa: PRM002
 		"""
 		Event Handler for zooming in.
 		"""
 
 		self.ZoomIn()
 
-	def OnZoomOut(self, *_):
+	def OnZoomOut(self, *_) -> None:  # noqa: PRM002
 		"""
 		Event Handler for zooming out.
 		"""
 
 		self.ZoomOut()
 
-	def OnZoomDefault(self, *_):
+	def OnZoomDefault(self, *_) -> None:  # noqa: PRM002
 		"""
 		Event Handler for resetting the zoom.
 		"""
 
 		self.SetZoom(self.default_zoom)
 
-	def setDisplayLineNumbers(self, state):
+	def setDisplayLineNumbers(self, state) -> None:
 		self.lineNumbers = state
 		if state:
 			self.SetMarginType(1, stc.STC_MARGIN_NUMBER)
@@ -325,24 +329,22 @@ Right click for options
 			self.SetMarginType(1, 0)
 			self.SetMarginWidth(1, 10)
 
-	# def OnShowLineNumbers(self, event):
-	# 	print("sln")
+	# def OnShowLineNumbers(self, event: wx.Event) -> None:	# 	print("sln")
 	# 	if hasattr(self, 'lineNumbers'):
 	# 		self.lineNumbers = event.IsChecked()
 	# 		self.setDisplayLineNumbers(self.lineNumbers)
 
-	def ToggleLineNumbers(self, *_):
+	def ToggleLineNumbers(self, *_) -> None:
 		self.setDisplayLineNumbers(not self.lineNumbers)
 
 	def CanCopy(self) -> bool:
 		"""
 		Returns :py:obj:`True` if text is selected and can be copied, :py:obj:`False` otherwise.
-
-		:rtype: bool
 		"""
+
 		return self.GetSelectionStart() != self.GetSelectionEnd()
 
-	def Copy(self):
+	def Copy(self) -> None:
 		"""
 		Copy the selection and place it on the clipboard.
 		"""
@@ -353,7 +355,7 @@ Right click for options
 			self._clip(data)
 
 	@staticmethod
-	def _clip(data):
+	def _clip(data) -> None:  # noqa: PRM002
 		"""
 		Internal function for copying to clipboard.
 		"""
@@ -364,7 +366,7 @@ Right click for options
 			wx.TheClipboard.Flush()
 			wx.TheClipboard.Close()
 
-	def wrap(self, wrap: bool = True):
+	def wrap(self, wrap: bool = True) -> None:
 		"""
 		Set whether text is word wrapped.
 
@@ -374,20 +376,20 @@ Right click for options
 		try:
 			self.SetWrapMode(wrap)
 		except AttributeError:
-			return "Wrapping is not available in this version."
+			raise NotImplementedError("Wrapping is not available in this wx version.")
 
 	#
-	# def OnWrap(self, event):
+	# def OnWrap(self, event: wx.Event) -> None:
 	# 	self.SetWrapMode(event.IsChecked())
 
-	def ToggleWrap(self, *_) -> None:
+	def ToggleWrap(self, *_) -> None:  # noqa: PRM002
 		"""
 		Toggle word wrap.
 		"""
 
 		self.SetWrapMode(not self.GetWrapMode())
 
-	def GetContextMenu(self):
+	def GetContextMenu(self) -> wx.Menu:
 		"""
 		Create and return a context menu for the log.
 		This is used instead of the scintilla default menu
@@ -412,7 +414,7 @@ Right click for options
 
 		return menu
 
-	def OnContextMenu(self, _):
+	def OnContextMenu(self, _) -> None:  # noqa: PRM002
 		"""
 		Event Handler for showing the context menu.
 		"""
@@ -425,24 +427,26 @@ Right click for options
 	def GetLastPosition(self):
 		return self.GetLength()
 
-	def GetRange(self, start, end):
+	def GetRange(self, start: int, end: int):
 		return self.GetTextRange(start, end)
 
-	def GetSelection(self):
+	def GetSelection(self) -> Tuple[int, int]:
 		return self.GetAnchor(), self.GetCurrentPos()
 
-	def ShowPosition(self, pos):
+	def ShowPosition(self, pos) -> None:
 		line = self.LineFromPosition(pos)
 		# self.EnsureVisible(line)
 		self.GotoLine(line)
 
-	def DoFindNext(self, findData, findDlg=None):
+	def DoFindNext(self, findData, findDlg=None) -> None:
 		backward = not (findData.GetFlags() & wx.FR_DOWN)
 		matchcase = (findData.GetFlags() & wx.FR_MATCHCASE) != 0
 		end = self.GetLength()
+
 		# Changed to reflect the fact that StyledTextControl is in UTF-8 encoding
 		textstring = self.GetTextRange(0, end).encode("utf-8")
 		findstring = findData.GetFindString().encode("utf-8")
+
 		if not matchcase:
 			textstring = textstring.lower()
 			findstring = findstring.lower()
@@ -472,6 +476,7 @@ Right click for options
 					)
 			dlg.ShowModal()
 			dlg.Destroy()
+
 		if findDlg:
 			if loc == -1:
 				wx.CallAfter(findDlg.SetFocus)
@@ -483,25 +488,25 @@ Right click for options
 		self.ShowPosition(loc)
 		self.SetSelection(loc, loc + len(findstring))
 
-	def OnFindText(self, *_):
+	def OnFindText(self, *_) -> None:
 		if self.findDlg is not None:
 			return
 
 		self.findDlg = wx.FindReplaceDialog(self, self.findData, "Find", wx.FR_NOWHOLEWORD)
 		self.findDlg.Show()
 
-	def OnFindClose(self, _):
+	def OnFindClose(self, _) -> None:
 		if self.findDlg is not None:
 			self.findDlg.Destroy()
 			self.findDlg = None
 
 	# Save Methods
 
-	def bufferHasChanged(self):
+	def bufferHasChanged(self) -> bool:
 		# the log buffers can always be saved
 		return True
 
-	def bufferSave(self):
+	def bufferSave(self) -> None:
 
 		appname = wx.GetApp().GetAppName()
 		default = appname + '-' + time.strftime("%Y%m%d-%H%M.py")
@@ -511,7 +516,7 @@ Right click for options
 				default_filename=default,
 				default_extension="py",
 				wildcard="*.py",
-				flags=wx.SAVE | wx.OVERWRITE_PROMPT
+				flags=wx.SAVE | wx.OVERWRITE_PROMPT,
 				)
 
 		if not filename:
@@ -529,7 +534,7 @@ Right click for options
 			d.ShowModal()
 			d.Destroy()
 
-	def write(self, text):
+	def write(self, text: str) -> None:
 		"""
 		Display text in the log.
 
@@ -542,7 +547,7 @@ Right click for options
 		self.AddText(text)
 		self.EnsureCaretVisible()
 
-	def Append(self, text, c=None):
+	def Append(self, text: str, c=None) -> None:
 		"""
 		Add the text to the end of the control using colour ``c``.
 
@@ -558,7 +563,7 @@ Right click for options
 		self.SetStyling(lenText, style)
 		self.EnsureCaretVisible()
 
-	def AppendStderr(self, text):
+	def AppendStderr(self, text: str) -> None:
 		"""
 		Add the stderr text to the end of the control using colour "red".
 

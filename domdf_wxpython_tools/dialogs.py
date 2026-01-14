@@ -28,7 +28,7 @@ import os
 from typing import List, Optional, Sequence
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.validators import CharValidator
@@ -39,7 +39,7 @@ __all__ = [
 		"file_dialog",
 		"FloatEntryDialog",
 		"IntEntryDialog",
-		"Wildcards"
+		"Wildcards",
 		]
 
 # style enumeration
@@ -52,8 +52,7 @@ common_filetypes = {
 		"png": ("PNG files", ["png"]),
 		"bmp": ("BMP files", ["bmp"]),
 		"tiff": ("TIFF files", ["tiff", "tif"]),
-		"gif": ("GIF files", ["gif"])
-		# TODO: Add more
+		"gif": ("GIF files", ["gif"]),  # TODO: Add more
 		}
 
 
@@ -64,17 +63,16 @@ def file_dialog_wildcard(
 		style: int = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 		**kwargs,
 		) -> Optional[List[str]]:
-	"""
+	r"""
 	Create a wx.FileDialog with the wildcard string given, and return a list of the files selected.
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
-	:param wildcard:
 	:param title:
+	:param wildcard:
 	:param style:
-	:param kwargs:
+	:param \*\*kwargs:
 
 	:return: List of filenames for the selected files. If wx.FD_MULTIPLE is not in the style, the list will contain only one element
-	:rtype: list of str
 	"""
 
 	with wx.FileDialog(parent, title, wildcard=wildcard, style=style, **kwargs) as fileDialog:
@@ -108,7 +106,7 @@ def file_dialog_multiple(
 		title: str,
 		filetypestring: str,
 		style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
-		**kwargs
+		**kwargs,
 		) -> Optional[List[str]]:
 	r"""
 	Create a :class:`wx.FileDialog` with the extension and filetypestring given, and return a list of the files selected.
@@ -129,7 +127,7 @@ def file_dialog_multiple(
 			title,
 			wildcard=f"{filetypestring} (*.{extension.lower()})|*.{extension.lower()};*.{extension.upper()}",
 			style=style,
-			**kwargs
+			**kwargs,
 			) as fileDialog:
 
 		if fileDialog.ShowModal() == wx.ID_CANCEL:
@@ -150,7 +148,7 @@ def file_dialog_multiple(
 		return pathnames
 
 
-def file_dialog(*args, **kwargs) -> Optional[str]:
+def file_dialog(*args, **kwargs) -> Optional[str]:  # noqa: PRM002
 	r"""
 	Create a wx.FileDialog with for the extension and filetypestring given, and return the filename selected.
 
@@ -173,7 +171,7 @@ def file_dialog(*args, **kwargs) -> Optional[str]:
 	return None
 
 
-class FloatEntryDialog(wx.TextEntryDialog):
+class FloatEntryDialog(wx.TextEntryDialog):  # noqa: PRM002
 	"""
 	Alternative to wx.NumberEntryDialog that provides a TextCtrl which only allows numbers and decimal points to be entered.
 
@@ -186,7 +184,7 @@ class FloatEntryDialog(wx.TextEntryDialog):
 
 		self.textctrl.SetValidator(CharValidator("float-only"))
 
-	def GetValue(self):
+	def GetValue(self) -> Optional[float]:
 		value = self.textctrl.GetValue()
 		if value == '':
 			return None
@@ -194,7 +192,7 @@ class FloatEntryDialog(wx.TextEntryDialog):
 			return float(value)
 
 
-class IntEntryDialog(wx.TextEntryDialog):
+class IntEntryDialog(wx.TextEntryDialog):  # noqa: PRM002
 	"""
 	Alternative to wx.NumberEntryDialog that provides a TextCtrl which only allows numbers to be entered.
 
@@ -207,7 +205,7 @@ class IntEntryDialog(wx.TextEntryDialog):
 
 		self.textctrl.SetValidator(CharValidator("int-only"))
 
-	def GetValue(self):
+	def GetValue(self) -> Optional[int]:
 		value = self.textctrl.GetValue()
 		if value == '':
 			return None
@@ -221,15 +219,15 @@ class Wildcards:
 	"""
 
 	def __init__(self):
-		self._wildcards = []
+		self._wildcards: List[str] = []
 
 	def add_filetype(
 			self,
 			description: str,
 			extensions: Optional[Sequence[str]] = None,
 			hint_format: int = style_lowercase,
-			value_format: int = style_lowercase | style_uppercase
-			):
+			value_format: int = style_lowercase | style_uppercase,
+			) -> None:
 		"""
 		Add a filetype to the wildcards.
 
@@ -301,7 +299,7 @@ class Wildcards:
 
 		self.add_filetype(*common_filetypes[filetype], hint_format=hint_format, value_format=value_format)
 
-	def add_image_wildcard(self, value_format: int = style_lowercase | style_uppercase):
+	def add_image_wildcard(self, value_format: int = style_lowercase | style_uppercase) -> None:
 		"""
 		Add a wildcard for all image filetypes.
 
@@ -320,7 +318,7 @@ class Wildcards:
 
 		self.add_filetype("Image files", image_extensions, hint_format=style_hidden, value_format=value_format)
 
-	def add_all_files_wildcard(self, hint_format: int = 0):
+	def add_all_files_wildcard(self, hint_format: int = 0) -> None:
 		"""
 		Add a wildcard for 'All Files'.
 
@@ -332,10 +330,10 @@ class Wildcards:
 		else:
 			self._wildcards.append("All files (*.*)|*.*")
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"Wildcard = {self.wildcard}"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.wildcard
 
 

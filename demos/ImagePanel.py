@@ -27,7 +27,7 @@ import tempfile
 import urllib.request
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 sys.path.append("..")
 
@@ -38,7 +38,7 @@ with tempfile.TemporaryDirectory() as tmp:
 	# Get splash image from GitHub
 	urllib.request.urlretrieve(
 			"https://github.com/wxWidgets/Phoenix/raw/master/demo/bitmaps/splash.png",
-			os.path.join(tmp, "wxsplash.png")
+			os.path.join(tmp, "wxsplash.png"),
 			)
 
 	class DemoFrame(wx.Frame):
@@ -62,7 +62,7 @@ with tempfile.TemporaryDirectory() as tmp:
 		def __init__(self, *args, **kwargs):
 			wx.App.__init__(self, *args, **kwargs)
 
-		def OnInit(self):
+		def OnInit(self) -> bool:
 			wx.InitAllImageHandlers()
 			frame = DemoFrame(None, -1, "ImagePanel Demo App", wx.DefaultPosition, (700, 700))
 

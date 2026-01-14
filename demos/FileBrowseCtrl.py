@@ -43,7 +43,7 @@
 import sys
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 sys.path.append("..")
 
@@ -56,11 +56,12 @@ class SimpleCallback:
 	def __init__(self, tag):
 		self.tag = tag
 
-	def __call__(self, event) -> None:
+	def __call__(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		print(self.tag, event.GetString())
 
 
@@ -76,7 +77,7 @@ class DemoFrame(wx.Frame):
 		control = FileBrowseCtrl(
 				panel,
 				style=wx.TAB_TRAVERSAL | wx.FD_SAVE,
-				fileMask="All files (*.*)|*.*|JPEG files (*.jpeg)|*.jpeg;*.jpg"
+				fileMask="All files (*.*)|*.*|JPEG files (*.jpeg)|*.jpeg;*.jpg",
 				)
 		innerbox.Add(control, 0, wx.EXPAND)
 		middlecontrol = FileBrowseCtrlWithHistory(
@@ -101,22 +102,24 @@ class DemoFrame(wx.Frame):
 				)
 		innerbox.Add(control, 0, wx.EXPAND)
 		self.bottommostcontrol = control = DirBrowseCtrl(
-				panel, labelText="Simple dir browse button", style=wx.SUNKEN_BORDER | wx.CLIP_CHILDREN
+				panel,
+				labelText="Simple dir browse button",
+				style=wx.SUNKEN_BORDER | wx.CLIP_CHILDREN,
 				)
 		innerbox.Add(control, 0, wx.EXPAND)
 		ID = wx.NewIdRef()
-		innerbox.Add(wx.Button(
-				panel,
-				ID,
-				"Change Label",
-				), 1, wx.EXPAND)
+		innerbox.Add(
+				wx.Button(panel, ID, "Change Label"),
+				1,
+				wx.EXPAND,
+				)
 		self.Bind(wx.EVT_BUTTON, self.OnChangeLabel, id=ID)
 		ID = wx.NewIdRef()
-		innerbox.Add(wx.Button(
-				panel,
-				ID,
-				"Change Value",
-				), 1, wx.EXPAND)
+		innerbox.Add(
+				wx.Button(panel, ID, "Change Value"),
+				1,
+				wx.EXPAND,
+				)
 		self.Bind(wx.EVT_BUTTON, self.OnChangeValue, id=ID)
 		panel.SetAutoLayout(True)
 		panel.SetSizer(innerbox)
@@ -127,45 +130,50 @@ class DemoFrame(wx.Frame):
 		list(keys).sort()
 		return keys
 
-	def OnFileNameChangedHistory(self, event) -> None:
+	def OnFileNameChangedHistory(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		self.history[event.GetString()] = 1
 
-	def OnCloseMe(self, event) -> None:
+	def OnCloseMe(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		self.Close(True)
 
-	def OnChangeLabel(self, event) -> None:
+	def OnChangeLabel(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		self.bottomcontrol.SetLabel("Label Updated")
 
-	def OnChangeValue(self, event) -> None:
+	def OnChangeValue(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		self.bottomcontrol.SetValue("r:\\somewhere\\over\\the\\rainbow.htm")
 
-	def OnCloseWindow(self, event) -> None:
+	def OnCloseWindow(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
+
 		self.Destroy()
 
 
 class DemoApp(wx.App):
 
-	def OnInit(self):
+	def OnInit(self) -> bool:
 		wx.InitAllImageHandlers()
 		frame = DemoFrame(None)
 		frame.Show(True)

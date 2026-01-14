@@ -32,7 +32,7 @@ A :class:`wx.TextCtrl` with a button to clear its contents.
 from typing import List, Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.textctrlwrapper import TextCtrlWrapper
@@ -77,7 +77,7 @@ class CTCWidget(wx.TextCtrl):
 
 		return self.parent
 
-	def OnText(self, event) -> None:
+	def OnText(self, event: wx.Event) -> None:
 		"""
 		Event handler for text being entered in the control.
 
@@ -90,7 +90,7 @@ class CTCWidget(wx.TextCtrl):
 
 		self.parent.GetEventHandler().ProcessEvent(event)
 
-	def OnTextEnter(self, _) -> None:
+	def OnTextEnter(self, _) -> None:  # noqa: PRM002
 		"""
 		Event handler for the :kbd:`enter` / :kbd:`return ⏎` key being pressed.
 
@@ -226,7 +226,7 @@ class ClearButton(wx.Control):
 
 		return wx.Size(self.m_bmp.GetWidth(), self.m_bmp.GetHeight())
 
-	def OnLeftUp(self, _) -> None:
+	def OnLeftUp(self, _) -> None:  # noqa: PRM002
 		"""
 		Event Handler for left mouse button being released.
 		"""
@@ -244,7 +244,7 @@ class ClearButton(wx.Control):
 
 		self.parent.SetFocus()
 
-	def OnPaint(self, _) -> None:
+	def OnPaint(self, _) -> None:  # noqa: PRM002
 		"""
 		Event Handler for widget being painted.
 		"""
@@ -285,8 +285,8 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
 			validator: wx.Validator = wx.DefaultValidator,
-			name: str = ClearableTextCtrlNameStr
-			):
+			name: str = ClearableTextCtrlNameStr,
+			) -> None:
 
 		wx.Panel.__init__(self, parent, id, pos, size, style | wx.BORDER_SUNKEN, name)
 
@@ -312,7 +312,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 		self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.OnClearButton, id=wx.ID_ANY)
 		self.Bind(wx.EVT_SIZE, self.OnSize)
 
-	# def Destroy(self):
+	# def Destroy(self) -> None:
 	# 	self.m_text.Destroy()
 	# 	self.m_clearButton.Destroy()
 	# 	wx.Control.Destroy(self)
@@ -414,7 +414,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		return self.m_text.AutoCompleteFileNames()
 
-	def ChangeValue(self, value: str):
+	def ChangeValue(self, value: str) -> None:
 		"""
 		Sets the new text control value.
 
@@ -519,12 +519,9 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	# GetMargins
 
 	# @staticmethod
-	# def GetMultiplier():
+	# def GetMultiplier() -> int:
 	# 	"""
 	# 	Icons are rendered at 3-8 times larger than necessary and downscaled for antialiasing
-	#
-	# 	:return:
-	# 	:rtype: int
 	# 	"""
 	#
 	# 	depth = wx.DisplayDepth()
@@ -731,7 +728,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		return self.m_text.PositionToXY(pos)
 
-	# def RenderClearBitmap(self, x: int, y: int):
+	# def RenderClearBitmap(self, x: int, y: int) -> None:
 	# 	"""
 	#
 	# 	:param x:
@@ -819,7 +816,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	# 	return bitmap
 
 	# @staticmethod
-	# def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size):
+	# def RescaleBitmap(bmp: wx.Bitmap, sizeNeeded: wx.Size) -> None:
 	# 	"""
 	#
 	# 	:param bmp:
@@ -845,7 +842,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 	#
 	# bmp = newBmp
 
-	def SetClearBitmap(self, bitmap: wx.Bitmap):
+	def SetClearBitmap(self, bitmap: wx.Bitmap) -> None:
 		"""
 		Sets the bitmap for the clear button.
 
@@ -881,7 +878,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		return self.m_text.SetDefaultStyle(style)
 
-	def SetEditable(self, editable: bool):
+	def SetEditable(self, editable: bool) -> None:
 		"""
 		Makes the text item editable or read-only, overriding the :py:obj:`wx.TE_READONLY` flag.
 
@@ -891,7 +888,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		self.m_text.SetEditable(editable)
 
-	def SetInsertionPoint(self, pos: int):
+	def SetInsertionPoint(self, pos: int) -> None:
 		"""
 		Sets the insertion point at the given position.
 
@@ -900,7 +897,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		self.m_text.SetInsertionPoint(pos)
 
-	def SetInsertionPointEnd(self):
+	def SetInsertionPointEnd(self) -> None:
 		"""
 		Sets the insertion point at the end of the text control.
 
@@ -912,7 +909,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	# SetMargins
 
-	def SetMaxLength(self, length: int):
+	def SetMaxLength(self, length: int) -> None:
 		"""
 		This function sets the maximum number of characters the user can enter into the control.
 
@@ -934,7 +931,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		self.m_text.SetMaxLength(length)
 
-	def SetModified(self, modified: bool):
+	def SetModified(self, modified: bool) -> None:
 		"""
 		Marks the control as being modified by the user or not.
 
@@ -959,7 +956,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 		return self.m_text.SetStyle(start, end, style)
 
-	def ShowPosition(self, pos: int):
+	def ShowPosition(self, pos: int) -> None:
 		"""
 		Makes the line containing the given position visible.
 

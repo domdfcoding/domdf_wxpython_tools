@@ -40,8 +40,8 @@ from decimal import Decimal
 from typing import List, Sequence, Union
 
 # 3rd party
-import wx  # type: ignore
-import wx.adv  # type: ignore
+import wx  # type: ignore[import-not-found]
+import wx.adv  # type: ignore[import-not-found]
 from mathematical.utils import rounders
 
 # this package
@@ -79,7 +79,7 @@ edit_btn_xpm = [
 		b"        .       ",
 		b"      .. ..     ",
 		b"                ",
-		b"                "
+		b"                ",
 		]
 
 numerical_edit_btn_xpm = [
@@ -102,7 +102,7 @@ numerical_edit_btn_xpm = [
 		b"        .       ",
 		b"      .. ..     ",
 		b"                ",
-		b"                "
+		b"                ",
 		]
 
 new_btn_xpm = [
@@ -127,7 +127,7 @@ new_btn_xpm = [
 		b"             #  ",
 		b"  # # # # # #   ",
 		b"                ",
-		b"                "
+		b"                ",
 		]
 
 delete_btn_xpm = [
@@ -150,7 +150,7 @@ delete_btn_xpm = [
 		b"  ...+     .+   ",
 		b"  ...+      .+  ",
 		b"   .         .  ",
-		b"                "
+		b"                ",
 		]
 
 down_btn_xpm = [
@@ -172,7 +172,7 @@ down_btn_xpm = [
 		b"       ...      ",
 		b"        .       ",
 		b"                ",
-		b"                "
+		b"                ",
 		]
 
 up_btn_xpm = [
@@ -194,7 +194,7 @@ up_btn_xpm = [
 		b"     ...        ",
 		b"                ",
 		b"                ",
-		b"                "
+		b"                ",
 		]
 
 
@@ -219,8 +219,8 @@ class CleverListCtrl(wx.ListCtrl):
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.LC_ICON,
 			validator: wx.Validator = wx.DefaultValidator,
-			name: str = wx.ListCtrlNameStr
-			):
+			name: str = wx.ListCtrlNameStr,
+			) -> None:
 
 		wx.ListCtrl.__init__(self, parent, id, pos, size, style, validator, name)
 
@@ -228,11 +228,11 @@ class CleverListCtrl(wx.ListCtrl):
 
 		self.Bind(wx.EVT_SIZE, self.OnSize)
 
-	def CreateColumns(self):
+	def CreateColumns(self) -> None:
 		self.InsertColumn(0, "item")
 		self.SizeColumns()
 
-	def SizeColumns(self):
+	def SizeColumns(self) -> None:
 		w = self.GetSize().x
 
 		if wx.Platform == "__WXMSW__":
@@ -245,7 +245,7 @@ class CleverListCtrl(wx.ListCtrl):
 		self.SetColumnWidth(0, w)
 
 	# private
-	def OnSize(self, event) -> None:
+	def OnSize(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
@@ -283,8 +283,8 @@ class EditableListBox(wx.Panel):
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.adv.EL_DEFAULT_STYLE,
-			name: str = wx.adv.EditableListBoxNameStr
-			):
+			name: str = wx.adv.EditableListBoxNameStr,
+			) -> None:
 
 		wx.Panel.__init__(self, parent, id, pos, size, style, name)
 
@@ -320,7 +320,9 @@ class EditableListBox(wx.Panel):
 			subsizer.Add(self.m_bUp, 0, wx.CENTER)
 
 			self.m_bDown = wx.BitmapButton(
-					subp, ID_ELB_DOWN, wx.ArtProvider.GetBitmap(wx.ART_GO_DOWN, wx.ART_BUTTON)
+					subp,
+					ID_ELB_DOWN,
+					wx.ArtProvider.GetBitmap(wx.ART_GO_DOWN, wx.ART_BUTTON),
 					)
 			self.m_bDown.SetToolTip("Move down")
 			subsizer.Add(self.m_bDown, 0, wx.CENTER)
@@ -354,13 +356,13 @@ class EditableListBox(wx.Panel):
 		self.Bind(wx.EVT_BUTTON, self.OnDelItem, id=ID_ELB_DELETE)
 		self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, self.m_listCtrl)
 
-	def OnItemActivated(self, evt):
-		self.curRow = evt.GetIndex()
+	def OnItemActivated(self, event: wx.Event) -> None:
+		self.curRow = event.GetIndex()
 		print(123)
 		self.m_listCtrl.EditLabel(self.curRow)
-		evt.Skip()
+		event.Skip()
 
-	def SetStrings(self, strings: List[str]):
+	def SetStrings(self, strings: List[str]) -> None:
 		"""
 		Replaces current contents with given strings.
 
@@ -379,7 +381,6 @@ class EditableListBox(wx.Panel):
 		Returns a list of the current contents of the control.
 
 		:return: list of strings
-		:rtype: list of str
 		"""
 
 		strings = []
@@ -391,7 +392,7 @@ class EditableListBox(wx.Panel):
 
 		return strings
 
-	def OnItemSelected(self, event):
+	def OnItemSelected(self, event: wx.Event) -> None:
 		self.m_selection = event.GetIndex()
 		if not (self.m_style & wx.adv.EL_NO_REORDER):
 			self.m_bUp.Enable(self.m_selection != 0 and self.m_selection < self.m_listCtrl.GetItemCount() - 1)
@@ -402,19 +403,21 @@ class EditableListBox(wx.Panel):
 			if self.m_style & wx.adv.EL_ALLOW_DELETE:
 				self.m_bDel.Enable(self.m_selection < self.m_listCtrl.GetItemCount() - 1)
 
-	def OnNewItem(self, event) -> None:
+	def OnNewItem(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
 		"""
 
 		self.m_listCtrl.SetItemState(
-				self.m_listCtrl.GetItemCount() - 1, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED
+				self.m_listCtrl.GetItemCount() - 1,
+				wx.LIST_STATE_SELECTED,
+				wx.LIST_STATE_SELECTED,
 				)
 
 		self.m_listCtrl.EditLabel(self.m_selection)
 
-	def OnBeginLabelEdit(self, event) -> None:
+	def OnBeginLabelEdit(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
@@ -434,10 +437,10 @@ class EditableListBox(wx.Panel):
 
 		return edit_control
 
-	def on_value_changed(self, event):  # wxGlade: CalibreMeasurementPanel.<event_handler>
+	def on_value_changed(self, event: wx.Event) -> None:  # wxGlade: CalibreMeasurementPanel.<event_handler>
 		event.Skip()
 
-	def OnEndLabelEdit(self, event) -> None:
+	def OnEndLabelEdit(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
@@ -462,7 +465,7 @@ class EditableListBox(wx.Panel):
 	def OnEditItem(self, _) -> None:
 		self.m_listCtrl.EditLabel(self.m_selection)
 
-	def SwapItems(self, i1: int, i2: int):
+	def SwapItems(self, i1: int, i2: int) -> None:
 		"""
 
 		:param i1:
@@ -492,9 +495,6 @@ class EditableListBox(wx.Panel):
 	def GetListCtrl(self) -> wx.ListCtrl:
 		"""
 		Returns a reference to the actual list control portion of the custom control.
-
-		:return:
-		:rtype: wx.ListCtrl
 		"""
 
 		return self.m_listCtrl
@@ -541,22 +541,25 @@ class EditableNumericalListBox(EditableListBox):
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param id:
 	:param label:
+	:param decimal_places:
 	:param pos:
 	:param size:
 	:param style:
 	:param name:
 	"""
 
+	_decimal_places: int
+
 	def __init__(
 			self,
 			parent: wx.Window,
 			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
 			label: str = '',
-			decimal_places=-1,
+			decimal_places: int = -1,
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.adv.EL_DEFAULT_STYLE,
-			name: str = wx.adv.EditableListBoxNameStr
+			name: str = wx.adv.EditableListBoxNameStr,
 			):
 
 		EditableListBox.__init__(self, parent, id, label, pos, size, style, name)
@@ -567,8 +570,8 @@ class EditableNumericalListBox(EditableListBox):
 		self.m_bEdit.SetBitmap(wx.Bitmap(numerical_edit_btn_xpm))
 		self.m_bEdit.SetBitmapDisabled(wx.NullBitmap)
 
-	def SetDecimalPlaces(self, _decimal_places):
-		self._decimal_places = _decimal_places
+	def SetDecimalPlaces(self, decimal_places: int) -> None:
+		self._decimal_places = decimal_places
 
 		if self._decimal_places == 0:
 			self._rounders_string = '0'
@@ -577,18 +580,18 @@ class EditableNumericalListBox(EditableListBox):
 		else:
 			self._rounders_string = f"0.{'0' * self._decimal_places}"
 
-	def GetDecimalPlaces(self):
+	def GetDecimalPlaces(self) -> int:
 		return self._decimal_places
 
 	@property
-	def decimal_places(self):
+	def decimal_places(self) -> int:
 		return self._decimal_places
 
 	@decimal_places.setter
-	def decimal_places(self, decimal_places):
+	def decimal_places(self, decimal_places: int) -> None:
 		self.SetDecimalPlaces(decimal_places)
 
-	def SetStrings(self, strings):
+	def SetStrings(self, strings: Sequence[Union[float, Decimal]]) -> None:  # type: ignore[override]
 		self.SetValues(strings)
 
 	def SetValues(self, values: Sequence[Union[float, Decimal]]) -> None:
@@ -605,15 +608,12 @@ class EditableNumericalListBox(EditableListBox):
 		self.m_listCtrl.InsertItem(len(values), '')
 		self.m_listCtrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
-	def GetStrings(self):
+	def GetStrings(self) -> Sequence[Union[float, Decimal]]:  # type: ignore[override]
 		return self.GetValues()
 
-	def GetValues(self):
+	def GetValues(self) -> Sequence[Union[float, Decimal]]:
 		"""
 		Returns a list of the current contents of the control.
-
-		:return:
-		:rtype:
 		"""
 
 		values = []
@@ -629,7 +629,7 @@ class EditableNumericalListBox(EditableListBox):
 
 		return values
 
-	def SetupEditControl(self):
+	def SetupEditControl(self) -> None:
 		edit_control = self.m_listCtrl.GetEditControl()
 		print(edit_control)
 		edit_control.SetValidator(FloatValidator(5))
@@ -638,7 +638,7 @@ class EditableNumericalListBox(EditableListBox):
 		edit_control.Bind(wx.EVT_TEXT, self.on_value_changed)
 		edit_control.Bind(wx.EVT_TEXT_ENTER, self.on_value_changed)
 
-	def on_value_changed(self, event):  # wxGlade: CalibreMeasurementPanel.<event_handler>
+	def on_value_changed(self, event: wx.Event) -> None:  # wxGlade: CalibreMeasurementPanel.<event_handler>
 		value = event.GetEventObject().GetValue()
 
 		if value == '.':

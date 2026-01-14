@@ -31,9 +31,10 @@ Various validator classes.
 
 # stdlib
 import string
+from typing import Any
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["ValidatorBase", "CharValidator", "FloatValidator"]
 
@@ -43,7 +44,7 @@ class ValidatorBase(wx.Validator):
 	Base class for Validators.
 	"""
 
-	def Clone(self):
+	def Clone(self) -> "ValidatorBase":
 		"""
 		Clones the :class:`wx.Validator`.
 		"""
@@ -94,13 +95,15 @@ class CharValidator(ValidatorBase):
 	"""
 	A Validator that only allows the type of characters selected to be entered.
 
+	:param flag:
+
 	The possible flags are:
 
 	* int-only - only the numbers ``0123456789`` can be entered.
 	* float-only - only numbers and decimal points can be entered.
 	"""
 
-	def __init__(self, flag):
+	def __init__(self, flag: str):
 		wx.Validator.__init__(self)
 		self.flag = flag
 		self.Bind(wx.EVT_CHAR, self.OnChar)
@@ -119,14 +122,14 @@ class CharValidator(ValidatorBase):
 				wx.WXK_DELETE,
 				}
 
-	def Clone(self):
+	def Clone(self) -> "CharValidator":
 		"""
 		Clones the :class:`~.CharValidator`.
 		"""
 
 		return self.__class__(self.flag)
 
-	def Validate(self, win) -> bool:
+	def Validate(self, win: Any) -> bool:
 		"""
 		Validate the control.
 
@@ -135,7 +138,7 @@ class CharValidator(ValidatorBase):
 
 		return True
 
-	def OnChar(self, event) -> None:
+	def OnChar(self, event: wx.Event) -> None:
 		"""
 		Event handler for text being entered in the control.
 
@@ -168,10 +171,14 @@ class FloatValidator(CharValidator):
 	"""
 	A Validator that only allows numbers and decimal points to be entered.
 	If a decimal point has already been entered, a second one cannot be entered.
-	The argument `flag` is used to limit the number of decimal places that can be entered.
+
+	:param flag: Limits the number of decimal places that can be entered.
 	"""
 
-	def OnChar(self, event) -> None:
+	def __init__(self, flag: int):
+		super().__init__(flag)  # type: ignore[arg-type]  # TODO: make generic base class
+
+	def OnChar(self, event: wx.Event) -> None:
 		"""
 		Event handler for text being entered in the control.
 

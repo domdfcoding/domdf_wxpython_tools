@@ -30,9 +30,10 @@ Useful for timeouts or updating timers, clocks etc.
 # stdlib
 import time
 from threading import Event, Thread
+from typing import Optional
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.events import SimpleEvent
@@ -74,7 +75,7 @@ class Timer(Thread):
 				timer_event.trigger()
 				wait_time = 0 + self._interval
 
-	def join(self, timeout=None) -> None:
+	def join(self, timeout: Optional[float] = None) -> None:
 		"""
 		Stop the thread and wait for it to end.
 

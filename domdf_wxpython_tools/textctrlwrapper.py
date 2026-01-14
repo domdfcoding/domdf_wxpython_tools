@@ -26,7 +26,7 @@
 from typing import Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["TextCtrlWrapper"]
 
@@ -41,7 +41,7 @@ class TextCtrlWrapper:
 	#: The :class:`wx.TextCtrl` being wrapped.
 	textctrl: wx.TextCtrl
 
-	def AppendText(self, text: str):
+	def AppendText(self, text: str) -> None:
 		"""
 		Appends the given text to the end of the text control.
 
@@ -53,7 +53,7 @@ class TextCtrlWrapper:
 		:param text:
 		"""
 
-		return self.textctrl.AppendText(text)
+		self.textctrl.AppendText(text)
 
 	def CanCopy(self) -> bool:
 		"""
@@ -117,13 +117,11 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Cut()
 
-	def GetLastPosition(self):
+	def GetLastPosition(self) -> wx.TextPos:
 		"""
 		Returns the zero based index of the last position in the text control.
 
 		This is equal to the number of characters in the control.
-
-		:rtype: wx.TextPos
 		"""
 
 		return self.textctrl.GetLastPosition()
@@ -201,7 +199,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Redo()
 
-	def Remove(self, from_: int, to_: int):
+	def Remove(self, from_: int, to_: int) -> None:
 		r"""
 		Removes the text starting at the first given position up to (but not including) the character at the last position.
 
@@ -211,9 +209,9 @@ class TextCtrlWrapper:
 		:param to\_: The last position
 		"""
 
-		return self.textctrl.Remove(from_, to_)
+		self.textctrl.Remove(from_, to_)
 
-	def Replace(self, from_: int, to_: int, value) -> str:
+	def Replace(self, from_: int, to_: int, value: str) -> str:
 		r"""
 		Replaces the text starting at the first position up to (but not including) the character at the last position with the given text.
 
@@ -240,7 +238,7 @@ class TextCtrlWrapper:
 
 		return self.textctrl.SelectNone()
 
-	def SetSelection(self, from_: int, to_: int):
+	def SetSelection(self, from_: int, to_: int) -> None:
 		r"""
 		Selects the text starting at the first position up to (but not including) the character at the last position.
 
@@ -252,9 +250,9 @@ class TextCtrlWrapper:
 		:param to\_: The last position
 		"""
 
-		return self.textctrl.SetSelection(from_, to_)
+		self.textctrl.SetSelection(from_, to_)
 
-	def SetValue(self, value: str):
+	def SetValue(self, value: str) -> None:
 		"""
 		Sets the new text control value.
 
@@ -274,7 +272,7 @@ class TextCtrlWrapper:
 		:param value: The new value to set. It may contain newline characters if the text control is multiline.
 		"""
 
-		return self.textctrl.SetValue(value)
+		self.textctrl.SetValue(value)
 
 	def Undo(self) -> None:
 		"""
@@ -285,14 +283,14 @@ class TextCtrlWrapper:
 
 		return self.textctrl.Undo()
 
-	def WriteText(self, text: str):
+	def WriteText(self, text: str) -> None:
 		"""
 		Writes the text into the text control at the current insertion position.
 
 		:param text: Text to write to the text control
 		"""
 
-		return self.textctrl.WriteText(text)
+		self.textctrl.WriteText(text)
 
 
 # end of class TextCtrlWrapper

@@ -29,10 +29,10 @@ can be used as the basis for custom list items
 
 # stdlib
 import pathlib
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.panel_listctrl.css_parser import parse_css, parse_css_file
@@ -52,12 +52,12 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL,
-			name=wx.PanelNameStr,
-			left_padding=32
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL,
+			name: bytes = wx.PanelNameStr,
+			left_padding=32,
 			):
 
 		wx.ScrolledWindow.__init__(self, parent, id, pos=pos, size=size, style=style | wx.TAB_TRAVERSAL, name=name)
@@ -79,7 +79,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_LISTBOX))
 
-	def _on_selection_changed(self, event):
+	def _on_selection_changed(self, event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		Handler for EVT_LIST_ITEM_SELECTED, triggered by clicking on an Item.
 		"""
@@ -92,7 +92,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		event.Skip()
 
-	def _on_key_down(self, event) -> None:
+	def _on_key_down(self, event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		Handler for EVT_LIST_KEY_DOWN, triggered by pressing key on keyboard when an item is focused.
 		"""
@@ -122,7 +122,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		event.Skip()
 		# TODO: Keyboard autocompletion?
 
-	def SetSelection(self, idx: int):
+	def SetSelection(self, idx: int) -> None:
 		"""
 		Set the current selection to the item at the given index.
 
@@ -137,7 +137,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 			else:
 				item.DeselectItem()
 
-	def DeselectAll(self):
+	def DeselectAll(self) -> None:
 		"""
 		Deselect all items.
 		"""
@@ -145,15 +145,17 @@ class PanelListCtrl(wx.ScrolledWindow):
 		for i in range(self.GetItemCount()):
 			self.Select(i, False)
 
-	def AcceptsFocus(self):
+	def AcceptsFocus(self) -> bool:
 		return True
 
-	def AcceptsFocusFromKeyboard(self):
+	def AcceptsFocusFromKeyboard(self) -> bool:
 		return False
 
-	def Append(self, panel_list_item: "PanelListItem"):
+	def Append(self, panel_list_item: "PanelListItem") -> None:
 		"""
-		Append a 'PanelListItem' object, or an instance of a custom subclass, to the control.
+		Append a :class:`~.PanelListItem` object, or an instance of a custom subclass, to the control.
+
+		:param panel_list_item:
 		"""
 
 		self.sizer_1.Add(panel_list_item, 0, wx.EXPAND, wx.TOP, 0)
@@ -175,7 +177,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		self.Append(item)
 		return item
 
-	def Clear(self):
+	def Clear(self) -> bool:
 		"""
 		Removes all items from the control.
 		"""
@@ -222,7 +224,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return False
 
-	def Focus(self, idx):
+	def Focus(self, idx: int) -> None:
 		"""
 		Set Focus to the the given item.
 
@@ -235,7 +237,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 			else:
 				item.DeselectItem()
 
-	def GetColumnCount(self):
+	def GetColumnCount(self) -> int:
 		"""
 		Returns the number of columns.
 		"""
@@ -254,7 +256,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		return 0
 #
 
-	def GetFirstSelected(self, *_) -> int:
+	def GetFirstSelected(self, *_) -> int:  # noqa: PRM002
 		"""
 		Returns the first selected item, or -1 when none is selected.
 		"""
@@ -265,12 +267,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return -1
 
-	def GetFocusedItem(self):
+	def GetFocusedItem(self) -> int:
 		"""
 		Gets the currently focused item or -1 if none is focused.
-
-		:return:
-		:rtype:
 		"""
 
 		for item in self._items:
@@ -279,7 +278,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return -1
 
-	def GetItem(self, itemIdx, *_):
+	def GetItem(self, itemIdx: int, *_) -> "PanelListItem":  # noqa: PRM002
 		"""
 		Returns information about the item. See :meth:`~.SetItem` for more information.
 
@@ -291,6 +290,8 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def GetItemBackgroundColour(self, item) -> wx.Colour:
 		"""
 		Returns the colour for this item.
+
+		:param item:
 		"""
 
 		return item.GetBackgroundColour()
@@ -305,6 +306,8 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def GetItemPosition(self, item) -> int:
 		"""
 		Returns the position of the item, or ``-1`` if it is not found.
+
+		:param item:
 		"""
 
 		if item in self._items:
@@ -312,7 +315,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return -1
 
-	def GetNextSelected(self, item):
+	def GetNextSelected(self, item) -> int:
 		"""
 		Returns subsequent selected items, or -1 when no more are selected.
 
@@ -365,17 +368,14 @@ class PanelListCtrl(wx.ScrolledWindow):
 # TODO: Trigger EVT_LIST_INSERT_ITEM
 #
 
-	def IsEmpty(self):
+	def IsEmpty(self) -> bool:
 		"""
 		Returns true if the control doesn't currently contain any items.
-
-		:return:
-		:rtype:
 		"""
 
 		return bool(self._items)
 
-	def IsSelected(self, idx):
+	def IsSelected(self, idx: int) -> bool:
 		"""
 		Returns ``:py:obj:`True``` if the item is selected.
 
@@ -384,7 +384,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 		return self._items[idx].IsSelected()
 
-	def RefreshItem(self, item):
+	def RefreshItem(self, item) -> None:
 		"""
 		Redraws the given item.
 
@@ -394,7 +394,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 		item.Layout()
 		item.Refresh()
 
-	def RefreshItems(self, itemFrom, itemTo):
+	def RefreshItems(self, itemFrom: int, itemTo: int) -> None:
 		"""
 		Redraws the items between itemFrom and itemTo.
 
@@ -413,7 +413,7 @@ class PanelListCtrl(wx.ScrolledWindow):
 # 		"""
 # 		return False
 
-	def Select(self, idx, on: int = 1):
+	def Select(self, idx: int, on: bool = True) -> None:
 		"""
 		Selects/deselects an item.
 
@@ -435,9 +435,8 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def ColumnCount(self) -> int:
 		"""
 		Returns the number of columns.
-
-		:rtype: int
 		"""
+
 		return 1
 
 #
@@ -451,12 +450,9 @@ class PanelListCtrl(wx.ScrolledWindow):
 #
 
 	@property
-	def FocusedItem(self):
+	def FocusedItem(self) -> int:
 		"""
 		Gets the currently focused item or -1 if none is focused.
-
-		:return:
-		:rtype:
 		"""
 
 		return self.GetFocusedItem()
@@ -465,9 +461,8 @@ class PanelListCtrl(wx.ScrolledWindow):
 	def ItemCount(self) -> int:
 		"""
 		Returns the number of items in the list control.
-
-		:rtype: int
 		"""
+
 		return len(self._items)
 
 
@@ -476,12 +471,13 @@ class PanelListCtrl(wx.ScrolledWindow):
 
 class PanelListItem(wx.Panel):
 	"""
+	An item in a :class:`~.PanelListCtrl`.
 
-	:param parent: The PanelListCtrl the item is to go into
+	:param parent: The :class:`~.PanelListCtrl` the item is to go into
 	:param text_dict:
 	:param style_data:
 	:param id: An identifier for the panel. ID_ANY is taken to mean a default.
-	:param style: The window style. See wx.Panel.
+	:param style: The window style. See :class:`wx.Panel`.
 	:param name: Window name
 	:param left_padding: the spacing to the left of the text in the control
 	"""
@@ -519,7 +515,7 @@ class PanelListItem(wx.Panel):
 					"""'style_data' must be either:
 	> A string or pathlib.Path object pointing to a css file, or
 	> A dictionary containing the style data, or
-	> A string containing css properties."""
+	> A string containing css properties.""",
 					)
 
 		self.style_data = style_data
@@ -551,7 +547,7 @@ class PanelListItem(wx.Panel):
 		else:
 			self._selected_background = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUHILIGHT)
 
-		self._items = {}
+		self._items: Dict[str, wx.StaticText] = {}
 		self._text_properties: Dict = {}
 
 		self.outer_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -586,7 +582,7 @@ class PanelListItem(wx.Panel):
 
 		self.Refresh()
 
-	def SelectItem(self, select: bool = True):
+	def SelectItem(self, select: bool = True) -> None:
 		"""
 		Select (or deselect) the given item.
 
@@ -625,7 +621,7 @@ class PanelListItem(wx.Panel):
 		event.SetEventObject(self)
 		wx.PostEvent(self, event)
 
-	def OnKeyDown(self, event) -> None:
+	def OnKeyDown(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
@@ -644,13 +640,13 @@ class PanelListItem(wx.Panel):
 
 		return self.selected
 
-	def _refresh_background_colour(self):
+	def _refresh_background_colour(self) -> None:
 		if self.selected:
 			wx.Panel.SetBackgroundColour(self, self._selected_background)
 		else:
 			wx.Panel.SetBackgroundColour(self, self._default_background)
 
-	def _refresh_text(self):
+	def _refresh_text(self) -> None:
 		for classname, widget in self._items.items():
 			if self.selected:
 				class_style_data = self.style_data[f"li p.{classname}::selection"]
@@ -690,13 +686,13 @@ class PanelListItem(wx.Panel):
 
 		return wx.Panel.GetBackgroundColour(self)
 
-	def Refresh(self, **kwargs):
+	def Refresh(self, **kwargs) -> None:
 		self._refresh_background_colour()
 		self._refresh_text()
 		wx.Panel.Refresh(self)
 
-	def GetContents(self):
-		return self._items.values()
+	def GetContents(self) -> List[wx.StaticText]:
+		return list(self._items.values())
 
 
 # end of class RecentProjectItem

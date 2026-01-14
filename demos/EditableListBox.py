@@ -24,8 +24,8 @@
 import sys
 
 # 3rd party
-import wx  # type: ignore
-import wx.adv  # type: ignore
+import wx  # type: ignore[import-not-found]
+import wx.adv  # type: ignore[import-untyped]
 
 sys.path.append("..")
 
@@ -35,7 +35,7 @@ from domdf_wxpython_tools import EditableListBox
 
 class DemoFrame(wx.Frame):
 
-	def __init__(self, ):
+	def __init__(self):
 		wx.Frame.__init__(
 				self,
 				None,
@@ -57,7 +57,7 @@ class DemoFrame(wx.Frame):
 				(152, 250),
 				style=wx.adv.EL_DEFAULT_STYLE |
 				# wx.adv.EL_NO_REORDER |
-				wx.adv.EL_ALLOW_NEW | wx.adv.EL_ALLOW_EDIT | wx.adv.EL_ALLOW_DELETE
+				wx.adv.EL_ALLOW_NEW | wx.adv.EL_ALLOW_EDIT | wx.adv.EL_ALLOW_DELETE,
 				)
 
 		self.elb.SetStrings([
@@ -68,7 +68,7 @@ class DemoFrame(wx.Frame):
 				])
 		self.SetFocus()
 
-	def OnClose(self, event) -> None:
+	def OnClose(self, event: wx.Event) -> None:
 		"""
 
 		:param event: The wxPython event.
@@ -79,7 +79,7 @@ class DemoFrame(wx.Frame):
 
 class DemoApp(wx.App):
 
-	def OnInit(self):
+	def OnInit(self) -> bool:
 		self.frame = DemoFrame()
 		self.frame.Show(True)
 

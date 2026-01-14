@@ -27,7 +27,7 @@ Dialog for configuring borders for charts.
 #
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["border_config"]
 
@@ -135,7 +135,7 @@ class border_config(wx.Dialog):
 				self.left_border_value.GetValue(),
 				self.bottom_border_value.GetValue(),
 				self.right_border_value.GetValue(),
-				self.top_border_value.GetValue()
+				self.top_border_value.GetValue(),
 				)
 		self.chromatogram_figure.canvas.draw_idle()
 

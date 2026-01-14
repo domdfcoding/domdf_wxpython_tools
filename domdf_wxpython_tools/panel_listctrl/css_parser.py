@@ -26,9 +26,9 @@
 from typing import Dict
 
 # 3rd party
-import tinycss  # type: ignore
+import tinycss  # type: ignore[import-untyped]
 import webcolors
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 from domdf_python_tools.typing import PathLike
 
 # this package
@@ -80,7 +80,7 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 	if stylesheet.errors:
 		raise ValueError(stylesheet.errors[0])
 
-	styles = {}  # type: ignore
+	styles: Dict[str, Dict[str, str]] = {}
 
 	# Remove declarations for other platforms and make
 
@@ -89,7 +89,7 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 
 		for declaration in rule.declarations:
 			name = declaration.name
-			value = declaration.value.as_css()
+			value: str = declaration.value.as_css()
 
 			if "color" in name:
 				value.lstrip("wx.")
@@ -100,8 +100,8 @@ def _parse_css(stylesheet: tinycss.css21.Stylesheet) -> Dict:
 						value = wx.SystemSettings.GetColour(sys_colour_lookup[value])
 					else:
 						raise ValueError(
-								f"""wx.SystemColour 'value' not recognised.
-See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values"""
+								"""wx.SystemColour 'value' not recognised.
+See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for the list of valid values""",
 								)
 
 				elif value.startswith('#'):
@@ -111,7 +111,7 @@ See https://wxpython.org/Phoenix/docs/html/wx.SystemColour.enumeration.html for 
 				elif value.startswith("rgb("):
 					# RGB value, convert to hex
 					rgb_triplet = tuple(int(x) for x in value.lstrip("rgb(").rstrip(')').split(','))
-					value = webcolors.rgb_to_hex(rgb_triplet)  # type: ignore
+					value = webcolors.rgb_to_hex(rgb_triplet)  # type: ignore[arg-type]
 
 				else:
 					# Named colour, convert to hex

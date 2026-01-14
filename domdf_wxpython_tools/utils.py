@@ -28,7 +28,7 @@ import sys
 from typing import Any, Dict
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["toggle", "coming_soon", "collapse_label", "generate_faces"]
 
@@ -48,7 +48,7 @@ def toggle(control: wx.CheckBox) -> bool:
 	return False
 
 
-def coming_soon(msg: str = "This feature has not been implemented yet"):
+def coming_soon(msg: str = "This feature has not been implemented yet") -> None:
 	"""
 	Displays a message box informing the user that the desired feature has not been implemented.
 

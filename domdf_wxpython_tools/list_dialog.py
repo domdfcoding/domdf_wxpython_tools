@@ -27,7 +27,7 @@
 from typing import List, Optional
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["list_dialog"]
 
@@ -66,7 +66,7 @@ class list_dialog(wx.Dialog):
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = wx.DEFAULT_DIALOG_STYLE,
-			name: str = wx.DialogNameStr
+			name: str = wx.DialogNameStr,
 			):
 		if choices is None:
 			choices = [
@@ -135,14 +135,14 @@ class list_dialog(wx.Dialog):
 		# end wxGlade
 		borders_label.SetLabel(self.label)
 
-	def do_select(self, _) -> None:  # wxGlade: list_dialog.<event_handler>
+	def do_select(self, _event: wx.Event) -> None:  # wxGlade: list_dialog.<event_handler>  # noqa: PRM002
 		"""
 		Event handler for item in list being selected.
 		"""
 
 		self.EndModal(wx.ID_OK)
 
-	def do_cancel(self, _) -> None:  # wxGlade: list_dialog.<event_handler>
+	def do_cancel(self, _event: wx.Event) -> None:  # wxGlade: list_dialog.<event_handler>  # noqa: PRM002
 		"""
 		Event handler for dialog being cancelled.
 		"""

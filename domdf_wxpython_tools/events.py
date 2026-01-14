@@ -51,31 +51,28 @@ Usage:
 
 # stdlib
 from collections import OrderedDict
+from typing import Dict
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["PayloadEvent", "SimpleEvent"]
 
 
-class PayloadEvent(wx.PyCommandEvent):
+class PayloadEvent(wx.PyCommandEvent):  # noqa: PRM002
 	"""
 	Event containing a message payload.
 	"""
 
 	def __init__(self, etype, eid, value):
-		"""
-		Creates the event object.
-		"""
-
 		wx.PyCommandEvent.__init__(self, etype, eid)
 		self.value = value
 
 	def GetValue(self):
-		"""Returns the value from the event.
-		@return: the value of this event
-
 		"""
+		Returns the value from the event.
+		"""
+
 		return self.value
 
 
@@ -88,15 +85,15 @@ class SimpleEvent:
 
 	_fields = ("receiver", "name", "event", "binder")
 
-	def __init__(self, receiver=None, name="Event"):
+	def __init__(self, receiver=None, name: str = "Event"):
 		self.receiver = receiver
 		self.name = name
 		self.event = wx.NewEventType()
 		self.binder = wx.PyEventBinder(self.event, 1)
 		self.value = None
-		self.bindings = {}
+		self.bindings: Dict = {}  # TODO; KT and VT
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""
 		Return a nicely formatted representation string.
 		"""
@@ -104,14 +101,14 @@ class SimpleEvent:
 		return f'SimpleEvent(name={self.name})'
 
 	@property
-	def __dict__(self):
+	def __dict__(self) -> OrderedDict:  # type: ignore[override]  # TODO
 		"""
 		Return a new OrderedDict which maps field names to their values.
 		"""
 
 		return OrderedDict(zip(self._fields, self))  # type: ignore
 
-	def set_receiver(self, receiver):
+	def set_receiver(self, receiver) -> None:
 		"""
 		Set the class that is to receive the event trigger.
 
@@ -120,13 +117,15 @@ class SimpleEvent:
 
 		self.receiver = receiver
 
-	def Bind(self, handler, receiver=None, **kwargs):
-		"""
+	def Bind(self, handler, receiver=None, **kwargs) -> None:
+		r"""
 		Bind the event to the handler.
 
 		:param handler: handler to bind the event to.
-		:param kwargs: keyword arguments to pass through to receiver's Bind method.
+		:param receiver:
+		:param \*\*kwargs: keyword arguments to pass through to receiver's Bind method.
 		"""
+
 		if receiver is None:
 			receiver = self.receiver
 
@@ -135,11 +134,12 @@ class SimpleEvent:
 
 	# self.receiver.Bind(self.binder, handler, **kwargs)
 
-	def Unbind(self, receiver=None, **kwargs):
-		"""
+	def Unbind(self, receiver=None, **kwargs) -> None:
+		r"""
 		Unbind the event from the handler.
 
-		:param kwargs: keyword arguments to pass through to receiver's Unbind method
+		:param receiver:
+		:param \*\*kwargs: keyword arguments to pass through to receiver's Unbind method
 		"""
 
 		if receiver:
@@ -150,7 +150,7 @@ class SimpleEvent:
 
 	# self.receiver.Unbind(self.binder, **kwargs)
 
-	def trigger(self, value=None):
+	def trigger(self, value=None) -> None:  # noqa: PRM002
 		"""
 		Trigger the event.
 		"""

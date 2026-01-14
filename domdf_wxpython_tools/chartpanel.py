@@ -34,17 +34,18 @@ A canvas for displaying a chart within a wxPython window.
 
 # stdlib
 import types
-from typing import Optional
+from typing import Callable, Optional
 
 # 3rd party
-import matplotlib  # type: ignore
-import matplotlib.projections  # type: ignore[import]
+import matplotlib
+import matplotlib.projections
 import numpy
-import wx.html2  # type: ignore
-from matplotlib.axes import Axes  # type: ignore
-from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
+import wx.html2  # type: ignore[import-not-found]
+from matplotlib.axes import Axes
+from matplotlib.backend_bases import MouseEvent
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
-from matplotlib.figure import Figure  # type: ignore
+from matplotlib.figure import Figure
 
 # this package
 from domdf_wxpython_tools.border_config import border_config
@@ -84,7 +85,7 @@ class ChartPanelBase(wx.Panel):
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
-			name: str = wx.PanelNameStr
+			name: str = wx.PanelNameStr,
 			):
 
 		wx.Panel.__init__(self, parent, id, pos, size, style | wx.TAB_TRAVERSAL, name)
@@ -101,7 +102,7 @@ class ChartPanelBase(wx.Panel):
 		self.Bind(wx.EVT_SIZE, self.on_size_change, self)
 		self.Bind(wx.EVT_MAXIMIZE, self.on_size_change)
 
-	def setup_ylim_refresher(self, y_data, x_data):
+	def setup_ylim_refresher(self, y_data, x_data) -> None:
 		"""
 		Setup the function for updating the ylim whenever the xlim changes.
 
@@ -109,12 +110,13 @@ class ChartPanelBase(wx.Panel):
 		:param x_data:
 		"""
 
-		def update_ylim(*args):
-			# print(str(*args).startswith("MPL MouseEvent")) # Pan
+		def update_ylim(*args) -> None:  # print(str(*args).startswith("MPL MouseEvent")) # Pan
+			assert self.canvas.toolbar is not None
 
 			# Zoom, Pan
-			x_pan = (str(*args).startswith("XPanAxesSubplot") and self.canvas.toolbar._active != "PAN")
-			mouse_zoom = (str(*args).startswith("MPL MouseEvent") and self.canvas.toolbar._active != "ZOOM")
+			active_tool = self.canvas.toolbar._active  # type: ignore[attr-defined]
+			x_pan = str(*args).startswith("XPanAxesSubplot") and active_tool != "PAN"
+			mouse_zoom = str(*args).startswith("MPL MouseEvent") and active_tool != "ZOOM"
 			if x_pan or mouse_zoom:
 				# print("updated xlims: ", axes.get_xlim())
 				min_x_index = (numpy.abs(x_data - self.ax.get_xlim()[0])).argmin()
@@ -139,40 +141,53 @@ class ChartPanelBase(wx.Panel):
 		sizer.Fit(self)
 		self.Layout()
 
-	def reset_view(self, *_) -> None:
+	def reset_view(self, *_) -> None:  # noqa: PRM002
 		"""
 		Reset the view of the chart.
 		"""
 
+		assert self.canvas.toolbar is not None
+
 		self.canvas.toolbar.home()
 		self.canvas.draw_idle()
 
-	def previous_view(self, *_) -> None:
+	def previous_view(self, *_) -> None:  # noqa: PRM002
 		"""
 		Go to the previous view of the chart.
 		"""
 
+		assert self.canvas.toolbar is not None
 		self.canvas.toolbar.back()
 
 	def zoom(self, enable: bool = True) -> None:
 		"""
 		Enable the Zoom tool.
+
+		:param enable:
 		"""
 
-		if enable or (not enable and self.canvas.toolbar._active == "ZOOM"):
+		assert self.canvas.toolbar is not None
+
+		if enable or (not enable and self.canvas.toolbar._active == "ZOOM"):  # type: ignore[attr-defined]
 			self.canvas.toolbar.zoom()
+
 		self.canvas.Refresh()
 
 	def pan(self, enable: bool = True) -> None:
 		"""
-		Enable the Pan tool.
+		Enable or disable the Pan tool.
+
+		:param enable:
 		"""
 
-		if enable or (not enable and self.canvas.toolbar._active == "PAN"):
+		assert self.canvas.toolbar is not None
+
+		if enable or (not enable and self.canvas.toolbar._active == "PAN"):  # type: ignore[attr-defined]
 			self.canvas.toolbar.pan()
+
 		self.canvas.Refresh()
 
-	def configure_borders(self, event: Optional[wx.Event] = None):
+	def configure_borders(self, event: Optional[wx.Event] = None) -> None:  # noqa: PRM002
 		"""
 		Open the ``Configure Borders`` dialog.
 		"""
@@ -190,11 +205,15 @@ class ChartPanelBase(wx.Panel):
 		:param key:
 		"""
 
-		def press_zoom(self, event):
+		def press_zoom(self, event: wx.Event) -> None:
 			event.key = key
 			NavigationToolbar.press_zoom(self, event)
 
-		self.fig.canvas.toolbar.press_zoom = types.MethodType(press_zoom, self.fig.canvas.toolbar)
+		assert self.fig.canvas.toolbar is not None
+		self.fig.canvas.toolbar.press_zoom = types.MethodType(  # type: ignore[method-assign]
+			press_zoom,
+			self.fig.canvas.toolbar,
+		)
 
 	# Other Toolbar Options
 	# Save chromatogram as image: save_figure(self, *args)
@@ -226,7 +245,7 @@ class ChartPanelBase(wx.Panel):
 		# if event.ClassName == "wxSizeEvent":
 		# 	event.Skip()
 
-	def on_size_change(self, _) -> None:
+	def on_size_change(self, _) -> None:  # noqa: PRM002
 		"""
 		Event handler for size change events.
 		"""
@@ -241,16 +260,18 @@ class ChartPanelBase(wx.Panel):
 		:param scale:
 		"""
 
-		def zoom_factory(ax, base_scale: float = 1.1):
+		def zoom_factory(ax: Axes, base_scale: float = 1.1) -> Callable[[MouseEvent], None]:
 
-			def zoom_fun(event):
-				# get the current x and y limits
+			def zoom_fun(event: MouseEvent) -> None:  # get the current x and y limits
 				cur_xlim = ax.get_xlim()
 				cur_ylim = ax.get_ylim()
 				cur_xrange = (cur_xlim[1] - cur_xlim[0]) * .5
 				cur_yrange = (cur_ylim[1] - cur_ylim[0]) * .5
 				xdata = event.xdata  # get event x location
 				ydata = event.ydata  # get event y location
+				assert xdata is not None
+				assert ydata is not None
+
 				if event.button == "up":
 					# deal with zoom in
 					scale_factor = 1 / base_scale
@@ -261,14 +282,18 @@ class ChartPanelBase(wx.Panel):
 					# deal with something that should never happen
 					scale_factor = 1
 					print(event.button)
+
 				# set new limits
-				ax.set_xlim([xdata - cur_xrange * scale_factor, xdata + cur_xrange * scale_factor])
-				ax.set_ylim([ydata - cur_yrange * scale_factor, ydata + cur_yrange * scale_factor])
+				ax.set_xlim((xdata - cur_xrange * scale_factor, xdata + cur_xrange * scale_factor))
+				ax.set_ylim((ydata - cur_yrange * scale_factor, ydata + cur_yrange * scale_factor))
 				self.canvas.draw()  # force re-draw
 
 			fig = ax.get_figure()  # get the figure of interest
+			assert fig is not None
+
 			# attach the call back
-			fig.canvas.mpl_connect("scroll_event", zoom_fun)
+			assert fig.canvas is not None
+			fig.canvas.mpl_connect("scroll_event", zoom_fun)  # type: ignore[arg-type]
 
 			# return the function
 			return zoom_fun

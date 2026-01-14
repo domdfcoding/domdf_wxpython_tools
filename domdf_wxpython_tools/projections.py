@@ -28,7 +28,8 @@
 from typing import Optional
 
 # 3rd party
-import matplotlib  # type: ignore
+import matplotlib
+from matplotlib.backend_bases import MouseButton
 
 __all__ = ["XPanAxes", "XPanAxes_NoZoom", "NoZoom"]
 
@@ -40,7 +41,7 @@ class XPanAxes(matplotlib.axes.Axes):
 
 	name = "XPanAxes"
 
-	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+	def drag_pan(self, button: MouseButton, key: Optional[str], x: float, y: float) -> None:
 		"""
 
 		:param button: The pressed mouse button.
@@ -60,7 +61,7 @@ class XPanAxes_NoZoom(matplotlib.axes.Axes):
 
 	name = "XPanAxes_NoZoom"
 
-	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+	def drag_pan(self, button: MouseButton, key: Optional[str], x: float, y: float) -> None:
 		"""
 
 		:param button: The pressed mouse button.
@@ -72,6 +73,7 @@ class XPanAxes_NoZoom(matplotlib.axes.Axes):
 		# pretend key=='x'
 		if button != 1:
 			return
+
 		matplotlib.axes.Axes.drag_pan(self, button, 'x', x, y)
 
 
@@ -82,7 +84,7 @@ class NoZoom(matplotlib.axes.Axes):
 
 	name = "NoZoom"
 
-	def drag_pan(self, button, key: Optional[str], x: float, y: float):
+	def drag_pan(self, button: MouseButton, key: Optional[str], x: float, y: float) -> None:
 		"""
 
 		:param button: The pressed mouse button.

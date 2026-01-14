@@ -25,17 +25,17 @@
 #
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["get_toolbar_icon", "get_button_icon", "GetStockBitmap", "GetStockToolbarBitmap"]
 
 
-def get_toolbar_icon(icon_name, size=24):
+def get_toolbar_icon(icon_name: str, size: int = 24) -> wx.Bitmap:
 
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_TOOLBAR_C", wx.Size(size, size)))
 
 
-def get_button_icon(icon_name, size=24):
+def get_button_icon(icon_name: str, size: int = 24) -> wx.Bitmap:
 	return wx.Bitmap(wx.ArtProvider.GetBitmap(f"wx{icon_name}", "wxART_BUTTON_C", wx.Size(size, size)))
 
 
@@ -44,17 +44,23 @@ def get_button_icon(icon_name, size=24):
 _art_provider = None
 
 
-def GetStockBitmap(art_id, art_client=None):
+def GetStockBitmap(art_id: int, art_client=None) -> None:
 	"""
 	Get a stock bitmap from its ``wx.ART_xxx`` ID.
+
+	:param art_id:
+	:param art_client:
 	"""
+
 	global _art_provider
+
 	if _art_provider is None:
 		_art_provider = wx.ArtProvider()
+
 	return _art_provider.GetBitmap(id=art_id, client=art_client or wx.ART_OTHER)
 
 
-def GetStockToolbarBitmap(art_id):
+def GetStockToolbarBitmap(art_id) -> None:
 	return GetStockBitmap(art_id, wx.ART_TOOLBAR)
 
 

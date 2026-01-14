@@ -23,12 +23,13 @@
 #
 
 # stdlib
-from typing import List, Optional
+from typing import Dict, List, Optional, Tuple
 
 # 3rd party
-import wx  # type: ignore
-from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
-from matplotlib.figure import Figure  # type: ignore
+import wx  # type: ignore[import-not-found]
+from matplotlib.axes import Axes
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 __all__ = ["StylePickerPanel"]
 
@@ -58,12 +59,12 @@ class StylePickerPanel(wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL,
-			name=wx.PanelNameStr,
-			label="Choose Styles: ",
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL,
+			name: bytes = wx.PanelNameStr,
+			label: str = "Choose Styles: ",
 			selection_choices: Optional[List[str]] = None,
 			):
 		if selection_choices is None:
@@ -108,7 +109,7 @@ class StylePickerPanel(wx.Panel):
 
 		self.Bind(wx.EVT_LISTBOX_DCLICK, self.remove, self.selection_list_box)
 
-		self.markers = {
+		self.markers: Dict[str, str] = {
 				"point": '.',
 				"pixel": ',',
 				"circle": 'o',
@@ -132,16 +133,17 @@ class StylePickerPanel(wx.Panel):
 				"x (filled)": 'X',
 				"diamond": 'D',
 				"thin_diamond": 'd',
-				"caretleft": 4,
-				"caretright": 5,
-				"caretup": 6,
-				"caretdown": 7,
+				"caretleft": 4,  # type: ignore[dict-item]
+				"caretright": 5,  # type: ignore[dict-item]
+				"caretup": 6,  # type: ignore[dict-item]
+				"caretdown": 7,  # type: ignore[dict-item]
 				}
 
 		for marker in self.selection_choices:
 			for key in self.markers.keys():
 				if marker == self.markers[key]:
 					self.selection_list_box.Append(key)
+
 		if not self.selection_list_box.IsEmpty():
 			self.selection_list_box.SetSelection(0)
 
@@ -149,6 +151,7 @@ class StylePickerPanel(wx.Panel):
 			for key in self.markers.keys():
 				if mark == self.markers[key]:
 					self.picker_list_box.Append(key)
+
 		self.picker_list_box.SetSelection(0)
 
 		self.picker_axes = self.picker_figure.add_subplot(111)
@@ -156,7 +159,7 @@ class StylePickerPanel(wx.Panel):
 		self.update_picker_preview()
 		self.update_selection_preview()
 
-	def __set_properties(self):
+	def __set_properties(self) -> None:
 		# begin wxGlade: StylePickerPanel.__set_properties
 		self.move_panel.SetMinSize((170, -1))
 		self.picker_list_box.SetMinSize((170, 256))
@@ -168,7 +171,7 @@ class StylePickerPanel(wx.Panel):
 		self.main_panel.SetMinSize((450, -1))
 		# end wxGlade
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: StylePickerPanel.__do_layout
 		parent_sizer = wx.BoxSizer(wx.HORIZONTAL)
 		main_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -216,15 +219,15 @@ class StylePickerPanel(wx.Panel):
 		# end wxGlade
 		borders_label.SetLabel(self.label)
 
-	def move_up(self, event):  # wxGlade: StylePickerPanel.<event_handler>
+	def move_up(self, event: wx.Event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		self.move(-1)
 		event.Skip()
 
-	def move_down(self, event):  # wxGlade: StylePickerPanel.<event_handler>
+	def move_down(self, event: wx.Event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		self.move(1)
 		event.Skip()
 
-	def move(self, direction=1):
+	def move(self, direction: int = 1) -> None:
 		selection = self.selection_list_box.GetSelection()
 		selection_string = self.selection_list_box.GetString(selection)
 		if self.selection_list_box.GetCount() == selection + direction or selection + direction < 0:
@@ -234,7 +237,7 @@ class StylePickerPanel(wx.Panel):
 		self.selection_list_box.InsertItems([selection_string], selection + direction)
 		self.selection_list_box.SetSelection(selection + direction)
 
-	def add(self, event):  # wxGlade: StylePickerPanel.<event_handler>
+	def add(self, event: wx.Event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		selection = self.picker_list_box.GetSelection()
 		if selection == -1:
 			return
@@ -249,7 +252,7 @@ class StylePickerPanel(wx.Panel):
 		self.update_picker_preview()
 		event.Skip()
 
-	def remove(self, event):  # wxGlade: StylePickerPanel.<event_handler>
+	def remove(self, event: wx.event) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		selection = self.selection_list_box.GetSelection()
 		if selection == -1:
 			return
@@ -264,18 +267,19 @@ class StylePickerPanel(wx.Panel):
 		self.update_selection_preview()
 		event.Skip()
 
-	def update_picker_preview(self, *_):  # wxGlade: StylePickerPanel.<event_handler>
+	def update_picker_preview(self, *_) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		self.update_preview(self.picker_list_box, self.picker_axes)
 		self.picker_canvas.draw_idle()
 
-	def update_selection_preview(self, *_):  # wxGlade: StylePickerPanel.<event_handler>
+	def update_selection_preview(self, *_) -> None:  # wxGlade: StylePickerPanel.<event_handler>
 		self.update_preview(self.selection_list_box, self.selection_axes)
 		self.selection_canvas.draw_idle()
 
-	def update_preview(self, list_obj, axes):
+	def update_preview(self, list_obj, axes: Axes) -> None:  # noqa: MAN001  # TODO
 		axes.clear()
 		axes.axis("off")
 		selection_string = list_obj.GetStringSelection()
+
 		if selection_string == '':
 			return
 
@@ -284,17 +288,17 @@ class StylePickerPanel(wx.Panel):
 	do_layout = __do_layout
 	set_properties = __set_properties
 
-	def get_selection(self):
+	def get_selection(self) -> List[str]:
 		return [
 				self.markers[self.selection_list_box.GetString(item)]
 				for item in range(self.selection_list_box.GetCount())
 				]
 
-	def _do_layout(self):
-		return self.__do_layout()
+	def _do_layout(self) -> None:
+		self.__do_layout()
 
-	def _set_properties(self):
-		return self.__set_properties()
+	def _set_properties(self) -> None:
+		self.__set_properties()
 
 
 # end of class StylePickerPanel

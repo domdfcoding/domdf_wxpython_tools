@@ -25,9 +25,10 @@
 
 # stdlib
 import pathlib
+from typing import Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 from domdf_python_tools.typing import PathLike
 
 # this package
@@ -61,12 +62,12 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
-			value='',
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL,
-			name=b"dir_picker",
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
+			value: str = '',
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL,
+			name: bytes = b"dir_picker",
 			):
 
 		self._parent = parent
@@ -86,7 +87,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.Bind(wx.EVT_BUTTON, self.Clear, self.clear_btn)
 		self.Bind(wx.EVT_BUTTON, self.Browse, self.browse_btn)
 
-	def __set_properties(self):
+	def __set_properties(self) -> None:
 		# begin wxGlade: dir_picker.__set_properties
 		self.dir_value.SetMinSize((-1, 29))
 		self.dir_value.SetMaxSize((-1, 29))
@@ -98,7 +99,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		# self.browse_btn.SetMinSize((self.height, self.height))
 		# self.SetMinSize((self.textctrl_width + 5 + (2*self.height), self.height+5))
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: dir_picker.__do_layout
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer_5 = wx.BoxSizer(wx.VERTICAL)
@@ -111,10 +112,10 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.Layout()
 		# end wxGlade
 
-	def set_textctrl_width(self, width):
+	def set_textctrl_width(self, width: int) -> None:
 		self.SetTextWidth(width)
 
-	def set_height(self, height):
+	def set_height(self, height: int) -> None:
 		self.SetHeight(height)
 
 	def get_value(self):
@@ -123,7 +124,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 	def reset_value(self):
 		return self.ResetValue()
 
-	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
+	def Browse(self, *_) -> None:  # wxGlade: dir_picker.<event_handler>
 		if self.get_value() == '':
 			default_path = self.initial_value
 		else:
@@ -133,15 +134,16 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 				None,
 				"Choose a directory:",
 				style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-				defaultPath=default_path
+				defaultPath=default_path,
 				)
 
 		if dlg.ShowModal() == wx.ID_OK:
 			self.dir_value.SetValue(dlg.GetPath())
+
 		dlg.Destroy()
 		self.dir_value.SetFocus()
 
-	def Clear(self, *_):  # wxGlade: dir_picker.<event_handler>
+	def Clear(self, *_) -> None:  # wxGlade: dir_picker.<event_handler>  # noqa: PRM002
 		"""
 		Clears the text in the control.
 
@@ -155,18 +157,18 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		Returns the insertion point, or cursor, position.
 
 		This is defined as the zero based index of the character position to the right of the insertion point. For example, if the insertion point is at the end of the single-line text control, it is equal to GetLastPosition .
-
-		:rtype:	long
 		"""
+
 		return self.dir_value.GetInsertionPoint()
 
 	def ResetValue(self):
 		"""
 		Resets the text ctrl to the initial value, either specified in __init__ or set with ``SetInitialValue``.
 		"""
+
 		return self.dir_value.SetValue(self.initial_value)
 
-	def SetHeight(self, height: int):
+	def SetHeight(self, height: int) -> None:
 		"""
 		Set the height of the widgets.
 
@@ -177,7 +179,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 		self.__set_properties()
 		self.Layout()
 
-	def SetInitialValue(self, value: str):
+	def SetInitialValue(self, value: str) -> None:
 		"""
 		Sets the initial value for the text ctrl.
 
@@ -201,9 +203,10 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 
 		This is equivalent to calling wx.TextCtrl.SetInsertionPoint with wx.TextCtrl.GetLastPosition argument.
 		"""
+
 		return self.dir_value.SetInsertionPointEnd()
 
-	def SetTextWidth(self, width: int):
+	def SetTextWidth(self, width: int) -> None:
 		"""
 		Sets the width of the TextCtrl.
 
@@ -219,7 +222,7 @@ class dir_picker(TextCtrlWrapper, wx.Panel):
 
 
 class file_picker(dir_picker):
-	"""
+	r"""
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param id:
@@ -231,22 +234,22 @@ class file_picker(dir_picker):
 	:param extension:
 	:param title:
 	:param filetypestring:
-	:param kwargs:
+	:param \*\*kwargs:
 	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
-			value='',
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
-			name=b"file_picker",
-			extension='*',
-			title="File Picker",
-			filetypestring="All Files",
-			**kwargs
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
+			value: str = '',
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+			name: bytes = b"file_picker",
+			extension: str = '*',
+			title: str = "File Picker",
+			filetypestring: str = "All Files",
+			**kwargs,
 			):
 
 		self._parent = parent
@@ -259,7 +262,7 @@ class file_picker(dir_picker):
 
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
 
-	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
+	def Browse(self, *_) -> None:  # wxGlade: dir_picker.<event_handler>
 		default_path: PathLike
 
 		if self.get_value() == '':
@@ -288,7 +291,7 @@ class file_picker(dir_picker):
 
 
 class file_folder_picker(dir_picker):
-	"""
+	r"""
 
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param id:
@@ -300,23 +303,24 @@ class file_folder_picker(dir_picker):
 	:param extension:
 	:param title:
 	:param filetypestring:
-	:param kwargs:
+	:param start_as_files:
+	:param \*\*kwargs:
 	"""
 
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
-			value='',
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
-			name=b"file_picker",
-			extension='*',
-			title="File Picker",
-			filetypestring="All Files",
-			start_as_files=True,
-			**kwargs
+			id: int = wx.ID_ANY,  # noqa: A002  # pylint: disable=redefined-builtin
+			value: str = '',
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL | wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+			name: bytes = b"file_picker",
+			extension: str = '*',
+			title: str = "File Picker",
+			filetypestring: str = "All Files",
+			start_as_files: bool = True,
+			**kwargs,
 			):
 
 		self._parent = parent
@@ -330,16 +334,16 @@ class file_folder_picker(dir_picker):
 
 		dir_picker.__init__(self, parent, id, value, pos, size, style, name)
 
-	def set_folders_mode(self):
+	def set_folders_mode(self) -> None:
 		self.files_mode = False
 
-	def set_files_mode(self):
+	def set_files_mode(self) -> None:
 		self.files_mode = True
 
-	def toggle_mode(self):
+	def toggle_mode(self) -> None:
 		self.files_mode = not self.files_mode
 
-	def Browse(self, *_):  # wxGlade: dir_picker.<event_handler>
+	def Browse(self, *_) -> None:  # wxGlade: dir_picker.<event_handler>
 
 		if self.files_mode:
 			default_path: PathLike
@@ -375,7 +379,7 @@ class file_folder_picker(dir_picker):
 					None,
 					"Choose a directory:",
 					style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-					defaultPath=default_path
+					defaultPath=default_path,
 					)
 
 			if dlg.ShowModal() == wx.ID_OK:

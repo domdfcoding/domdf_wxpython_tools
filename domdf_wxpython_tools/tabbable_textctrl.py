@@ -28,7 +28,7 @@ Multiline wx.TextCtrl that allows tabbing to the next or previous control.
 from typing import AnyStr
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 __all__ = ["TabbableTextCtrl"]
 
@@ -57,7 +57,7 @@ class TabbableTextCtrl(wx.TextCtrl):
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
 			validator: wx.Validator = wx.DefaultValidator,
-			name: AnyStr = wx.TextCtrlNameStr
+			name: AnyStr = wx.TextCtrlNameStr,
 			):
 		wx.TextCtrl.__init__(
 				self,
@@ -68,13 +68,13 @@ class TabbableTextCtrl(wx.TextCtrl):
 				size=size,
 				style=style | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER,
 				validator=validator,
-				name=name
+				name=name,
 				)
 
 		self.Bind(wx.EVT_CHAR, self.on_char)
 
 	@staticmethod
-	def on_char(event) -> None:
+	def on_char(event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		Event handler for key being pressed, to allow for navigating between controls with :kbd:`TAB`.
 		"""

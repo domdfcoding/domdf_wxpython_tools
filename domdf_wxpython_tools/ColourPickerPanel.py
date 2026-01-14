@@ -31,10 +31,10 @@ Based on StylePickerPanel, a Panel for selecting a list of colours, and their or
 from typing import List, Optional
 
 # 3rd party
-import matplotlib  # type: ignore
-import wx  # type: ignore
-from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas  # type: ignore
-from matplotlib.figure import Figure  # type: ignore
+import matplotlib
+import wx  # type: ignore[import-not-found]
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 # this package
 from domdf_wxpython_tools.StylePickerPanel import StylePickerPanel
@@ -162,7 +162,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.update_picker_preview()
 		self.update_selection_preview()
 
-	def __set_properties(self):
+	def __set_properties(self) -> None:
 		# begin wxGlade: ColourPickerPanel.__set_properties
 		self.move_panel.SetMinSize((170, -1))
 		self.picker_list_box.SetMinSize((170, 256))
@@ -174,7 +174,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.main_panel.SetMinSize((450, -1))
 		# end wxGlade
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: ColourPickerPanel.__do_layout
 		parent_sizer = wx.BoxSizer(wx.HORIZONTAL)
 		main_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -222,7 +222,7 @@ class ColourPickerPanel(StylePickerPanel):
 		# end wxGlade
 		borders_label.SetLabel(self.label)
 
-	def add(self, event):  # wxGlade: ColourPickerPanel.<event_handler>
+	def add(self, event: wx.Event) -> None:  # wxGlade: ColourPickerPanel.<event_handler>  # noqa: PRM002
 		"""
 		Event handler for adding the colour currently selected in the 'picker' to the 'selection'.
 		"""
@@ -243,7 +243,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.update_selection_preview()
 		event.Skip()
 
-	def remove(self, event):  # wxGlade: ColourPickerPanel.<event_handler>
+	def remove(self, event: wx.Event) -> None:  # wxGlade: ColourPickerPanel.<event_handler>  # noqa: PRM002
 		"""
 		Event handler for removing the colour currently selected in the 'selection'.
 		"""
@@ -261,7 +261,7 @@ class ColourPickerPanel(StylePickerPanel):
 		self.update_selection_preview()
 		event.Skip()
 
-	def update_preview(self, list_obj: wx.ListBox, axes: matplotlib.axes.Axes):
+	def update_preview(self, list_obj: wx.ListBox, axes: matplotlib.axes.Axes) -> None:
 		"""
 		Update the preview from the given list.
 
@@ -277,7 +277,7 @@ class ColourPickerPanel(StylePickerPanel):
 
 		axes.scatter(1, 1, s=400, color=selection_string, marker='s')
 
-	def pick(self, *args):
+	def pick(self, *args) -> None:  # noqa: PRM002
 		"""
 		Open a :py:class:`wx.ColourDialog` to edit the colour currently selected in the picker.
 		"""
@@ -294,13 +294,14 @@ class ColourPickerPanel(StylePickerPanel):
 		colour.SetColour(selection_string)
 
 		dlg = wx.ColourDialog(self, data=colour)
-
 		res = dlg.ShowModal()
+
 		if res == wx.ID_OK:
 			self.selection_list_box.Delete(selection)
 			self.selection_list_box.InsertItems(
-				[dlg.GetColourData().GetColour().GetAsString(wx.C2S_HTML_SYNTAX)],
-				selection)  # yapf: disable
+					[dlg.GetColourData().GetColour().GetAsString(wx.C2S_HTML_SYNTAX)],
+					selection,
+					)
 			self.selection_list_box.SetSelection(selection)
 			self.update_selection_preview()
 			dlg.Destroy()

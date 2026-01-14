@@ -24,7 +24,7 @@
 import sys
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 sys.path.append("..")
 
@@ -48,7 +48,7 @@ class DemoFrame(wx.Frame):
 			size=wx.DefaultSize,
 			style=wx.DEFAULT_FRAME_STYLE,
 			*args,
-			**kwds
+			**kwds,
 			):
 
 		wx.Frame.__init__(self, parent, id, title, pos, size, style)
@@ -71,7 +71,7 @@ class App(wx.App):
 	LogCtrl Demo application.
 	"""
 
-	def OnInit(self):
+	def OnInit(self) -> bool:
 		self.frame = DemoFrame()
 		self.frame.Show()
 		self.SetTopWindow(self.frame)

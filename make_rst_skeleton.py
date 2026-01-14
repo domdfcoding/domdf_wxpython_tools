@@ -49,7 +49,7 @@ class Module:
 	def __str__(self) -> str:
 		return self.__repr__()
 
-	def make_rst(self, parent_names: List[str], directory: pathlib.Path, extras: Optional[str] = None):
+	def make_rst(self, parent_names: List[str], directory: pathlib.Path, extras: Optional[str] = None) -> None:
 		dotted_name = '.'.join(parent_names + [self.name])
 		print(dotted_name)
 		buf = "========="
@@ -62,11 +62,11 @@ class Module:
 			clean_writer(buf, fp)
 
 
-def is_package(path: pathlib.Path):
+def is_package(path: pathlib.Path) -> bool:
 	return path.is_dir() and (path / "__init__.py").is_file()
 
 
-def is_module(path: pathlib.Path):
+def is_module(path: pathlib.Path) -> bool:
 	return path.is_file() and path.suffix == ".py"
 
 

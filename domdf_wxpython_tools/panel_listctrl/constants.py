@@ -24,7 +24,7 @@ Constants for :mod:`~.panel_listctrl`.
 
 # 3rd party
 import webcolors
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # Default text settings
 text_defaults = {
@@ -44,7 +44,7 @@ elif wx.Platform == "__WXGTK__":
 
 	try:
 		# 3rd party
-		import lsb_release  # type: ignore
+		import lsb_release  # type: ignore[import-not-found]
 
 		if "Ubuntu" in lsb_release.get_distro_information().values():
 			text_defaults["font-face-name"] = "Ubuntu"

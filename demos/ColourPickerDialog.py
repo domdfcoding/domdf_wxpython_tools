@@ -24,7 +24,7 @@
 import sys
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 sys.path.append("..")
 

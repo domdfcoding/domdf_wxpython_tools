@@ -29,7 +29,7 @@ Dialogs for choosing Matplotlib colours and styles.
 from typing import List, Optional
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.ColourPickerPanel import ColourPickerPanel
@@ -84,13 +84,12 @@ class StylePicker(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.apply, self.apply_btn)
 		# end wxGlade
 
-	def __set_properties(self):
-		# begin wxGlade: StylePicker.__set_properties
+	def __set_properties(self) -> None:  # begin wxGlade: StylePicker.__set_properties
 		self.SetTitle("Choose Styles")
 		# end wxGlade
 		self.SetTitle(self.title)
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: StylePicker.__do_layout
 		parent_sizer = wx.FlexGridSizer(2, 1, 0, 0)
 		button_grid = wx.GridSizer(1, 2, 0, 5)
@@ -104,14 +103,14 @@ class StylePicker(wx.Dialog):
 		self.Layout()
 		# end wxGlade
 
-	def cancel(self, _):  # wxGlade: StylePicker.<event_handler>
+	def cancel(self, _event: wx.Event) -> None:  # wxGlade: StylePicker.<event_handler>  # noqa: PRM002
 		"""
 		Called when the user presses the :guilabel:`Cancel` button.
 		"""
 
 		self.Destroy()
 
-	def apply(self, event) -> None:  # wxGlade: StylePicker.<event_handler>
+	def apply(self, event: wx.Event) -> None:  # wxGlade: StylePicker.<event_handler>
 		"""
 		Called when the user presses the :guilabel:`Apply` button.
 
@@ -135,6 +134,7 @@ class ColourPicker(style_picker):
 	:param parent: Parent window. Should not be :py:obj:`None`.
 	:param title: The dialog title.
 	:param label: The dialog label.
+	:param picker_choices:
 	:param selection_choices:
 	:param \*args: Additional arguments passed to :class:`wx.Dialog`.
 	:param \*\*kwds:  Additional keyword arguments passed to :class:`wx.Dialog`.
@@ -148,7 +148,7 @@ class ColourPicker(style_picker):
 			picker_choices: Optional[List] = None,
 			selection_choices: Optional[List] = None,
 			*args,
-			**kwds
+			**kwds,
 			):
 
 		self.title = title
@@ -174,7 +174,7 @@ class ColourPicker(style_picker):
 		self.Bind(wx.EVT_BUTTON, self.cancel, self.cancel_btn)
 		self.Bind(wx.EVT_BUTTON, self.apply, self.apply_btn)
 
-	def apply(self, event) -> None:
+	def apply(self, event: wx.Event) -> None:
 		"""
 		Called when the user presses the :guilabel:`Apply` button.
 
@@ -185,13 +185,13 @@ class ColourPicker(style_picker):
 		event.Skip()
 		self.EndModal(wx.ID_OK)
 
-	def __set_properties(self):
+	def __set_properties(self) -> None:
 		# begin wxGlade: style_picker.__set_properties
 		self.SetTitle("Choose Styles")
 		# end wxGlade
 		self.SetTitle(self.title)
 
-	def __do_layout(self):
+	def __do_layout(self) -> None:
 		# begin wxGlade: style_picker.__do_layout
 		parent_sizer = wx.FlexGridSizer(2, 1, 0, 0)
 		button_grid = wx.GridSizer(1, 2, 0, 5)

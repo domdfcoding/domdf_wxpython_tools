@@ -42,11 +42,12 @@
 # stdlib
 import os
 import pathlib
+from typing import List, Tuple
 
 # 3rd party
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 from domdf_python_tools.typing import PathLike
-from wx.lib.filebrowsebutton import FileBrowseButton  # type: ignore
+from wx.lib.filebrowsebutton import FileBrowseButton  # type: ignore[import-not-found]
 
 # this package
 from domdf_wxpython_tools.clearable_textctrl import ClearableTextCtrl
@@ -63,7 +64,7 @@ __all__ = ["FileBrowseCtrl", "FileBrowseCtrlWithHistory", "DirBrowseCtrl"]
 # TODO: Control doesn't indicate when it has focus; on GTK there should be an orange border but there isn't
 
 
-class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
+class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):  # noqa: PRM002
 	"""
 	A control to allow the user to type in a filename or browse with
 	the standard file dialog to select file.
@@ -105,12 +106,12 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 			initialValue: str = '',
 			# callback for when value changes (optional)
 			changeCallback=lambda x: x,
-			labelWidth=0,
-			name="fileBrowseButton",
+			labelWidth: int = 0,
+			name: str = "fileBrowseButton",
 			show_cancel_btn: bool = True,
 			fileMask: str = "All files (*.*)|*.*",
 			dialog_title: str = "File Picker",
-			**kwargs
+			**kwargs,
 			):
 
 		# Store Variables
@@ -144,7 +145,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	# # 	size.y = 34
 	# self.SetSize(size)
 
-	def createTextControl(self):
+	def createTextControl(self) -> ClearableTextCtrl:
 		"""
 		Create the text control.
 		"""
@@ -166,14 +167,16 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return textControl
 
-	def createBrowseButton(self):
+	def createBrowseButton(self) -> None:
 		"""
 		Create the browse-button control.
 		"""
 
 		# button = wx.Button(self, -1, self.buttonText)
 		button = wx.BitmapButton(
-				self, -1, bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16))
+				self,
+				-1,
+				bitmap=wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16)),
 				)
 		# button.SetToolTip(self.toolTip)
 		button.SetToolTip(self.buttonText)
@@ -182,7 +185,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		# button.SetSize((29, 29))
 		return button
 
-	def OnBrowse(self, event=None):
+	def OnBrowse(self, event=None) -> None:  # noqa: PRM002
 		"""
 		Going to browse for file...
 		"""
@@ -213,7 +216,7 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 			self.textControl.ChangeValue(pathname[0])
 			self.textControl.SetFocus()
 
-	def SetValue(self, value, callBack=1):
+	def SetValue(self, value, callBack=1) -> None:
 		"""
 		Sets the new text control value.
 
@@ -223,7 +226,8 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		Note that, unlike most other functions changing the controls values, this function generates a wxEVT_TEXT event. To avoid this you can use ChangeValue instead.
 
-		Parameters:	value (string) – The new value to set. It may contain newline characters if the text control is multi-line.
+		:param value: The new value to set. It may contain newline characters if the text control is multi-line.
+		:param callBack:
 		"""
 
 		save = self.callCallback
@@ -239,9 +243,11 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 
 		return self.label.GetLabel()
 
-	def SetLabel(self, value):
+	def SetLabel(self, value: str):
 		"""
 		Set the label's current text.
+
+		:param value:
 		"""
 
 		rvalue = self.label.SetLabel(value)
@@ -273,9 +279,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def GetNumberOfLines(self) -> int:
 		"""
 		Returns the number of lines in the text control buffer.
-
-		:return:
-		:rtype: int
 		"""
 
 		return 1
@@ -285,9 +288,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Returns :py:obj:`True` if the text has been modified by user.
 
 		Note that calling SetValue doesn't make the control modified.
-
-		:return:
-		:rtype: bool
 		"""
 
 		return self.textControl.IsModified()
@@ -295,9 +295,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def IsMultiLine(self) -> bool:
 		"""
 		Returns :py:obj:`True` if this is a multi line edit control and :py:obj:`False` otherwise.
-
-		:return:
-		:rtype: bool
 		"""
 
 		return False
@@ -305,9 +302,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def IsSingleLine(self) -> bool:
 		"""
 		Returns :py:obj:`True` if this is a single line edit control and :py:obj:`False` otherwise.
-
-		:return:
-		:rtype: bool
 		"""
 
 		return True
@@ -315,9 +309,6 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 	def MarkDirty(self):
 		"""
 		Mark text as modified (dirty).
-
-		:return:
-		:rtype:
 		"""
 
 		return self.textControl.MarkDirty()
@@ -402,43 +393,29 @@ class FileBrowseCtrl(TextCtrlWrapper, FileBrowseButton):
 		Returns :py:obj:`True` if the controls contents may be edited by user (note that it always can be changed by the program).
 
 		In other words, this functions returns :py:obj:`True` if the control hasn't been put in read-only mode by a previous call to SetEditable .
-
-		:rtype:	bool
 		"""
 
 		return True
 
 
-class FileBrowseCtrlWithHistory(FileBrowseCtrl):
+class FileBrowseCtrlWithHistory(FileBrowseCtrl):  # noqa: PRM002
 	"""
-	with following additions:
-		__init__(..., history=None)
+	Modified :class:`~.FileBrowseCtrl` with the following new methods:
 
-			history -- optional list of paths for initial history drop-down
-				(must be passed by name, not a positional argument)
-				If history is callable it will must return a list used
-				for the history drop-down
+	* ``GetHistoryControl()``
+	* ``GetHistory()``
+	* ``SetHistory( value=(), selectionIndex = None )``
 
-			changeCallback -- as for FileBrowseCtrl, but with a work-around
-				for win32 systems which don't appear to create wx.EVT_COMBOBOX
-				events properly.  There is a (slight) chance that this work-around
-				will cause some systems to create two events for each Combobox
-				selection. If you discover this condition, please report it!
+	:param history: Optional list of paths for initial history drop-down
+		(must be passed by name, not a positional argument).
+		If history is callable it will must return a list used for the history drop-down
 
-			As for a FileBrowseCtrl.__init__ otherwise.
-
-		GetHistoryControl()
-			Return reference to the control which implements interfaces
-			required for manipulating the history list.  See GetHistoryControl
-			documentation for description of what that interface is.
-
-		GetHistory()
-			Return current history list
-
-		SetHistory( value=(), selectionIndex = None )
-			Set current history list, if selectionIndex is not :py:obj:`None`, select that index
-
-		"""
+	:param changeCallback: :class:`~.FileBrowseCtrl`, but with a work-around
+			for win32 systems which don't appear to create wx.EVT_COMBOBOX events properly.
+			There is a (slight) chance that this work-around will cause some systems to create
+			two events for each Combobox selection.
+			If you discover this condition, please report it!
+	"""  # noqa: D400
 
 	def __init__(self, *arguments, **namedarguments):
 		self.history = namedarguments.get("history")
@@ -453,7 +430,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		namedarguments["name"] = name
 		FileBrowseCtrl.__init__(self, *arguments, **namedarguments)
 
-	def createTextControl(self):
+	def createTextControl(self) -> wx.ComboBox:
 		"""
 		Create the text control.
 		"""
@@ -461,19 +438,21 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		textControl = wx.ComboBox(self, -1, style=wx.CB_DROPDOWN)
 		textControl.SetToolTip(self.toolTip)
 		textControl.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
+
 		if self.changeCallback:
 			textControl.Bind(wx.EVT_TEXT, self.OnChanged)
 			textControl.Bind(wx.EVT_COMBOBOX, self.OnChanged)
+
 		if self.history:
 			history = self.history
 			self.history = None
 			self.SetHistory(history, control=textControl)
+
 		return textControl
 
-	def GetHistoryControl(self):
+	def GetHistoryControl(self) -> wx.TextCtrl:
 		"""
-		Return a pointer to the control which provides (at least)
-		the following methods for manipulating the history list:
+		Return a pointer to the control which provides (at least) the following methods for manipulating the history list:
 
 			Append( item ) -- add item
 			Clear() -- clear all items
@@ -481,31 +460,42 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 			SetSelection( index ) -- 0-based index to select in list
 
 		Semantics of the methods follow those for the wxComboBox control
-		"""
+		"""  # noqa: D400
+
 		return self.textControl
 
-	def SetHistory(self, value=(), selectionIndex=None, control=None):
+	def SetHistory(self, value=(), selectionIndex=None, control=None) -> None:
 		"""
 		Set the current history list.
+
+		:param value:
+		:param selectionIndex: If not :py:obj:`None`, select that index.
+		:param control:
 		"""
 
 		if control is None:
 			control = self.GetHistoryControl()
+
 		if self.history == value:
 			return
+
 		self.history = value
+
 		# Clear history values not the selected one.
 		tempValue = control.GetValue()
+
 		# clear previous values
 		control.Clear()
 		control.SetValue(tempValue)
+
 		# walk through, appending new values
 		for path in value:
 			control.Append(path)
+
 		if selectionIndex is not None:
 			control.SetSelection(selectionIndex)
 
-	def GetHistory(self):
+	def GetHistory(self) -> List[str]:
 		"""
 		Return the current history list.
 		"""
@@ -517,7 +507,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 		else:
 			return []
 
-	def OnSetFocus(self, event):
+	def OnSetFocus(self, event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		When the history scroll is selected, update the history.
 		"""
@@ -528,7 +518,7 @@ class FileBrowseCtrlWithHistory(FileBrowseCtrl):
 
 	if wx.Platform == "__WXMSW__":
 
-		def SetValue(self, value, callBack=1):
+		def SetValue(self, value, callBack=1) -> None:  # noqa: PRM002
 			"""
 			Convenient setting of text control value.
 
@@ -560,17 +550,17 @@ class DirBrowseCtrl(FileBrowseCtrl):
 	def __init__(
 			self,
 			parent: wx.Window,
-			id=-1,  # noqa: A002  # pylint: disable=redefined-builtin
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
-			labelText="Select a directory:",
-			buttonText="Browse",
-			toolTip="Type directory name or browse to select",
-			dialogTitle='',
+			id: int = -1,  # noqa: A002  # pylint: disable=redefined-builtin
+			pos: Tuple[int, int] = wx.DefaultPosition,
+			size: Tuple[int, int] = wx.DefaultSize,
+			style: int = wx.TAB_TRAVERSAL | wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON,
+			labelText: str = "Select a directory:",
+			buttonText: str = "Browse",
+			toolTip: str = "Type directory name or browse to select",
+			dialogTitle: str = '',
 			initialValue=None,
 			changeCallback=None,
-			name="DirBrowseCtrl"
+			name: str = "DirBrowseCtrl",
 			):
 
 		if initialValue is None:
@@ -593,7 +583,7 @@ class DirBrowseCtrl(FileBrowseCtrl):
 				name=name,
 				)
 
-	def OnBrowse(self, ev=None):
+	def OnBrowse(self, ev=None) -> None:
 
 		default_path: PathLike
 

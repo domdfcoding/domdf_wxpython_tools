@@ -28,12 +28,12 @@ using PIL and matplotlib, with a right click menu with some basic options
 from typing import Optional, Tuple, Union
 
 # 3rd party
-import matplotlib  # type: ignore
-import matplotlib.projections  # type: ignore
+import matplotlib
+import matplotlib.projections
 import PIL
-import wx  # type: ignore
+import wx  # type: ignore[import-not-found]
 from domdf_python_tools.typing import PathLike
-from matplotlib.figure import Figure  # type: ignore
+from matplotlib.figure import Figure
 from PIL import Image
 
 # this package
@@ -80,7 +80,6 @@ class EvtImgPanelChanged(wx.PyCommandEvent):
 	eventType = ImgPanelChangedEvent
 
 	def __init__(self, windowID: int, obj):
-
 		wx.PyCommandEvent.__init__(self, self.eventType, windowID)
 		self.SetEventObject(obj)
 
@@ -115,7 +114,7 @@ class ImagePanel(ChartPanelBase):
 			pos: wx.Point = wx.DefaultPosition,
 			size: wx.Size = wx.DefaultSize,
 			style: int = 0,
-			name: str = wx.PanelNameStr
+			name: str = wx.PanelNameStr,
 			):
 
 		fig = Figure()
@@ -140,7 +139,7 @@ class ImagePanel(ChartPanelBase):
 		self._load_image()
 		wx.CallAfter(self.reset_view)
 
-	def _setup_context_menu(self):
+	def _setup_context_menu(self) -> None:
 		self.context_menu = wx.Menu()
 
 		self.context_menu.Append(ID_ImagePanel_Reset_View, "Reset View")
@@ -164,7 +163,11 @@ class ImagePanel(ChartPanelBase):
 		self.context_menu.Append(ID_ImagePanel_Delete_Image, "Delete Image")
 		self.Bind(wx.EVT_MENU, self.clear, id=ID_ImagePanel_Delete_Image)
 
-	def load_image(self, new_image: Union[Image.Image, None, PathLike] = None, suppress_event: bool = False):
+	def load_image(
+			self,
+			new_image: Union[Image.Image, None, PathLike] = None,
+			suppress_event: bool = False,
+			) -> None:
 		"""
 		Load the 'new_image' into the control.
 
@@ -199,14 +202,17 @@ class ImagePanel(ChartPanelBase):
 		if not suppress_event:
 			wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 
-	def _load_image(self):
+	def _load_image(self) -> None:
 		"""
 		Internal function for the actual loading of the image.
 		"""
 
+		assert self._image is not None
+
 		self.ax.clear()
 		self.ax.imshow(self._image, aspect="equal")
 
+		assert self.ax.axes is not None
 		self.ax.axes.get_xaxis().set_visible(False)
 		self.ax.axes.get_yaxis().set_visible(False)
 		# self.fig.tight_layout()
@@ -219,7 +225,7 @@ class ImagePanel(ChartPanelBase):
 		self.setup_scrollwheel_zooming()
 		self.canvas.mpl_connect("button_press_event", self.on_context_menu)
 
-	def on_context_menu(self, event):
+	def on_context_menu(self, event: wx.Event) -> None:  # noqa: PRM002
 		"""
 		Event Handler for bringing up right click context menu.
 		"""
@@ -230,7 +236,7 @@ class ImagePanel(ChartPanelBase):
 			self.PopupMenu(self.context_menu)
 			# UIActionSimulator().MouseClick(wx.MOUSE_BTN_RIGHT)
 
-	def copy(self, _=None):
+	def copy(self, _=None) -> None:  # noqa: PRM002
 		"""
 		Copy the image to the clipboard.
 		"""
@@ -246,9 +252,10 @@ class ImagePanel(ChartPanelBase):
 		if wx.TheClipboard.Open():
 			wx.TheClipboard.SetData(bmp_data)
 			wx.TheClipboard.Flush()
+
 		wx.TheClipboard.Close()
 
-	def paste(self, event=None):
+	def paste(self, event=None) -> None:  # noqa: PRM002
 		"""
 		Paste the image from the clipboard into the control.
 		"""
@@ -264,7 +271,7 @@ class ImagePanel(ChartPanelBase):
 			# https://stackoverflow.com/a/46606553/3092681
 			# Get bitmap and convert to PIL Image
 			bmp = bmp_data.GetBitmap()
-			size: Tuple[int, int] = tuple(bmp.GetSize())  # type: ignore[assignment]
+			size: Tuple[int, int] = tuple(bmp.GetSize())
 			buf = size[0] * size[1] * 3 * b"\x00"
 			bmp.CopyToBuffer(buf)
 			self._image = Image.frombuffer("RGB", size, buf, "raw", "RGB", 0, 1)
@@ -279,13 +286,16 @@ class ImagePanel(ChartPanelBase):
 			# No image on clipboard
 			wx.TheClipboard.Close()
 
-	def on_save(self, event=None):
+	def on_save(self, event=None) -> None:  # noqa: PRM002
 		"""
 		Save the image to the location selected in the dialog.
 		"""
 
 		save_location = file_dialog_wildcard(
-				self, "Save Image", images_wildcard.wildcard, style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+				self,
+				"Save Image",
+				images_wildcard.wildcard,
+				style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
 				)
 
 		if not save_location:
@@ -294,13 +304,16 @@ class ImagePanel(ChartPanelBase):
 		assert self._image is not None
 		self._image.save(save_location[0])
 
-	def on_load(self, event=None):
+	def on_load(self, event=None) -> None:  # noqa: PRM002
 		"""
 		Load the image into the dialog from the file selected in the dialog.
 		"""
 
 		new_image = file_dialog_wildcard(
-				self, "Choose an Image", images_wildcard.wildcard, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+				self,
+				"Choose an Image",
+				images_wildcard.wildcard,
+				style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
 				)
 
 		if not new_image:
@@ -314,7 +327,7 @@ class ImagePanel(ChartPanelBase):
 
 		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 
-	def clear(self, event=None):
+	def clear(self, event: wx.Event = None) -> None:  # noqa: PRM002
 		"""
 		Clear the image from the control.
 		"""
@@ -327,7 +340,7 @@ class ImagePanel(ChartPanelBase):
 
 		wx.PostEvent(self.GetEventHandler(), EvtImgPanelChanged(self.GetId(), self))
 
-	def reset_view(self, *_):
+	def reset_view(self, *_) -> None:  # noqa: PRM002
 		"""
 		Reset the view of the image.
 		"""
@@ -353,7 +366,7 @@ class ImagePanel(ChartPanelBase):
 
 	#
 	# @image.setter
-	# def image(self, new_image):
+	# def image(self, new_image) -> None:
 	#
 	# 	if isinstance(new_image, Image.Image):
 	# 		# PIL Image object, load directly

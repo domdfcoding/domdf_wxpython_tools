@@ -40,13 +40,15 @@ __all__ = ["freezeargs", "parse_font"]
 
 def freezeargs(func: Callable) -> Callable:
 	"""
-	Makes a mutable dictionary immutable, so it can be used as an argument for :func:`slru_cache`.
+	Makes a mutable dictionary immutable, so it can be used as an argument for :func:`~.lru_cache`.
+
+	:param func:
 	"""
 
 	# From stackoverflow.com/a/53394430
 
 	@wraps(func)
-	def wrapped(*args, **kwargs):
+	def wrapped(*args, **kwargs) -> None:
 		args = tuple([frozendict(arg) if isinstance(arg, dict) else arg for arg in args])
 		kwargs = {k: frozendict(v) if isinstance(v, dict) else v for k, v in kwargs.items()}
 		return func(*args, **kwargs)
