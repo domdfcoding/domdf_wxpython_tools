@@ -93,11 +93,11 @@ domdf_wxpython_tools
 	:target: https://github.com/domdfcoding/domdf_wxpython_tools/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2025
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2026
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+	:target: https://pypistats.org/packages/domdf_wxpython_tools
 	:alt: PyPI - Downloads
 
 .. end shields

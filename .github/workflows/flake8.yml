@@ -10,12 +10,11 @@ on:
       - 'imgbot'
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   Run:
     name: "Flake8"
+    permissions:
+      contents: read
     runs-on: "ubuntu-22.04"
 
     steps:
@@ -35,7 +34,7 @@ jobs:
         if: steps.changes.outputs.code == 'true'
         uses: "actions/setup-python@v5"
         with:
-          python-version: "3.8"
+          python-version: "3.9"
 
       - name: Install dependencies 🔧
         if: steps.changes.outputs.code == 'true'
