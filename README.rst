@@ -113,6 +113,6 @@ To install with ``pip``:
 
 .. code-block:: bash
 
-	$ python -m pip install domdf_wxpython_tools
+	$ python -m pip install domdf-wxpython-tools
 
 .. end installation

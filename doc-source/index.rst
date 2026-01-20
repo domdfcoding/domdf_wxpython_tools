@@ -118,6 +118,7 @@ Installation
 
 .. installation:: domdf_wxpython_tools
 	:pypi:
+	:pypi-name: domdf-wxpython-tools
 	:github:
 
 .. end installation
