@@ -62,20 +62,20 @@ domdf_wxpython_tools
 	:target: https://www.codefactor.io/repository/github/domdfcoding/domdf_wxpython_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/domdf-wxpython-tools
+	:target: https://pypi.org/project/domdf-wxpython-tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/domdf_wxpython_tools?logo=python&logoColor=white
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/domdf-wxpython-tools?logo=python&logoColor=white
+	:target: https://pypi.org/project/domdf-wxpython-tools/
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/domdf-wxpython-tools
+	:target: https://pypi.org/project/domdf-wxpython-tools/
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/domdf_wxpython_tools
-	:target: https://pypi.org/project/domdf_wxpython_tools/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/domdf-wxpython-tools
+	:target: https://pypi.org/project/domdf-wxpython-tools/
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/domdf_wxpython_tools
@@ -96,8 +96,8 @@ domdf_wxpython_tools
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2026
 	:alt: Maintenance
 
-.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/domdf_wxpython_tools
-	:target: https://pypistats.org/packages/domdf_wxpython_tools
+.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/domdf-wxpython-tools
+	:target: https://pypistats.org/packages/domdf-wxpython-tools
 	:alt: PyPI - Downloads
 
 .. end shields
@@ -113,6 +113,6 @@ To install with ``pip``:
 
 .. code-block:: bash
 
-	$ python -m pip install domdf_wxpython_tools
+	$ python -m pip install domdf-wxpython-tools
 
 .. end installation
