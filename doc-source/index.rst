@@ -66,22 +66,22 @@ domdf_wxpython_tools
 		:alt: CodeFactor Grade
 
 	.. |pypi-version| pypi-shield::
-		:project: domdf_wxpython_tools
+		:project: domdf-wxpython-tools
 		:version:
 		:alt: PyPI - Package Version
 
 	.. |supported-versions| pypi-shield::
-		:project: domdf_wxpython_tools
+		:project: domdf-wxpython-tools
 		:py-versions:
 		:alt: PyPI - Supported Python Versions
 
 	.. |supported-implementations| pypi-shield::
-		:project: domdf_wxpython_tools
+		:project: domdf-wxpython-tools
 		:implementations:
 		:alt: PyPI - Supported Implementations
 
 	.. |wheel| pypi-shield::
-		:project: domdf_wxpython_tools
+		:project: domdf-wxpython-tools
 		:wheel:
 		:alt: PyPI - Wheel
 
@@ -105,7 +105,7 @@ domdf_wxpython_tools
 		:alt: Maintenance
 
 	.. |pypi-downloads| pypi-shield::
-		:project: domdf_wxpython_tools
+		:project: domdf-wxpython-tools
 		:downloads: month
 		:alt: PyPI - Downloads
 
@@ -118,6 +118,7 @@ Installation
 
 .. installation:: domdf_wxpython_tools
 	:pypi:
+	:pypi-name: domdf-wxpython-tools
 	:github:
 
 .. end installation
