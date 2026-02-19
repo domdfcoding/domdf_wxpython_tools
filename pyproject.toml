@@ -3,7 +3,7 @@ requires = [ "setuptools!=61.*,<=67.1.0,>=40.6.0", "wheel>=0.34.2",]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "domdf_wxpython_tools"
+name = "domdf-wxpython-tools"
 version = "0.3.0.post1"
 description = "Tools and widgets for wxPython."
 readme = "README.rst"
@@ -61,6 +61,7 @@ python-implementations = [ "CPython",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
 additional-files = [ "include domdf_wxpython_tools/panel_listctrl/Default.css",]
+package = "domdf_wxpython_tools"
 
 [tool.importcheck]
 always = [
