@@ -967,7 +967,7 @@ class ClearableTextCtrl(TextCtrlWrapper, wx.Panel):
 
 	def ShouldInheritColours(self) -> bool:
 		"""
-		"""
+"""
 
 		return True
 
